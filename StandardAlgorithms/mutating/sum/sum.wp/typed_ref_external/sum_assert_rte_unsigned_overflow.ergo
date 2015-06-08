@@ -1,0 +1,31 @@
+(* ---------------------------------------------------------- *)
+(* --- Assertion 'rte,unsigned_overflow' (file sum.c, line 16) --- *)
+(* ---------------------------------------------------------- *)
+
+goal sum_assert_rte_unsigned_overflow:
+  forall i_0,n_0 : int.
+  forall Malloc_0 : int farray.
+  forall Mint_0 : (addr,int) farray.
+  forall a_0 : addr.
+  let x_0 = L_Sum(Mint_0, a_0, i_0) : int in
+  let a_1 = shift(a_0, i_0) : addr in
+  let x_1 = Mint_0[a_1] : int in
+  let x_2 = x_0 + x_1 : int in
+  (i_0 < n_0) ->
+  (0 <= i_0) ->
+  (i_0 <= n_0) ->
+  linked(Malloc_0) ->
+  is_uint32(i_0) ->
+  is_uint32(n_0) ->
+  ((-2147483648) <= x_0) ->
+  (x_0 <= 2147483647) ->
+  is_sint32(x_0) ->
+  is_sint32(x_1) ->
+  valid_rd(Malloc_0, shift(a_0, 0), n_0) ->
+  valid_rd(Malloc_0, a_1, 1) ->
+  ((-2147483648) <= x_2) ->
+  (x_2 <= 2147483647) ->
+  (forall i_1 : int. let x_3 = L_Sum(Mint_0, a_0, i_1) : int in (0 <= i_1) ->
+   (i_1 <= n_0) -> (((-2147483648) <= x_3) and (x_3 <= 2147483647))) ->
+  (i_0 <= 4294967294)
+

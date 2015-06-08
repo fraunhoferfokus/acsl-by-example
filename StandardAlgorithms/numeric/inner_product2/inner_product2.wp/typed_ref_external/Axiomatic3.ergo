@@ -1,0 +1,22 @@
+(* ---------------------------------------------------------- *)
+(* --- Global Definitions (continued #3)                  --- *)
+(* ---------------------------------------------------------- *)
+
+predicate P_PartialSum
+    (Mint_0:(addr,int) farray,
+    Mint_1:(addr,int) farray,
+    a:addr,
+    n:int,
+    b:addr) =
+    forall i : int. (i < n) -> (0 <= i) ->
+    (Mint_0[shift_sint32(b, i)] = L_Accumulate_2_(Mint_1, a, 1 + i))
+
+axiom Q_PartialSum_Next:
+  forall a,b : addr.
+  forall Mint_0,Mint_1 : (addr,int) farray.
+  forall n : int.
+  (0 < n) -> P_PartialSum(Mint_0, Mint_1, a, n, b) ->
+    (Mint_0[shift_sint32(b, n)]
+       = (Mint_1[shift_sint32(a, n)] + Mint_0[shift_sint32(b, n - 1)])) ->
+    P_PartialSum(Mint_0, Mint_1, a, 1 + n, b)
+

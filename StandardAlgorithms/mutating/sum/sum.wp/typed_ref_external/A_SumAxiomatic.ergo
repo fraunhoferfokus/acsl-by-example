@@ -1,0 +1,15 @@
+(* ---------------------------------------------------------- *)
+(* --- Axiomatic 'SumAxiomatic'                           --- *)
+(* ---------------------------------------------------------- *)
+
+logic L_Sum : (addr,int) farray,addr,int -> int
+
+axiom Q_SumNext:
+  forall n_0 : int. forall Mint_0 : (addr,int) farray. forall a_0 : addr.
+    L_Sum(Mint_0, a_0, 1 + n_0)
+      = (L_Sum(Mint_0, a_0, n_0) + Mint_0[shift(a_0, n_0)])
+
+axiom Q_SumEmpty:
+  forall n_0 : int. forall Mint_0 : (addr,int) farray. forall a_0 : addr.
+    (n_0 <= 0) -> (0 = L_Sum(Mint_0, a_0, n_0))
+

@@ -1,0 +1,11 @@
+fill
+swap
+swap_ranges
+copy
+reverse_copy
+reverse
+rotate_copy
+replace_copy
+remove_copy
+remove_copy2
+iota

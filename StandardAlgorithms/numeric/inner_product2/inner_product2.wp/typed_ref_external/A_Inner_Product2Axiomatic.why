@@ -1,0 +1,33 @@
+(* ---------------------------------------------------------- *)
+(* --- Axiomatic 'Inner_Product2Axiomatic'                --- *)
+(* ---------------------------------------------------------- *)
+theory A_Inner_Product2Axiomatic
+  
+use import bool.Bool
+use import int.Int
+use import int.ComputerDivision
+use import real.RealInfix
+use import Qed.Qed
+use import int.Abs as IAbs
+use import map.Map
+use import Memory.Memory
+
+function l_Inner_Product2 (map addr int) addr addr int int : int
+
+use import Cint.Cint
+use import Compound.Compound
+use import A_AccumulateAxiomatic.A_AccumulateAxiomatic
+
+axiom Q_Inner_Product2:
+  forall a b c : addr.
+  forall mint_0 : map addr int.
+  forall init_0 n : int.
+  ((is_sint32 init_0)) ->
+    (forall i : int. (i < n) -> (0 <= i) ->
+     (mint_0[(shift_sint32 c i)]
+        = (mint_0[(shift_sint32 a i)] * mint_0[(shift_sint32 b i)]))) ->
+    (((l_Accumulate_1_ mint_0 c n init_0))
+       = ((l_Inner_Product2 mint_0 a b n init_0)))
+
+end
+

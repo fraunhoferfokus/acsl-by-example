@@ -1,0 +1,37 @@
+(* ---------------------------------------------------------- *)
+(* --- Post-condition (file stack_full_wd.c, line 11) in 'stack_full_wd' --- *)
+(* ---------------------------------------------------------- *)
+theory VCstack_full_wd_post
+  
+use import bool.Bool
+use import int.Int
+use import int.ComputerDivision
+use import real.RealInfix
+use import Qed.Qed
+use import int.Abs as IAbs
+use import map.Map
+use import Axiomatic.Axiomatic
+use import Memory.Memory
+use import Cint.Cint
+
+goal WP "expl:Post-condition (file stack_full_wd.c, line 11) in 'stack_full_wd'":
+  forall stack_full_1 stack_full_0 : int.
+  forall malloc_0 : map int int.
+  forall mint_0 : map addr int.
+  forall mptr_0 : map addr addr.
+  forall s_0 t_0 : addr.
+  ((framed mptr_0)) ->
+  ((linked malloc_0)) ->
+  ((is_sint32 stack_full_1)) ->
+  ((is_sint32 stack_full_0)) ->
+  ((1 = stack_full_1) <-> ((p_Full mint_0 t_0))) ->
+  ((1 = stack_full_0) <-> ((p_Full mint_0 s_0))) ->
+  ((0 = stack_full_1) <-> (not((p_Full mint_0 t_0)))) ->
+  ((0 = stack_full_0) <-> (not((p_Full mint_0 s_0)))) ->
+  ((p_Valid malloc_0 mptr_0 mint_0 s_0)) ->
+  ((p_Valid malloc_0 mptr_0 mint_0 t_0)) ->
+  ((p_Equal mptr_0 mint_0 mptr_0 mint_0 s_0 t_0)) ->
+  (0 <> (if (stack_full_1 = stack_full_0) then 1 else 0))
+
+end
+

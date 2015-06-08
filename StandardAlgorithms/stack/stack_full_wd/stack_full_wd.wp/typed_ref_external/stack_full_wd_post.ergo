@@ -1,0 +1,23 @@
+(* ---------------------------------------------------------- *)
+(* --- Post-condition (file stack_full_wd.c, line 11) in 'stack_full_wd' --- *)
+(* ---------------------------------------------------------- *)
+
+goal stack_full_wd_post:
+  forall stack_full_1,stack_full_0 : int.
+  forall Malloc_0 : int farray.
+  forall Mint_0 : (addr,int) farray.
+  forall Mptr_0 : (addr,addr) farray.
+  forall s_0,t_0 : addr.
+  framed(Mptr_0) ->
+  linked(Malloc_0) ->
+  is_sint32(stack_full_1) ->
+  is_sint32(stack_full_0) ->
+  ((1 = stack_full_1) <-> P_Full(Mint_0, t_0)) ->
+  ((1 = stack_full_0) <-> P_Full(Mint_0, s_0)) ->
+  ((0 = stack_full_1) <-> (not P_Full(Mint_0, t_0))) ->
+  ((0 = stack_full_0) <-> (not P_Full(Mint_0, s_0))) ->
+  P_Valid(Malloc_0, Mptr_0, Mint_0, s_0) ->
+  P_Valid(Malloc_0, Mptr_0, Mint_0, t_0) ->
+  P_Equal(Mptr_0, Mint_0, Mptr_0, Mint_0, s_0, t_0) ->
+  (0 <> (ite((eqb(stack_full_1, stack_full_0)), 1, 0)))
+

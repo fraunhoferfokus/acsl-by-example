@@ -1,0 +1,18 @@
+(* ---------------------------------------------------------- *)
+(* --- Lemma 'Accumulate_1'                               --- *)
+(* ---------------------------------------------------------- *)
+
+(* --- Global Definitions (continued #2) --- *)
+
+function L_Accumulate_2_
+    (Mint_0:(addr,int) farray,
+    a:addr,
+    n:int) :
+    int =
+    L_Accumulate_1_(Mint_0, a, n, 0)
+
+goal lemma_Accumulate_1:
+  forall t : (addr,int) farray.
+  forall a : addr.
+  L_Accumulate_2_(t, a, 1) = t[shift_sint32(a, 0)]
+

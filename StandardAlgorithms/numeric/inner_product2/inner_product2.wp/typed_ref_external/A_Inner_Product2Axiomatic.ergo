@@ -1,0 +1,17 @@
+(* ---------------------------------------------------------- *)
+(* --- Axiomatic 'Inner_Product2Axiomatic'                --- *)
+(* ---------------------------------------------------------- *)
+
+logic L_Inner_Product2 : (addr,int) farray,addr,addr,int,int -> int
+
+axiom Q_Inner_Product2:
+  forall a,b,c : addr.
+  forall Mint_0 : (addr,int) farray.
+  forall init_0,n : int.
+  is_sint32(init_0) ->
+    (forall i : int. (i < n) -> (0 <= i) ->
+     (Mint_0[shift_sint32(c, i)]
+        = (Mint_0[shift_sint32(a, i)] * Mint_0[shift_sint32(b, i)]))) ->
+    (L_Accumulate_1_(Mint_0, c, n, init_0)
+       = L_Inner_Product2(Mint_0, a, b, n, init_0))
+

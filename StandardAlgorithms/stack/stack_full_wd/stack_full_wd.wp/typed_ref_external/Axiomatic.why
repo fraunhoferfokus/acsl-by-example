@@ -1,0 +1,77 @@
+(* ---------------------------------------------------------- *)
+(* --- Global Definitions                                 --- *)
+(* ---------------------------------------------------------- *)
+theory Axiomatic
+  
+use import bool.Bool
+use import int.Int
+use import int.ComputerDivision
+use import real.RealInfix
+use import Qed.Qed
+use import int.Abs as IAbs
+use import map.Map
+use import Memory.Memory
+
+function l_Capacity (mint_0 : map addr int) (s_0 : addr) : int =
+    mint_0[(shift s_0 1)]
+
+function l_Size (mint_0 : map addr int) (s_0 : addr) : int =
+    mint_0[(shift s_0 2)]
+
+predicate p_Full (mint_0 : map addr int) (s_0 : addr) =
+    ((l_Capacity mint_0 s_0)) = ((l_Size mint_0 s_0))
+
+function l_Storage (mptr_0 : map addr addr) (s_0 : addr) : addr =
+    mptr_0[(shift s_0 0)]
+
+predicate p_Valid (malloc_0 : map int int) (mptr_0 : map addr addr)
+    (mint_0 : map addr int) (s_0 : addr) =
+    let x_0 = (l_Capacity mint_0 s_0) in let x_1 = (l_Size mint_0 s_0) in
+    let a_0 = (shift ((l_Storage mptr_0 s_0)) 0) in (0 < x_0) /\
+    (0 <= x_1) /\ (x_1 <= x_0) /\ ((valid_rw malloc_0 s_0 3)) /\
+    ((valid_rw malloc_0 a_0 x_0)) /\ ((separated s_0 3 a_0 x_0))
+
+predicate p_EqualRanges_1_ (mint_0 : map addr int) (mint_1 : map addr int)
+    (a_0 : addr) (n_0 : int) (b_0 : addr) =
+    forall i_0 : int. (i_0 < n_0) -> (0 <= i_0) ->
+    (mint_0[(shift b_0 i_0)] = mint_1[(shift a_0 i_0)])
+
+predicate p_Equal (mptr_0 : map addr addr) (mint_0 : map addr int)
+    (mptr_1 : map addr addr) (mint_1 : map addr int) (s_0 : addr)
+    (t_0 : addr) =
+    let x_0 = (l_Size mint_1 s_0) in (x_0 = ((l_Size mint_0 t_0))) /\
+    ((p_EqualRanges_1_ mint_0 mint_1 ((l_Storage mptr_1 s_0)) x_0
+       ((l_Storage mptr_0 t_0))))
+
+use import Cint.Cint
+
+axiom Q_TL_Capacity:
+  forall s_0 : addr.
+  forall mint_0 : map addr int
+  [(l_Capacity mint_0 s_0)].
+  (is_uint32 ((l_Capacity mint_0 s_0)))
+
+lemma Q_StackEqualTransitive:
+  forall mint_2 mint_0 mint_1 : map addr int.
+    forall mptr_2 mptr_0 mptr_1 : map addr addr. forall s_0 t_0 u_0 : addr.
+    ((p_Equal mptr_2 mint_2 mptr_1 mint_1 t_0 u_0)) ->
+    ((p_Equal mptr_1 mint_1 mptr_0 mint_0 s_0 t_0)) ->
+    ((p_Equal mptr_2 mint_2 mptr_0 mint_0 s_0 u_0))
+
+lemma Q_StackEqualSymmetric:
+  forall mint_0 mint_1 : map addr int. forall mptr_0 mptr_1 : map addr addr.
+    forall s_0 t_0 : addr. ((p_Equal mptr_1 mint_1 mptr_0 mint_0 s_0 t_0)) ->
+    ((p_Equal mptr_0 mint_0 mptr_1 mint_1 t_0 s_0))
+
+lemma Q_StackEqualReflexive:
+  forall mint_0 : map addr int. forall mptr_0 : map addr addr.
+    forall s_0 : addr. (p_Equal mptr_0 mint_0 mptr_0 mint_0 s_0 s_0)
+
+axiom Q_TL_Size:
+  forall s_0 : addr.
+  forall mint_0 : map addr int
+  [(l_Size mint_0 s_0)].
+  (is_uint32 ((l_Size mint_0 s_0)))
+
+end
+

@@ -1,0 +1,25 @@
+(* ---------------------------------------------------------- *)
+(* --- Post-condition (file sum.h, line 13) in 'sum'      --- *)
+(* ---------------------------------------------------------- *)
+
+goal sum_post:
+  forall i_0,n_0 : int.
+  forall Malloc_0 : int farray.
+  forall Mint_1,Mint_0 : (addr,int) farray.
+  forall a_0 : addr.
+  let x_0 = L_Sum(Mint_0, a_0, i_0) : int in
+  (0 <= i_0) ->
+  (i_0 <= n_0) ->
+  (n_0 <= i_0) ->
+  linked(Malloc_0) ->
+  is_uint32(i_0) ->
+  is_uint32(n_0) ->
+  ((-2147483648) <= x_0) ->
+  (x_0 <= 2147483647) ->
+  is_sint32(x_0) ->
+  is_sint32(Mint_1[shift(a_0, i_0)]) ->
+  valid_rd(Malloc_0, shift(a_0, 0), n_0) ->
+  (forall i_1 : int. let x_1 = L_Sum(Mint_0, a_0, i_1) : int in (0 <= i_1) ->
+   (i_1 <= n_0) -> (((-2147483648) <= x_1) and (x_1 <= 2147483647))) ->
+  (x_0 = L_Sum(Mint_0, a_0, n_0))
+

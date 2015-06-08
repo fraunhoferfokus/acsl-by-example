@@ -1,0 +1,33 @@
+(* ---------------------------------------------------------- *)
+(* --- Global Definitions (continued #2)                  --- *)
+(* ---------------------------------------------------------- *)
+theory Axiomatic2
+  
+use import bool.Bool
+use import int.Int
+use import int.ComputerDivision
+use import real.RealInfix
+use import Qed.Qed
+use import int.Abs as IAbs
+use import map.Map
+use import Memory.Memory
+use import A_AccumulateAxiomatic.A_AccumulateAxiomatic
+
+function l_Accumulate_2_ (mint_0 : map addr int) (a : addr) (n : int) : int =
+    (l_Accumulate_1_ mint_0 a n 0)
+
+use import Compound.Compound
+
+lemma Q_Accumulate_2:
+  forall a : addr.
+  forall mint_0 : map addr int.
+  ((l_Accumulate_2_ mint_0 a 2))
+    = (mint_0[(shift_sint32 a 0)] + mint_0[(shift_sint32 a 1)])
+
+lemma Q_Accumulate_1:
+  forall a : addr.
+  forall mint_0 : map addr int.
+  ((l_Accumulate_2_ mint_0 a 1)) = mint_0[(shift_sint32 a 0)]
+
+end
+
