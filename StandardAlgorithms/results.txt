@@ -16,22 +16,22 @@ verify maxmin
    verify  max_seq                   [8     8   (5     3   0   0)]     100%
    verify  min_element               [45   45   (29   16   0   0)]     100%
 verify binarysearch
-   verify  lower_bound               [36   36   (20   15   1   0)]     100%
-   verify  upper_bound               [36   36   (18   17   1   0)]     100%
+   verify  lower_bound               [36   36   (20   16   0   0)]     100%
+   verify  upper_bound               [36   36   (18   18   0   0)]     100%
    verify  equal_range               [22   22   (17    5   0   0)]     100%
    verify  binary_search             [12   12   (8     4   0   0)]     100%
    verify  binary_search2            [15   15   (8     7   0   0)]     100%
 verify mutating
    verify  fill                      [17   17   (7     9   1   0)]     100%
    verify  swap                      [8     8   (8     0   0   0)]     100%
-   verify  swap_ranges               [38   38   (9    23   6   0)]     100%
+   verify  swap_ranges               [38   38   (9    25   4   0)]     100%
    verify  copy                      [18   18   (7    10   1   0)]     100%
    verify  reverse_copy              [21   21   (7    13   1   0)]     100%
    verify  reverse                   [38   38   (11   24   3   0)]     100%
    verify  rotate_copy               [20   20   (4    15   1   0)]     100%
    verify  replace_copy              [33   33   (14   15   4   0)]     100%
-   verify  remove_copy               [48   48   (23   20   3   2)]     100%
-   verify  remove_copy2              [62   62   (23   28   4   7)]     100%
+   verify  remove_copy               [48   48   (23   21   3   1)]     100%
+   verify  remove_copy2              [62   62   (23   29   3   7)]     100%
    verify  iota                      [22   22   (12    9   1   0)]     100%
 verify stack
    verify  stack_init                [14   14   (3    11   0   0)]     100%
