@@ -1,0 +1,171 @@
+
+MAKEFLAGS += --silent --no-print-directory
+
+SHELL=/bin/bash
+#Variables for counting invalid and valid proof goals; used in make-report targets
+# the variables will be overwritten by function startWP and startJessie in script script_functions.sh
+
+export TOP_DIR=../..
+export SCRIPT_DIR=$(TOP_DIR)/Scripts
+
+CPPFLAGS = -I$(TOP_DIR)
+CPPFLAGS += -I$(TOP_DIR)/LogicSpecifications 
+
+VPATH += $(TOP_DIR)/nonmutating
+CPPFLAGS += -I$(TOP_DIR)/nonmutating
+LDFLAGS  += -L$(TOP_DIR)/nonmutating
+
+VPATH += $(TOP_DIR)/maxmin
+CPPFLAGS += -I$(TOP_DIR)/maxmin
+LDFLAGS  += -L$(TOP_DIR)/maxmin
+
+VPATH += $(TOP_DIR)/binarysearch
+CPPFLAGS += -I$(TOP_DIR)/binarysearch
+LDFLAGS  += -L$(TOP_DIR)/binarysearch
+
+VPATH += $(TOP_DIR)/mutating
+CPPFLAGS += -I$(TOP_DIR)/mutating
+LDFLAGS  += -L$(TOP_DIR)/mutating
+
+VPATH += $(TOP_DIR)/numeric
+CPPFLAGS += -I$(TOP_DIR)/numeric
+LDFLAGS  += -L$(TOP_DIR)/numeric
+
+VPATH += $(TOP_DIR)/stack
+CPPFLAGS += -I$(TOP_DIR)/stack
+LDFLAGS  += -L$(TOP_DIR)/stack
+
+#setup some basic flags
+INCLUDES  = $(CPPFLAGS)
+
+# PREPROCESSOR
+
+SHARED_FLAGS=-Wall -pedantic -Werror
+CFLAGS=-x c++ $(SHARED_FLAGS)
+CXXFLAGS=-std=c++11 $(SHARED_FLAGS)
+
+#setup wp
+WP_TIMEOUT ?= 10
+WP_COQ_TIMEOUT ?= 20
+WP_ALT_ERGO_STEPS ?= 1000
+WP_PROCESSES ?= 1
+
+#setup coq
+SCRIPT?='wp0.script' # default script
+
+# We differentiate between two types of WP options:
+# 1) in WP_FLAGS we collect the general options
+# 2) in WP_PROVER_FLAGS we collect the ones where we select the provers
+# This allows us, for example, to start the gui very quickly and then
+# run the prover(s) on select proof obligtions.
+
+WP_FLAGS += -cpp-gnu-like
+WP_FLAGS += -pp-annot -no-unicode
+WP_FLAGS += -wp
+WP_FLAGS += -wp-rte
+WP_FLAGS += -wp-split
+
+WP_FLAGS += -wp-driver $(TOP_DIR)/external.driver
+WP_FLAGS += -wp-script $(SCRIPT)
+WP_FLAGS += -wp-model Typed+ref
+WP_FLAGS += -wp-timeout $(WP_TIMEOUT)
+WP_FLAGS += -wp-coq-timeout $(WP_COQ_TIMEOUT)
+WP_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
+
+
+WP_PROVER_FLAGS += -wp-prover alt-ergo
+#WP_PROVER_FLAGS += -wp-prover cvc3
+WP_PROVER_FLAGS += -wp-prover cvc4
+WP_PROVER_FLAGS += -wp-prover coq 
+
+
+export WP=frama-c 
+export WPGUI=frama-c-gui
+
+export WP_C_FLAGS  = -cpp-command 'gcc -C -E -nostdinc $(INCLUDES)' $(WP_FLAGS)
+export WP_CXX_FLAGS = -cxx-clang-command="framaCIRGen $(INCLUDES)"  $(WP_FLAGS)
+
+export WP_C_REPORT=$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1
+
+TESTOBJ = $(FILE)_test.o $(FILE).o
+
+driver: FORCE
+	@(cd $(TOP_DIR)/coq && $(MAKE) compile)
+
+$(FILE)_test: $(TESTOBJ) FORCE
+	@$(CXX) $(LDFLAGS) -o $@ $(TESTOBJ)
+
+test: $(FILE)_test FORCE
+	@./$(FILE)_test
+
+%.cpp:%.c
+	cp $< $@
+
+# start WP on command line and run provers
+%.wp:%.c driver FORCE
+	@$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1 -wp-out $(patsubst %.c,%.wp, $<)  $<
+
+%.wp++:%.cpp driver FORCE
+	@$(WP) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1 -wp-out $(patsubst %.cpp,%.wp++, $<)  $<
+
+# start WP GUI and run provers
+%.wpgui:%.c driver FORCE
+	@($(WPGUI) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 4 -wp-out $(patsubst %.c,%.wp, $<)  $< &)
+
+%.wpgui++:%.cpp driver FORCE
+	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) -wp-par 4 -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
+
+
+%.report-wp:%.c driver FORCE
+	@(. ${SCRIPT_DIR}/script_functions.sh; reportWp $(basename $<););
+
+%.report:%.c
+	@+$(MAKE) $(patsubst %.c,%.report-wp, $<)
+
+report: $(FILE).report
+check: $(FILE).check
+
+tex:
+	@(. ${SCRIPT_DIR}/script_functions.sh; genTableEntry $(FILE) $(CMD) $(SEC););
+	@ $(RM) fillFull.debug
+
+
+
+report-raw:
+	(. ${SCRIPT_DIR}/script_functions.sh; extract_raw_data_Wp $(FILE););
+
+obj: $(FILE).o
+
+
+clean:: FORCE
+	@(cd $(TOP_DIR)/coq && $(MAKE) clean)
+	@$(RM) *.o
+	@$(RM) *.back
+	@$(RM) *.orig
+	@$(RM) *.exe
+	@$(RM) -rf  *.debug
+	@$(RM) -rf  .frama-c
+	@$(RM) -rf  *.jessie
+	@$(RM) -rf  *.wp
+	@$(RM) -rf  *.wp++
+	@$(RM) -rf  *.ml
+	@$(RM) $(FILE).cpp
+	@$(RM) $(FILE)_test
+
+ASTYLEOPTIONS += -A1
+ASTYLEOPTIONS += --break-blocks
+ASTYLEOPTIONS += --pad-oper
+ASTYLEOPTIONS += --pad-header
+ASTYLEOPTIONS += --indent-col1-comments
+ASTYLEOPTIONS += --lineend=linux
+ASTYLEOPTIONS += --add-brackets
+ASTYLEOPTIONS += --indent=spaces=2
+ASTYLEOPTIONS += --min-conditional-indent=0
+
+format: FORCE
+	@astyle $(ASTYLEOPTIONS) *.c *.cpp *.h 
+
+all: clean test report
+
+FORCE:
+
