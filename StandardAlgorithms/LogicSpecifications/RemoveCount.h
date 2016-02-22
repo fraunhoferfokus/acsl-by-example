@@ -22,7 +22,7 @@
         RemoveCount(a, i+1, v) == RemoveCount(a, i, v) + 1;
 
   lemma RemoveCountRead{L1,L2}:
-     \forall value_type *a, v, integer i; EqualRanges{L1,L2}(a, i) ==>
+     \forall value_type *a, v, integer i; Unchanged{L1,L2}(a, i) ==>
         RemoveCount{L1}(a, i, v) == RemoveCount{L2}(a, i, v);
 */
 

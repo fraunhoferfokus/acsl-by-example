@@ -3,8 +3,7 @@
 
 size_type max_element(const value_type* a, size_type n)
 {
-  if (n == 0)
-  {
+  if (n == 0) {
     return 0;
   }
 
@@ -18,10 +17,8 @@ size_type max_element(const value_type* a, size_type n)
     loop assigns max, i;
     loop variant n-i;
   */
-  for (size_type i = 1; i < n; i++)
-  {
-    if (a[max] < a[i])
-    {
+  for (size_type i = 1; i < n; i++) {
+    if (a[max] < a[i]) {
       max = i;
     }
   }

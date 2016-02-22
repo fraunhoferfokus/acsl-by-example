@@ -17,6 +17,6 @@ OBJ := \
 lib: libstack.a
 
 libstack.a: obj FORCE
-	@ar cru  $@ $(OBJ)
+	@ar cr  $@ $(OBJ)
 	@ranlib  $@
 

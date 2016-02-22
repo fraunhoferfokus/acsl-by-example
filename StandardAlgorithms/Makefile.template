@@ -47,11 +47,11 @@ CXXFLAGS=-std=c++11 $(SHARED_FLAGS)
 #setup wp
 WP_TIMEOUT ?= 10
 WP_COQ_TIMEOUT ?= 20
-WP_ALT_ERGO_STEPS ?= 1000
+#WP_ALT_ERGO_STEPS ?= 1000
 WP_PROCESSES ?= 1
 
 #setup coq
-SCRIPT?='wp0.script' # default script
+SCRIPT?='$(TOP_DIR)/wp0.script' # default script
 
 # We differentiate between two types of WP options:
 # 1) in WP_FLAGS we collect the general options
@@ -59,32 +59,32 @@ SCRIPT?='wp0.script' # default script
 # This allows us, for example, to start the gui very quickly and then
 # run the prover(s) on select proof obligtions.
 
-WP_FLAGS += -cpp-gnu-like
-WP_FLAGS += -pp-annot -no-unicode
-WP_FLAGS += -wp
-WP_FLAGS += -wp-rte
-WP_FLAGS += -wp-split
+WP_BASE_FLAGS += -pp-annot
+WP_BASE_FLAGS += -no-unicode
+WP_BASE_FLAGS += -wp
+WP_BASE_FLAGS += -wp-rte
+#WP_BASE_FLAGS += -wp-split
+
+WP_FLAGS = $(WP_BASE_FLAGS)
 
 WP_FLAGS += -wp-driver $(TOP_DIR)/external.driver
 WP_FLAGS += -wp-script $(SCRIPT)
 WP_FLAGS += -wp-model Typed+ref
-WP_FLAGS += -wp-timeout $(WP_TIMEOUT)
-WP_FLAGS += -wp-coq-timeout $(WP_COQ_TIMEOUT)
-WP_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
+WP_PROVER_FLAGS += -wp-timeout $(WP_TIMEOUT)
+WP_PROVER_FLAGS += -wp-coq-timeout $(WP_COQ_TIMEOUT)
+WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
-WP_PROVER_FLAGS += -wp-prover alt-ergo
-#WP_PROVER_FLAGS += -wp-prover cvc3
 WP_PROVER_FLAGS += -wp-prover cvc4
+WP_PROVER_FLAGS += -wp-prover z3
+WP_PROVER_FLAGS += -wp-prover alt-ergo
 WP_PROVER_FLAGS += -wp-prover coq 
-
 
 export WP=frama-c 
 export WPGUI=frama-c-gui
 
-export WP_C_FLAGS  = -cpp-command 'gcc -C -E -nostdinc $(INCLUDES)' $(WP_FLAGS)
+export WP_C_FLAGS = -cpp-extra-args="$(INCLUDES)" $(WP_FLAGS)
 export WP_CXX_FLAGS = -cxx-clang-command="framaCIRGen $(INCLUDES)"  $(WP_FLAGS)
-
 export WP_C_REPORT=$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1
 
 TESTOBJ = $(FILE)_test.o $(FILE).o
@@ -101,6 +101,9 @@ test: $(FILE)_test FORCE
 %.cpp:%.c
 	cp $< $@
 
+%.why3:%.c driver FORCE
+	@($(WP) $(WP_C_FLAGS)  -wp-prover why3 -wp-gen  -wp-out $(patsubst %.c,%.wp, $<)  $<)
+
 # start WP on command line and run provers
 %.wp:%.c driver FORCE
 	@$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1 -wp-out $(patsubst %.c,%.wp, $<)  $<
@@ -110,10 +113,10 @@ test: $(FILE)_test FORCE
 
 # start WP GUI and run provers
 %.wpgui:%.c driver FORCE
-	@($(WPGUI) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 4 -wp-out $(patsubst %.c,%.wp, $<)  $< &)
+	@($(WPGUI) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1 -wp-out $(patsubst %.c,%.wp, $<)  $< &)
 
 %.wpgui++:%.cpp driver FORCE
-	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) -wp-par 4 -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
+	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1 -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
 
 
 %.report-wp:%.c driver FORCE
@@ -122,8 +125,11 @@ test: $(FILE)_test FORCE
 %.report:%.c
 	@+$(MAKE) $(patsubst %.c,%.report-wp, $<)
 
+%.check:%.c
+	@$(WP) $(WP_FLAGS) -wp-check -cpp-command 'gcc -C -E -nostdinc $(INCLUDES)' -wp-out $(patsubst %.c,%.wp, $<)  $<
+
 report: $(FILE).report
-check: $(FILE).check
+
 
 tex:
 	@(. ${SCRIPT_DIR}/script_functions.sh; genTableEntry $(FILE) $(CMD) $(SEC););
@@ -143,6 +149,7 @@ clean:: FORCE
 	@$(RM) *.back
 	@$(RM) *.orig
 	@$(RM) *.exe
+	@$(RM) lia.cache
 	@$(RM) -rf  *.debug
 	@$(RM) -rf  .frama-c
 	@$(RM) -rf  *.jessie
@@ -152,8 +159,8 @@ clean:: FORCE
 	@$(RM) $(FILE).cpp
 	@$(RM) $(FILE)_test
 
-ASTYLEOPTIONS += -A1
-ASTYLEOPTIONS += --break-blocks
+ASTYLEOPTIONS += -A3
+#ASTYLEOPTIONS += --break-blocks
 ASTYLEOPTIONS += --pad-oper
 ASTYLEOPTIONS += --pad-header
 ASTYLEOPTIONS += --indent-col1-comments

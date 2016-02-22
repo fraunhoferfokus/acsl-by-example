@@ -17,6 +17,6 @@ OBJ :=  fill/fill.o\
 lib: libmutating.a
 
 libmutating.a: obj FORCE
-	@ar cru  $@ $(OBJ)
+	@ar cr  $@ $(OBJ)
 	@ranlib  $@
 

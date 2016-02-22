@@ -5,8 +5,7 @@
 #include "ForallCompare.h"
 #include "Sorted.h"
 
-struct spair
-{
+struct spair {
   size_type first;
   size_type second;
 };

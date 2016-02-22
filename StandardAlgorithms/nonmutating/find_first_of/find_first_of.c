@@ -9,10 +9,8 @@ size_type find_first_of (const value_type* a, size_type m,
     loop assigns i;
     loop variant m-i;
   */
-  for (size_type i = 0; i < m; i++)
-  {
-    if (find(b, n, a[i]) < n)
-    {
+  for (size_type i = 0; i < m; i++) {
+    if (find(b, n, a[i]) < n) {
       return i;
     }
   }

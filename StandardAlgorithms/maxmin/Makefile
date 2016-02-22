@@ -9,7 +9,7 @@ clean::
 lib: libmaxmin.a
 
 libmaxmin.a: obj FORCE
-	@ar cru  $@ $(OBJ)
+	@ar cr  $@ $(OBJ)
 	@ranlib  $@
 
 

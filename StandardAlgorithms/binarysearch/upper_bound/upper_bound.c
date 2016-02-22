@@ -16,16 +16,12 @@ upper_bound(const value_type* a, size_type n, value_type val)
     loop assigns middle, left, right;
     loop variant right - left;
   */
-  while (left < right)
-  {
+  while (left < right) {
     middle = left + (right - left) / 2;
 
-    if (a[middle] <= val)
-    {
+    if (a[middle] <= val) {
       left = middle + 1;
-    }
-    else
-    {
+    } else {
       right = middle;
     }
   }

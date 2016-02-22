@@ -3,7 +3,6 @@
 #define SWAP_RANGES_H_INCLUDED
 
 #include "EqualRanges.h"
-#include "Unchanged.h"
 
 /*@
   requires valid_a: \valid(a + (0..n-1));

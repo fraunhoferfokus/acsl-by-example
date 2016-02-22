@@ -11,7 +11,7 @@
 
   assigns \nothing;
 
-  ensures result:  \result <==> 
+  ensures result:  \result <==>
                    \exists integer i; 0 <= i < n && a[i] == val;
  */
 bool binary_search(const value_type* a, size_type n, value_type val);

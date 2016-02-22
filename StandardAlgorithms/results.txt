@@ -1,60 +1,63 @@
 verify nonmutating
-   verify  equal                     [22   22   (12   10   0   0)]     100%
-   verify  equal2                    [18   18   (9     9   0   0)]     100%
-   verify  equal3                    [7     7   (6     1   0   0)]     100%
-   verify  mismatch                  [28   28   (16   12   0   0)]     100%
-   verify  find                      [27   27   (15   12   0   0)]     100%
-   verify  find2                     [27   27   (17   10   0   0)]     100%
-   verify  find_first_of             [34   34   (23   11   0   0)]     100%
-   verify  adjacent_find             [36   36   (20   16   0   0)]     100%
-   verify  search                    [59   59   (31   28   0   0)]     100%
-   verify  count                     [31   31   (18   13   0   0)]     100%
+   verify  equal                               [18    18   (8     0  10   0   0)]     100%
+   verify  equal2                              [15    15   (7     0   8   0   0)]     100%
+   verify  equal3                              [9      9   (6     0   3   0   0)]     100%
+   verify  mismatch                            [20    20   (9     0  11   0   0)]     100%
+   verify  find                                [19    19   (8     0  11   0   0)]     100%
+   verify  find2                               [19    19   (9     0  10   0   0)]     100%
+   verify  find_first_of                       [28    28   (16    0  12   0   0)]     100%
+   verify  adjacent_find                       [23    23   (11    0  11   1   0)]     100%
+   verify  search                              [33    33   (19    0  14   0   0)]     100%
+   verify  count                               [19    19   (8     0  11   0   0)]     100%
 verify maxmin
-   verify  operators                 [6     6   (4     2   0   0)]     100%
-   verify  max_element               [45   45   (29   16   0   0)]     100%
-   verify  max_element2              [45   45   (29   16   0   0)]     100%
-   verify  max_seq                   [8     8   (5     3   0   0)]     100%
-   verify  min_element               [45   45   (29   16   0   0)]     100%
+   verify  operators                           [6      6   (4     0   2   0   0)]     100%
+   verify  max_element                         [25    25   (13    0  12   0   0)]     100%
+   verify  max_element2                        [25    25   (12    0  13   0   0)]     100%
+   verify  max_seq                             [8      8   (5     0   3   0   0)]     100%
+   verify  min_element                         [25    25   (12    0  13   0   0)]     100%
 verify binarysearch
-   verify  lower_bound               [36   36   (20   16   0   0)]     100%
-   verify  upper_bound               [36   36   (18   18   0   0)]     100%
-   verify  equal_range               [22   22   (17    5   0   0)]     100%
-   verify  binary_search             [12   12   (8     4   0   0)]     100%
-   verify  binary_search2            [15   15   (8     7   0   0)]     100%
+   verify  lower_bound                         [22    22   (10    0  12   0   0)]     100%
+   verify  upper_bound                         [22    22   (8     0  14   0   0)]     100%
+   verify  equal_range                         [20    20   (15    0   5   0   0)]     100%
+   verify  binary_search                       [10    10   (8     0   2   0   0)]     100%
+   verify  binary_search2                      [11    11   (8     0   3   0   0)]     100%
 verify mutating
-   verify  fill                      [17   17   (7     9   1   0)]     100%
-   verify  swap                      [8     8   (8     0   0   0)]     100%
-   verify  swap_ranges               [38   38   (9    25   4   0)]     100%
-   verify  copy                      [18   18   (7    10   1   0)]     100%
-   verify  reverse_copy              [21   21   (7    13   1   0)]     100%
-   verify  reverse                   [38   38   (11   24   3   0)]     100%
-   verify  rotate_copy               [20   20   (4    15   1   0)]     100%
-   verify  replace_copy              [33   33   (14   15   4   0)]     100%
-   verify  remove_copy               [48   48   (23   21   3   1)]     100%
-   verify  remove_copy2              [62   62   (23   29   3   7)]     100%
+   verify  fill                                [14    14   (4     0  10   0   0)]     100%
+   verify  swap                                [8      8   (8     0   0   0   0)]     100%
+   verify  swap_ranges                         [27    27   (5     0  22   0   0)]     100%
+   verify  copy                                [18    18   (4     0  14   0   0)]     100%
+   verify  reverse_copy                        [21    21   (4     0  17   0   0)]     100%
+   verify  reverse                             [29    29   (7     0  22   0   0)]     100%
+   verify  rotate_copy                         [19    19   (4     0  15   0   0)]     100%
+   verify  replace_copy                        [22    22   (6     0  16   0   0)]     100%
+   verify  replace                             [19    19   (4     0  15   0   0)]     100%
+   verify  remove_copy                         [86    86   (52    0  33   1   0)]     100%
+   verify  remove_copy2                        [108  108   (56    1  47   0   4)]     100%
 verify numeric
-   verify  iota                      [22   22   (12    9   1   0)]     100%
-   verify  accumulate                [18   18   (10    8   0   0)]     100%
-   verify  inner_product             [23   23   (10   13   0   0)]     100%
-   verify  partial_sum               [32   32   (13   15   3   1)]     100%
-   verify  adjacent_difference       [32   32   (14   16   1   1)]     100%
+   verify  iota                                [18    18   (7     0  11   0   0)]     100%
+   verify  accumulate                          [16    16   (6     0  10   0   0)]     100%
+   verify  inner_product                       [21    21   (6     0  12   3   0)]     100%
+   verify  partial_sum                         [41    41   (8     2  30   1   0)]     100%
+   verify  adjacent_difference                 [35    35   (10    0  25   0   0)]     100%
+   verify  partial_sum_inverse                 [20    20   (4     0  16   0   0)]     100%
+   verify  adjacent_difference_inverse         [27    27   (3     1  21   1   1)]     100%
 verify stack
-   verify  stack_init                [14   14   (3    11   0   0)]     100%
-   verify  stack_equal               [22   22   (7    15   0   0)]     100%
-   verify  stack_size                [6     6   (1     5   0   0)]     100%
-   verify  stack_size_wd             [12   12   (8     4   0   0)]     100%
-   verify  stack_empty               [10   10   (5     5   0   0)]     100%
-   verify  stack_empty_wd            [12   12   (8     4   0   0)]     100%
-   verify  stack_full                [11   11   (5     6   0   0)]     100%
-   verify  stack_top                 [17   17   (7    10   0   0)]     100%
-   verify  stack_top_wd              [12   12   (8     4   0   0)]     100%
-   verify  stack_push                [56   56   (41   12   3   0)]     100%
-   verify  stack_push_wd             [8     8   (1     4   3   0)]     100%
-   verify  stack_pop                 [43   43   (31   12   0   0)]     100%
-   verify  stack_pop_wd              [12   12   (6     3   3   0)]     100%
-   verify  axiom_size_of_pop         [11   11   (7     4   0   0)]     100%
-   verify  axiom_size_of_push        [14   14   (9     5   0   0)]     100%
-   verify  axiom_top_of_push         [13   13   (8     5   0   0)]     100%
-   verify  axiom_pop_of_push         [12   12   (7     5   0   0)]     100%
-   verify  axiom_push_of_pop_top     [17   17   (11    6   0   0)]     100%
-   verify  axiom_size_of_init        [19   19   (16    3   0   0)]     100%
+   verify  stack_init                          [16    16   (3     0  13   0   0)]     100%
+   verify  stack_equal                         [20    20   (7     0  13   0   0)]     100%
+   verify  stack_size                          [8      8   (1     0   7   0   0)]     100%
+   verify  stack_size_wd                       [14    14   (8     0   6   0   0)]     100%
+   verify  stack_empty                         [12    12   (5     0   7   0   0)]     100%
+   verify  stack_empty_wd                      [14    14   (8     0   6   0   0)]     100%
+   verify  stack_full                          [13    13   (5     0   8   0   0)]     100%
+   verify  stack_top                           [18    18   (6     0  12   0   0)]     100%
+   verify  stack_top_wd                        [14    14   (8     0   6   0   0)]     100%
+   verify  stack_push                          [45    45   (28    0  17   0   0)]     100%
+   verify  stack_push_wd                       [17    17   (3     0  13   1   0)]     100%
+   verify  stack_pop                           [34    34   (20    0  14   0   0)]     100%
+   verify  stack_pop_wd                        [14    14   (6     0   8   0   0)]     100%
+   verify  axiom_size_of_pop                   [13    13   (8     0   5   0   0)]     100%
+   verify  axiom_size_of_push                  [14    14   (9     0   5   0   0)]     100%
+   verify  axiom_top_of_push                   [13    13   (8     0   5   0   0)]     100%
+   verify  axiom_pop_of_push                   [12    12   (6     0   6   0   0)]     100%
+   verify  axiom_push_of_pop_top               [17    17   (9     0   7   1   0)]     100%
+   verify  axiom_size_of_init                  [17    17   (12    0   5   0   0)]     100%

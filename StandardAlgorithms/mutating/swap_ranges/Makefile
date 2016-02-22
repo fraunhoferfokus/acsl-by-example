@@ -7,3 +7,5 @@ include ../../Makefile.template
 
 TESTOBJ += -lmutating
 
+#WP_FLAGS += -wp-prop equal_a,@lemma
+

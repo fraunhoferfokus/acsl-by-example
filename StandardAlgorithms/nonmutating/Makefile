@@ -14,7 +14,7 @@ clean::
 lib: libnonmutating.a
 
 libnonmutating.a: obj FORCE
-	@ar cru  $@ $(OBJ)
+	@ar cr  $@ $(OBJ)
 	@ranlib  $@
 
 

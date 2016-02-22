@@ -4,13 +4,11 @@
 size_type search(const value_type* a, size_type m,
                  const value_type* b, size_type n)
 {
-  if ((n == 0) || (m == 0))
-  {
+  if ((n == 0) || (m == 0)) {
     return 0;
   }
 
-  if (n > m)
-  {
+  if (n > m) {
     return m;
   }
 
@@ -20,10 +18,8 @@ size_type search(const value_type* a, size_type m,
     loop assigns i;
     loop variant m-i;
   */
-  for (size_type i = 0; i <= m - n; i++)
-  {
-    if (equal(a + i, n, b)) // Is there a match?
-    {
+  for (size_type i = 0; i <= m - n; i++) {
+    if (equal(a + i, n, b)) { // Is there a match?
       return i;
     }
   }

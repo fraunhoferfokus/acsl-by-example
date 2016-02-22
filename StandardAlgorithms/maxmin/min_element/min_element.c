@@ -3,8 +3,7 @@
 
 size_type min_element(const value_type* a, size_type n)
 {
-  if (0 == n)
-  {
+  if (0 == n) {
     return n;
   }
 
@@ -19,10 +18,8 @@ size_type min_element(const value_type* a, size_type n)
     loop assigns min, i;
     loop variant n-i;
   */
-  for (size_type i = 0; i < n; i++)
-  {
-    if (a[i] < a[min])
-    {
+  for (size_type i = 0; i < n; i++) {
+    if (a[i] < a[min]) {
       min = i;
     }
   }

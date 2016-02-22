@@ -81,7 +81,7 @@ function extract_raw_data_Wp()
     local alg=${1##*/}
    # local prover=${2##*/}
     checkAlg $alg
-    changeToAlgDir $alg
+    #changeToAlgDir $alg
     local tempFile
     local tempFile2
     local goalCount=0
@@ -90,6 +90,7 @@ function extract_raw_data_Wp()
     local valid_qed=0
     local valid_alt_ergo=0
     local valid_cvc4=0
+    local valid_z3=0
     local valid_coq=0
     local invalid=0
     local valid=0
@@ -102,12 +103,13 @@ function extract_raw_data_Wp()
     valid_pattern='[[:print:]]*[[:blank:]]+Valid'
     coq_pattern=${wp_pattern}'\[Coq\]'${valid_pattern}
     cvc4_pattern=${wp_pattern}'\[cvc4\]'${valid_pattern}
+    z3_pattern=${wp_pattern}'\[z3\]'${valid_pattern}
     qed_pattern=${wp_pattern}'\[Qed\]'${valid_pattern}
     alt_ergo_pattern=${wp_pattern}'\[Alt-Ergo\]'${valid_pattern}
     goalPattern=${wp_pattern}'[[:digit:]]+[[:blank:]]+goals[[:blank:]]+scheduled'
 
     #set -vx
-    prog="${WP_C_REPORT} -wp-out ${alg}.wp ${alg}.c"
+    prog="${WP_C_REPORT} -wp-par 1 -wp-out ${alg}.wp ${alg}.c"
 
     eval "$prog"> $tempFile
     #debug
@@ -121,11 +123,12 @@ function extract_raw_data_Wp()
     let "valid_alt_ergo=$valid_alt_ergo + `grep -E $alt_ergo_pattern $tempFile |countData`"
     let "valid_coq=$valid_coq + `grep -E $coq_pattern $tempFile |countData`"
     let "valid_cvc4=$valid_cvc4 + `grep -E $cvc4_pattern $tempFile |countData`"
+    let "valid_z3=$valid_z3 + `grep -E $z3_pattern $tempFile |countData`"
 
     #cat $tempFile > fillFull.debug
     #calculate all valid goals
-    let "valid=$valid_qed + $valid_alt_ergo + $valid_cvc4 + $valid_coq"
-    printf "%s;%d;%d;%d;%d;%d;%d;\n" $alg $goalCount $valid $valid_qed $valid_alt_ergo $valid_cvc4 $valid_coq
+    let "valid=$valid_qed + $valid_alt_ergo + $valid_cvc4 + $valid_z3 + $valid_coq"
+    printf "%s;%d;%d;%d;%d;%d;%d;%d;\n" $alg $goalCount $valid $valid_qed $valid_alt_ergo $valid_cvc4 $valid_z3 $valid_coq
 
     #debug
     #cat $tempFile2 > fill1.debug
@@ -144,10 +147,9 @@ function extract_raw_data_Wp()
 }
 
 
-
 #reads raw date from stdout and generates a report
 
-#first arg: algortthm name
+#first arg: algorithm name
 #second arg: tex-command
 function genTableEntry()
 {
@@ -159,6 +161,7 @@ function genTableEntry()
     local valid_qed=0
     local valid_alt_ergo=0
     local valid_cvc4=0
+    local valid_z3=0
     local valid_coq=0
     local percent=0
     local invalid=0
@@ -185,14 +188,15 @@ function genTableEntry()
     let "valid_qed= $valid_qed + `cat $tempFile |  cut -f4`"
     let "valid_alt_ergo= $valid_alt_ergo + `cat $tempFile |  cut -f5`"
     let "valid_cvc4= $valid_cvc4 + `cat $tempFile |  cut -f6`"
-    let "valid_coq= $valid_coq + `cat $tempFile |  cut -f7`"
+    let "valid_z3= $valid_z3 + `cat $tempFile |  cut -f7`"
+    let "valid_coq= $valid_coq + `cat $tempFile |  cut -f8`"
     if [ $goalCount -ne 0 ]
         then
              let "invalid=$goalCount -$valid"
              let "percent=(100*$valid)/$goalCount"
         else    percent=0
         fi
-    printf "%-5s & \\\\ref{%-5s} & %-3d  & %3d   & %-3d  & %3d    & %3d    & %3d    & %3d \\\\\\\\\hline" $cmd $sec $valid $goalCount $percent $valid_qed $valid_alt_ergo $valid_cvc4 $valid_coq  > ${1}.tex
+    printf "%-5s & \\\\ref{%-5s} & %-3d  & %3d   & %-3d  & %3d  & %3d  & %3d  & %3d  & %3d \\\\\\\\\hline\n" $cmd $sec $valid $goalCount $percent $valid_qed $valid_alt_ergo $valid_cvc4 $valid_z3 $valid_coq  > ${1}.tex
 
     unset cmd
     unset sec
@@ -206,21 +210,6 @@ function genTableEntry()
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #reads raw date from stdout and generates a report
 function reportWp()
 {
@@ -230,6 +219,7 @@ function reportWp()
     local valid_qed=0
     local valid_alt_ergo=0
     local valid_cvc4=0
+    local valid_z3=0
     local valid_coq=0
     local percent=0
     local invalid=0
@@ -256,14 +246,16 @@ function reportWp()
     let "valid_qed= $valid_qed + `cat $tempFile |  cut -f4`"
     let "valid_alt_ergo= $valid_alt_ergo + `cat $tempFile |  cut -f5`"
     let "valid_cvc4= $valid_cvc4 + `cat $tempFile |  cut -f6`"
-    let "valid_coq= $valid_coq + `cat $tempFile |  cut -f7`"
+    let "valid_z3= $valid_z3 + `cat $tempFile |  cut -f7`"
+    let "valid_coq= $valid_coq + `cat $tempFile |  cut -f8`"
     if [ $goalCount -ne 0 ]
         then
              let "invalid=$goalCount -$valid"
              let "percent=(100*$valid)/$goalCount"
         else    percent=0
         fi
-    printf  "   verify  %-25s [%-3d %3d   (%-3d %3d %3d %3d)]     %3d%%\n" $1 $goalCount $valid $valid_qed $valid_alt_ergo $valid_cvc4 $valid_coq $percent
+    printf  "   verify  %-35s [%-4d %3d   (%-3d %3d %3d %3d %3d)]     %3d%%\n" $1 $goalCount $valid $valid_qed $valid_alt_ergo $valid_cvc4 $valid_z3 $valid_coq $percent
+
 
     unset goalCount
     unset invalid

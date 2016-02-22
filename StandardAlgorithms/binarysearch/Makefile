@@ -10,6 +10,6 @@ clean:: FORCE
 lib: libbinarysearch.a
 
 libbinarysearch.a: obj FORCE
-	@ar cru  $@ $(OBJ)
+	@ar cr  $@ $(OBJ)
 	@ranlib  $@
 

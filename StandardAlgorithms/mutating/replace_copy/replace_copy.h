@@ -2,7 +2,8 @@
 #ifndef REPLACE_COPY_H_INCLUDED
 #define REPLACE_COPY_H_INCLUDED
 
-#include "typedefs.h"
+#include "ReplaceLogic.h"
+#include "Unchanged.h"
 
 /*@
   requires valid_a: \valid_read(a + (0..n-1));
@@ -11,13 +12,9 @@
 
   assigns b[0..n-1];
 
-  ensures change: \forall integer i; 0 <= i < n
-              ==> (\old(a[i]) == oldv ==> b[i] == newv);
-
-  ensures keep:   \forall integer i; 0 <= i < n
-              ==> (\old(a[i]) != oldv ==> b[i] == \old(a[i]));
-
-  ensures result: \result == n;
+  ensures replace:   Replace{Old,Here}(a, n, b, oldv, newv);
+  ensures unchanged: Unchanged{Old,Here}(a, n);
+  ensures result:    \result == n;
 */
 size_type replace_copy(const value_type* a, size_type n,
                        value_type* b,
