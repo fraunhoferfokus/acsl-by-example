@@ -1,1 +1,0 @@
-2016-06-16 16:57:17.877 coqide[10318:578107] *** WARNING: Method userSpaceScaleFactor in class NSView is deprecated on 10.7 and later. It should not be used in new applications. Use convertRectToBacking: instead. 
