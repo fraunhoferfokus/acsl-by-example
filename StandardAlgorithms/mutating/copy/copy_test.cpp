@@ -1,5 +1,4 @@
 
-
 #include <algorithm>
 #include <vector>
 #include <iostream>
@@ -9,24 +8,18 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a;
+  std::vector<value_type> a{1, 2, 3, 3, 3, 7, 8};
 
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(7);
-  a.push_back(8);
+  auto a_backup = a;
+  auto b = a;
 
-  std::vector<int> a_backup(a);
-
-  std::vector<int> b(a.size());
   copy(&a[0], a.size(), &b[0]);
 
   assert(a == a_backup);
   assert(a == b);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+
+  return EXIT_SUCCESS;
 }
+

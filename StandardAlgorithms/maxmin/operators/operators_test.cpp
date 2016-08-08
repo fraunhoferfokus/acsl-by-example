@@ -1,10 +1,8 @@
 
-
-#include <algorithm>
+#include <functional>
 #include <iostream>
 #include <cassert>
 
-#include <cassert>
 #include "typedefs.h"
 
 int main(int argc, char** argv)
@@ -16,5 +14,7 @@ int main(int argc, char** argv)
   assert(std::less<value_type>()(a, b));
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+
+  return EXIT_SUCCESS;
 }
+

@@ -7,9 +7,9 @@ count(const value_type* a, size_type n, value_type val)
   size_type counted = 0;
 
   /*@
-    loop invariant 0 <= i <= n;
-    loop invariant 0 <= counted <= i;
-    loop invariant counted == Count(a, i, val);
+    loop invariant bound: 0 <= i <= n;
+    loop invariant bound: 0 <= counted <= i;
+    loop invariant count: counted == Count(a, i, val);
     loop assigns i, counted;
     loop variant n-i;
   */

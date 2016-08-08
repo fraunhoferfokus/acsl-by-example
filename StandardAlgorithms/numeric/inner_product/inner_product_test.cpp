@@ -7,8 +7,8 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<value_type> a {1, 3, -6, 0, 4};
-  std::vector<value_type> b {2, 15, 9, -3, 0};
+  std::vector<value_type> a{1, 3, -6, 0, 4};
+  std::vector<value_type> b{2, 15, 9, -3, 0};
   value_type init = 2;
 
   value_type result1 = inner_product(&a[0], &b[0], a.size(), init);

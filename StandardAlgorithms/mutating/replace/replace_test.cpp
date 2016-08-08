@@ -8,21 +8,13 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a;
+  std::vector<value_type> a{1, 2, 3, 3, 3, 7, 8};
 
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(7);
-  a.push_back(8);
-
-  std::vector<int> b = a;
+  auto b = a;
   assert(a == b);
 
-  const int old_value = 3;
-  const int new_value = 4;
+  const value_type old_value = 3;
+  const value_type new_value = 4;
 
   replace(&a[0], a.size(), old_value, new_value);
   std::replace(b.begin(), b.end(), old_value, new_value);
@@ -30,5 +22,7 @@ int main(int argc, char** argv)
   assert(a == b);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
+
+  return EXIT_SUCCESS;
 }
 

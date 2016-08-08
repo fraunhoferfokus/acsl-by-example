@@ -4,24 +4,17 @@
 
 #include "ForallCompare.h"
 #include "Sorted.h"
-
-struct spair {
-  size_type first;
-  size_type second;
-};
-
-typedef struct spair size_type_pair;
+#include "make_pair.h"
 
 /*@
-  requires \valid_read(a + (0..n-1));
-  requires Sorted(a, n);
+  requires valid: \valid_read(a + (0..n-1));
+  requires sorted: Sorted(a, n);
 
   assigns \nothing;
 
   ensures result:  0 <= \result.first <= \result.second <= n;
   ensures left:    StrictUpperBound(a, 0, \result.first, val);
-  ensures middle:  ConstantRange(a, \result.first,
-                                    \result.second, val);
+  ensures middle:  ConstantRange(a, \result.first, \result.second, val);
   ensures right:   StrictLowerBound(a, \result.second, n, val);
  */
 size_type_pair

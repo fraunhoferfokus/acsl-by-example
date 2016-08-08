@@ -4,8 +4,8 @@
 size_type find(const value_type* a, size_type n, value_type val)
 {
   /*@
-    loop invariant 0 <= i <= n;
-    loop invariant !HasValue(a, i, val);
+    loop invariant bound:     0 <= i <= n;
+    loop invariant not_found: !HasValue(a, i, val);
     loop assigns i;
     loop variant n-i;
    */

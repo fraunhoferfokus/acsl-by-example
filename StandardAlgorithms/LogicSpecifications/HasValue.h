@@ -11,3 +11,4 @@
 */
 
 #endif /* HASVALUE_H_INCLUDED */
+

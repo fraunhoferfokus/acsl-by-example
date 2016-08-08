@@ -1,7 +1,7 @@
 
 MAKEFLAGS += --silent --no-print-directory
 
-EXAMPLES := nonmutating maxmin binarysearch mutating numeric stack
+EXAMPLES := nonmutating maxmin binarysearch mutating numeric heap stack
 
 report:
 	@for i in $(EXAMPLES);\
@@ -35,6 +35,7 @@ lib:
 clean:
 	@($(RM) -rf errorlogs);\
 	$(RM) *.back
+	@(echo "clean coq"; $(MAKE) clean -sC coq);
 	@for i in $(EXAMPLES);\
         do \
                 (echo "clean $$i"; $(MAKE) clean -sC $$i);\

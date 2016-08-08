@@ -2,7 +2,7 @@
 #ifndef RETAINALLBUTONE_H_INCLUDED
 #define RETAINALLBUTONE_H_INCLUDED
 
-#include "CountAxiomatic.h"
+#include "CountLogic.h"
 
 /*@
   predicate

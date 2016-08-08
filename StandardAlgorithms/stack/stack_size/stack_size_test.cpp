@@ -22,6 +22,6 @@ int main(int argc, char** argv)
   assert(stack_size(&b) == 1);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+  return EXIT_SUCCESS;
 }
 

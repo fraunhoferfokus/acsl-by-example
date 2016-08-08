@@ -1,5 +1,4 @@
 
-
 #include <algorithm>
 #include <vector>
 #include <iostream>
@@ -9,17 +8,8 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a;
-
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(5);
-  a.push_back(6);
-  a.push_back(7);
-  a.push_back(9);
-
-  std::vector<int> a_backup(a);
+  std::vector<value_type> a{1, 2, 3, 5, 7, 6, 9};
+  auto a_backup = a;
 
   std::reverse(&a[0], &a[0] + a.size());
   reverse(&a[0], a.size());
@@ -34,5 +24,7 @@ int main(int argc, char** argv)
   assert(a == a_backup);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+
+  return EXIT_SUCCESS;
 }
+

@@ -11,15 +11,13 @@
 
   behavior empty:
     assumes n == 0;
-
     ensures result:   \result == 0;
 
   behavior not_empty:
     assumes 0 < n;
-
     ensures result:   0 <= \result < n;
-    ensures maximum:  MaxElement(a, n, \result);
-    ensures first:    StrictUpperBound(a, 0, \result, a[\result]);
+    ensures max:      MaxElement(a, n, \result);
+    ensures strict:   StrictUpperBound(a, 0, \result, a[\result]);
 
   complete behaviors;
   disjoint behaviors;

@@ -5,8 +5,8 @@
 #include "HasValueOf.h"
 
 /*@
-  requires \valid_read(a + (0..m-1));
-  requires \valid_read(b + (0..n-1));
+  requires valid: \valid_read(a + (0..m-1));
+  requires valid: \valid_read(b + (0..n-1));
 
   assigns \nothing;
 

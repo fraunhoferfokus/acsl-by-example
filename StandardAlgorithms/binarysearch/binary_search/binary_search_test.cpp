@@ -5,28 +5,21 @@
 #include <cassert>
 
 #include "binary_search.h"
-#include "../lower_bound/lower_bound.h"
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a;
+  std::vector<value_type> a{1, 2, 3, 3, 3, 7, 8};
 
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(7);
-  a.push_back(8);
+  value_type value = 3;
 
-  int value = 3;
+  bool result1 = std::binary_search(a.begin(), a.end(), value);
+  assert(result1);
 
-  bool pos1 = std::binary_search(a.begin(), a.end(), value);
-  bool pos2 = binary_search(&a[0], a.size(), value);
-  assert(pos1 == pos2);
+  bool result2 = binary_search(&a[0], a.size(), value);
+  assert(result1 == result2);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 

@@ -8,7 +8,7 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<value_type> a {1, 5, -2, 4, 0};
+  std::vector<value_type> a{1, 5, -2, 4, 0};
   std::vector<value_type> result1(a.size());
   std::vector<value_type> result2(a.size());
 

@@ -10,8 +10,9 @@ compile: FORCE
 
 
 clean: FORCE
-	$(RM)	WP_basics.glob
-	$(RM)	WP_basics.vo
+	@$(RM)	lia.cache
+	@$(RM)	WP_basics.glob
+	@$(RM)	WP_basics.vo
 
 
 FORCE:

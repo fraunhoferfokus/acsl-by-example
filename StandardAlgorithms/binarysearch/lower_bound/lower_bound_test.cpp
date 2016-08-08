@@ -1,32 +1,43 @@
-#include <algorithm>
-#include <vector>
+
 #include <iostream>
 #include <cassert>
+#include <vector>
+#include <algorithm>
+#include <functional>
 
 #include "lower_bound.h"
+#include "../partitioned_test.h"
+
+void lower_bound_test(const std::vector<value_type>& a, value_type value, size_type pos)
+{
+  auto pred = [value](value_type x) {
+    return x < value;
+  };
+
+  {
+    assert(pos == lower_bound(&a[0], a.size(), value));
+    auto ptr = &a[0];
+    assert(ptr + pos == std::partition_point(ptr, ptr + a.size(), pred));
+  }
+  {
+    auto it = std::lower_bound(a.begin(), a.end(), value);
+    assert(it == a.begin() + pos);
+    assert(it == std::partition_point(a.begin(), a.end(), pred));
+  }
+}
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a;
+  auto a = binary_search_data();
 
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(7);
-  a.push_back(8);
-
-  int value = 3;
-
-  std::vector<int>::iterator it = std::lower_bound(a.begin(), a.end(), value);
-
-  int  pos = lower_bound(&a[0], a.size(), value);
-
-  assert(it - a.begin() == pos);
-
-  assert(*it == a[pos]);
+  lower_bound_test(a, 1, 0);
+  lower_bound_test(a, 2, 0);
+  lower_bound_test(a, 3, 1);
+  lower_bound_test(a, 5, 4);
+  lower_bound_test(a, 11, 6);
+  lower_bound_test(a, 14, 7);
+  lower_bound_test(a, 17, 9);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+  return EXIT_SUCCESS;
 }

@@ -4,6 +4,8 @@
 
 #include "RemoveCount.h"
 #include "CountLemmas.h"
+#include "CountBounds.h"
+#include "CountMonotonic.h"
 
 /*@
   lemma RemoveCountMonotonic:

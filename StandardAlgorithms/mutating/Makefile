@@ -12,7 +12,7 @@ OBJ :=  fill/fill.o\
 	reverse/reverse.o\
 	rotate_copy/rotate_copy.o\
 	replace_copy/replace_copy.o\
-	remove_copy2/remove_copy2.o\
+	remove/remove.o
 
 lib: libmutating.a
 

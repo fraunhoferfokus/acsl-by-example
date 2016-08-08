@@ -5,20 +5,19 @@
 #include "typedefs.h"
 
 /*@
-  requires  \valid_read(a + (..n-1));
+  requires valid:  \valid_read(a + (0..n-1));
 
   assigns \nothing;
 
   behavior empty:
     assumes n == 0;
-    ensures \result == 0;
+    ensures result:  \result == 0;
 
   behavior not_empty:
     assumes 0 < n;
-
-    ensures 0 <= \result < n;
-    ensures \forall integer i; 0 <= i < n ==> a[i] <= a[\result];
-    ensures \forall integer i; 0 <= i < \result ==> a[i] < a[\result];
+    ensures result:  0 <= \result < n;
+    ensures upper:   \forall integer i; 0 <= i < n       ==> a[i] <= a[\result];
+    ensures strict:  \forall integer i; 0 <= i < \result ==> a[i] <  a[\result];
 
   complete behaviors;
   disjoint behaviors;

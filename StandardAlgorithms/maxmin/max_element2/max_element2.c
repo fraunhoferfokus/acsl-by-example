@@ -8,13 +8,11 @@ size_type max_element(const value_type* a, size_type n)
   }
 
   size_type max = 0;
-
   /*@
-    loop invariant bound:  0 <= i <= n;
-    loop invariant min:    0 <= max < n;
-    loop invariant lower:  UpperBound(a, 0, i, a[max]);
-    loop invariant first:  StrictUpperBound(a, 0, max, a[max]);
-
+    loop invariant bound:   0 <= i <= n;
+    loop invariant max:     0 <= max < n;
+    loop invariant upper:   UpperBound(a, 0, i, a[max]);
+    loop invariant strict:  StrictUpperBound(a, 0, max, a[max]);
     loop assigns max, i;
     loop variant n-i;
   */
@@ -23,6 +21,6 @@ size_type max_element(const value_type* a, size_type n)
       max = i;
     }
   }
-
   return max;
 }
+

@@ -1,5 +1,4 @@
 
-
 #include <algorithm>
 #include <vector>
 #include <iostream>
@@ -9,27 +8,20 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a;
+  std::vector<value_type> a{1, 3, 2, 8, 3, 3, 7};
+  std::vector<value_type> b(a.size());
+  std::vector<value_type> c(a.size());
 
-  a.push_back(1);
-  a.push_back(3);
-  a.push_back(2);
-  a.push_back(8);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(7);
+  const value_type value = 3;
 
-  std::vector<int> b(a.size());
-  std::vector<int> c(a.size());
-
-  const int value = 3;
-
-  int* last_b = std::remove_copy(&a[0], &a[0] + a.size(), &b[0], value);
-  int  size_c =      remove_copy(&a[0], a.size(), &c[0], value);
+  auto last_b = std::remove_copy(&a[0], &a[0] + a.size(), &b[0], value);
+  auto size_c =      remove_copy(&a[0], a.size(), &c[0], value);
 
   assert(size_c == last_b - &b[0]);
   assert(b == c);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
 
+  return EXIT_SUCCESS;
 }
+

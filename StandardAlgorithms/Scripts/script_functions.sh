@@ -196,7 +196,7 @@ function genTableEntry()
              let "percent=(100*$valid)/$goalCount"
         else    percent=0
         fi
-    printf "%-5s & \\\\ref{%-5s} & %-3d  & %3d   & %-3d  & %3d  & %3d  & %3d  & %3d  & %3d \\\\\\\\\hline\n" $cmd $sec $valid $goalCount $percent $valid_qed $valid_alt_ergo $valid_cvc4 $valid_z3 $valid_coq  > ${1}.tex
+    printf "%-5s & \\\\ref{%-5s} & %-3d  & %3d   & %-3d  & %3d  & %3d  & %3d  & %3d  & %3d \\\\\\\\\hline\n" $cmd $sec $valid $goalCount $percent $valid_qed $valid_cvc4 $valid_z3 $valid_alt_ergo $valid_coq  > ${1}.tex
 
     unset cmd
     unset sec
@@ -254,7 +254,7 @@ function reportWp()
              let "percent=(100*$valid)/$goalCount"
         else    percent=0
         fi
-    printf  "   verify  %-35s [%-4d %3d   (%-3d %3d %3d %3d %3d)]     %3d%%\n" $1 $goalCount $valid $valid_qed $valid_alt_ergo $valid_cvc4 $valid_z3 $valid_coq $percent
+    printf  "   verify  %-35s [%-4d %3d   (%-3d %3d %3d %3d %3d)]     %3d%%\n" $1 $goalCount $valid $valid_qed $valid_cvc4 $valid_z3 $valid_alt_ergo $valid_coq $percent
 
 
     unset goalCount

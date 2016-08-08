@@ -1,7 +1,7 @@
 
 include ../Makefile.call
 
-OBJ := equal3/equal3.o\
+OBJ := equal/equal.o\
        mismatch/mismatch.o\
        find2/find2.o\
        find_first_of/find_first_of.o\
@@ -16,5 +16,4 @@ lib: libnonmutating.a
 libnonmutating.a: obj FORCE
 	@ar cr  $@ $(OBJ)
 	@ranlib  $@
-
 

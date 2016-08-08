@@ -1,5 +1,4 @@
 
-
 #include <cassert>
 #include <iostream>
 #include <algorithm>
@@ -10,10 +9,10 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a(7);
-  std::vector<int> b(a.size());
+  std::vector<value_type> a(7);
+  std::vector<value_type> b(a.size());
 
-  int value = 0;
+  const value_type value = 0;
 
   std::iota(a.begin(), a.end(), value);
   iota(&b[0], b.size(), value);
@@ -21,6 +20,7 @@ int main(int argc, char** argv)
   assert(a == b);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+
+  return EXIT_SUCCESS;
 }
 

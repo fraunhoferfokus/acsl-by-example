@@ -7,7 +7,7 @@ DIR =	$(shell pwd)/
 FILE := $(shell cat $(FILELIST))
 
 
-test: lib
+test:: lib
 	@for i in $(FILE);\
         do \
                 (cd "$$i"; $(MAKE) -s test || break);\

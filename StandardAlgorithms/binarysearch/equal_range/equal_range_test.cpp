@@ -4,30 +4,48 @@
 #include <cassert>
 
 #include "equal_range.h"
+#include "../partitioned_test.h"
 
-typedef std::vector<int>::const_iterator iterator;
+void equal_range_test(const std::vector<value_type>& a, value_type value,
+                      size_type lower, size_type upper)
+{
+  auto less = [value](value_type x) {
+    return x < value;
+  };
+
+  auto less_equal = [value](value_type x) {
+    return x <= value;
+  };
+
+  {
+    auto pair = equal_range(&a[0], a.size(), value);
+    assert(lower == pair.first);
+    assert(upper == pair.second);
+    auto ptr = &a[0];
+    assert(ptr + lower == std::partition_point(ptr, ptr + a.size(), less));
+    assert(ptr + upper == std::partition_point(ptr, ptr + a.size(), less_equal));
+  }
+  {
+    auto pair = std::equal_range(a.begin(), a.end(), value);
+    assert(pair.first  == a.begin() + lower);
+    assert(pair.second == a.begin() + upper);
+    assert(pair.first  == std::partition_point(a.begin(), a.end(), less));
+    assert(pair.second == std::partition_point(a.begin(), a.end(), less_equal));
+  }
+}
 
 int main(int argc, char** argv)
 {
-  std::vector<value_type> a;
+  auto a = binary_search_data();
 
-  a.push_back(1);
-  a.push_back(2);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(3);
-  a.push_back(7);
-  a.push_back(8);
-
-  value_type value = 3;
-
-  std::pair<iterator, iterator> iter_pair = std::equal_range(a.begin(), a.end(), value);
-
-  size_type_pair size_pair = equal_range(&a[0], a.size(), value);
-
-  assert(iter_pair.first - a.begin()  == size_pair.first);
-  assert(iter_pair.second - a.begin() == size_pair.second);
+  equal_range_test(a, 1, 0,  0);
+  equal_range_test(a, 2, 0,  1);
+  equal_range_test(a, 3, 1,  4);
+  equal_range_test(a, 5, 4,  4);
+  equal_range_test(a, 11, 6, 7);
+  equal_range_test(a, 14, 7, 9);
+  equal_range_test(a, 17, 9, 9);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+  return EXIT_SUCCESS;
 }

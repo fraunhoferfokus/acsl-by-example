@@ -27,6 +27,10 @@ VPATH += $(TOP_DIR)/mutating
 CPPFLAGS += -I$(TOP_DIR)/mutating
 LDFLAGS  += -L$(TOP_DIR)/mutating
 
+VPATH += $(TOP_DIR)/heap
+CPPFLAGS += -I$(TOP_DIR)/heap
+LDFLAGS  += -L$(TOP_DIR)/heap
+
 VPATH += $(TOP_DIR)/numeric
 CPPFLAGS += -I$(TOP_DIR)/numeric
 LDFLAGS  += -L$(TOP_DIR)/numeric
@@ -42,12 +46,12 @@ INCLUDES  = $(CPPFLAGS)
 
 SHARED_FLAGS=-Wall -pedantic -Werror
 CFLAGS=-x c++ $(SHARED_FLAGS)
-CXXFLAGS=-std=c++11 $(SHARED_FLAGS)
+CXXFLAGS=-std=c++14 $(SHARED_FLAGS)
 
 #setup wp
 WP_TIMEOUT ?= 10
 WP_COQ_TIMEOUT ?= 20
-#WP_ALT_ERGO_STEPS ?= 1000
+WP_ALT_ERGO_STEPS ?= 1000
 WP_PROCESSES ?= 1
 
 #setup coq
@@ -73,7 +77,7 @@ WP_FLAGS += -wp-model Typed+ref
 
 WP_PROVER_FLAGS += -wp-timeout $(WP_TIMEOUT)
 WP_PROVER_FLAGS += -wp-coq-timeout $(WP_COQ_TIMEOUT)
-WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
+#WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 WP_PROVER_FLAGS += -wp-prover cvc4
 WP_PROVER_FLAGS += -wp-prover z3
@@ -126,10 +130,9 @@ test: $(FILE)_test FORCE
 	@+$(MAKE) $(patsubst %.c,%.report-wp, $<)
 
 %.check:%.c
-	@$(WP) $(WP_FLAGS) -wp-check -cpp-command 'gcc -C -E -nostdinc $(INCLUDES)' -wp-out $(patsubst %.c,%.wp, $<)  $<
+	@$(WP) $(WP_C_FLAGS) -wp-check -wp-out $(patsubst %.c,%.wp, $<)  $<
 
 report: $(FILE).report
-
 
 tex:
 	@(. ${SCRIPT_DIR}/script_functions.sh; genTableEntry $(FILE) $(CMD) $(SEC););

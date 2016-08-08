@@ -15,6 +15,6 @@ int main(int argc, char** argv)
   assert(stack_empty(&a));
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+  return EXIT_SUCCESS;
 }
 

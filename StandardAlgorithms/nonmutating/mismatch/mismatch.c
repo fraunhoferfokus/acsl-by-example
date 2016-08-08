@@ -1,12 +1,12 @@
 
 #include "mismatch.h"
 
-size_type mismatch(const value_type* a, size_type n,
-                   const value_type* b)
+size_type
+mismatch(const value_type* a, size_type n, const value_type* b)
 {
   /*@
-    loop invariant 0 <= i <= n;
-    loop invariant EqualRanges{Here,Here}(a, i, b);
+    loop invariant bound:  0 <= i <= n;
+    loop invariant equal:  EqualRanges{Here,Here}(a, i, b);
     loop assigns i;
     loop variant n-i;
   */

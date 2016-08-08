@@ -10,17 +10,17 @@
 
   assigns \nothing;
 
-  ensures (n == 0 || m == 0) ==> \result == 0;
+  ensures trivial: (n == 0 || m == 0) ==> \result == 0;
 
   behavior has_match:
     assumes HasSubRange(a, m, b, n);
-    ensures 0 <= \result <= m-n;
-    ensures EqualRanges{Here,Here}(a+\result, n, b);
-    ensures !HasSubRange(a, \result+n-1, b, n);
+    ensures bound:  0 <= \result <= m-n;
+    ensures result: EqualRanges{Here,Here}(a+\result, n, b);
+    ensures first:  !HasSubRange(a, \result+n-1, b, n);
 
   behavior no_match:
     assumes !HasSubRange(a, m, b, n);
-    ensures \result == m;
+    ensures result: \result == m;
 
   complete behaviors;
   disjoint behaviors;

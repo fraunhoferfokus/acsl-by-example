@@ -1,5 +1,4 @@
 
-
 #include <algorithm>
 #include <vector>
 #include <iostream>
@@ -9,12 +8,8 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a;
-
-  a.push_back(1);
-  a.push_back(2);
-
-  std::vector<int> b(a);
+  std::vector<value_type> a{1, 2};
+  auto b = a;
   assert(a == b);
 
   std::iter_swap(&a[0], &a[1]);
@@ -23,5 +18,7 @@ int main(int argc, char** argv)
   assert(a == b);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+
+  return EXIT_SUCCESS;
 }
+

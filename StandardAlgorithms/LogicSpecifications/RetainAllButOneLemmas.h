@@ -7,6 +7,7 @@
 /*@
   lemma RetainAllButOneMiss{K,L}:
     \forall value_type *a, *b, v, integer m, n;
+       0 <= m  ==>  0 <= n               ==>
        RetainAllButOne{K}(a, m, b, n, v) ==>
        \at(a[m],K) != v                  ==>
        \at(a[m],L) == \at(b[n],L)        ==>

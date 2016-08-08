@@ -22,5 +22,5 @@ int main(int argc, char** argv)
   assert(a.top() == stack_top(&b));
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-  return 0;
+  return EXIT_SUCCESS;
 }

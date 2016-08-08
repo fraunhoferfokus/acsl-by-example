@@ -2,7 +2,7 @@
 #ifndef REMOVECOUNT_H_INCLUDED
 #define REMOVECOUNT_H_INCLUDED
 
-#include "CountAxiomatic.h"
+#include "CountLogic.h"
 
 /*@
   logic
