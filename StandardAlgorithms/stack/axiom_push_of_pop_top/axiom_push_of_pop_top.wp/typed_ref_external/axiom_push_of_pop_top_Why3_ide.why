@@ -1,0 +1,158 @@
+(* ---------------------------------------------------------- *)
+(* --- Post-condition (file axiom_push_of_pop_top.c, line 7) in 'axiom_push_of_pop_top' --- *)
+(* ---------------------------------------------------------- *)
+theory VCaxiom_push_of_pop_top_post
+  
+use import bool.Bool
+use import int.Int
+use import int.ComputerDivision
+use import real.RealInfix
+use import Qed.Qed
+use import int.Abs as IAbs
+use import map.Map
+use import Axiomatic.Axiomatic
+use import Memory.Memory
+use import Cint.Cint
+use import Compound.Compound
+
+goal WP "expl:Post-condition (file axiom_push_of_pop_top.c, line 7) in 'axiom_push_of_pop_top'":
+  forall i_2 i_1 i : int.
+  forall t : map int int.
+  forall t_1 : map addr int.
+  forall t_2 : map addr addr.
+  forall a : addr.
+  let a_1 = (shiftfield_F1_Stack_size a) in
+  let x = (l_Top t_2 t_1 a) in
+  let m = t_1[a_1 <- i] in
+  let x_1 = (l_Capacity m a) in
+  let x_2 = (l_Size m a) in
+  let x_3 = 1 + x_2 in
+  let m_1 = t_1[a_1 <- i_1][((shift_sint32 t_2[(shiftfield_F1_Stack_obj a)]
+                               i)) <- i_2] in
+  let a_2 = (l_Storage t_2 a) in
+  ((framed t_2)) ->
+  ((linked t)) ->
+  ((is_uint32 i)) ->
+  (not((p_Empty t_1 a))) ->
+  (((region (a.base))) <= 0) ->
+  ((is_uint32 t_1[a_1])) ->
+  ((p_Valid t t_2 t_1 a)) ->
+  ((is_sint32 x)) ->
+  (((l_Capacity t_1 a)) = x_1) ->
+  (not((p_Full m a))) ->
+  ((p_Valid t t_2 m a)) ->
+  (((l_Size t_1 a)) = x_3) ->
+  (x_1 = ((l_Capacity m_1 a))) ->
+  (x_3 = ((l_Size m_1 a))) ->
+  ((p_Unchanged_2_ m t_1 a_2 x_2)) ->
+  (not((p_Empty m_1 a))) ->
+  (x = ((l_Top t_2 m_1 a))) ->
+  ((p_Unchanged_2_ m_1 m a_2 x_2)) ->
+  ((p_Valid t t_2 m_1 a)) ->
+  ((p_Equal t_2 t_1 t_2 m_1 a a))
+
+end
+
+(* ---------------------------------------------------------- *)
+(* --- Assigns (file axiom_push_of_pop_top.c, line 6) in 'axiom_push_of_pop_top' (4/4) --- *)
+(* ---------------------------------------------------------- *)
+theory VCaxiom_push_of_pop_top_assign_exit_part4
+  
+use import bool.Bool
+use import int.Int
+use import int.ComputerDivision
+use import real.RealInfix
+use import Qed.Qed
+use import int.Abs as IAbs
+use import map.Map
+use import Axiomatic.Axiomatic
+use import Memory.Memory
+use import Cint.Cint
+use import Compound.Compound
+
+goal WP "expl:Assigns (file axiom_push_of_pop_top.c, line 6) in 'axiom_push_of_pop_top' (4/4)":
+  forall i : int.
+  forall t : map int int.
+  forall t_1 : map addr int.
+  forall t_2 : map addr addr.
+  forall a : addr.
+  let a_1 = (shiftfield_F1_Stack_size a) in
+  let x = t_1[a_1] in
+  let m = t_1[a_1 <- i] in
+  let x_1 = (l_Size m a) in
+  let a_2 = (shift_sint32 t_2[(shiftfield_F1_Stack_obj a)] i) in
+  ((framed t_2)) ->
+  ((linked t)) ->
+  ((is_uint32 i)) ->
+  (not((p_Empty t_1 a))) ->
+  (((region (a.base))) <= 0) ->
+  ((is_uint32 x)) ->
+  ((p_Valid t t_2 t_1 a)) ->
+  ((is_sint32 ((l_Top t_2 t_1 a)))) ->
+  (((l_Capacity t_1 a)) = ((l_Capacity m a))) ->
+  (not((p_Full m a))) ->
+  ((p_Valid t t_2 m a)) ->
+  (((l_Size t_1 a)) = (1 + x_1)) ->
+  ((valid_rd t a_2 1)) ->
+  ((p_Unchanged_2_ m t_1 ((l_Storage t_2 a)) x_1)) ->
+  (((1 + i) = x) \/ (a_1 = a_2))
+
+end
+
+(* ---------------------------------------------------------- *)
+(* --- Assigns (file axiom_push_of_pop_top.c, line 6) in 'axiom_push_of_pop_top' (4/4) --- *)
+(* ---------------------------------------------------------- *)
+theory VCaxiom_push_of_pop_top_assign_normal_part4
+  
+use import bool.Bool
+use import int.Int
+use import int.ComputerDivision
+use import real.RealInfix
+use import Qed.Qed
+use import int.Abs as IAbs
+use import map.Map
+use import Axiomatic.Axiomatic
+use import Memory.Memory
+use import Cint.Cint
+use import Compound.Compound
+
+goal WP "expl:Assigns (file axiom_push_of_pop_top.c, line 6) in 'axiom_push_of_pop_top' (4/4)":
+  forall i_2 i_1 i : int.
+  forall t : map int int.
+  forall t_1 : map addr int.
+  forall t_2 : map addr addr.
+  forall a : addr.
+  let a_1 = (shiftfield_F1_Stack_size a) in
+  let x = t_1[a_1] in
+  let x_1 = (l_Top t_2 t_1 a) in
+  let m = t_1[a_1 <- i] in
+  let x_2 = (l_Capacity m a) in
+  let x_3 = (l_Size m a) in
+  let x_4 = 1 + x_3 in
+  let a_2 = (shift_sint32 t_2[(shiftfield_F1_Stack_obj a)] i) in
+  let m_1 = t_1[a_1 <- i_1][a_2 <- i_2] in
+  let a_3 = (l_Storage t_2 a) in
+  ((framed t_2)) ->
+  ((linked t)) ->
+  ((is_uint32 i)) ->
+  (not((p_Empty t_1 a))) ->
+  (((region (a.base))) <= 0) ->
+  ((is_uint32 x)) ->
+  ((p_Valid t t_2 t_1 a)) ->
+  ((is_sint32 x_1)) ->
+  (((l_Capacity t_1 a)) = x_2) ->
+  (not((p_Full m a))) ->
+  ((p_Valid t t_2 m a)) ->
+  (((l_Size t_1 a)) = x_4) ->
+  ((valid_rd t a_2 1)) ->
+  (x_2 = ((l_Capacity m_1 a))) ->
+  (x_4 = ((l_Size m_1 a))) ->
+  ((p_Unchanged_2_ m t_1 a_3 x_3)) ->
+  (not((p_Empty m_1 a))) ->
+  (x_1 = ((l_Top t_2 m_1 a))) ->
+  ((p_Unchanged_2_ m_1 m a_3 x_3)) ->
+  ((p_Valid t t_2 m_1 a)) ->
+  (((1 + i) = x) \/ (a_1 = a_2))
+
+end
+
