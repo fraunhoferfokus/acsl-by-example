@@ -11,7 +11,7 @@
 
   assigns  b[0..n-1];
 
-  ensures EqualRanges{Old,Here}(a, n, b);
+  ensures equal: EqualRanges{Here,Old}(b, n, a);
 */
 void copy_backward(const value_type* a, size_type n, value_type* b);
 

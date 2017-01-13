@@ -18,7 +18,7 @@
 
     ensures Size(s) == Size{Old}(s) - 1;
     ensures !Full(s);
-    ensures Unchanged{Pre,Here}(Storage(s), Size(s));
+    ensures Unchanged{Old,Here}(Storage(s), Size(s));
     ensures Storage(s) == Storage{Old}(s);
     ensures Capacity(s) == Capacity{Old}(s);
 
@@ -28,7 +28,7 @@
     assigns \nothing;
 
     ensures Empty(s);
-    ensures Unchanged{Pre,Here}(Storage(s), Size(s));
+    ensures Unchanged{Old,Here}(Storage(s), Size(s));
     ensures Size(s) == Size{Old}(s);
     ensures Storage(s) == Storage{Old}(s);
     ensures Capacity(s) == Capacity{Old}(s);

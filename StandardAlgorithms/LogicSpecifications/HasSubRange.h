@@ -6,8 +6,8 @@
 
 /*@
   predicate
-    HasSubRange{A}(value_type* a, integer f, integer t, value_type* b, integer n) =
-      \exists integer k; (f <= k <= t-n) && EqualRanges{A,A}(a+k, n, b);
+    HasSubRange{A}(value_type* a, integer f, integer l, value_type* b, integer n) =
+      \exists integer k; (f <= k <= l-n) && EqualRanges{A,A}(a+k, n, b);
 
   predicate
     HasSubRange{A}(value_type* a, integer m, value_type* b, integer n) =

@@ -26,6 +26,18 @@ clean::
                 (cd "$$i"; $(MAKE) -s clean);\
         done
 
+depend:
+	@for i in $(FILE);\
+        do \
+                (cd "$$i"; $(MAKE) -s depend);\
+        done
+
+depend-clean::
+	@for i in $(FILE);\
+        do \
+                (cd "$$i"; $(MAKE) -s depend-clean);\
+        done
+
 report:
 	@for i in $(FILE);\
         do \

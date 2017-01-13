@@ -1,0 +1,17 @@
+./heap/sort_heap/sort_heap.wp/typed_ref/lemma_CountSectionUnion_Coq.v
+./heap/sort_heap/sort_heap.wp/typed_ref/lemma_HeapMaximum_Coq.v
+./heap/push_heap/push_heap.wp/typed_ref/lemma_CountSectionUnion_Coq.v
+./heap/make_heap/make_heap.wp/typed_ref/lemma_HeapMaximum_Coq.v
+./binarysearch/equal_range2/equal_range2.wp/typed_ref/lemma_LowerBoundShift_Coq.v
+./binarysearch/equal_range2/equal_range2.wp/typed_ref/lemma_StrictLowerBoundShift_Coq.v
+./mutating/remove_copy2/remove_copy2.wp/typed_ref/lemma_RemoveCountMonotonic_Coq.v
+./mutating/remove_copy2/remove_copy2.wp/typed_ref/lemma_CountSectionUnion_Coq.v
+./mutating/remove_copy2/remove_copy2.wp/typed_ref/lemma_CountSectionMonotonic_Coq.v
+./mutating/remove_copy2/remove_copy2.wp/typed_ref/lemma_CountSectionBounds_Coq.v
+./mutating/rotate/rotate.wp/typed_ref/lemma_ReverseIdempotentLeft_Coq.v
+./mutating/rotate/rotate.wp/typed_ref/lemma_ReverseIdempotentRight_Coq.v
+./mutating/rotate/rotate.wp/typed_ref/lemma_ReverseShift_Coq.v
+./mutating/remove/remove.wp/typed_ref/lemma_HasValueCountInversion_Coq.v
+./mutating/remove/remove.wp/typed_ref/lemma_CountSectionUnion_Coq.v
+./mutating/remove/remove.wp/typed_ref/lemma_HasValueShiftInversion_Coq.v
+./mutating/remove/remove.wp/typed_ref/lemma_CountShift_Coq.v

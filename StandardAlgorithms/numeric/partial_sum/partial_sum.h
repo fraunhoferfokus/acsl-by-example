@@ -15,7 +15,7 @@
 
   ensures result:     \result == n;
   ensures partialsum: PartialSum(a, n, b);
-  ensures unchanged:  Unchanged{Here,Pre}(a, n);
+  ensures unchanged:  Unchanged{Here,Old}(a, n);
 */
 size_type
 partial_sum(const value_type* a, size_type n, value_type* b);

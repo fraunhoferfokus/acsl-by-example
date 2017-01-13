@@ -20,7 +20,7 @@
     ensures Size(s) == Size{Old}(s) + 1;
     ensures Top(s) == v;
     ensures !Empty(s);
-    ensures Unchanged{Pre,Here}(Storage(s), Size{Pre}(s));
+    ensures Unchanged{Old,Here}(Storage(s), Size{Old}(s));
     ensures Storage(s) == Storage{Old}(s);
     ensures Capacity(s) == Capacity{Old}(s);
 
@@ -31,7 +31,7 @@
 
     ensures Valid(s);
     ensures Full(s);
-    ensures Unchanged{Pre,Here}(Storage(s), Size(s));
+    ensures Unchanged{Old,Here}(Storage(s), Size(s));
     ensures Size(s) == Size{Old}(s);
     ensures Storage(s) == Storage{Old}(s);
     ensures Capacity(s) == Capacity{Old}(s);

@@ -11,8 +11,8 @@ void random_shuffle(value_type* a, size_type n)
 
     /*@
       loop invariant bounds:    1 <= i <= n;
-      loop invariant reorder:   MultisetUnchanged{Pre,Here}(a,0,i);
-      loop invariant unchanged: Unchanged{Pre,Here}(a,i,n);
+      loop invariant reorder:   MultisetUnchanged{Here,Pre}(a,0,i);
+      loop invariant unchanged: Unchanged{Here,Pre}(a,i,n);
       loop assigns   i, a[0..n-1];
       loop variant   n - i;
     */
@@ -21,8 +21,8 @@ void random_shuffle(value_type* a, size_type n)
 
       //@ ghost Before:
       swap(&a[j], &a[i]);
-      //@ assert reorder: MultisetUnchanged{Before,Here}(a, 0, j);
-      //@ assert reorder: MultisetUnchanged{Before,Here}(a, j+1, i);
+      //@ assert reorder: MultisetUnchanged{Here,Before}(a, 0, j);
+      //@ assert reorder: MultisetUnchanged{Here,Before}(a, j+1, i);
     }
   }
 }

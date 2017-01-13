@@ -6,6 +6,7 @@ copy_backward
 reverse_copy
 reverse
 rotate_copy
+rotate
 replace_copy
 replace
 remove_copy

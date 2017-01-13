@@ -57,7 +57,7 @@ CFLAGS=-x c++ $(SHARED_FLAGS)
 CXXFLAGS=-std=c++14 $(SHARED_FLAGS)
 
 #setup wp
-WP_TIMEOUT ?= 10
+WP_TIMEOUT ?= 20
 WP_COQ_TIMEOUT ?= 20
 WP_ALT_ERGO_STEPS ?= 1000
 WP_PROCESSES ?= 1
@@ -74,6 +74,8 @@ SCRIPT?='$(TOP_DIR)/wp0.script' # default script
 
 WP_BASE_FLAGS += -pp-annot
 WP_BASE_FLAGS += -no-unicode
+WP_BASE_FLAGS += -warn-unsigned-overflow
+WP_BASE_FLAGS += -warn-unsigned-downcast
 WP_BASE_FLAGS += -wp
 WP_BASE_FLAGS += -wp-rte
 #WP_BASE_FLAGS += -wp-split
@@ -165,6 +167,22 @@ report: $(FILE).report
 	@$(WP) $(WP_C_FLAGS) -wp-check -wp-out $(patsubst %.c,%.wp, $<)  $<
 
 obj: $(FILE).o
+
+# track dependencies for target 'report'
+%.d: %.c
+	@set -e; rm -f $@; \
+	$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\.o[ :]*,\1.report $@ : ,g' < $@.$$$$ > $@; \
+	rm -f $@.$$$$
+
+depend: $(FILE).d
+
+depend-clean:
+	$(RM) $(FILE).d
+
+include $(FILE).d
+
+# cleanup
 
 clean:: FORCE
 	@(cd $(TOP_DIR)/coq && $(MAKE) clean)

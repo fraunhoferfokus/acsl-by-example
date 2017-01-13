@@ -6,15 +6,30 @@
 
 /*@
   predicate 
-    Reverse{A,B}(value_type* a, integer n, value_type* b, integer l, integer r) =
-      \forall integer k; l <= k < r ==> \at(a[k], A) == \at(b[n-1-k], B);
+    Reverse{K,L}(value_type* a, integer m, integer n,
+                 value_type* b, integer p) =
+      \let s = n - m;
+      \let q = p + s;
+      \forall integer i; 0 <= i < s ==> \at(a[m+i],K) == \at(b[q-1-i], L);
 
   predicate 
-    Reverse{A,B}(value_type* a, integer n, value_type* b) =
-      Reverse{A,B}(a, n, b, 0, n);
+    Reverse{K,L}(value_type* a, integer m, integer n, value_type* b) =
+      Reverse{K,L}(a, m, n, b, m);
 
   predicate 
-    Reverse{A,B}(value_type* a, integer n) = Reverse{A,B}(a, n, a);
+    Reverse{K,L}(value_type* a, integer n, value_type* b) =
+      Reverse{K,L}(a, 0, n, b);
+
+  predicate 
+    Reverse{K,L}(value_type* a, integer m, integer n, integer p) =
+      Reverse{K,L}(a, m, n, a, p);
+
+  predicate 
+    Reverse{K,L}(value_type* a, integer m, integer n) =
+      Reverse{K,L}(a, m, n, a, m);
+
+  predicate 
+    Reverse{K,L}(value_type* a, integer n) = Reverse{K,L}(a, 0, n);
 
 */
 

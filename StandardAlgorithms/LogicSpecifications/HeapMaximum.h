@@ -2,8 +2,8 @@
 #ifndef HEAPMAXIMUM_LEMMA_INCLUDED
 #define HEAPMAXIMUM_LEMMA_INCLUDED
 
-#include "HeapLogic.h"
 #include "MaxElement.h"
+#include "IsHeap.h"
 
 /*@
   lemma HeapMaximum{L} :

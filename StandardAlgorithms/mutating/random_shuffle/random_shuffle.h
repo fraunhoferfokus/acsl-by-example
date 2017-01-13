@@ -9,7 +9,7 @@
 
   assigns a[0..n-1];
 
-  ensures  MultisetUnchanged{Pre,Here}(a,n);
+  ensures  MultisetUnchanged{Here,Old}(a,n);
 */
 void random_shuffle(value_type* a, size_type n);
 

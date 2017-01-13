@@ -16,8 +16,8 @@
   ensures result:    \result == n;
 */
 size_type
-replace_copy(const value_type* a, size_type n, value_type* b, value_type v,
-             value_type w);
+replace_copy(const value_type* a, size_type n, value_type* b,
+             value_type v, value_type w);
 
 #endif /* REPLACE_COPY_H_INCLUDED */
 

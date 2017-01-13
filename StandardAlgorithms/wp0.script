@@ -61,6 +61,33 @@ Proof.
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_lemma_CountBounds.
@@ -85,6 +112,33 @@ Proof.
     - rewrite Q_CountOneHit; auto with zarith.
     - rewrite <- Q_CountOneMiss; auto with zarith.
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -117,6 +171,33 @@ Proof.
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_lemma_CountSectionMonotonic.
@@ -146,6 +227,33 @@ Proof.
     - rewrite <- Q_CountSectionMiss; auto with zarith.
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -184,6 +292,33 @@ Proof.
       rewrite <- Q_CountSectionMiss; auto with zarith.
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -266,6 +401,33 @@ Proof.
   trivial.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_lemma_LowerBoundShift.
@@ -277,6 +439,33 @@ Proof.
   replace i with (b + (i - b)); auto with zarith.
   rewrite <- shift_associative.
   apply LowerBound; lia.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -297,6 +486,33 @@ Proof.
   rewrite H2; auto with zarith.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_lemma_RemoveCountMonotonic.
@@ -312,6 +528,33 @@ Proof.
   unfold L_Count.
   cut (m + L_CountSection M a m n v <= n); auto with zarith.
   apply Q_CountSectionBounds; auto with zarith.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -357,6 +600,33 @@ Proof.
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_lemma_SortedShift.
@@ -374,6 +644,33 @@ Proof.
   apply H1; lia.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_lemma_StrictLowerBoundShift.
@@ -386,6 +683,33 @@ Proof.
   replace i0 with (i_2 + (i0 - i_2)) by lia.
   rewrite <- shift_associative.
   apply H0; lia.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -402,6 +726,33 @@ Proof.
   apply H0; lia.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_lemma_UpperBoundShift.
@@ -416,6 +767,33 @@ Proof.
   apply H0; auto with zarith.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_remove_copy_assert_retain.
@@ -423,6 +801,33 @@ Hint property,remove_copy,retain.
 Proof.
   intros.
   apply Q_MultisetRetainRestMiss.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -441,12 +846,66 @@ Proof.
   apply Q_MultisetRetainRestMiss with (t_1); auto with zarith.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_external_remove_copy_core_active_post_retain_2.
 Hint active,property,remove_copy_core,retain.
 Proof.
 (* auto with zarith. *)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -512,6 +971,83 @@ Proof.
   }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Qed.
+
+Goal typed_ref_lemma_CountSectionBounds.
+Hint CountSectionBounds,property.
+Proof.
+  Require Import Psatz.
+  intros.
+  subst x.
+  remember i_1 as m.
+  remember i   as n.
+  remember i_2 as v.
+ 
+  replace n with (m + (n-m)) by lia.
+  apply natlike_rec2 with (z := (n - m)); auto with zarith.
+  {
+    rewrite Zplus_0_r.
+    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
+  }
+  {
+    intros.
+    replace (m + Z.succ z) with (1 + (m+z)) by lia.
+
+    assert (X: t.[ shift a (m+z)] =  v \/
+               t.[ shift a (m+z)] <> v) by lia.
+    destruct X as [eq|neq]. 
+    - rewrite A_Count.Q_CountSectionHit; auto with zarith.
+    - rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_lemma_CountSectionMonotonic.
@@ -537,10 +1073,93 @@ Proof.
     assert (X: t.[ shift a (n+z)] =  v \/
                t.[ shift a (n+z)] <> v) by lia.
     destruct X as [eq|neq].
-    - rewrite Q_CountSectionHit; auto with zarith.
-    - rewrite <- Q_CountSectionMiss; auto with zarith.
+    - rewrite A_Count.Q_CountSectionHit; auto with zarith.
+    - rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Qed.
+
+Goal typed_ref_lemma_CountSectionUnion.
+Hint CountSectionUnion,property.
+Proof.
+  Require Import Psatz.
+  intros.
+  remember i_2 as v.
+  remember i   as n.
+  remember i_1 as m.
+
+  replace n with (m + (n-m)) by lia.
+  apply natlike_rec2 with (z := (n - m)); auto with zarith.
+  {
+    rewrite Zplus_0_r.
+    replace (L_Count_1_ t a m m v) with 0 by (rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith).
+    lia.
+  }
+  {
+    intros.
+    replace (m + Z.succ z) with (1 + (m+z)) by lia.
+
+    assert (X: t.[ shift a (m+z)] =  v \/ t.[ shift a (m+z)] <> v) by lia.
+    destruct X as [eq|neq].
+    {
+      rewrite A_Count.Q_CountSectionHit; auto with zarith.
+      rewrite H3; auto with zarith.
+      symmetry.
+      rewrite A_Count.Q_CountSectionHit; auto with zarith.
+    }
+    {
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      symmetry.
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -556,8 +1175,8 @@ Proof.
   apply natlike_rec2 with (z := n); auto with zarith.
   {
     replace (0 + m) with m by lia.
-    rewrite <- Q_CountSectionEmpty; auto with zarith.
-    rewrite <- Q_CountSectionEmpty; auto with zarith.
+    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
+    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
   }
   {
     assert(Shift: forall p k l, 
@@ -588,11 +1207,11 @@ Proof.
        assert (X: azm = v \/ azm <> v) by tauto.
        destruct X as [eq|neq].
        {
-         rewrite Q_CountSectionHit; auto with zarith.
-         rewrite <- Q_CountSectionEmpty; auto with zarith.
-         rewrite Q_CountSectionHit; auto with zarith.
+         rewrite A_Count.Q_CountSectionHit; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
+         rewrite A_Count.Q_CountSectionHit; auto with zarith.
          {
-           rewrite <- Q_CountSectionEmpty; auto with zarith.
+           rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
          }
          {
            subst azm.
@@ -602,11 +1221,11 @@ Proof.
          }
        }
        {
-         rewrite <- Q_CountSectionMiss; auto with zarith.
-         rewrite <- Q_CountSectionEmpty; auto with zarith.
-         rewrite <- Q_CountSectionMiss; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
          {
-           rewrite <- Q_CountSectionEmpty; auto with zarith.
+           rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
          }
          {
            subst azm.
@@ -618,6 +1237,26 @@ Proof.
        
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -635,7 +1274,7 @@ Proof.
   destruct X as [le|geq].
   {
     intros.
-    rewrite <- Q_CountSectionEmpty; auto with zarith.   
+    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.   
   }
   {
     pose (p := n - m).
@@ -650,14 +1289,14 @@ Proof.
     {
        replace (m + 0) with m by lia.
        intros.
-       rewrite <- Q_CountSectionEmpty; auto with zarith.   
+       rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.   
     }
     {
       intros.
       replace (Z.succ z) with (1 + z) in * by lia.
       replace (m + (1 + z)) with (1 + (m + z)) in * by lia.
 
-      rewrite <- Q_CountSectionMiss; auto with zarith.
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
       apply H1.
       {
         unfold P_HasValue_1_ in *.
@@ -677,6 +1316,106 @@ Proof.
        subst p; lia.
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Qed.
+
+Goal typed_ref_lemma_HasValueShiftInversion.
+Hint HasValueShiftInversion,property.
+Proof.
+  Require Import Psatz.
+  intros v m n.
+  intros.
+  unfold P_HasValue_1_ in *.
+  unfold shift_sint32 in *.
+
+  assert(Shift: forall p k l,
+            (shift (shift p k) l) = (shift p (l + k))).
+  {
+    intros.
+    unfold shift.
+    simpl.
+    replace (offset p + k + l) with (offset p + (l + k)) by lia.
+    trivial.
+  }
+
+  destruct H0 as [j [K L]].
+  pose (k := j - m).
+  assert (0 <= k < n) by (subst k; lia).
+
+  replace j with (k + m) in K by (subst k; lia).
+  rewrite <- Shift in K.
+  exists k.
+  split; auto.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Qed.
+
+Goal typed_ref_lemma_HeapBounds.
+Hint HeapBounds,property.
+Proof.
+(* auto with zarith. *)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -741,12 +1480,37 @@ Proof.
          }
          assert(ZZ: s .[ shift_sint32 b (L_HeapParent (1+z))] <= s .[ shift_sint32 b 0]).
          {
+            (* jg: somehow Frama-C/Why/Coq cannot find the ACSL lemma HeapBounds ...
+                   so I have to do a clumsy proof by hand *)
+            assert (HeapBoundsBug: forall k, let x := ((Cdiv k 2))%Z in
+                       ((0 <= k)%Z) -> (((x <= k)%Z) /\ ((0 <= x)%Z))).
+            {
+              intros.
+              subst x.
+              replace (Cdiv k 2) with (k/2).
+              {
+                split.
+                - assert(OR: 0 < k \/ 0 = k) by (apply Zle_lt_or_eq; lia).
+                  destruct OR as [less | zero].
+                  + cut (k/2 < k).
+                    ++ auto with zarith.
+                    ++ apply Z_div_lt; lia.
+                  + rewrite <- zero.
+                    auto with zarith.  
+                - apply Z_div_pos; lia.
+              }
+              {
+                symmetry.
+                apply Cdiv_cases; lia.
+              }
+            }
+
            unfold L_HeapParent.
            replace (1+z-1) with z by lia.
            apply Y; auto with zarith.
-           cut (Cdiv z 2 <= z); auto with zarith.
-           apply Q_HeapBounds; lia.
-           apply Q_HeapBounds; lia.
+           - apply HeapBoundsBug; lia. (* here Q_HeapBounds should be visibile but it isn't *)
+           - cut (Cdiv z 2 <= z); auto with zarith.
+             apply HeapBoundsBug; lia. (* here Q_HeapBounds should be visibile but it isn't *)
          }
          lia.
        }
@@ -757,6 +1521,20 @@ Proof.
   apply Reformulate; auto with zarith.
   replace (1+(i-1)) with i by lia.
   trivial.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.
@@ -782,6 +1560,33 @@ Proof.
   apply LowerBound; lia.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_lemma_MultisetUnchangedUnion.
@@ -800,6 +1605,33 @@ Proof.
   rewrite H2; auto with zarith.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_lemma_RemoveCountMonotonic.
@@ -815,6 +1647,192 @@ Proof.
   unfold L_Count_2_.
   cut (m + L_Count_1_ M a m n v <= n); auto with zarith.
   apply Q_CountSectionBounds; auto with zarith.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Qed.
+
+Goal typed_ref_lemma_ReverseIdempotentLeft.
+Hint ReverseIdempotentLeft,property.
+Proof.
+  Require Import Psatz.
+  intros m n K L M.
+  intros.
+  subst x.
+  unfold P_Reverse_4_ in *.
+  unfold P_Reverse_1_ in *.
+  unfold P_EqualRanges_2_.
+  unfold P_EqualRanges_1_.
+  unfold shift_sint32 in *.
+  intros.
+
+  rewrite H0; auto with zarith.
+  replace (n - m + m - 1 - 0 - i) with (n - 1 - i) by lia.
+
+  pose ( j := n - 1 - i - m).
+  assert( 0 <= j) by (subst j; lia).
+  assert( m + j < n) by (subst j; lia).
+
+  replace (n - 1 - i) with (m + j) by (subst j; lia).
+  rewrite H; auto with zarith.
+
+  subst j.
+  replace (n + m - 1 - m - (n - 1 - i - m)) with (m+i) by lia.
+  trivial.
+
+Qed.
+
+Goal typed_ref_lemma_ReverseIdempotentRight.
+Hint ReverseIdempotentRight,property.
+Proof.
+ Require Import Psatz.
+  intros m n K L M.
+  intros.
+  subst x.
+  unfold P_Reverse_4_ in *.
+  unfold P_Reverse_1_ in *.
+  unfold P_EqualRanges_2_.
+  unfold P_EqualRanges_1_.
+  unfold shift_sint32 in *.
+  intros.
+
+  rewrite H0; auto with zarith.
+  replace (n + 0 - 1 - (n - m) - i)  with (m - 1 -i) by lia.
+
+  pose ( j := m - 1 - i).
+  assert( 0 <= j < m) by (subst j; lia).
+  replace (m - 1 - i) with (0 + j) by (subst j; lia).
+  rewrite H; auto with zarith.
+  subst j.
+
+  replace (m + 0 - 1 - 0 - (m - 1 - i)) with (0 + i) by lia.
+  trivial.
+
+
+Qed.
+
+Goal typed_ref_lemma_ReverseShift.
+Hint ReverseShift,property.
+Proof.
+  Require Import Psatz.
+  intros p q K L.
+  intros.
+  unfold P_Reverse_6_ in *.
+  unfold P_Reverse_5_ in *.
+  unfold P_Reverse_1_ in *.
+  unfold shift_sint32 in *.
+  intros.
+
+  assert(Shift: forall z k l, (shift (shift z k) l) = (shift z (k + l))).
+  {
+    intros.
+    unfold shift.
+    simpl.
+    replace (offset z + k + l) with (offset z + (k + l)) by lia.
+    trivial.
+  }
+
+  replace (shift a (p + i)) with (shift (shift a p) (0 + i)).
+  - rewrite H; auto with zarith.
+    rewrite Shift.
+    replace (p + (q - p + 0 - 1 - 0 - i)) with (q + p - 1 - p - i) by lia.
+    trivial.
+  - rewrite Shift.
+    replace (0 + i) with i by lia.
+    trivial.
+
+
+
+
+
+
+Qed.
+
+Goal typed_ref_lemma_ReverseSwitch.
+Hint ReverseSwitch,property.
+Proof.
+  intros p q r K L.
+  intros.
+  unfold P_Reverse_4_ in *.
+  unfold P_Reverse_1_ in *.
+  unfold shift_sint32 in *.
+  intros.
+  replace (r + q - p + p - 1 - r - i) with (q - 1 - i) by auto with zarith.
+  assert(p + i < q) by auto with zarith.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Qed.
+
+Goal typed_ref_lemma_ReverseUnion.
+Hint ReverseUnion,property.
+Proof.
+  intros p q K L.
+  intros.
+  unfold P_Reverse_4_ in *.
+  unfold P_Reverse_1_ in *.
+  unfold shift_sint32 in *.
+  intros.
+
+  assert(X: i < p \/ i >= p) by tauto.
+  destruct X as [lower|upper].
+  {
+    rewrite H1; auto with zarith.
+    replace (p + q - 1 - 0 - i) with (q + p - 1 - 0 - i) by auto with zarith.
+    trivial.
+  }
+  {
+       pose (j := i - p).
+       replace (0 + i) with (p + j).
+       replace (q + p - 1 - 0 - i) with (q + p - 1 - p - j).
+       rewrite H2; auto with zarith.
+       - subst j; auto with zarith.
+       - subst j; auto with zarith.
+       - subst j; auto with zarith.
+       - subst j; auto with zarith.
+  }
+
+
+
+
+
+
 
 
 Qed.
@@ -844,6 +1862,33 @@ Proof.
   apply H1; lia.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_lemma_StrictLowerBoundShift.
@@ -869,6 +1914,33 @@ Proof.
   apply H0; lia.
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Qed.
 
 Goal typed_ref_lemma_StrictUpperBoundShift.
@@ -890,6 +1962,33 @@ Proof.
   }
   rewrite <- Assoc.
   apply H0; lia.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 Qed.

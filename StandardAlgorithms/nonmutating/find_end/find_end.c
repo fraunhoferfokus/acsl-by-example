@@ -16,10 +16,10 @@ size_type find_end(const value_type* a, size_type m,
   size_type ret = m;
 
   /*@
-    loop invariant bound:   ret <= m - n || ret == m;
-    loop invariant result1: ret == m ==> !HasSubRange(a, n+i-1, b, n);
-    loop invariant result2: ret < m  ==> EqualRanges{Here,Here}(a+ret, n, b);
-    loop invariant last:    ret < m  ==> !HasSubRange(a, ret+1, i+n-1, b, n);
+    loop invariant bound:  ret <= m - n || ret == m;
+    loop invariant result: ret == m ==> !HasSubRange(a, n+i-1, b, n);
+    loop invariant result: ret < m  ==> EqualRanges{Here,Here}(a + ret, n, b);
+    loop invariant last:   ret < m  ==> !HasSubRange(a, ret+1, i+n-1, b, n);
     loop assigns i, ret;
     loop variant m - i;
   */

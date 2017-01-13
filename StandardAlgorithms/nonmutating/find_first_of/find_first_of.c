@@ -1,4 +1,6 @@
-#include "nonmutating.h"
+
+#include "find_first_of.h"
+#include "../find/find.h"
 
 size_type find_first_of (const value_type* a, size_type m,
                          const value_type* b, size_type n)

@@ -5,7 +5,7 @@
 #include "Unchanged.h"
 
 /*@
-  axiomatic CountSection
+  axiomatic Count
   {
     logic integer
       Count{L}(value_type* a, integer m, integer n, value_type v) reads a[m..n-1];

@@ -13,9 +13,9 @@
 
   assigns b[0..(n-1)];
 
-  ensures equal_first: EqualRanges{Here,Here}(a,   m,   b+(n-m));
-  ensures equal_last:  EqualRanges{Here,Here}(a+m, n-m, b);
-  ensures unchanged:   Unchanged{Old,Here}(a, n);
+  ensures left:      EqualRanges{Here,Old}(b, 0, n-m, a, m);
+  ensures right:     EqualRanges{Here,Old}(b, n-m, n, a, 0);
+  ensures unchanged:   Unchanged{Here,Old}(a, n);
 */
 void rotate_copy(const value_type* a, size_type m, size_type n, value_type* b);
 

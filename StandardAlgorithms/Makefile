@@ -4,6 +4,18 @@ MAKEFLAGS += --silent --no-print-directory
 FILELIST = filelist.path
 EXAMPLES := $(shell cat $(FILELIST))
 
+depend:
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "generate dependencies $$i"; $(MAKE) depend -sC $$i);\
+	done
+
+depend-clean:
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "depend-clean $$i"; $(MAKE) depend-clean -sC $$i);\
+	done
+
 report:
 	@for i in $(EXAMPLES);\
 	do \

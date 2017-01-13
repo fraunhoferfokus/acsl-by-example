@@ -3,8 +3,8 @@
 #define MULTISETUNCHANGEDLEMMAS_H_INCLUDED
 
 #include "MultisetUnchanged.h"
-#include "Unchanged.h"
 #include "CountLemmas.h"
+#include "Unchanged.h"
 
 /*@
   lemma

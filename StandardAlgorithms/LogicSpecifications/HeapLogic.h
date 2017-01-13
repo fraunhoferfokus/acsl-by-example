@@ -1,6 +1,6 @@
 
-#ifndef HEAPLOGIC_INCLUDED
-#define HEAPLOGIC_INCLUDED
+#ifndef HEAPLOGIC_H_INCLUDED
+#define HEAPLOGIC_H_INCLUDED
 
 #include "typedefs.h"
 

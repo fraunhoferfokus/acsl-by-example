@@ -5,7 +5,7 @@ SEC=sec:find_end
 
 include ../../Makefile.template
 
-WP_TIMEOUT=100
+#WP_TIMEOUT=20
 
 # verify "first"
 #WP_FLAGS += -wp-prop first

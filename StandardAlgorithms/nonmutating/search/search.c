@@ -17,10 +17,12 @@ size_type search(const value_type* a, size_type m,
   */
   for (size_type i = 0; i <= m - n; ++i) {
     if (equal(a + i, n, b)) {
+      //@ assert has_match: HasSubRange(a, 0, m, b, n);
       return i;
     }
   }
 
+  //@ assert no_match: !HasSubRange(a, 0, m, b, n);
   return m;
 }
 
