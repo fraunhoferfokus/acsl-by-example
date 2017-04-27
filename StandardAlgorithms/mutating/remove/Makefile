@@ -3,9 +3,11 @@ FILE=remove
 CMD=\\remove
 SEC=sec:remove
 
-#WP_TIMEOUT=20
+#WP_TIMEOUT=40
 
 include ../../Makefile.template
+
+#WP_FLAGS += -wp-split
 
 #WP_FLAGS += -wp-prop size
 #WP_FLAGS += -wp-prop retain
@@ -15,6 +17,7 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-prop @lemma
 
 #WP_FLAGS += -wp-prop CountShift
+#WP_FLAGS += -wp-prop UnchangedShift
 #WP_FLAGS += -wp-prop HasValueSectionInversion
 #WP_FLAGS += -wp-prop HasValueShiftInversion
 

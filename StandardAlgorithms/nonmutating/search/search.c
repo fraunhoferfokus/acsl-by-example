@@ -5,7 +5,7 @@
 size_type search(const value_type* a, size_type m,
                  const value_type* b, size_type n)
 {
-  if (n > m) {
+  if (m < n) {
     return m;
   }
 

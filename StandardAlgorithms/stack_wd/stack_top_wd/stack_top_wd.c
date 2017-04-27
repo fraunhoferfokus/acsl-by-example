@@ -2,13 +2,13 @@
 #include "stack/stack.h"
 
 /*@
-  requires Valid(s) && !Empty(s);
-  requires Valid(t) && !Empty(t);
-  requires Equal{Here,Here}(s, t);
+  requires valid: \valid(s) && Invariant(s) && !Empty(s);
+  requires valid: \valid(t) && Invariant(t) && !Empty(t);
+  requires equal: Equal{Here,Here}(s, t);
 
   assigns \nothing;
 
-  ensures \result;
+  ensures equal:  \result;
 */
 bool stack_top_wd(const Stack* s, const Stack* t)
 {

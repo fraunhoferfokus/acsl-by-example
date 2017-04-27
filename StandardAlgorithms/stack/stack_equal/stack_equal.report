@@ -1,1 +1,1 @@
-stack_equal 23 23 7 0 15 1 0 0 0 0 100 \stackequal sec:stack-runtime-equality
+stack_equal 18 18 7 0 11 0 0 0 0 0 100 \stackequal sec:stack-runtime-equality

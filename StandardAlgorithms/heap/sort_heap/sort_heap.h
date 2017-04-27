@@ -2,10 +2,11 @@
 #ifndef SORT_HEAP_H_INCLUDED
 #define SORT_HEAP_H_INCLUDED
 
+#include <limits.h>
 #include "IsHeap.h"
+#include "HeapMaximum.h"
 #include "MultisetUnchanged.h"
 #include "Sorted.h"
-#include <limits.h>
 
 /*@
    requires limit:  0 < n < (INT_MAX-2)/2;

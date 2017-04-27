@@ -1,6 +1,6 @@
 
 #include "stack/stack.h"
-#include "nonmutating.h"
+#include "../nonmutating/equal/equal.h"
 
 bool stack_equal(const Stack* s, const Stack* t)
 {

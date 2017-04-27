@@ -3,6 +3,7 @@
 #define MAX_ELEMENT2_H_INCLUDED
 
 #include "MaxElement.h"
+#include "StrictUpperBound.h"
 
 /*@
   requires  \valid_read(a + (0..n-1));
@@ -17,7 +18,7 @@
     assumes 0 < n;
     ensures result:   0 <= \result < n;
     ensures max:      MaxElement(a, n, \result);
-    ensures strict:   StrictUpperBound(a, 0, \result, a[\result]);
+    ensures strict:   StrictUpperBound(a, \result, a[\result]);
 
   complete behaviors;
   disjoint behaviors;

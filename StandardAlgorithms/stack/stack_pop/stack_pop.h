@@ -5,33 +5,33 @@
 #include "stack/stack.h"
 
 /*@
-  requires Valid(s);
+  requires valid: \valid(s) && Invariant(s);
 
   assigns s->size;
 
-  ensures  Valid(s);
+  ensures  valid: \valid(s) && Invariant(s);
 
   behavior not_empty:
     assumes !Empty(s);
 
     assigns s->size;
 
-    ensures Size(s) == Size{Old}(s) - 1;
-    ensures !Full(s);
-    ensures Unchanged{Old,Here}(Storage(s), Size(s));
-    ensures Storage(s) == Storage{Old}(s);
-    ensures Capacity(s) == Capacity{Old}(s);
+    ensures size:      Size(s) == Size{Old}(s) - 1;
+    ensures full:      !Full(s);
+    ensures unchanged: Unchanged{Old,Here}(Storage(s), Size(s));
+    ensures storage:   Storage(s) == Storage{Old}(s);
+    ensures capacity:  Capacity(s) == Capacity{Old}(s);
 
   behavior empty:
     assumes Empty(s);
 
     assigns \nothing;
 
-    ensures Empty(s);
-    ensures Unchanged{Old,Here}(Storage(s), Size(s));
-    ensures Size(s) == Size{Old}(s);
-    ensures Storage(s) == Storage{Old}(s);
-    ensures Capacity(s) == Capacity{Old}(s);
+    ensures empty:     Empty(s);
+    ensures unchanged: Unchanged{Old,Here}(Storage(s), Size(s));
+    ensures size:      Size(s) == Size{Old}(s);
+    ensures storage:   Storage(s) == Storage{Old}(s);
+    ensures capacity:  Capacity(s) == Capacity{Old}(s);
 
   complete behaviors;
   disjoint behaviors;

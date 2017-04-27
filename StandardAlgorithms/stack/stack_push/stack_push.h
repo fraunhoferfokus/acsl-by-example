@@ -5,7 +5,7 @@
 #include "stack/stack.h"
 
 /*@
-  requires Valid(s);
+  requires valid: \valid(s) && Invariant(s);
 
   assigns s->size;
   assigns s->obj[s->size];
@@ -16,25 +16,25 @@
     assigns s->size;
     assigns s->obj[s->size];
 
-    ensures Valid(s);
-    ensures Size(s) == Size{Old}(s) + 1;
-    ensures Top(s) == v;
-    ensures !Empty(s);
-    ensures Unchanged{Old,Here}(Storage(s), Size{Old}(s));
-    ensures Storage(s) == Storage{Old}(s);
-    ensures Capacity(s) == Capacity{Old}(s);
+    ensures valid:     \valid(s) && Invariant(s);
+    ensures size:      Size(s) == Size{Old}(s) + 1;
+    ensures top:       Top(s) == v;
+    ensures not_empty: !Empty(s);
+    ensures unchanged: Unchanged{Old,Here}(Storage(s), Size{Old}(s));
+    ensures storage:   Storage(s) == Storage{Old}(s);
+    ensures capacity:  Capacity(s) == Capacity{Old}(s);
 
   behavior full:
     assumes Full(s);
 
     assigns \nothing;
 
-    ensures Valid(s);
-    ensures Full(s);
-    ensures Unchanged{Old,Here}(Storage(s), Size(s));
-    ensures Size(s) == Size{Old}(s);
-    ensures Storage(s) == Storage{Old}(s);
-    ensures Capacity(s) == Capacity{Old}(s);
+    ensures valid:     \valid(s) && Invariant(s);
+    ensures full:      Full(s);
+    ensures unchanged: Unchanged{Old,Here}(Storage(s), Size(s));
+    ensures size:      Size(s) == Size{Old}(s);
+    ensures storage:   Storage(s) == Storage{Old}(s);
+    ensures capacity:  Capacity(s) == Capacity{Old}(s);
 
   complete behaviors;
   disjoint behaviors;

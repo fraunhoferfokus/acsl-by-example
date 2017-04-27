@@ -19,13 +19,25 @@ depend-clean:
 report:
 	@for i in $(EXAMPLES);\
 	do \
-		(echo "verify $$i"; $(MAKE) report -sC $$i);\
+		(echo "report $$i"; $(MAKE) report -sC $$i);\
 	done
 
 report-clean:
 	@for i in $(EXAMPLES);\
 	do \
 		(echo "report-clean $$i"; $(MAKE) report-clean -sC $$i);\
+	done
+
+preport:
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "preport $$i"; $(MAKE) preport -sC $$i);\
+	done
+
+preport-clean:
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "preport-clean $$i"; $(MAKE) preport-clean -sC $$i);\
 	done
 
 log:
@@ -46,12 +58,10 @@ lib:
 clean:
 	@($(RM) -rf errorlogs);\
 	$(RM) *.back
-	@(echo "clean coq"; $(MAKE) clean -sC coq);
-	@for i in $(EXAMPLES);\
+	@for i in drivers $(EXAMPLES);\
         do \
                 (echo "clean $$i"; $(MAKE) clean -sC $$i);\
         done
-			
 
 format:
 	@for i in $(EXAMPLES);\

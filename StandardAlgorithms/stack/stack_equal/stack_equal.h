@@ -5,13 +5,13 @@
 #include "stack/stack.h"
 
 /*@
-    requires Valid(s);
-    requires Valid(t);
+    requires valid: \valid(s) && Invariant(s);
+    requires valid: \valid(t) && Invariant(t);
 
     assigns \nothing;
 
-    ensures \result == 1  <==>  Equal{Here,Here}(s, t);
-    ensures \result == 0  <==> !Equal{Here,Here}(s, t);
+    ensures equal:     \result == 1  <==>  Equal{Here,Here}(s, t);
+    ensures not_equal: \result == 0  <==> !Equal{Here,Here}(s, t);
 */
 bool stack_equal(const Stack* s, const Stack* t);
 

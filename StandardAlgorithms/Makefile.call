@@ -50,6 +50,18 @@ report-clean:
 		($(MAKE) report-clean -sC $$i);\
 	done
 
+preport:
+	@for i in $(FILE);\
+        do \
+                ($(MAKE) preport -sC $$i);\
+        done
+
+preport-clean:
+	@for i in $(FILE);\
+	do \
+		($(MAKE) preport-clean -sC $$i);\
+	done
+
 format:
 	@for i in $(FILE);\
         do \

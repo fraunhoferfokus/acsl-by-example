@@ -3,7 +3,6 @@
 #define BINARY_SEARCH_H_INCLUDED
 
 #include "Sorted.h"
-#include "ForallCompare.h"
 
 /*@
   requires valid:  \valid_read(a + (0..n-1));

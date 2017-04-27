@@ -2,8 +2,9 @@
 #ifndef UPPER_BOUND_H_INCLUDED
 #define UPPER_BOUND_H_INCLUDED
 
-#include "ForallCompare.h"
 #include "Sorted.h"
+#include "UpperBound.h"
+#include "StrictLowerBound.h"
 
 /*@
   requires \valid_read(a + (0..n-1));

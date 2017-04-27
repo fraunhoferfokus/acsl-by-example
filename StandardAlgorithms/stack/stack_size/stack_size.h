@@ -5,11 +5,11 @@
 #include "stack/stack.h"
 
 /*@
-    requires Valid(s);
+    requires valid: \valid(s) && Invariant(s);
 
     assigns \nothing;
 
-    ensures \result == Size(s);
+    ensures size: \result == Size(s);
 */
 size_type stack_size(const Stack* s);
 

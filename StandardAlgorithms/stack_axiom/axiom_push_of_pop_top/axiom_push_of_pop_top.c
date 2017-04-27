@@ -2,9 +2,13 @@
 #include "stack/stack.h"
 
 /*@
-  requires  Valid(s) && !Empty(s);
-  assigns   s->size, s->obj[s->size-1];
-  ensures   Equal{Here,Old}(s, s);
+  requires  valid:      \valid(s) && Invariant(s);
+  requires  not_empty:  !Empty(s);
+
+  assigns   s->size;
+  assigns   s->obj[s->size-1];
+
+  ensures   equal: Equal{Here,Old}(s, s);
 */
 void axiom_push_of_pop_top(Stack* s)
 {

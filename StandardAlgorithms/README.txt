@@ -97,3 +97,39 @@ make <algorithm>.coq
  
 make format
 - uses astyle to format the source code
+
+interesting environment variables
+---------------------------------
+
+A number of environment variables affect the generation of reports:
+
+WP_TIMEOUT (20)
+    The default timeout when running provers.  This value is multiplied
+    by 1.1 for each additional process after the first in $WP_PROCESSES.
+
+WP_COQ_TIMEOUT (20)
+    The timeout for coq.  This timeout is scaled in the same way
+    WP_TIMEOUT is.
+
+WP_ALT_ERGO_STEPS (1000)
+    The number of steps alt-ergo runs for before it is aborted.
+
+WP_PROCESSES (1)
+    The number of provers to run in parallel.
+
+REPORT_BACKEND (default)
+    One of trust_wp, wp_runner, and default.  Chooses how reports are
+    generated: With default, the default backend is used.  trust_wp uses
+    a different script to extract results from Frama C's output in a way
+    that used to be broken.  wp_runner uses a custom script to run
+    provers.  You probably won't need to touch this variable.
+
+SCRIPT (wp0.script)
+    The proof script used for discharging proof obligations with coq.
+    You probably won't need to touch this variable.
+
+FRAMAC_SHARE
+    The path of a folder in the Frama C installation where Frama C
+    stores a number importantant scripts and resources.  This variable
+    is typically set in ~/.profile according to the location of your
+    Frama C installation.

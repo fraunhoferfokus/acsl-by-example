@@ -7,20 +7,30 @@
 #include "typedefs.h"
 #include "search_n.h"
 
+void test(const std::vector<value_type>& a, size_type n, value_type v)
+{
+  assert(std::search_n(a.begin(), a.end(), n, v) == 
+         a.begin() + search_n(&a[0], a.size(), n, v));
+}
+
 int main(int argc, char** argv)
 {
-  std::vector<value_type> a{00, 42, 42, 42, 40, 42, 42, 42, 42};
-  //std::vector<value_type> a{00, 42, 42, 30, 40, 42, 42, 42, 42};
-  //std::vector<value_type> a{00, 10, 20, 30, 40, 42, 42, 42, 42};
-  //std::vector<value_type> a{00, 10, 20, 30, 40, 50, 42, 42, 42};
-  //std::vector<value_type> a{00, 10, 20, 30, 40, 50, 60, 42, 42};
-  //std::vector<value_type> a{00, 10, 20, 30, 40, 50, 60, 70, 80};
-  //std::vector<value_type> a{00, 10, 20, 42, 42, 42, 60, 70, 80};
+  std::vector<value_type> a{0, 4, 4, 4, 5, 4, 4, 4, 4};
 
-  auto it = std::search_n(a.begin(), a.end(), 3, 42);
+  // successful nontrivial search
+  test(a, 3, 7);
 
-  auto pos = search_n(&a[0], 9, 3, 42);
-  assert(it == a.begin() + pos);
+  // failing nontrivial search
+  test(a, 6, 4);
+
+  // search for empty range
+  test(a, 0, 4);
+
+  // search in empty range
+  test(a, 1, 4);
+
+  // search for too large range
+  test(a, 20, 4);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
 

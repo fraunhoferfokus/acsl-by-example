@@ -8,7 +8,7 @@
 #include "Unchanged.h"
 #include "StackCapacitySizeTop.h"
 #include "StackEmptyFull.h"
-#include "StackValid.h"
+#include "StackInvariant.h"
 #include "StackEqual.h"
 #include "StackEquivalence.h"
 #include "StackSeparated.h"

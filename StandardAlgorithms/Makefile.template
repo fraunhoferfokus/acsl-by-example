@@ -7,9 +7,10 @@ SHELL=/bin/bash
 
 export TOP_DIR=../..
 export SCRIPT_DIR=$(TOP_DIR)/Scripts
+export DRIVER_DIR=$(TOP_DIR)/drivers
 
 CPPFLAGS = -I$(TOP_DIR)
-CPPFLAGS += -I$(TOP_DIR)/LogicSpecifications 
+CPPFLAGS += -I$(TOP_DIR)/Logic
 
 VPATH += $(TOP_DIR)/nonmutating
 CPPFLAGS += -I$(TOP_DIR)/nonmutating
@@ -53,18 +54,30 @@ INCLUDES  = $(CPPFLAGS)
 # PREPROCESSOR
 
 SHARED_FLAGS=-Wall -pedantic -Werror
-CFLAGS=-x c++ $(SHARED_FLAGS)
+CFLAGS=-x c++ -std=c++14 $(SHARED_FLAGS)
 CXXFLAGS=-std=c++14 $(SHARED_FLAGS)
 
 #setup wp
-WP_TIMEOUT ?= 20
-WP_COQ_TIMEOUT ?= 20
-WP_ALT_ERGO_STEPS ?= 1000
-WP_PROCESSES ?= 1
+export WP_TIMEOUT ?= 20
+export WP_COQ_TIMEOUT ?= 10
+export WP_ALT_ERGO_STEPS ?= 1000
+export WP_PROCESSES ?= 1
+
+# flags for when we invoke Frama C directly instead of going
+# through script_functions.sh
+WP_TIME_FLAGS= \
+	-wp-timeout $(WP_TIMEOUT) \
+	-wp-coq-timeout $(WP_COQ_TIMEOUT) \
+	-wp-steps $(WP_ALT_ERGO_STEPS) \
+	-wp-par $(WP_PROCESSES)
 
 #setup coq
 SCRIPT?='$(TOP_DIR)/wp0.script' # default script
-#DRIVER=$(TOP_DIR)/coq/driver
+DRIVER=$(DRIVER_DIR)/driver
+
+# having this as a separate variable allows us to override it in
+# algorithm makefiles
+WP_RTE_FLAGS ?= -warn-unsigned-overflow -warn-unsigned-downcast
 
 # We differentiate between two types of WP options:
 # 1) in WP_FLAGS we collect the general options
@@ -74,28 +87,27 @@ SCRIPT?='$(TOP_DIR)/wp0.script' # default script
 
 WP_BASE_FLAGS += -pp-annot
 WP_BASE_FLAGS += -no-unicode
-WP_BASE_FLAGS += -warn-unsigned-overflow
-WP_BASE_FLAGS += -warn-unsigned-downcast
 WP_BASE_FLAGS += -wp
-WP_BASE_FLAGS += -wp-rte
+WP_BASE_FLAGS += -wp-rte $(WP_RTE_FLAGS)
 #WP_BASE_FLAGS += -wp-split
 
 WP_FLAGS = $(WP_BASE_FLAGS)
 
-#WP_FLAGS += -wp-driver $(TOP_DIR)/external.driver
+WP_FLAGS += -wp-driver $(DRIVER_DIR)/external.driver
 WP_FLAGS += -wp-script $(SCRIPT)
 WP_FLAGS += -wp-model Typed+ref
 
-WP_PROVER_FLAGS += -wp-timeout $(WP_TIMEOUT)
-WP_PROVER_FLAGS += -wp-coq-timeout $(WP_COQ_TIMEOUT)
 #WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
+# provers
 WP_PROVER_FLAGS += -wp-prover cvc4
 WP_PROVER_FLAGS += -wp-prover z3
 WP_PROVER_FLAGS += -wp-prover alt-ergo
-
 WP_PROVER_FLAGS += -wp-prover cvc3
 WP_PROVER_FLAGS += -wp-prover eprover
+WP_PROVER_FLAGS += -wp-prover coq
+
+
 #WP_PROVER_FLAGS += -wp-prover gappa
 #WP_PROVER_FLAGS += -wp-prover metis
 
@@ -113,20 +125,17 @@ WP_PROVER_FLAGS += -wp-prover eprover
 # yices (version 2.* does not support quantifiers ...)
 #WP_PROVER_FLAGS += -wp-prover Yices
 
-# interactive provers
-WP_PROVER_FLAGS += -wp-prover coq 
-
-export WP=frama-c 
+export WP=frama-c
 export WPGUI=frama-c-gui
-
+export WP_PROVER_FLAGS
 export WP_C_FLAGS = -cpp-extra-args="$(INCLUDES)" $(WP_FLAGS)
 export WP_CXX_FLAGS = -cxx-clang-command="framaCIRGen $(INCLUDES)"  $(WP_FLAGS)
 export WP_C_REPORT=$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1
 
 TESTOBJ = $(FILE)_test.o $(FILE).o
 
-$(DRIVER):
-	@(cd $(TOP_DIR)/coq && $(MAKE) compile)
+$(DRIVER): FORCE
+	@(cd $(DRIVER_DIR) && $(MAKE) compile)
 
 $(FILE)_test: $(TESTOBJ) FORCE
 	@$(CXX) $(LDFLAGS) -o $@ $(TESTOBJ)
@@ -137,25 +146,31 @@ test: $(FILE)_test FORCE
 %.cpp:%.c
 	cp $< $@
 
-%.why3:%.c FORCE
-	@($(WP) $(WP_C_FLAGS)  -wp-prover why3 -wp-gen  -wp-out $(patsubst %.c,%.wp, $<)  $<)
+%.why3:%.c driver FORCE
+	@($(WP) $(WP_C_FLAGS) $(WP_TIME_FLAGS) -wp-prover why3 -wp-gen  -wp-out $(patsubst %.c,%.wp, $<)  $<)
 
 # start WP on command line and run provers
-%.wp:%.c FORCE
-	@$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES) -wp-out $(patsubst %.c,%.wp, $<)  $<
+%.wp:%.c $(DRIVER) FORCE
+	@$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -save $(patsubst %.c,%.sav, $<) -wp-out $(patsubst %.c,%.wp, $<)  $<
 
 %.wp++:%.cpp FORCE
-	@$(WP) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES) -wp-out $(patsubst %.cpp,%.wp++, $<)  $<
+	@$(WP) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $<
+
+%.wprunner:%.c FORCE
+	@${SCRIPT_DIR}/wp_runner.sh $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES)
 
 # start WP GUI and run provers
-%.wpgui:%.c FORCE
-	@($(WPGUI) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES) -wp-out $(patsubst %.c,%.wp, $<)  $< &)
+%.wpgui:%.c $(DRIVER) FORCE
+	@($(WPGUI) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.c,%.wp, $<)  $< &)
 
 %.wpgui++:%.cpp FORCE
-	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES) -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
+	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
 
-%.report:%.c 
-	@. ${SCRIPT_DIR}/script_functions.sh; extract_raw_data_Wp $(basename $<) $(CMD) $(SEC) >$@
+%.report:%.c
+	@. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
+
+%.preport:%.c
+	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
 
 %.report-wp:%.report
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport <$<
@@ -163,8 +178,15 @@ test: $(FILE)_test FORCE
 report: $(FILE).report
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport <$(FILE).report
 
+preport: $(FILE).preport
+	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport <$(FILE).preport
+
 %.check:%.c
 	@$(WP) $(WP_C_FLAGS) -wp-check -wp-out $(patsubst %.c,%.wp, $<)  $<
+
+# display saved results by FRAMA-C GUI
+load:
+	@frama-c-gui -load $(FILE).sav
 
 obj: $(FILE).o
 
@@ -185,12 +207,12 @@ include $(FILE).d
 # cleanup
 
 clean:: FORCE
-	@(cd $(TOP_DIR)/coq && $(MAKE) clean)
+	@(cd $(DRIVER_DIR) && $(MAKE) -s clean)
 	@$(RM) *.o
 	@$(RM) *.back
 	@$(RM) *.orig
 	@$(RM) *.exe
-	@$(RM) lia.cache
+	@$(RM) .lia.cache
 	@$(RM) -rf  *.debug
 	@$(RM) -rf  .frama-c
 	@$(RM) -rf  *.jessie
@@ -200,9 +222,13 @@ clean:: FORCE
 	@$(RM) $(FILE).cpp
 	@$(RM) $(FILE)_test
 	@$(RM) $(FILE).tex
+	@$(RM) $(FILE).sav
 
 report-clean: FORCE
 	@$(RM) *.report
+
+preport-clean: FORCE
+	@$(RM) *.preport
 
 ASTYLEOPTIONS += -A3
 #ASTYLEOPTIONS += --break-blocks
@@ -215,7 +241,7 @@ ASTYLEOPTIONS += --indent=spaces=2
 ASTYLEOPTIONS += --min-conditional-indent=0
 
 format: FORCE
-	@astyle $(ASTYLEOPTIONS) *.c *.cpp *.h 
+	@astyle $(ASTYLEOPTIONS) *.c *.cpp *.h
 
 all: clean test report
 

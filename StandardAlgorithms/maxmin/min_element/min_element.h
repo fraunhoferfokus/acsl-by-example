@@ -3,6 +3,7 @@
 #define MIN_ELEMENT_H_INCLUDED
 
 #include "MinElement.h"
+#include "StrictLowerBound.h"
 
 /*@
   requires \valid_read(a + (0..n-1));
@@ -17,7 +18,7 @@
     assumes 0 < n;
     ensures result:  0 <= \result < n;
     ensures min:     MinElement(a, n, \result);
-    ensures strict:  StrictLowerBound(a, 0, \result, a[\result]);
+    ensures strict:  StrictLowerBound(a, \result, a[\result]);
 
   complete behaviors;
   disjoint behaviors;

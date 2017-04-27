@@ -1,0 +1,23 @@
+
+/*
+ * For details,see:
+ *
+ * wp-manual
+ * Sect.2.3.10 "Linking ACSL Symbols to External Libraries"
+ *
+ * and
+ *
+ * mail of Jochen Burghardt 16.2.2017 17:11 and
+ * mail of Francois Bobot   17.2.2017 10:31
+ * on frama-c-discuss@lists.gforge.inria.fr
+ */
+
+/* Make sure that the coq file starts with CAPITAL letter.
+   No idea why...
+*/
+coq.file += "Shift_lemmas.v";
+
+library memory:
+     altergo.file += "shift_lemmas.mlw";
+     why3.file    += "shift_lemmas.why";
+

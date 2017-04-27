@@ -5,20 +5,18 @@
 #include "stack/stack.h"
 
 /*@
-  requires \valid(s);
-  requires 0 < capacity;
-  requires \valid(storage + (0..capacity-1));
-  requires \separated(s, storage + (0..capacity-1));
+  requires valid:    \valid(s);
+  requires capacity: 0 < capacity;
+  requires storage:  \valid(storage + (0..capacity-1));
+  requires sep:      \separated(s, storage + (0..capacity-1));
 
-  assigns s->obj;
-  assigns s->capacity;
-  assigns s->size;
+  assigns s->obj, s->capacity, s->size;
 
-  ensures Valid(s);
-  ensures Capacity(s) == capacity;
-  ensures Size(s) == 0;
-  ensures Empty(s);
-  ensures Storage(s) == storage;
+  ensures valid:     \valid(s);
+  ensures invariant: Invariant(s);
+  ensures capacity:  Capacity(s) == capacity;
+  ensures empty:     Empty(s);
+  ensures storage:   Storage(s) == storage;
 */
 void stack_init(Stack* s, value_type* storage, size_type capacity);
 

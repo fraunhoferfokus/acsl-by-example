@@ -2,9 +2,11 @@
 #ifndef EQUAL_RANGE_H_INCLUDED
 #define EQUAL_RANGE_H_INCLUDED
 
-#include "ForallCompare.h"
-#include "Sorted.h"
 #include "../equal_range/make_pair.h"
+#include "Sorted.h"
+#include "ConstantRange.h"
+#include "StrictUpperBound.h"
+#include "StrictLowerBound.h"
 
 /*@
   requires valid:  \valid_read(a + (0..n-1));

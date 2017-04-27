@@ -5,7 +5,7 @@ SEC=sec:removecopy2
 
 include ../../Makefile.template
 
-#WP_TIMEOUT=20
+WP_TIMEOUT=30
 
 #WP_FLAGS  += -wp-fct remove_copy_aux
 #WP_FLAGS  += -wp-fct remove_copy

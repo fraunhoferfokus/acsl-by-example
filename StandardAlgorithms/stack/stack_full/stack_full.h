@@ -5,12 +5,12 @@
 #include "stack/stack.h"
 
 /*@
-    requires Valid(s);
+    requires valid: \valid(s) && Invariant(s);
 
     assigns \nothing;
 
-    ensures \result == 1 <==>  Full(s);
-    ensures \result == 0 <==> !Full(s);
+    ensures full:     \result == 1  <==>  Full(s);
+    ensures not_full: \result == 0  <==> !Full(s);
 */
 bool stack_full(const Stack* s);
 

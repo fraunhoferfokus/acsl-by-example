@@ -5,11 +5,11 @@
 #include "stack/stack.h"
 
 /*@
-    requires Valid(s);
+    requires valid: \valid(s) && Invariant(s);
 
     assigns \nothing;
 
-    ensures !Empty(s) ==> \result == Top(s);
+    ensures top: !Empty(s) ==> \result == Top(s);
 */
 value_type stack_top(const Stack* s);
 

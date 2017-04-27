@@ -1,10 +1,10 @@
 
 #include "sort_heap.h"
 #include "../pop_heap/pop_heap.h"
-#include "HeapMaximum.h"
-#include "MultisetUnchangedLemmas.h"
+#include "LowerBound.h"
 #include "SortedLemmas.h"
 #include "Unchanged.h"
+#include "MultisetUnchangedLemmas.h"
 
 void sort_heap(value_type* a, size_type n)
 {

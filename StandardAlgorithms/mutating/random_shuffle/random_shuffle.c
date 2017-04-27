@@ -13,7 +13,7 @@ void random_shuffle(value_type* a, size_type n)
       loop invariant bounds:    1 <= i <= n;
       loop invariant reorder:   MultisetUnchanged{Here,Pre}(a,0,i);
       loop invariant unchanged: Unchanged{Here,Pre}(a,i,n);
-      loop assigns   i, a[0..n-1];
+      loop assigns   i, a[0..n-1], random_seed[0..2];
       loop variant   n - i;
     */
     for (size_type i = 1; i < n; ++i) {

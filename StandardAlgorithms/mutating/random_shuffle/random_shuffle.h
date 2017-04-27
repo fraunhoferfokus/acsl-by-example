@@ -4,10 +4,13 @@
 
 #include "MultisetUnchanged.h"
 
+extern unsigned short random_seed[3];
+
 /*@
   requires \valid(a + (0..n-1));
 
   assigns a[0..n-1];
+  assigns random_seed[0..2];
 
   ensures  MultisetUnchanged{Here,Old}(a,n);
 */

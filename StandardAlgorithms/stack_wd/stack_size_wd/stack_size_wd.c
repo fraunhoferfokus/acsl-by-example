@@ -2,12 +2,13 @@
 #include "stack/stack.h"
 
 /*@
-  requires Valid(s) && Valid(t);
-  requires Equal{Here,Here}(s, t);
+  requires valid: \valid(s) && Invariant(s);
+  requires valid: \valid(t) && Invariant(t);
+  requires equal: Equal{Here,Here}(s, t);
 
   assigns \nothing;
 
-  ensures \result;
+  ensures equal:  \result == Size(s);
 */
 bool stack_size_wd(const Stack* s, const Stack* t)
 {

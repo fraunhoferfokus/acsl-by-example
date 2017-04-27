@@ -1,3 +1,4 @@
+
 #include "equal_range2.h"
 #include "../lower_bound/lower_bound.h"
 #include "../upper_bound/upper_bound.h"
@@ -47,3 +48,4 @@ equal_range(const value_type* a, size_type n, value_type val)
     return make_pair(first, first);
   }
 }
+

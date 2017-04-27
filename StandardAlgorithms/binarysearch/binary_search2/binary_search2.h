@@ -2,7 +2,6 @@
 #ifndef BINARY_SEARCH2_H_INCLUDED
 #define BINARY_SEARCH2_H_INCLUDED
 
-#include "ForallCompare.h"
 #include "Sorted.h"
 #include "HasValue.h"
 

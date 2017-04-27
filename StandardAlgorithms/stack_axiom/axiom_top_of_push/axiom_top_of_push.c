@@ -2,13 +2,13 @@
 #include "stack/stack.h"
 
 /*@
-  requires Valid(s);
-  requires !Full(s);
+  requires valid:    \valid(s) && Invariant(s);
+  requires not_full: !Full(s);
 
   assigns s->size;
   assigns s->obj[s->size];
 
-  ensures \result == v;
+  ensures top: \result == v;
 */
 value_type axiom_top_of_push(Stack* s, value_type v)
 {

@@ -1,0 +1,14 @@
+
+# stupid command to search for largest verfication times
+
+find . -name "*.out" -exec cut -f 2 -d: {} \; | sed "s/ Valid/Valid/" | cut -d " " -f 2 | sed "s/(//" | sed "s/)//" |  sed "s/s//" | sort -unr | less
+
+# list algorithms whose algorithms depends on coq proofs
+find . -name "*_Coq.v" | cut -d "/" -f 3 | sort -u
+
+#  list ACSL lemma verified by coq
+find . -name "*_Coq.v" | cut -d "/" -f 6 |  sed "s/lemma_//" | sed "s/_Coq.v//" | sort -u
+
+# print list of pairs of "algorithms | 'Coq' lemma"
+find . -name "*_Coq.v" | cut -d "/" -f 3,6 |  sed "s/lemma_//" | sed "s/_Coq.v//" | sed "s/\//\t/" | sort -u
+
