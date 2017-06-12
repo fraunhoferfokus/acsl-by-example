@@ -58,9 +58,9 @@ CFLAGS=-x c++ -std=c++14 $(SHARED_FLAGS)
 CXXFLAGS=-std=c++14 $(SHARED_FLAGS)
 
 #setup wp
-export WP_TIMEOUT ?= 20
+export WP_TIMEOUT ?= 10
 export WP_COQ_TIMEOUT ?= 10
-export WP_ALT_ERGO_STEPS ?= 1000
+export WP_ALT_ERGO_STEPS ?= 10000
 export WP_PROCESSES ?= 1
 
 # flags for when we invoke Frama C directly instead of going
@@ -100,12 +100,12 @@ WP_FLAGS += -wp-model Typed+ref
 #WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 # provers
-WP_PROVER_FLAGS += -wp-prover cvc4
-WP_PROVER_FLAGS += -wp-prover z3
 WP_PROVER_FLAGS += -wp-prover alt-ergo
+WP_PROVER_FLAGS += -wp-prover coq
+WP_PROVER_FLAGS += -wp-prover z3
+WP_PROVER_FLAGS += -wp-prover cvc4
 WP_PROVER_FLAGS += -wp-prover cvc3
 WP_PROVER_FLAGS += -wp-prover eprover
-WP_PROVER_FLAGS += -wp-prover coq
 
 
 #WP_PROVER_FLAGS += -wp-prover gappa
@@ -173,10 +173,13 @@ test: $(FILE)_test FORCE
 	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
 
 %.report-wp:%.report
-	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport <$<
+	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
 
 report: $(FILE).report
-	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport <$(FILE).report
+	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $(FILE).report
+
+preport: $(FILE).preport
+	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $(FILE).preport
 
 preport: $(FILE).preport
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport <$(FILE).preport

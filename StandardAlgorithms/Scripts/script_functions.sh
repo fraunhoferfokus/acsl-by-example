@@ -11,7 +11,8 @@ set -e
 adjustTimeout()
 {
 	local increment=0.1
-	local timeout=`dc -e "20 k 1 $increment + $2 1 - ^ $1 * p"`
+	#local timeout=`dc -e "20 k 1 $increment + $2 1 - ^ $1 * p"`
+	local timeout=$1
 	LC_NUMERIC=C printf %.0f $timeout
 }
 
@@ -95,14 +96,14 @@ extract_raw_data_Wp()
     goal_count=`grep "goals scheduled" $results | cut -d ' ' -f2`
     valid_qed=`countValid $results Qed`
     valid_alt_ergo=`countValid $results Alt-Ergo`
-    valid_coq=`countValid $results Coq`
+    valid_z3=`countValid $results z3`
     valid_cvc4=`countValid $results cvc4`
     valid_cvc3=`countValid $results cvc3`
-    valid_z3=`countValid $results z3`
     valid_eprover=`countValid $results eprover`
+    valid_coq=`countValid $results Coq`
 
     #calculate all valid goals
-    valid=$(($valid_qed + $valid_alt_ergo + $valid_cvc4 + $valid_z3 + $valid_cvc3 + $valid_coq + $valid_eprover))
+    valid=$(($valid_qed + $valid_alt_ergo + $valid_z3 + $valid_cvc4 + $valid_cvc3 + $valid_eprover + $valid_coq))
 
     print_statistics
 }
@@ -111,7 +112,7 @@ extract_raw_data_Wp()
 extract_statistics_Wp()
 {
     # initialize validation variables with reasonable default values
-    for i in qed alt_ergo coq cvc4 cvc3 z3 eprover
+    for i in qed alt_ergo z3 cvc4 cvc3 eprover coq 
     do
         eval "valid_$i=0"
     done
@@ -143,27 +144,43 @@ print_statistics()
         percent=0
     fi
 
-    echo $alg $goal_count $valid $valid_qed $valid_alt_ergo $valid_cvc4 $valid_z3 $valid_cvc3 $valid_eprover $valid_coq $invalid $percent $cmd $sec
+    generate_report
 }
 
-# read a report from stdin and pretty-print it to stdout
+# report fields
+fields='alg goal_count valid
+    valid_qed valid_alt_ergo valid_z3 valid_cvc4 valid_cvc3 valid_eprover valid_coq
+    invalid percent cmd sec'
+
+# parse report fileand set variables accordingly
+parse_report()
+{
+    # read report
+    . $1
+
+    # fill in missing fields
+    for key in fields
+    do eval : \${$key:=0}
+    done
+}
+
+# generate a report file from the various variables and write it to stdout.
+# the format of the report file is such that it can be parsed by parse_report.
+generate_report()
+{
+    for key in $fields
+    do
+        eval value=\$$key
+        echo $key=\'${value:-0}\'
+    done
+}
+
+# read a report and pretty-print it to stdout
 prettyPrintReport()
 {
-    local alg
-    local cmd
-    local sec
-    local goal_count
-    local valid
-    local valid_qed
-    local valid_alt_ergo
-    local valid_cvc4
-    local valid_z3
-    local valid_cvc3
-    local valid_coq
-    local percent
-    local invalid
-
-    read -r alg goal_count valid valid_qed valid_alt_ergo valid_cvc4 valid_z3 valid_cvc3 valid_eprover valid_coq invalid percent cmd sec
+    parse_report $1
     printf  "   %-30s [%-4d %3d   (%3d %3d %3d %3d %3d %3d %3d)]     %3d%%\n" \
-        $alg $goal_count $valid $valid_qed $valid_cvc4 $valid_z3 $valid_alt_ergo $valid_cvc3 $valid_eprover $valid_coq $percent
+        $alg $goal_count $valid \
+        $valid_qed $valid_alt_ergo $valid_z3 $valid_cvc4 $valid_cvc3 $valid_eprover $valid_coq \
+        $percent
 }

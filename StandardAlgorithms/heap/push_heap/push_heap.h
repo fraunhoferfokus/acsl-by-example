@@ -6,7 +6,7 @@
 #include "MultisetUnchanged.h"
 
 /*@
-   requires nonempty: n > 0;
+   requires nonempty: 0 < n;
    requires valid:    \valid(a + (0..n-1));
    requires heap:     IsHeap(a, n-1);
 

@@ -13,7 +13,6 @@ random_shuffle	CountSectionUnion
 remove_copy2	CountSectionBounds
 remove_copy2	CountSectionMonotonic
 remove_copy2	CountSectionUnion
-remove_copy2	RemoveCountMonotonic
 remove		CountSectionUnion
 remove		CountShift
 remove		HasValueCountInversion

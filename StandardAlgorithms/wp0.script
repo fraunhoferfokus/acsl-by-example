@@ -143,7 +143,7 @@ Proof.
   apply natlike_rec2 with (z := (n - m)); auto with zarith.
   {
     rewrite Zplus_0_r.
-    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
+    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
   }
   {
     intros.
@@ -152,10 +152,9 @@ Proof.
     assert (X: t.[ shift a (m+z)] =  v \/
                t.[ shift a (m+z)] <> v) by lia.
     destruct X as [eq|neq]. 
-    - rewrite A_Count.Q_CountSectionHit; auto with zarith.
-    - rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+    - rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+    - rewrite A_Count.Q_CountSectionMiss; auto with zarith.
   }
-
 Qed.
 
 Goal typed_ref_external_lemma_CountSectionMonotonic.
@@ -181,10 +180,9 @@ Proof.
     assert (X: t.[ shift a (n+z)] =  v \/
                t.[ shift a (n+z)] <> v) by lia.
     destruct X as [eq|neq].
-    - rewrite A_Count.Q_CountSectionHit; auto with zarith.
-    - rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+    - rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+    - rewrite A_Count.Q_CountSectionMiss; auto with zarith.
   }
-
 Qed.
 
 Goal typed_ref_external_lemma_CountSectionUnion.
@@ -200,7 +198,7 @@ Proof.
   apply natlike_rec2 with (z := (n - m)); auto with zarith.
   {
     rewrite Zplus_0_r.
-    replace (L_Count_1_ t a m m v) with 0 by (rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith).
+    replace (L_Count_1_ t a m m v) with 0 by (rewrite A_Count.Q_CountSectionEmpty; auto with zarith).
     lia.
   }
   {
@@ -210,18 +208,16 @@ Proof.
     assert (X: t.[ shift a (m+z)] =  v \/ t.[ shift a (m+z)] <> v) by lia.
     destruct X as [eq|neq].
     {
-      rewrite A_Count.Q_CountSectionHit; auto with zarith.
-      rewrite H3; auto with zarith.
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
       symmetry.
-      rewrite A_Count.Q_CountSectionHit; auto with zarith.
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
     }
     {
-      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      rewrite A_Count.Q_CountSectionMiss; auto with zarith.
       symmetry.
-      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      rewrite A_Count.Q_CountSectionMiss; auto with zarith.
     }
   }
-
 Qed.
 
 Goal typed_ref_external_lemma_CountShift.
@@ -235,64 +231,115 @@ Proof.
   apply natlike_rec2 with (z := n); auto with zarith.
   {
     replace (0 + m) with m by lia.
-    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
-    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
+    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
   }
   {
-    assert(Shift: forall p k l, 
-            (shift (shift p k) l) = (shift p (l + k))).
-    {
-      intros.
-      unfold shift.
-      simpl.
-      replace (offset p + k + l) with (offset p + (l + k)) by lia.
-      trivial.
-    }
-    
     intros.
     replace (Z.succ z) with (1 + z) by auto with zarith.
-    rewrite Q_CountSectionOne; auto with zarith.
+    rewrite <- Q_CountSectionOne; auto with zarith.
     replace (1 + z + m) with (1 + (z + m)) by lia.
- 
-    rewrite Q_CountSectionOne; auto with zarith.
+    symmetry.
+    rewrite <- Q_CountSectionOne; auto with zarith.
 
     cut(L_Count_1_ t a (z + m) (1 + (z + m)) v = 
         L_Count_1_ t (shift a m) z (1 + z) v).
     {
-      auto with zarith.
+      intros.
+      rewrite H3.
+      rewrite <- H4.
+      trivial.
     }
     {
-       pose (azm := t.[shift a (z + m)]).
+       remember (t.[shift a (z + m)]) as azm.
        assert (X: azm = v \/ azm <> v) by lia.
        destruct X as [eq|neq].
        {
-         rewrite A_Count.Q_CountSectionHit; auto with zarith.
-         rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
-         rewrite A_Count.Q_CountSectionHit; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+         rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
          {
-           rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
+           rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
          }
          {
            subst azm.
            unfold shift_sint32.
-           rewrite Shift.
-           auto.
+           rewrite shift_associative.
+           replace (m + z) with (z + m) by lia.
+           trivial.
          }
+         unfold shift_sint32.
+         lia.
        }
        {
-         rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
-         rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
-         rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
-         {
-           rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.
-         }
-         {
-           subst azm.
-           unfold shift_sint32.
-           rewrite Shift.
-           auto.
-         }
+         rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+         rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+         rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+         - rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+         - unfold shift_sint32.
+           auto with zarith.
+           rewrite shift_associative.
+           replace (m + z) with (z + m) by lia.
+           lia.
+         - unfold shift_sint32.
+           lia.
        }
+    }
+  }
+Qed.
+
+Goal typed_ref_external_lemma_HasValueCountInversion.
+Hint HasValueCountInversion,property.
+Proof.
+  Require Import Psatz.
+  intros v m n t a.
+  intros V.
+
+  assert(X: n < m \/ n >= m) by tauto.
+
+  destruct X as [le|geq].
+  {
+    intros.
+    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+  }
+  {
+    pose (p := n - m).
+    assert (p >= 0). {
+      subst p.
+      lia.
+    }
+
+    replace n with (m + p).
+
+    apply natlike_rec2 with (z := p); auto with zarith.
+    {
+       replace (m + 0) with m by lia.
+       intros.
+       rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+    }
+    {
+      intros.
+      replace (Z.succ z) with (1 + z) in * by lia.
+      replace (m + (1 + z)) with (1 + (m + z)) in * by lia.
+
+      rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+      apply H1.
+      {
+        unfold P_HasValue_1_ in *.
+        intuition.
+        apply H2.
+        destruct H3.
+        exists x; auto with zarith.
+      }
+      {
+        unfold P_HasValue_1_ in *.
+        intuition.
+        apply H2.
+        exists (m + z); auto with zarith.
+      }
+    }
+    {
+       subst p; lia.
     }
   }
 
@@ -486,6 +533,12 @@ Proof.
 
 Qed.
 
+Goal typed_ref_external_lemma_MultsetAddDistinct.
+Hint MultsetAddDistinct,property.
+Proof.
+  intros v i n 
+Qed.
+
 Goal typed_ref_external_lemma_RemoveCountMonotonic.
 Hint RemoveCountMonotonic,property.
 Proof.
@@ -581,6 +634,41 @@ Hint bound,mismatch,preserved.
 Proof.
   auto with zarith.
 
+Qed.
+
+Goal typed_ref_external_push_heap_assert_reorder_5.
+Hint property,push_heap,reorder.
+Proof.
+(* --------------------------------------
+  
+From 'typed_ref_external_push_heap_stmt_post_heap_4': 
+(* auto with zarith. *)
+*)
+(* --------------------------------------
+  
+From 'typed_ref_external_push_heap_stmt_post_heap_3': 
+(* --------------------------------------
+  
+From 'typed_ref_external_push_heap_stmt_post_heap_4': 
+(* auto with zarith. *)
+*)
+*)
+Qed.
+
+Goal typed_ref_external_push_heap_stmt_post_heap_3.
+Hint default,heap,property,push_heap.
+Proof.
+(* --------------------------------------
+  
+From 'typed_ref_external_push_heap_stmt_post_heap_4': 
+(* auto with zarith. *)
+*)
+Qed.
+
+Goal typed_ref_external_push_heap_stmt_post_heap_4.
+Hint default,heap,property,push_heap.
+Proof.
+(* auto with zarith. *)
 Qed.
 
 Goal typed_ref_external_remove_copy_assert_retain.
@@ -1312,4 +1400,5 @@ Proof.
   apply H0; lia.
 
 Qed.
+
 

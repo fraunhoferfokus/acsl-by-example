@@ -2,105 +2,96 @@
 #include "push_heap.h"
 #include "CountLemmas.h"
 #include "MultisetAdd.h"
+#include "MultisetAddDistinct.h"
 #include "MultisetMinus.h"
-#include "MultisetUnchangedExcept.h"
+#include "MultisetMinusDistinct.h"
+#include "MultisetRetainRest2.h"
+#include "MultisetPushHeapRetain.h"
+#include "MultisetPushHeapClosure.h"
 
 void push_heap(value_type* a, size_type n)
 {
   // start of prologue
 
-  if (n == 1) {
-    return;
-  }
+  if (1u < n) { // otherwise nothings needs to be done
 
-  const value_type val = a[n - 1];
-  size_type hole = n - 1;
+    size_type hole = n - 1u;
+    const value_type v = a[hole];
 
-  size_type parent = (hole - 1) / 2;
+    size_type parent = (hole - 1u) / 2u;
 
-  if (val > a[parent]) {
-    /*@
-       requires val:      a[hole] == val;
-       assigns  a[hole];
-       ensures  newhole:  Unchanged{Old, Here}(a, 0, hole);
-       ensures  newhole:  Unchanged{Old, Here}(a, hole+1, n);
-       ensures  val:      a[hole] == a[parent];
-    */
-    a[hole] = a[parent];
-    hole = parent;
-  }
-  //@ assert heap:  IsHeap(a, n);
-
-  if (hole == n - 1) {
-    return;
-  }
-
-  // end of prologue
-  // start of main act
-
-  /*@
-     loop invariant bound:    0 <= hole < n-1;
-     loop invariant heap:     IsHeap(a, n);
-     loop invariant less:     a[hole] < val;
-     loop invariant reorder:  MultisetMinus{Pre,Here}(a, n, val);
-     loop invariant reorder:  MultisetAdd{Pre,Here}(a, n, a[hole]);
-     loop invariant reorder:  MultisetUnchangedExcept{Pre,Here}(a, n, val, a[hole]);
-     loop assigns   hole, a[0..n-1];
-     loop variant   hole;
-  */
-  while (hole > 0) {
-    const size_type par = (hole - 1) / 2;
-
-    /*@
-      requires heap:        IsHeap(a, n);
-      assigns  hole, a[hole];
-      ensures  heap:        IsHeap(a, n);
-      ensures  reorder:     MultisetMinus{Pre,Here}(a, n, val);
-      ensures  reorder:     MultisetAdd{Pre,Here}(a, n, a[hole]);
-      ensures  reorder:     MultisetUnchangedExcept{Pre,Here}(a, n, val, a[par]);
-      ensures  less:        a[hole] < val;
-      ensures  decreasing:  hole < \old(hole);
-    */
-    if (a[par] < val) {
+    if (a[parent] < v) {
       /*@
-         requires heap:       IsHeap(a, n);
-         requires heap:       par == HeapParent(hole);
-         requires heap:       HeapParent(hole) < hole < n-1;
-         assigns  a[hole];
-         ensures  heap:       a[hole] == a[HeapParent(hole)];
-         ensures  unchanged:  Unchanged{Old,Here}(a, 0, hole);
-         ensures  unchanged:  Unchanged{Old,Here}(a, hole+1, n);
-         ensures  heap:       IsHeap(a, n);
+        requires hole:       hole == n-1;
+        requires value:      a[hole] == v;
+        assigns              hole, a[hole];
+        ensures  unchanged:  Unchanged{Old, Here}(a, 0, n-1);
+        ensures  decrease:   hole < \old(hole);
+        ensures  changed:    a[\old(hole)] == a[parent];
+        ensures  changed:    hole == parent;
       */
-      a[hole] = a[par];
+      {
+        a[hole] = a[parent];
+        hole = parent;
+      }
+
+      //@ assert heap:   IsHeap(a, n);
+      //@ assert add:    MultisetAdd{Pre,Here}(a, n, a[hole]);
+      //@ assert minus:  MultisetMinus{Pre,Here}(a, n, v);
+      //@ assert retain: MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
+
+      // end of prologue
+      // start of main act
+
       /*@
-         assigns hole;
-         ensures bound:    hole < \old(hole);
-         ensures less:     a[hole] < val;
-         ensures reorder:  MultisetUnchangedExcept{Pre,Here}(a, n, val, a[hole]);
+        loop invariant bound:  0 <= hole < n-1;
+        loop invariant heap:   IsHeap(a, n);
+        loop invariant less:   a[hole] < v;
+        loop invariant add:    MultisetAdd{Pre,Here}(a, n, a[hole]);
+        loop invariant minus:  MultisetMinus{Pre,Here}(a, n, v);
+        loop invariant retain: MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
+        loop assigns           hole, a[0..n-1];
+        loop variant           hole;
       */
-      hole = par;
-      //@ assert reorder:  MultisetUnchangedExcept{Pre,Here}(a, n, val, a[hole]);
-    } else {
-      break;
+      while (hole > 0u) {
+        //@ ghost Loop: // LoopEntry not yet supported!
+        //@ ghost const value_type old_a = a[hole];
+        //@ assert reorder:  old_a == \at(a[hole],Loop);
+        const size_type parent = (hole - 1u) / 2u;
+
+        if (a[parent] < v) {
+          if (a[hole] < a[parent]) {
+            a[hole] = a[parent];
+            //@ assert less:    old_a   < v;
+            //@ assert less:    a[hole] < v;
+            //@ assert retain:  MultisetUnchanged{Loop,Here}(a, 0, hole);
+            //@ assert retain:  MultisetUnchanged{Loop,Here}(a, hole + 1, n);
+            //@ assert minus:   MultisetMinus{Loop,Here}(a, n, old_a);
+            //@ assert add:     MultisetAdd{Loop,Here}(a, n, a[hole]);
+            //@ assert retain:  MultisetRetain{Loop,Here}(a, n, v);
+            //@ assert retain:  MultisetRetain{Pre,Here}(a, n, old_a);
+            //@ assert retain:  MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
+          }
+          hole = parent;
+        } else {
+          break;
+        }
+      }
+
+      // end of main act
+      // start of epilogue
+
+      //@ ghost Epi:
+      a[hole] = v;
+      //@ assert value:      \at(a[hole],Epi)  != v;
+      //@ assert value:      \at(a[hole],Here) == v;
+      //@ assert unchanged:  MultisetUnchanged{Epi,Here}(a, 0, hole);
+      //@ assert unchanged:  MultisetUnchanged{Epi,Here}(a, hole+1, n);
+      //@ assert add:        MultisetAdd{Epi,Here}(a, n, v);
+      //@ assert minus:      MultisetMinus{Epi,Here}(a, n, \at(a[hole],Epi));
+      //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, n);
     }
-    //@ assert heap:  IsHeap(a, n);
   }
-
-  // end of main act
-  // start of epilogue
-
-  /*@
-     requires val:  a[hole] != val;
-     assigns  a[hole];
-     ensures  val:  a[hole] == val;
-     ensures  val:  Unchanged{Old,Here}(a, 0, hole);
-     ensures  val:  Unchanged{Old,Here}(a, hole+1, n);
-  */
-  a[hole] = val;
-  //@ assert heap:     IsHeap(a, n);
-  //@ assert reorder:  MultisetUnchanged{Pre,Here}(a, n);
-
   // end of epilogue
 }
 

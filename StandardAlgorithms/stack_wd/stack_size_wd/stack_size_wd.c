@@ -8,7 +8,7 @@
 
   assigns \nothing;
 
-  ensures equal:  \result == Size(s);
+  ensures equal:  \result;
 */
 bool stack_size_wd(const Stack* s, const Stack* t)
 {
