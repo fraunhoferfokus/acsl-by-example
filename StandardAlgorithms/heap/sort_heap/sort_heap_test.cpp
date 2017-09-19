@@ -7,19 +7,20 @@
 
 int main(int argc, char** argv)
 {
-  std::vector<int> a(10);
+  std::vector<value_type> a(10);
 
   for (size_t i = 0; i < a.size(); i++) {
     a[i] = 2 * i;
   }
 
-  make_heap(&a[0], a.size());
+  make_heap(a.data(), a.size());
+  assert(std::is_heap(a.begin(), a.end()));
+  auto b = a;
 
-  assert(!is_sorted(a.begin(), a.end()));
+  sort_heap(a.data(), a.size());
+  std::sort_heap(b.begin(), b.end());
 
-  sort_heap(&a[0], a.size());
-
-  assert(is_sorted(a.begin(), a.end()));
+  assert(a == b);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
 

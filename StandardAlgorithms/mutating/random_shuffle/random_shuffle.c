@@ -7,7 +7,7 @@
 
 void random_shuffle(value_type* a, size_type n)
 {
-  if (n > 0) {
+  if (0u < n) {
 
     /*@
       loop invariant bounds:    1 <= i <= n;

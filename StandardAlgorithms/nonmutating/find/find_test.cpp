@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   value_type value = 3;
 
   auto it = std::find(a.begin(), a.end(), value);
-  auto pos = find(&a[0], a.size(), value);
+  auto pos = find(a.data(), a.size(), value);
 
   assert(it == a.begin() + pos);
   assert(*it == a[pos]);

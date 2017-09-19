@@ -15,7 +15,7 @@ int main(int argc, char** argv)
   const value_type value = 0;
 
   std::iota(a.begin(), a.end(), value);
-  iota(&b[0], b.size(), value);
+  iota(b.data(), b.size(), value);
 
   assert(a == b);
 

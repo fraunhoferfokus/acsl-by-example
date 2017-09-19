@@ -10,6 +10,8 @@
 
   assigns \nothing;
 
+  ensures result: 0 <= \result <= m;
+
   behavior found:
     assumes HasValueOf(a, m, b, n);
     ensures bound:  0 <= \result < m;

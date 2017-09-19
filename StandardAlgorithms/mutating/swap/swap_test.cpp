@@ -12,8 +12,8 @@ int main(int argc, char** argv)
   auto b = a;
   assert(a == b);
 
-  std::iter_swap(&a[0], &a[1]);
-  swap(&b[0], &b[1]);
+  std::iter_swap(a.data(), a.data() + 1);
+  swap(b.data(), b.data() + 1);
 
   assert(a == b);
 

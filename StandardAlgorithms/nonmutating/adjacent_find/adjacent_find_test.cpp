@@ -10,7 +10,7 @@ int main(int argc, char** argv)
 {
   std::vector<value_type> a{1, 2, 3, 3, 3, 7, 8};
 
-  auto first = &a[0];
+  auto first = a.data();
   auto last  = first + a.size();
 
   auto pos_std = std::adjacent_find(first, last);

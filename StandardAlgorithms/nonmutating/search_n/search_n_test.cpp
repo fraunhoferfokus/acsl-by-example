@@ -9,8 +9,8 @@
 
 void test(const std::vector<value_type>& a, size_type n, value_type v)
 {
-  assert(std::search_n(a.begin(), a.end(), n, v) == 
-         a.begin() + search_n(&a[0], a.size(), n, v));
+  assert(std::search_n(a.begin(), a.end(), n, v) ==
+         a.begin() + search_n(a.data(), a.size(), n, v));
 }
 
 int main(int argc, char** argv)

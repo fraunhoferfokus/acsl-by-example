@@ -13,13 +13,13 @@ int main(int argc, char** argv)
   auto b = a;
 
   assert(std::equal(a.begin(), a.end(), b.begin()));
-  assert(equal(&a[0], a.size(), &b[0]));
+  assert(equal(a.data(), a.size(), b.data()));
 
   auto c = a;
   c.front() += 1;
 
   assert(!std::equal(a.begin(), a.end(), c.begin()));
-  assert(!equal(&a[0], a.size(), &c[0]));
+  assert(!equal(a.data(), a.size(), c.data()));
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
 

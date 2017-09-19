@@ -16,6 +16,12 @@ depend-clean:
 		(echo "depend-clean $$i"; $(MAKE) depend-clean -sC $$i);\
 	done
 
+generate:
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "generate $$i"; $(MAKE) generate -sC $$i);\
+	done
+
 report:
 	@for i in $(EXAMPLES);\
 	do \
@@ -23,10 +29,7 @@ report:
 	done
 
 report-clean:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "report-clean $$i"; $(MAKE) report-clean -sC $$i);\
-	done
+	@rm Results/*.report
 
 preport:
 	@for i in $(EXAMPLES);\
@@ -35,10 +38,7 @@ preport:
 	done
 
 preport-clean:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "preport-clean $$i"; $(MAKE) preport-clean -sC $$i);\
-	done
+	@rm Results/*.preport
 
 log:
 	@($(MAKE) report > results.txt)

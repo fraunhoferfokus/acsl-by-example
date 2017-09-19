@@ -15,7 +15,7 @@ int main(int argc, char** argv)
   bool result1 = std::binary_search(a.begin(), a.end(), value);
   assert(result1);
 
-  bool result2 = binary_search(&a[0], a.size(), value);
+  bool result2 = binary_search(a.data(), a.size(), value);
   assert(result1 == result2);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";

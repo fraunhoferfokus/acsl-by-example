@@ -8,7 +8,9 @@
   requires \valid_read(a + (0..m-1));
   requires \valid_read(b + (0..n-1));
 
-  assigns \nothing;
+  assigns  \nothing;
+
+  ensures  result: 0 <= \result <= m;
 
   behavior has_match:
     assumes HasSubRange(a, 0, m, b, n);

@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   assert(not a.empty());
 
   auto max_it  = std::max_element(a.begin(), a.end());
-  auto max = max_seq(&a[0], a.size());
+  auto max = max_seq(a.data(), a.size());
 
   assert(*max_it == max);
 

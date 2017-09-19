@@ -13,8 +13,8 @@ void upper_bound_test(const std::vector<value_type>& a, value_type value, size_t
   };
 
   {
-    assert(pos == upper_bound(&a[0], a.size(), value));
-    auto ptr = &a[0];
+    assert(pos == upper_bound(a.data(), a.size(), value));
+    auto ptr = a.data();
     assert(ptr + pos == std::partition_point(ptr, ptr + a.size(), pred));
   }
   {

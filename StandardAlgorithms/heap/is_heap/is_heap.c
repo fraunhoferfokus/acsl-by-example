@@ -3,7 +3,7 @@
 
 bool is_heap(const value_type* a, size_type n)
 {
-  size_type parent = 0;
+  size_type parent = 0u;
 
   /*@
     loop invariant bound:  0 <= parent < child <= n+1;
@@ -18,7 +18,7 @@ bool is_heap(const value_type* a, size_type n)
       return false;
     }
 
-    if ((child % 2u) == 0) {
+    if ((child % 2u) == 0u) {
       parent++;
     }
   }

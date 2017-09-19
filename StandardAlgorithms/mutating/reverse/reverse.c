@@ -5,7 +5,7 @@
 
 void reverse(value_type* a, size_type n)
 {
-  const size_type half = n/2;
+  const size_type half = n / 2;
   /*@
     loop invariant bound: 0 <= i <= half;
 

@@ -212,7 +212,7 @@ then
 	fi
 fi
 
-provers=`get_provers "$@" | sort -f`
+provers=`get_provers "$@" | sed s/why3:// | sort -f`
 echo [wprunner] Provers: $provers
 source=$1
 wpdir=${source%.c}.wp

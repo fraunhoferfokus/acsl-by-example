@@ -1,4 +1,5 @@
 is_heap
 push_heap
+pop_heap
 make_heap
 sort_heap

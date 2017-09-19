@@ -16,7 +16,7 @@ int main(int argc, char** argv)
   const value_type old_value = 3;
   const value_type new_value = 4;
 
-  replace(&a[0], a.size(), old_value, new_value);
+  replace(a.data(), a.size(), old_value, new_value);
   std::replace(b.begin(), b.end(), old_value, new_value);
 
   assert(a == b);

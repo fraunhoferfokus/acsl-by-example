@@ -9,17 +9,17 @@
 
   assigns \nothing;
 
-  ensures bound:  0 <= \result <= n;
+  ensures result:  0 <= \result <= n;
 
   behavior some:
     assumes  HasEqualNeighbors(a, n);
-    ensures  bound:    0 <= \result < n-1;
+    ensures  result:    0 <= \result < n-1;
     ensures  adjacent: a[\result] == a[\result+1];
     ensures  first:    !HasEqualNeighbors(a, \result);
 
   behavior none:
     assumes  !HasEqualNeighbors(a, n);
-    ensures  bound:    \result == n;
+    ensures  result:    \result == n;
 
   complete behaviors;
   disjoint behaviors;

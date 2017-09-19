@@ -101,11 +101,11 @@ WP_FLAGS += -wp-model Typed+ref
 
 # provers
 WP_PROVER_FLAGS += -wp-prover alt-ergo
+WP_PROVER_FLAGS += -wp-prover why3:cvc4
+WP_PROVER_FLAGS += -wp-prover why3:cvc3
+WP_PROVER_FLAGS += -wp-prover why3:z3
+WP_PROVER_FLAGS += -wp-prover why3:eprover
 WP_PROVER_FLAGS += -wp-prover coq
-WP_PROVER_FLAGS += -wp-prover z3
-WP_PROVER_FLAGS += -wp-prover cvc4
-WP_PROVER_FLAGS += -wp-prover cvc3
-WP_PROVER_FLAGS += -wp-prover eprover
 
 
 #WP_PROVER_FLAGS += -wp-prover gappa
@@ -146,12 +146,13 @@ test: $(FILE)_test FORCE
 %.cpp:%.c
 	cp $< $@
 
-%.why3:%.c driver FORCE
+# only generate proof obligations for why3
+%.why3:%.c FORCE
 	@($(WP) $(WP_C_FLAGS) $(WP_TIME_FLAGS) -wp-prover why3 -wp-gen  -wp-out $(patsubst %.c,%.wp, $<)  $<)
 
 # start WP on command line and run provers
 %.wp:%.c $(DRIVER) FORCE
-	@$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -save $(patsubst %.c,%.sav, $<) -wp-out $(patsubst %.c,%.wp, $<)  $<
+	@$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.c,%.wp, $<)  $<
 
 %.wp++:%.cpp FORCE
 	@$(WP) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $<
@@ -166,23 +167,22 @@ test: $(FILE)_test FORCE
 %.wpgui++:%.cpp FORCE
 	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
 
-%.report:%.c
-	@. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
+$(TOP_DIR)/Results/$(FILE).report: $(FILE).c
+	. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
 
-%.preport:%.c
+$(TOP_DIR)/Results/$(FILE).preport: $(FILE).c
 	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
 
-%.report-wp:%.report
+%.report-wp: $(TOP_DIR)/Results/$(FILE).report
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
 
-report: $(FILE).report
-	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $(FILE).report
+generate: $(FILE).why3
 
-preport: $(FILE).preport
-	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $(FILE).preport
+report: $(TOP_DIR)/Results/$(FILE).report
+	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
 
-preport: $(FILE).preport
-	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport <$(FILE).preport
+preport: $(TOP_DIR)/Results/$(FILE).preport
+	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
 
 %.check:%.c
 	@$(WP) $(WP_C_FLAGS) -wp-check -wp-out $(patsubst %.c,%.wp, $<)  $<
@@ -226,12 +226,6 @@ clean:: FORCE
 	@$(RM) $(FILE)_test
 	@$(RM) $(FILE).tex
 	@$(RM) $(FILE).sav
-
-report-clean: FORCE
-	@$(RM) *.report
-
-preport-clean: FORCE
-	@$(RM) *.preport
 
 ASTYLEOPTIONS += -A3
 #ASTYLEOPTIONS += --break-blocks

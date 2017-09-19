@@ -10,6 +10,8 @@
 
   assigns \nothing;
 
+  ensures result: 0 <= \result <= m;
+
   behavior has_match:
     assumes HasSubRange(a, 0, m, b, n);
     ensures bound:  0 <= \result <= m-n;

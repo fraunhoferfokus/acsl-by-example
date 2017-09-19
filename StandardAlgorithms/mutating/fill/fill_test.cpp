@@ -14,8 +14,8 @@ int main(int argc, char** argv)
 
   value_type value = 9;
 
-  std::fill(&a[0], &a[0] + a.size(), value);
-  fill(&b[0], b.size(), value);
+  std::fill(a.data(), a.data() + a.size(), value);
+  fill(b.data(), b.size(), value);
 
   assert(a == b);
 

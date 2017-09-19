@@ -11,8 +11,9 @@ OBJ :=  fill/fill.o\
 	reverse_copy/reverse_copy.o\
 	reverse/reverse.o\
 	rotate_copy/rotate_copy.o\
+	rotate/rotate.o\
 	replace_copy/replace_copy.o\
-	remove_copy/remove_copy.o\
+	remove_copy2/remove_copy2.o\
 	remove/remove.o\
 	random_shuffle/random_shuffle.o
 

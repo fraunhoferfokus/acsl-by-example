@@ -35,7 +35,7 @@ extract_data_Wp()
 {
     if [ $# -ne 3 ]
     then
-        echo "please provide exactly three arguments"
+        echo "please provide exactly three arguments" >&2
         exit 1
     fi
 
@@ -96,14 +96,14 @@ extract_raw_data_Wp()
     goal_count=`grep "goals scheduled" $results | cut -d ' ' -f2`
     valid_qed=`countValid $results Qed`
     valid_alt_ergo=`countValid $results Alt-Ergo`
-    valid_z3=`countValid $results z3`
     valid_cvc4=`countValid $results cvc4`
     valid_cvc3=`countValid $results cvc3`
+    valid_z3=`countValid $results z3`
     valid_eprover=`countValid $results eprover`
     valid_coq=`countValid $results Coq`
 
     #calculate all valid goals
-    valid=$(($valid_qed + $valid_alt_ergo + $valid_z3 + $valid_cvc4 + $valid_cvc3 + $valid_eprover + $valid_coq))
+    valid=$(($valid_qed + $valid_alt_ergo + $valid_cvc4 + $valid_cvc3 + $valid_z3 + $valid_eprover + $valid_coq))
 
     print_statistics
 }
@@ -112,7 +112,7 @@ extract_raw_data_Wp()
 extract_statistics_Wp()
 {
     # initialize validation variables with reasonable default values
-    for i in qed alt_ergo z3 cvc4 cvc3 eprover coq 
+    for i in qed alt_ergo cvc4 cvc3 z3 eprover coq 
     do
         eval "valid_$i=0"
     done
@@ -149,7 +149,7 @@ print_statistics()
 
 # report fields
 fields='alg goal_count valid
-    valid_qed valid_alt_ergo valid_z3 valid_cvc4 valid_cvc3 valid_eprover valid_coq
+    valid_qed valid_alt_ergo valid_cvc4 valid_cvc3 valid_z3 valid_eprover valid_coq
     invalid percent cmd sec'
 
 # parse report fileand set variables accordingly
@@ -181,6 +181,6 @@ prettyPrintReport()
     parse_report $1
     printf  "   %-30s [%-4d %3d   (%3d %3d %3d %3d %3d %3d %3d)]     %3d%%\n" \
         $alg $goal_count $valid \
-        $valid_qed $valid_alt_ergo $valid_z3 $valid_cvc4 $valid_cvc3 $valid_eprover $valid_coq \
+        $valid_qed $valid_alt_ergo $valid_cvc4 $valid_cvc3 $valid_z3 $valid_eprover $valid_coq \
         $percent
 }

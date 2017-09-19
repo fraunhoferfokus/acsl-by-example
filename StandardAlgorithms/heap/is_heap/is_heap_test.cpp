@@ -14,7 +14,7 @@ int main(int argc, char** argv)
   std::iota(a.begin(), a.end(), 0);
   std::make_heap(a.begin(), a.end());
 
-  assert(is_heap(&a[0], a.size()));
+  assert(is_heap(a.data(), a.size()));
   assert(std::is_heap(a.begin(), a.end()));
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";

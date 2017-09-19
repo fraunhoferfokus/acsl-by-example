@@ -15,10 +15,10 @@ int main(int argc, char** argv)
   const value_type old_value = 3;
   const value_type new_value = 4;
 
-  auto last_b = std::replace_copy(&a[0], &a[0] + a.size(), &b[0], old_value, new_value);
-  auto size_c =      replace_copy(&a[0], a.size(), &c[0], old_value, new_value);
+  auto last_b = std::replace_copy(a.data(), a.data() + a.size(), b.data(), old_value, new_value);
+  auto size_c =      replace_copy(a.data(), a.size(), c.data(), old_value, new_value);
 
-  assert(size_c == last_b - &b[0]);
+  assert(size_c == last_b - b.data());
 
   assert(b == c);
 

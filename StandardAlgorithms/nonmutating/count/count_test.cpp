@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   value_type count_value = 3;
 
   auto c1 = std::count(a.begin(), a.end(), count_value);
-  auto c2 = count(&a[0], a.size(), count_value);
+  auto c2 = count(a.data(), a.size(), count_value);
 
   assert(c1 = c2);
 

@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   auto a_backup = a;
   auto b = a;
 
-  copy_backward(&a[0], a.size(), &b[0]);
+  copy_backward(a.data(), a.size(), b.data());
 
   assert(a == a_backup);
   assert(a == b);

@@ -5,7 +5,7 @@
 size_type rotate(value_type* a, size_type m, size_type n)
 {
   // if one subrange is empty, then nothings needs to be done
-  if (0 < m && m < n) {
+  if (0u < m && m < n) {
     reverse(a,  m);
     reverse(a + m, n - m);
 

@@ -18,10 +18,10 @@ void equal_range_test(const std::vector<value_type>& a, value_type value,
   };
 
   {
-    auto pair = equal_range(&a[0], a.size(), value);
+    auto pair = equal_range(a.data(), a.size(), value);
     assert(lower == pair.first);
     assert(upper == pair.second);
-    auto ptr = &a[0];
+    auto ptr = a.data();
     assert(ptr + lower == std::partition_point(ptr, ptr + a.size(), less));
     assert(ptr + upper == std::partition_point(ptr, ptr + a.size(), less_equal));
   }

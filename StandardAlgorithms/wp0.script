@@ -153,7 +153,15 @@ Proof.
                t.[ shift a (m+z)] <> v) by lia.
     destruct X as [eq|neq]. 
     - rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-    - rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+      + replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto with zarith.
+      + replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto with zarith.
+    - rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      + replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto with zarith.
+      + replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto with zarith.
   }
 Qed.
 
@@ -180,8 +188,18 @@ Proof.
     assert (X: t.[ shift a (n+z)] =  v \/
                t.[ shift a (n+z)] <> v) by lia.
     destruct X as [eq|neq].
-    - rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-    - rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+    - apply  Z.ge_le.
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+      + replace (1 + (n + z) - 1) with (n + z) by lia.
+        auto with zarith.
+      + replace (1 + (n + z) - 1) with (n + z) by lia.
+        auto.
+    - apply  Z.ge_le.
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      + replace (1 + (n + z) - 1) with (n + z) by lia.
+        auto with zarith.
+      + replace (1 + (n + z) - 1) with (n + z) by lia.
+        auto.
   }
 Qed.
 
@@ -208,14 +226,31 @@ Proof.
     assert (X: t.[ shift a (m+z)] =  v \/ t.[ shift a (m+z)] <> v) by lia.
     destruct X as [eq|neq].
     {
-      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
       symmetry.
       rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+      replace (1 + (m + z) - 1) with (m + z) by lia.
+      symmetry.
+      rewrite Z.add_comm.
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+      replace (1 + (m + z) - 1) with (m + z) by lia.
+      auto with zarith.
+      - replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto.
+      - replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto.
     }
     {
-      rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+      rewrite Z.add_comm.
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      replace (1 + (m + z) - 1) with (m + z) by lia.
       symmetry.
-      rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      replace (1 + (m + z) - 1) with (m + z) by lia.
+      auto with zarith.
+      - replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto.
+      - replace (1 + (m + z) - 1) with (m + z) by lia.
+        auto.
     }
   }
 Qed.
@@ -265,23 +300,26 @@ Proof.
            subst azm.
            unfold shift_sint32.
            rewrite shift_associative.
-           replace (m + z) with (z + m) by lia.
+           replace (m + (1 + z -1)) with (z + m) by lia.
            trivial.
          }
          unfold shift_sint32.
+         replace (1 + (z + m) - 1) with (z + m) by lia.
          lia.
        }
        {
-         rewrite A_Count.Q_CountSectionMiss; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
          rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
-         rewrite A_Count.Q_CountSectionMiss; auto with zarith.
-         - rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+         rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+         - replace (1 + z - 1) with z by lia.
+           rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
          - unfold shift_sint32.
-           auto with zarith.
+           replace (1 + z - 1) with z by lia.
            rewrite shift_associative.
            replace (m + z) with (z + m) by lia.
            lia.
          - unfold shift_sint32.
+           replace (1 + (z + m) - 1) with (z + m) by lia.
            lia.
        }
     }
@@ -300,7 +338,7 @@ Proof.
   destruct X as [le|geq].
   {
     intros.
-    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.   
   }
   {
     pose (p := n - m).
@@ -315,64 +353,7 @@ Proof.
     {
        replace (m + 0) with m by lia.
        intros.
-       rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
-    }
-    {
-      intros.
-      replace (Z.succ z) with (1 + z) in * by lia.
-      replace (m + (1 + z)) with (1 + (m + z)) in * by lia.
-
-      rewrite A_Count.Q_CountSectionMiss; auto with zarith.
-      apply H1.
-      {
-        unfold P_HasValue_1_ in *.
-        intuition.
-        apply H2.
-        destruct H3.
-        exists x; auto with zarith.
-      }
-      {
-        unfold P_HasValue_1_ in *.
-        intuition.
-        apply H2.
-        exists (m + z); auto with zarith.
-      }
-    }
-    {
-       subst p; lia.
-    }
-  }
-
-Qed.
-
-Goal typed_ref_external_lemma_HasValueCountInversion.
-Hint HasValueCountInversion,property.
-Proof.
-  Require Import Psatz.
-  intros v m n t a.
-  intros V.
-
-  assert(X: n < m \/ n >= m) by tauto.
-
-  destruct X as [le|geq].
-  {
-    intros.
-    rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.   
-  }
-  {
-    pose (p := n - m).
-    assert (p >= 0). {
-      subst p.
-      lia.
-    }
-
-    replace n with (m + p).
-
-    apply natlike_rec2 with (z := p); auto with zarith.
-    {
-       replace (m + 0) with m by lia.
-       intros.
-       rewrite <- A_Count.Q_CountSectionEmpty; auto with zarith.   
+       rewrite A_Count.Q_CountSectionEmpty; auto with zarith.   
     }
     {
       intros.
@@ -380,6 +361,7 @@ Proof.
       replace (m + (1 + z)) with (1 + (m + z)) in * by lia.
 
       rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      replace (1 + (m + z) - 1) with (m + z) by lia.
       apply H1.
       {
         unfold P_HasValue_1_ in *.
@@ -389,6 +371,7 @@ Proof.
         exists x; auto with zarith.
       }
       {
+        replace (1 + (m + z) - 1) with (m + z) by lia.
         unfold P_HasValue_1_ in *.
         intuition.
         apply H2.
@@ -548,11 +531,10 @@ Proof.
   intros.
 
   cut(m + (L_Count_2_ M a n v) <= n + (L_Count_2_ M a m v)); auto with zarith.
-  rewrite Q_CountUnion with (i_1 := m); auto with zarith.
+  rewrite <- Q_CountUnion with (i_1 := m); auto with zarith.
   unfold L_Count_2_.
   cut (m + L_Count_1_ M a m n v <= n); auto with zarith.
   apply Q_CountSectionBounds; auto with zarith.
-
 Qed.
 
 Goal typed_ref_external_lemma_RetainAllButOneMiss.

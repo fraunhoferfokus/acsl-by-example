@@ -16,13 +16,11 @@
 
     axiom CountSectionHit:
       \forall value_type *a, v, integer n, m;
-        m <= n  ==>  a[n] == v
-                ==>  Count(a, m, n + 1, v) == Count(a, m, n, v) + 1;
+        m < n  ==> a[n-1] == v  ==>  Count(a, m, n, v) == Count(a, m, n - 1, v) + 1;
 
     axiom CountSectionMiss:
       \forall value_type *a, v, integer n, m;
-        m <= n  ==>  a[n] != v
-                ==>  Count(a, m, n + 1, v) == Count(a, m, n, v);
+        m < n  ==> a[n-1] != v  ==>  Count(a, m, n, v) == Count(a, m, n - 1, v);
 
     axiom CountSectionRead{L1,L2}:
       \forall value_type *a, v, integer m, n;

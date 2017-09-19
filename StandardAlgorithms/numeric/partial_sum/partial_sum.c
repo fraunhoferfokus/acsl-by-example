@@ -5,7 +5,7 @@
 size_type
 partial_sum(const value_type* a, size_type n, value_type* b)
 {
-  if (n > 0) {
+  if (0u < n) {
     b[0] = a[0];
 
     /*@

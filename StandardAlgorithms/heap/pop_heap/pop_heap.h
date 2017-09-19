@@ -11,7 +11,6 @@
    requires limits: 1 <= n <  (UINT_MAX-2)/2;
    requires valid:  \valid(a + (0..n-1));
    requires heap:   IsHeap(a, n);
-   requires max:    MaxElement(a, n, 0);
 
    assigns a[0..n-1];
 

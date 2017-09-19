@@ -12,13 +12,13 @@ int main(int argc, char** argv)
 
   auto b = a;
 
-  assert(a.size() == mismatch(&a[0], a.size(), &b[0]));
+  assert(a.size() == mismatch(a.data(), a.size(), b.data()));
 
   auto c = a;
   c[2] += 1;
   c[5] += 1;
 
-  assert(2 == mismatch(&a[0], a.size(), &c[0]));
+  assert(2 == mismatch(a.data(), a.size(), c.data()));
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
 

@@ -1,6 +1,6 @@
-axiom_size_of_pop
+axiom_size_of_init
 axiom_size_of_push
 axiom_top_of_push
+axiom_size_of_pop
 axiom_pop_of_push
 axiom_push_of_pop_top
-axiom_size_of_init

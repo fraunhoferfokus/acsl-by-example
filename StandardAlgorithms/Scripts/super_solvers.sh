@@ -2,7 +2,7 @@
 
 StandardAlgorithms=`dirname "$0"`/..
 report=${1:-preport}
-provers="alt_ergo cvc4 z3 cvc3 eprover coq"
+provers="alt_ergo cvc4 z3 cvc3 eprover"
 
 . $StandardAlgorithms/Scripts/script_functions.sh
 
@@ -45,7 +45,7 @@ prover_report_line() {
 prover_report() {
 	all_algorithms | while read dir alg
 	do
-		prover_report_line $StandardAlgorithms/$dir/$alg/$alg.$report
+		prover_report_line $StandardAlgorithms/Results/$alg.$report
 	done
 }
 

@@ -14,8 +14,8 @@ int main(int argc, char** argv)
   std::vector<value_type> b(a.size());
   std::vector<value_type> c(a.size());
 
-  std::reverse_copy(&a[0], &a[0] + a.size(), &b[0]);
-  reverse_copy(&b[0], b.size(), &c[0]);
+  std::reverse_copy(a.data(), a.data() + a.size(), b.data());
+  reverse_copy(b.data(), b.size(), c.data());
 
   assert(a == c);
   assert(a == a_backup);

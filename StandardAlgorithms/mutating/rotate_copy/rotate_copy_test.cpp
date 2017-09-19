@@ -16,8 +16,8 @@ int main(int argc, char** argv)
 
   size_type m = 4;
 
-  std::rotate_copy(&a[0], &a[0] + m, &a[0] + a.size(), &b[0]);
-  rotate_copy(&a[0], m, a.size(), &c[0]);
+  std::rotate_copy(a.data(), a.data() + m, a.data() + a.size(), b.data());
+  rotate_copy(a.data(), m, a.size(), c.data());
 
   assert(a == a_backup);
   assert(b == c);

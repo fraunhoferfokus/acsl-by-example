@@ -18,7 +18,7 @@ int main(int argc, char** argv)
   assert(b == a_backup);
   assert(a == b_backup);
 
-  swap_ranges(&b[0], b.size(), &a[0]);
+  swap_ranges(b.data(), b.size(), a.data());
   assert(a == a_backup);
   assert(b == b_backup);
 

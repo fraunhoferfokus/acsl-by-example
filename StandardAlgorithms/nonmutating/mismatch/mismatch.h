@@ -10,6 +10,8 @@
 
   assigns \nothing;
 
+  ensures  result: 0 <= \result <= n;
+
   behavior all_equal:
     assumes EqualRanges{Here,Here}(a, n, b);
     ensures result: \result == n;

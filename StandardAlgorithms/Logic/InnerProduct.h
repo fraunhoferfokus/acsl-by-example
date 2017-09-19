@@ -17,8 +17,8 @@
 
      axiom InnerProductNext:
        \forall value_type *a, *b, init, integer n;
-         n >= 0 ==> InnerProduct(a, b, n + 1, init) ==
-                    InnerProduct(a, b, n, init) + (a[n] * b[n]);
+         n > 0  ==> InnerProduct(a, b, n, init) ==
+                    InnerProduct(a, b, n-1, init) + (a[n-1] * b[n-1]);
 
      axiom InnerProductRead{L1,L2}:
        \forall value_type *a, *b, init, integer n;

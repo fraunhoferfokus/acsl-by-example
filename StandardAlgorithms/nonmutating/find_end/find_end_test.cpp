@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 
   auto it = std::find_end(a.begin(), a.end(), b.begin(), b.end());
 
-  auto pos = find_end(&a[0], a.size(), &b[0], b.size());
+  auto pos = find_end(a.data(), a.size(), b.data(), b.size());
   assert(it == a.begin() + pos);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";

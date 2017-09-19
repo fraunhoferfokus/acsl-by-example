@@ -7,7 +7,9 @@
 /*@
   requires  \valid_read(a + (0..n-1));
 
-  assigns  \nothing;
+  assigns   \nothing;
+
+  ensures   0 <= \result <= \result;
 
   behavior some:
     assumes  \exists integer i; 0 <= i < n && a[i] == val;

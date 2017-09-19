@@ -27,3 +27,5 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-prop="@lemma"
 #WP_FLAGS += -wp-prop="-@lemma"
 
+TESTOBJ += -lheap
+

@@ -13,5 +13,5 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-prop HeapBounds
 #WP_FLAGS += -wp-prop HeapMaximum
 
-TESTOBJ += -lheap ../pop_heap/pop_heap.o
+TESTOBJ += -lheap 
 

@@ -14,8 +14,8 @@ int main(int argc, char** argv)
 
   size_type m = 5;
 
-  std::rotate(&a[0], &a[0] + m, &a[0] + a.size());
-  rotate(&b[0], m, b.size());
+  std::rotate(a.data(), a.data() + m, a.data() + a.size());
+  rotate(b.data(), m, b.size());
 
   assert(a == b);
 

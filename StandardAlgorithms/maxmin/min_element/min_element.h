@@ -6,9 +6,9 @@
 #include "StrictLowerBound.h"
 
 /*@
-  requires \valid_read(a + (0..n-1));
-
-  assigns \nothing;
+  requires valid:   \valid_read(a + (0..n-1));
+  assigns  \nothing;
+  ensures  result:  0 <= \result <= n;
 
   behavior empty:
     assumes n == 0;

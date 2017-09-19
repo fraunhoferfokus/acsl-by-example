@@ -12,7 +12,7 @@ int main(int argc, char** argv)
   std::vector<value_type> result1(a.size());
   std::vector<value_type> result2(a.size());
 
-  adjacent_difference(&a[0], a.size(), &result1[0]);
+  adjacent_difference(a.data(), a.size(), result1.data());
   std::adjacent_difference(a.begin(), a.end(), result2.begin());
 
   assert(result1 == result2);

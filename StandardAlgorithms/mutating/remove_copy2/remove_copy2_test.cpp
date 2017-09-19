@@ -14,10 +14,10 @@ int main(int argc, char** argv)
 
   const value_type value = 3;
 
-  auto last_b = std::remove_copy(&a[0], &a[0] + a.size(), &b[0], value);
-  auto size_c =      remove_copy(&a[0], a.size(), &c[0], value);
+  auto last_b = std::remove_copy(a.data(), a.data() + a.size(), b.data(), value);
+  auto size_c =      remove_copy(a.data(), a.size(), c.data(), value);
 
-  assert(size_c == last_b - &b[0]);
+  assert(size_c == last_b - b.data());
   assert(b == c);
 
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";

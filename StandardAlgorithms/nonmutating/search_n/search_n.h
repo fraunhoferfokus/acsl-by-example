@@ -7,7 +7,9 @@
 /*@
   requires valid: \valid_read(a + (0..m-1));
 
-  assigns \nothing;
+  assigns  \nothing;
+
+  ensures  result:  0 <= \result <= m;
 
   behavior has_match:
     assumes HasConstantSubRange(a, m, n, b);
