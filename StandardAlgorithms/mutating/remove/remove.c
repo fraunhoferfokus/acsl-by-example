@@ -14,12 +14,11 @@ size_type remove(value_type* a, size_type n, value_type v)
   const size_type f = find(a, n, v);
 
   if (f == n) {
-
     //@ assert discard_nothing:  !HasValue(a, n, v);
     //@ assert size_zero:       Count{Pre}(a, n, v) == 0;
     return n;
-  } else {
-
+  }
+  else {
     const size_type m = remove_copy(a + f + 1, n - f - 1, a + f, v);
 
     //@ assert discard_first:  !HasValue(a, 0, f, v);

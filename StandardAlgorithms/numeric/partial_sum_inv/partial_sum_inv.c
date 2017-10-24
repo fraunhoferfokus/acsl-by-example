@@ -11,7 +11,7 @@
 
   assigns a[0..n-1], b[0..n-1];
 
-  ensures unchanged:   Unchanged{Here,Pre}(a, n);
+  ensures unchanged:   Unchanged{Pre,Here}(a, n);
 */
 void partial_sum_inv(value_type* a, size_type n, value_type* b)
 {

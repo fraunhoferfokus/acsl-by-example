@@ -1,5 +1,5 @@
 
-include ../Makefile.call
+include ../Makefile.group
 
 clean:: FORCE
 	$(RM) libnumeric.a

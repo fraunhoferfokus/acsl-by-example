@@ -173,16 +173,20 @@ $(TOP_DIR)/Results/$(FILE).report: $(FILE).c
 $(TOP_DIR)/Results/$(FILE).preport: $(FILE).c
 	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
 
-%.report-wp: $(TOP_DIR)/Results/$(FILE).report
-	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
-
 generate: $(FILE).why3
 
 report: $(TOP_DIR)/Results/$(FILE).report
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
 
+report-clean:
+	@$(RM) $(TOP_DIR)/Results/$(FILE).report
+
+
 preport: $(TOP_DIR)/Results/$(FILE).preport
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
+
+preport-clean:
+	@$(RM) $(TOP_DIR)/Results/$(FILE).preport
 
 %.check:%.c
 	@$(WP) $(WP_C_FLAGS) -wp-check -wp-out $(patsubst %.c,%.wp, $<)  $<
@@ -192,20 +196,6 @@ load:
 	@frama-c-gui -load $(FILE).sav
 
 obj: $(FILE).o
-
-# track dependencies for target 'report'
-%.d: %.c
-	@set -e; rm -f $@; \
-	$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
-	sed 's,\($*\)\.o[ :]*,\1.report $@ : ,g' < $@.$$$$ > $@; \
-	rm -f $@.$$$$
-
-depend: $(FILE).d
-
-depend-clean:
-	$(RM) $(FILE).d
-
-include $(FILE).d
 
 # cleanup
 
@@ -228,14 +218,14 @@ clean:: FORCE
 	@$(RM) $(FILE).sav
 
 ASTYLEOPTIONS += -A3
-#ASTYLEOPTIONS += --break-blocks
+ASTYLEOPTIONS += --indent=spaces=2
+ASTYLEOPTIONS += --indent-col1-comments
+ASTYLEOPTIONS += --min-conditional-indent=0
+ASTYLEOPTIONS += --lineend=linux
+ASTYLEOPTIONS += --break-closing-braces
+ASTYLEOPTIONS += --add-braces
 ASTYLEOPTIONS += --pad-oper
 ASTYLEOPTIONS += --pad-header
-ASTYLEOPTIONS += --indent-col1-comments
-ASTYLEOPTIONS += --lineend=linux
-ASTYLEOPTIONS += --add-brackets
-ASTYLEOPTIONS += --indent=spaces=2
-ASTYLEOPTIONS += --min-conditional-indent=0
 
 format: FORCE
 	@astyle $(ASTYLEOPTIONS) *.c *.cpp *.h

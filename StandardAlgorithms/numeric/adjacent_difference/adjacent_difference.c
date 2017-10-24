@@ -10,7 +10,7 @@ adjacent_difference(const value_type* a, size_type n, value_type* b)
 
     /*@
        loop invariant index:      1 <= i <= n;
-       loop invariant unchanged:  Unchanged{Here,Pre}(a, n);
+       loop invariant unchanged:  Unchanged{Pre,Here}(a, n);
        loop invariant difference: AdjacentDifference(a, i, b);
        loop assigns i, b[1..n-1];
        loop variant n - i;
@@ -23,7 +23,7 @@ adjacent_difference(const value_type* a, size_type n, value_type* b)
         ensures step: b[i] == Difference(a, i);
       */
       b[i] = a[i] - a[i - 1u];
-      //@ assert difference: AdjacentDifference{Here}(a, i+1, b);
+      //@ assert difference: AdjacentDifference(a, i+1, b);
     }
   }
 

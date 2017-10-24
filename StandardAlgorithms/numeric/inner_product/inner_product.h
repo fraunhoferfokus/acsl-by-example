@@ -15,8 +15,8 @@
   assigns \nothing;
 
   ensures result:    \result == InnerProduct(a, b, n, init);
-  ensures unchanged: Unchanged{Here,Old}(a, n);
-  ensures unchanged: Unchanged{Here,Old}(b, n);
+  ensures unchanged: Unchanged{Old,Here}(a, n);
+  ensures unchanged: Unchanged{Old,Here}(b, n);
 */
 value_type
 inner_product(const value_type* a, const value_type* b, size_type n,

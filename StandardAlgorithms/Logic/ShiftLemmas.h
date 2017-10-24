@@ -14,13 +14,13 @@
 
   lemma LowerBoundShift{L}:
     \forall value_type *a, val, integer b, c, d;
-      LowerBound{L}(a + b, c,     d,     val)  ==>
-      LowerBound{L}(a,     c + b, d + b, val);
+      LowerBound{L}(a+b, c,   d,   val)  ==>
+      LowerBound{L}(a,   c+b, d+b, val);
 
   lemma StrictLowerBoundShift{L}:
     \forall value_type *a, val, integer b, c, d;
-      StrictLowerBound{L}(a + b, c,     d,     val)  ==>
-      StrictLowerBound{L}(a,     c + b, d + b, val);
+      StrictLowerBound{L}(a+b, c,   d,   val)  ==>
+      StrictLowerBound{L}(a,   c+b, d+b, val);
 
   lemma UpperBoundShift{L}:
     \forall value_type *a, val, integer b, c;

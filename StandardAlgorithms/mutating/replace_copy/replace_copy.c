@@ -8,7 +8,7 @@ replace_copy(const value_type* a, size_type n, value_type* b, value_type v,
   /*@
     loop invariant bounds:    0 <= i <= n;
     loop invariant replace:   Replace{Pre,Here}(a, i, b, v, w);
-    loop invariant unchanged: Unchanged{Here,Pre}(a, i, n);
+    loop invariant unchanged: Unchanged{Pre,Here}(a, i, n);
     loop assigns i, b[0..n-1];
     loop variant n-i;
   */

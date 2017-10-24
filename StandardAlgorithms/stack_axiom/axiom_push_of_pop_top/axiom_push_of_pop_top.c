@@ -8,7 +8,7 @@
   assigns   s->size;
   assigns   s->obj[s->size-1];
 
-  ensures   equal: Equal{Here,Old}(s, s);
+  ensures   equal: Equal{Old,Here}(s, s);
 */
 void axiom_push_of_pop_top(Stack* s)
 {

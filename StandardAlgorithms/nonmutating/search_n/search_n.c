@@ -21,7 +21,8 @@ search_n(const value_type* a, size_type m, size_type n, value_type b)
       for (size_type i = 0; i < m; ++i) {
         if (a[i] != b) {
           start = i + 1;
-        } else if (n == i + 1 - start) {
+        }
+        else if (n == i + 1 - start) {
           return start;
         }
       }

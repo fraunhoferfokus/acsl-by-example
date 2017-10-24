@@ -15,11 +15,11 @@
 
   lemma CountHit:
     \forall value_type *a, v, integer n;
-      0 < n  ==>  a[n-1] == v  ==>  Count(a, n, v) == Count(a, n - 1, v) + 1;
+      0 < n  ==>  a[n-1] == v  ==>  Count(a, n, v) == Count(a, n-1, v) + 1;
 
   lemma CountMiss:
     \forall value_type *a, v, integer n;
-      0 < n  ==>  a[n-1] != v  ==>  Count(a, n, v) == Count(a, n - 1, v);
+      0 < n  ==>  a[n-1] != v  ==>  Count(a, n, v) == Count(a, n-1, v);
 
   lemma CountRead{L1,L2}:
     \forall value_type *a, v, integer n;

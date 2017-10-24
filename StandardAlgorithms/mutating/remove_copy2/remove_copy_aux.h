@@ -49,7 +49,8 @@ remove_copy_aux(const value_type* a, size_type n, size_type i,
     //@ assert retain_pre:  MultisetRetainRest{Pre,Here}(a, i,   b, j,   v);
     //@ assert retain_now:  MultisetRetainRest{Pre,Here}(a, i+1, b, j+1, v);
     return j + 1;
-  } else {
+  }
+  else {
     //@ assert size:     j == RemoveCount(a, i+1, v);
     //@ assert retain:   MultisetRetainRest{Pre,Here}(a, i+1, b, j, v);
     //@ assert mapping:  RemoveMapping{Pre,Here}(a, i+1, b, v);

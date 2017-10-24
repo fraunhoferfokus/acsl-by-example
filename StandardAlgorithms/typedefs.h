@@ -16,5 +16,7 @@ typedef int value_type;
 
 typedef unsigned int size_type;
 
+#define SIZE_TYPE_MAX  UINT_MAX 
+
 #endif /* TYPEDEFS_H_INCLUDED */
 

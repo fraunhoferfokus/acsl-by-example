@@ -4,17 +4,14 @@ MAKEFLAGS += --silent --no-print-directory
 FILELIST = filelist.path
 EXAMPLES := $(shell cat $(FILELIST))
 
-depend:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "generate dependencies $$i"; $(MAKE) depend -sC $$i);\
-	done
 
-depend-clean:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "depend-clean $$i"; $(MAKE) depend-clean -sC $$i);\
-	done
+clean:
+	@($(RM) -rf errorlogs);\
+	$(RM) *.back
+	@for i in drivers $(EXAMPLES);\
+        do \
+                (echo "clean $$i"; $(MAKE) clean -sC $$i);\
+        done
 
 generate:
 	@for i in $(EXAMPLES);\
@@ -29,7 +26,10 @@ report:
 	done
 
 report-clean:
-	@rm Results/*.report
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "delete report $$i"; $(MAKE) report-clean -sC $$i);\
+	done
 
 preport:
 	@for i in $(EXAMPLES);\
@@ -38,7 +38,10 @@ preport:
 	done
 
 preport-clean:
-	@rm Results/*.preport
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "delete preport $$i"; $(MAKE) preport-clean -sC $$i);\
+	done
 
 log:
 	@($(MAKE) report > results.txt)
@@ -54,14 +57,6 @@ lib:
 	do \
 		(echo "make lib $$i"; $(MAKE) lib -sC $$i);\
 	done
-
-clean:
-	@($(RM) -rf errorlogs);\
-	$(RM) *.back
-	@for i in drivers $(EXAMPLES);\
-        do \
-                (echo "clean $$i"; $(MAKE) clean -sC $$i);\
-        done
 
 format:
 	@for i in $(EXAMPLES);\

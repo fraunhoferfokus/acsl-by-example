@@ -1,5 +1,6 @@
 
 #include "push_heap.h"
+#include "../is_heap/heap_aux.h"
 #include "CountLemmas.h"
 #include "MultisetAdd.h"
 #include "MultisetAddDistinct.h"
@@ -12,29 +13,14 @@
 void push_heap(value_type* a, size_type n)
 {
   // start of prologue
-
   if (1u < n) { // otherwise nothings needs to be done
 
-    size_type hole = n - 1u;
-    const value_type v = a[hole];
+    const value_type v      = a[n - 1];
+    size_type  hole = heap_parent(n - 1);
 
-    size_type parent = (hole - 1u) / 2u;
+    if (a[hole] < v) {
 
-    if (a[parent] < v) {
-      /*@
-        requires hole:       hole == n-1;
-        requires value:      a[hole] == v;
-        assigns              hole, a[hole];
-        ensures  unchanged:  Unchanged{Old, Here}(a, 0, n-1);
-        ensures  decrease:   hole < \old(hole);
-        ensures  changed:    a[\old(hole)] == a[parent];
-        ensures  changed:    hole == parent;
-      */
-      {
-        a[hole] = a[parent];
-        hole = parent;
-      }
-
+      a[n - 1] = a[hole];
       //@ assert heap:   IsHeap(a, n);
       //@ assert add:    MultisetAdd{Pre,Here}(a, n, a[hole]);
       //@ assert minus:  MultisetMinus{Pre,Here}(a, n, v);
@@ -42,24 +28,25 @@ void push_heap(value_type* a, size_type n)
 
       // end of prologue
       // start of main act
+      if (0u < hole) {
+        size_type parent = heap_parent(hole);
 
-      /*@
-        loop invariant bound:  0 <= hole < n-1;
-        loop invariant heap:   IsHeap(a, n);
-        loop invariant less:   a[hole] < v;
-        loop invariant add:    MultisetAdd{Pre,Here}(a, n, a[hole]);
-        loop invariant minus:  MultisetMinus{Pre,Here}(a, n, v);
-        loop invariant retain: MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
-        loop assigns           hole, a[0..n-1];
-        loop variant           hole;
-      */
-      while (hole > 0u) {
-        //@ ghost Loop: // LoopEntry not yet supported!
-        //@ ghost const value_type old_a = a[hole];
-        //@ assert reorder:  old_a == \at(a[hole],Loop);
-        const size_type parent = (hole - 1u) / 2u;
+        /*@
+          loop invariant bound:  0 <= hole < n-1;
+          loop invariant heap:   IsHeap(a, n);
+          loop invariant heap:   parent == HeapParent(hole);
+          loop invariant less:   a[hole] < v;
+          loop invariant add:    MultisetAdd{Pre,Here}(a, n, a[hole]);
+          loop invariant minus:  MultisetMinus{Pre,Here}(a, n, v);
+          loop invariant retain: MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
+          loop assigns           hole, parent, a[0..n-1];
+          loop variant           hole;
+        */
+        while (0u < hole && a[parent] < v) {
+          //@ ghost Loop: // LoopEntry not yet supported!
+          //@ ghost const value_type old_a = a[hole];
+          //@ assert reorder:  old_a == \at(a[hole],Loop);
 
-        if (a[parent] < v) {
           if (a[hole] < a[parent]) {
             a[hole] = a[parent];
             //@ assert less:    old_a   < v;
@@ -72,12 +59,13 @@ void push_heap(value_type* a, size_type n)
             //@ assert retain:  MultisetRetain{Pre,Here}(a, n, old_a);
             //@ assert retain:  MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
           }
+
           hole = parent;
-        } else {
-          break;
+          if (0u < hole) {
+            parent = heap_parent(hole);
+          }
         }
       }
-
       // end of main act
       // start of epilogue
 

@@ -6,7 +6,7 @@ clean:: FORCE
 	$(RM) libheap.a
 
 
-include ../Makefile.call
+include ../Makefile.group
 
 OBJ :=  push_heap/push_heap.o\
  	pop_heap/pop_heap.o\

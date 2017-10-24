@@ -23,9 +23,11 @@ equal_range(const value_type* a, size_type n, value_type val)
 
     if (a[middle] < val) {
       first = middle + 1;
-    } else if (val < a[middle]) {
+    }
+    else if (val < a[middle]) {
       last = middle;
-    } else {
+    }
+    else {
       break;
     }
   }
@@ -44,7 +46,8 @@ equal_range(const value_type* a, size_type n, value_type val)
     //@ assert strict: StrictLowerBound(a, right, last, val);
 
     return make_pair(left, right);
-  } else {
+  }
+  else {
     return make_pair(first, first);
   }
 }

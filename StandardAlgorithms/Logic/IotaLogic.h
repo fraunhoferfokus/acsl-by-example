@@ -7,7 +7,7 @@
 /*@
   predicate
    Iota(value_type* a, integer n, value_type v) = 
-     \forall integer i; 0 <= i < n ==> a[i] == v + i; 
+     \forall integer i; 0 <= i < n ==> a[i] == v+i; 
 */
 
 #endif /* IOTALOGIC_H_INCLUDED */

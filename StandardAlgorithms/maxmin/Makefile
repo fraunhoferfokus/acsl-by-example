@@ -1,5 +1,5 @@
 
-include ../Makefile.call
+include ../Makefile.group
 
 OBJ := max_element2/max_element2.o\
        min_element/min_element.o

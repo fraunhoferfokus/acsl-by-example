@@ -9,7 +9,7 @@
 
   assigns a[0..n-1];
 
-  ensures reverse: Reverse{Here,Old}(a, n);
+  ensures reverse: Reverse{Old,Here}(a, n);
 */
 void reverse(value_type* a, size_type n);
 

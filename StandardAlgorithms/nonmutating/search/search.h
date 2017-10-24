@@ -14,7 +14,7 @@
 
   behavior has_match:
     assumes HasSubRange(a, 0, m, b, n);
-    ensures bound:  \result <= m-n;
+    ensures bound:  0 <= \result <= m-n;
     ensures result: EqualRanges{Here,Here}(a+\result, n, b);
     ensures first:  !HasSubRange(a, 0, \result+n-1, b, n);
 

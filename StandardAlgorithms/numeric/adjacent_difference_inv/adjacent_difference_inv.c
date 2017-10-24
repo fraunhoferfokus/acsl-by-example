@@ -12,7 +12,7 @@
 
   assigns a[0..n-1], b[0..n-1];
 
-  ensures unchanged:   Unchanged{Here,Pre}(a, n);
+  ensures unchanged:   Unchanged{Old,Here}(a, n);
 */
 void adjacent_difference_inv(value_type* a, size_type n, value_type* b)
 {

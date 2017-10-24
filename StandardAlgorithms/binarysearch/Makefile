@@ -1,5 +1,5 @@
 
-include ../Makefile.call
+include ../Makefile.group
 
 OBJ := lower_bound/lower_bound.o\
        upper_bound/upper_bound.o\

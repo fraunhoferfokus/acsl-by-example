@@ -2,12 +2,10 @@
 #ifndef MAKE_HEAP_H_INCLUDED
 #define MAKE_HEAP_H_INCLUDED
 
-#include <limits.h>
 #include "IsHeap.h"
 #include "MultisetUnchanged.h"
 
 /*@
-   requires limit:  n < UINT_MAX;
    requires valid:  \valid(a + (0..n-1));
 
    assigns a[0..n-1];

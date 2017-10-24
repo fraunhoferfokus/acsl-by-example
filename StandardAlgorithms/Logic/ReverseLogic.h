@@ -11,7 +11,7 @@
 
   predicate 
     Reverse{K,L}(value_type* a, integer m, integer n,
-                 value_type* b, integer p) = Reverse{K,L}(a + m, n - m, b + p);
+                 value_type* b, integer p) = Reverse{K,L}(a+m, n-m, b+p);
 
   predicate 
     Reverse{K,L}(value_type* a, integer m, integer n, value_type* b) =

@@ -16,7 +16,7 @@
   predicate
     EqualRanges{K,L}(value_type* a, integer m, integer n,
                      value_type* b, integer p) =
-      EqualRanges{K,L}(a + m, n - m, b + p);
+      EqualRanges{K,L}(a+m, n-m, b+p);
 
   predicate
     EqualRanges{K,L}(value_type* a, integer m, integer n, integer p) =

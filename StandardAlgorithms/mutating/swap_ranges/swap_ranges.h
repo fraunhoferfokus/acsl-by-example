@@ -12,8 +12,8 @@
   assigns a[0..n-1];
   assigns b[0..n-1];
 
-  ensures equal:  EqualRanges{Here,Old}(a, n, b);
-  ensures equal:  EqualRanges{Here,Old}(b, n, a);
+  ensures equal:  EqualRanges{Old,Here}(a, n, b);
+  ensures equal:  EqualRanges{Old,Here}(b, n, a);
 */
 void swap_ranges(value_type* a, size_type n, value_type* b);
 

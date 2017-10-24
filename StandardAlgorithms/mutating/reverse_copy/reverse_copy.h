@@ -12,8 +12,8 @@
 
   assigns b[0..(n-1)];
 
-  ensures reverse:     Reverse{Here,Old}(b, n, a);
-  ensures unchanged: Unchanged{Here,Old}(a, n);
+  ensures reverse:     Reverse{Old,Here}(a, n, b);
+  ensures unchanged: Unchanged{Old,Here}(a, n);
 */
 void reverse_copy(const value_type* a, size_type n, value_type* b);
 

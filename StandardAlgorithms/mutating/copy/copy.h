@@ -12,7 +12,7 @@
 
   assigns b[0..n-1];
 
-  ensures equal:   EqualRanges{Here,Old}(b, n, a);
+  ensures equal:   EqualRanges{Old,Here}(a, n, b);
 */
 void copy(const value_type* a, const size_type n, value_type* b);
 

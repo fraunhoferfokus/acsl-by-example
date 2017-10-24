@@ -10,18 +10,18 @@ size_type rotate(value_type* a, size_type m, size_type n)
     reverse(a + m, n - m);
 
     /*@
-      requires left:   Reverse{Here,Pre}(a, 0, m, 0);
-      requires right:  Reverse{Here,Pre}(a, m, n, m);
+      requires left:   Reverse{Pre,Here}(a, 0, m, 0);
+      requires right:  Reverse{Pre,Here}(a, m, n, m);
 
       assigns          a[0..n-1];
 
-      ensures left:    Reverse{Here,Old}(a, 0, n-m, m);
-      ensures right:   Reverse{Here,Old}(a, n-m, n, 0);
+      ensures left:    Reverse{Old,Here}(a, 0, m, n-m);
+      ensures right:   Reverse{Old,Here}(a, m, n, 0);
     */
     reverse(a, n);
 
-    //@ assert left:   EqualRanges{Here,Pre}(a, 0, n-m, m);
-    //@ assert right:  EqualRanges{Here,Pre}(a, n-m, n, 0);
+    //@ assert left:   EqualRanges{Pre,Here}(a, 0, m, n-m);
+    //@ assert right:  EqualRanges{Pre,Here}(a, m, n, 0);
   }
 
   return n - m;

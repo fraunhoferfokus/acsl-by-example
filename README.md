@@ -16,7 +16,7 @@ This version of *ACSL by Example* is intended for
 Frama-C 15 (20170501 Phosphorus) and relies
 on the following other sofware packages.
 
-* Why3      0.87.3
+* Why3      0.88.0
 * Alt-Ergo	1.30
 * Z3        4.5.1
 * CVC4		  1.4

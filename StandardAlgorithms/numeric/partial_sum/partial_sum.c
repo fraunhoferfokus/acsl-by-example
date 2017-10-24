@@ -10,7 +10,7 @@ partial_sum(const value_type* a, size_type n, value_type* b)
 
     /*@
        loop invariant bound:      1 <= i <= n;
-       loop invariant unchanged:  Unchanged{Here,Pre}(a, n);
+       loop invariant unchanged:  Unchanged{Pre,Here}(a, n);
        loop invariant accumulate: b[i-1] == Accumulate(a, i);
        loop invariant partialsum: PartialSum(a, i, b);
        loop assigns i, b[1..n-1];

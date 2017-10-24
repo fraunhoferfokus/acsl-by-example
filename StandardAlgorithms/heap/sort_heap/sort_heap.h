@@ -8,7 +8,6 @@
 #include "Sorted.h"
 
 /*@
-   requires limit:  0 <= n < (UINT_MAX-2)/2;
    requires valid:  \valid(a + (0..n-1));
    requires heap:   IsHeap(a, n);
 

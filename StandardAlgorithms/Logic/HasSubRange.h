@@ -15,7 +15,7 @@
 
   lemma HasSubRangeSizes:
     \forall value_type *a, *b, integer f, t, n;
-      HasSubRange(a, f, t, b, n) ==> n <= t - f;
+      HasSubRange(a, f, t, b, n) ==> n <= t-f;
 */
 
 #endif /*  HASSUBRANGE_H_INCLUDED */

@@ -4,6 +4,7 @@ binarysearch
 mutating
 numeric
 heap
+classic-sorting
 stack
 stack_wd
 stack_axiom

@@ -1,5 +1,5 @@
 
-include ../Makefile.call
+include ../Makefile.group
 
 OBJ := equal/equal.o\
        mismatch/mismatch.o\

@@ -12,7 +12,7 @@ extern unsigned short random_seed[3];
   assigns a[0..n-1];
   assigns random_seed[0..2];
 
-  ensures  MultisetUnchanged{Here,Old}(a,n);
+  ensures  MultisetUnchanged{Old,Here}(a,n);
 */
 void random_shuffle(value_type* a, size_type n);
 

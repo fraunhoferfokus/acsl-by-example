@@ -8,7 +8,7 @@
 #include <limits.h>
 
 /*@
-   requires limits: 1 <= n <  (UINT_MAX-2)/2;
+   requires bounds: 0 < n;
    requires valid:  \valid(a + (0..n-1));
    requires heap:   IsHeap(a, n);
 

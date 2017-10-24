@@ -11,8 +11,8 @@
   assigns a[0..n-1];
 
   ensures result: \result == n-m;
-  ensures left:   EqualRanges{Here,Old}(a, 0, n-m, m);
-  ensures right:  EqualRanges{Here,Old}(a, n-m, n, 0);
+  ensures left:   EqualRanges{Old,Here}(a, 0, m, n-m);
+  ensures right:  EqualRanges{Old,Here}(a, m, n, 0);
 */
 size_type rotate(value_type* a, size_type m, size_type n);
 

@@ -7,6 +7,9 @@ SEC=sec:push_heap
 
 include ../../Makefile.template
 
+#WP_FLAGS += -wp-prop="@lemma"
+#WP_FLAGS += -wp-prop="-@lemma"
+
 #WP_FLAGS += -wp-prop MultsetAddDistinct
 #WP_FLAGS += -wp-prop MultisetUnchangedExceptLemma
 #WP_FLAGS += -wp-prop heap
@@ -24,8 +27,6 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-prop rte
 #WP_FLAGS += -wp-prop @assigns
 #WP_FLAGS += -wp-prop="-@invariant"
-#WP_FLAGS += -wp-prop="@lemma"
-#WP_FLAGS += -wp-prop="-@lemma"
 
 TESTOBJ += -lheap
 

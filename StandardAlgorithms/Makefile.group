@@ -26,33 +26,34 @@ clean::
                 (cd "$$i"; $(MAKE) -s clean);\
         done
 
-depend:
-	@for i in $(FILE);\
-        do \
-                (cd "$$i"; $(MAKE) -s depend);\
-        done
-
-depend-clean::
-	@for i in $(FILE);\
-        do \
-                (cd "$$i"; $(MAKE) -s depend-clean);\
-        done
-
 generate:
 	@for i in $(FILE);\
         do \
                 ($(MAKE) generate -sC $$i);\
         done
+
 report:
 	@for i in $(FILE);\
         do \
                 ($(MAKE) report -sC $$i);\
         done
 
+report-clean:
+	@for i in $(FILE);\
+        do \
+                ($(MAKE) report-clean -sC $$i);\
+        done
+
 preport:
 	@for i in $(FILE);\
         do \
                 ($(MAKE) preport -sC $$i);\
+        done
+
+preport-clean:
+	@for i in $(FILE);\
+        do \
+                ($(MAKE) preport-clean -sC $$i);\
         done
 
 format:

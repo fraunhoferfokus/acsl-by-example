@@ -1,4 +1,4 @@
-include ../Makefile.call
+include ../Makefile.group
 
 OBJ := \
 	stack_empty_wd/stack_empty_wd.o\

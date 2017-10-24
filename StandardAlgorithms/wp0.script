@@ -326,6 +326,113 @@ Proof.
   }
 Qed.
 
+Goal typed_ref_external_lemma_EqualRangesPreservesCount.
+Hint EqualRangesPreservesCount,property.
+Proof.
+  Require Import Psatz.
+  intros v m n p L K a. intros P Q V.
+  replace n with (m + (n-m)) by lia.
+
+
+  apply natlike_rec2 with (z := (n - m)); auto with zarith.
+  {
+    intros.
+    rewrite Zplus_0_r in *.
+    replace (p + m - m) with p by lia.
+    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+    rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+  }
+  {
+    intros z.
+    replace (p + (m + z) - m) with (p + z) by lia.
+    replace (m + Z.succ z) with (1 + (m+z)) by lia.
+    replace (p + (1 + (m + z)) - m) with (1 + (p + z)) by lia.
+    intros.
+    enough(Y: P_EqualRanges_4_ L K a m (m + z) p).
+
+    assert (X: K.[ shift a (m+z)] =  v \/
+               K.[ shift a (m+z)] <> v) by lia.
+    destruct X as [eq|neq].
+    { 
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+      replace (1 + (p + z) - 1) with (p + z) by lia.
+      symmetry.
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+      replace (1 + (m + z) - 1) with (m + z) by lia.
+      symmetry.
+      auto with zarith.
+
+      replace (1 + (m + z) - 1) with (m + z) by lia.
+      auto.
+     
+      replace (1 + (p + z) - 1) with (p + z) by lia.
+      unfold P_EqualRanges_4_ in H1.
+      unfold P_EqualRanges_3_ in H1.
+      unfold P_EqualRanges_1_ in H1.
+      unfold shift_sint32 in *.
+      rewrite <- shift_associative; auto with zarith.
+      rewrite <- H1; auto with zarith.
+      rewrite shift_associative; auto with zarith.
+    }
+    {
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      replace (1 + (p + z) - 1) with (p + z) by lia.
+      symmetry.
+      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+      replace (1 + (m + z) - 1) with (m + z) by lia.
+      symmetry.
+      auto with zarith.
+
+      replace (1 + (m + z) - 1) with (m + z) by lia.
+      auto.
+     
+      replace (1 + (p + z) - 1) with (p + z) by lia.
+      unfold P_EqualRanges_4_ in H1.
+      unfold P_EqualRanges_3_ in H1.
+      unfold P_EqualRanges_1_ in H1.
+      unfold shift_sint32 in *.
+      rewrite <- shift_associative; auto with zarith.
+      rewrite <- H1; auto with zarith.
+      rewrite shift_associative; auto with zarith.
+    }
+
+    unfold P_EqualRanges_4_ in *.
+    unfold P_EqualRanges_3_ in *.
+    unfold P_EqualRanges_1_ in *.
+    unfold shift_sint32 in *.
+    intros.
+    rewrite H1; auto with zarith.
+  }
+
+Qed.
+
+Goal typed_ref_external_lemma_EqualRangesPreservesSorted.
+Hint EqualRangesPreservesSorted,property.
+Proof.
+ Require Import Psatz.
+ intros m n p L K a; intros.
+ subst x.
+ unfold P_Sorted_1_.
+ unfold P_EqualRanges_4_ in *.
+ unfold P_EqualRanges_3_ in *.
+ unfold P_EqualRanges_1_ in *.
+ intros i j; intros.
+ unfold shift_sint32 in *.
+
+ replace i with ((p + m) + (i - p - m)) by lia.
+ rewrite <- shift_associative.
+ rewrite <- H0; auto with zarith.
+
+ replace j with ((p + m) + (j - p - m)) by lia.
+ rewrite <- shift_associative.
+ rewrite <- H0; auto with zarith.
+
+ rewrite shift_associative.
+ rewrite shift_associative.
+
+ apply H; auto with zarith.
+Qed.
+
 Goal typed_ref_external_lemma_HasValueCountInversion.
 Hint HasValueCountInversion,property.
 Proof.
@@ -470,9 +577,9 @@ Proof.
            unfold L_HeapParent.
            replace (1+z-1) with z by lia.
            apply Y; auto with zarith.
-           apply Q_HeapBounds; lia.
+           apply Axiomatic.Q_HeapBounds; lia.
            cut (Cdiv z 2 <= z); auto with zarith. 
-           apply Q_HeapBounds; lia.
+           apply Axiomatic.Q_HeapBounds; lia.
          }
          lia.
        }
@@ -514,12 +621,6 @@ Proof.
   rewrite H1; auto with zarith.
   rewrite H2; auto with zarith.
 
-Qed.
-
-Goal typed_ref_external_lemma_MultsetAddDistinct.
-Hint MultsetAddDistinct,property.
-Proof.
-  intros v i n 
 Qed.
 
 Goal typed_ref_external_lemma_RemoveCountMonotonic.
@@ -579,6 +680,36 @@ Proof.
 
 Qed.
 
+Goal typed_ref_external_lemma_RotatePreservesStrictLowerBound.
+Hint RotatePreservesStrictLowerBound,property.
+Proof.
+  Require Import Psatz.
+  intros m n L K a. intros.
+  subst x. subst x_1.
+  unfold P_StrictLowerBound_1_ in *.
+  intros.
+  unfold P_EqualRanges_4_ in *.
+  unfold P_EqualRanges_3_ in *.
+  unfold P_EqualRanges_1_ in *.
+
+  unfold shift_sint32 in *.
+
+  replace m with (m + 0) by lia.
+  rewrite <- shift_associative.
+  rewrite <- H; auto with zarith.
+
+  replace i with ((1 + m) + (i - (1 + m))) by lia.
+  rewrite <- shift_associative.
+  rewrite <- H0; auto with zarith.
+
+  rewrite shift_associative. 
+  rewrite shift_associative.
+
+  replace (n + 0) with n by lia.
+  replace (m + (i - (1 + m))) with (i - 1) by lia.
+  apply H1; auto with zarith.
+Qed.
+
 Goal typed_ref_external_lemma_StrictLowerBoundShift.
 Hint StrictLowerBoundShift,property.
 Proof.
@@ -587,6 +718,20 @@ Proof.
   unfold shift_sint32 in *.
   intros.
   replace i0 with (i_2 + (i0 - i_2)) by lia.
+
+  rewrite <- shift_associative.
+  apply H0; lia.
+
+Qed.
+
+Goal typed_ref_external_lemma_StrictUpperBoundShift.
+Hint StrictUpperBoundShift,property.
+Proof.
+  Require Import Psatz.
+  unfold P_StrictUpperBound_1_ in *.
+  unfold shift_sint32 in *.
+  intros.
+  replace i0 with (i_1 + (i0 - i_1)) by lia.
 
   rewrite <- shift_associative.
   apply H0; lia.
@@ -608,6 +753,20 @@ Proof.
   - apply H; auto with zarith.
   - rewrite shift_associative.
     trivial.
+
+Qed.
+
+Goal typed_ref_external_lemma_UpperBoundShift.
+Hint UpperBoundShift,property.
+Proof.
+  Require Import Psatz.
+  unfold P_UpperBound_1_ in *.
+  unfold shift_sint32 in *.
+  intros.
+  replace i0 with (i_1 + (i0 - i_1)) by lia.
+
+  rewrite <- shift_associative.
+  apply H0; lia.
 
 Qed.
 
