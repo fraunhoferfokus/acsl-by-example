@@ -3,7 +3,7 @@ Require Import ZArith.
 Require Import Memory.
 Require Import Psatz.
 
-Open Local Scope Z_scope.
+Open Scope Z_scope.
 
 Lemma foo :
   forall i k m n: Z,
@@ -14,9 +14,9 @@ Proof.
   intros.
   assert(IK: i < k \/ i = k \/ i > k) by apply Ztrichotomy.
      destruct IK as [L|[M|R]].
-     left; omega.
-     right; omega.
-     right; omega.
+     left; lia.
+     right; lia.
+     right; lia.
 Qed.
 
 Lemma shift_associative :

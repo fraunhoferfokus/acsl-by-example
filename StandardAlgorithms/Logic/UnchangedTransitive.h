@@ -5,11 +5,12 @@
 #include "Unchanged.h"
 
 /*@
-  lemma UnchangedTransitive{K,L,M}:
-    \forall value_type *a, integer n;
-      Unchanged{K,L}(a, n)  ==>
-      Unchanged{L,M}(a, n)  ==>
-      Unchanged{K,M}(a, n);
+  lemma
+    UnchangedTransitive{K,L,M}:
+      \forall value_type *a, integer n;
+        Unchanged{K,L}(a, n)  ==>
+        Unchanged{L,M}(a, n)  ==>
+        Unchanged{K,M}(a, n);
 */
 
 #endif /* UNCHANGEDTRANSITIVE_H_INCLUDED */

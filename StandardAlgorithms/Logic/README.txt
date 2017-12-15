@@ -6,3 +6,10 @@ It relies on the assumptions
 - the names are longer than one character 
 
 grep -o "[A-Z][A-z]*" *.spec | cut -d : -f 2 | sort | uniq | grep -v '^[A-Z]$'
+
+
+
+To check that each file has all includes needed:
+
+for i in *.h ; do echo +++++ $i +++++ ; cc -Wall -c -I.. $i ; done
+

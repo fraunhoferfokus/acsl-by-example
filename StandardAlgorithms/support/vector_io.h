@@ -11,8 +11,12 @@ std::ostream& operator<<(std::ostream& stream, const std::vector<T>& v)
 {
     stream << '(';
     for(auto i = v.begin(); i != v.end(); ++i) {
-        stream << *i <<  ((std::next(i) != v.end()) ? ',' : ')');
+        stream << *i;
+        if (std::next(i) != v.end()) {
+          stream << ',';
+        }
     }
+    stream << ')';
 
     return stream;
 }

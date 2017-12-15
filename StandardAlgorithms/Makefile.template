@@ -53,7 +53,7 @@ INCLUDES  = $(CPPFLAGS)
 
 # PREPROCESSOR
 
-SHARED_FLAGS=-Wall -pedantic -Werror
+SHARED_FLAGS=-Wall -pedantic -Werror -O2
 CFLAGS=-x c++ -std=c++14 $(SHARED_FLAGS)
 CXXFLAGS=-std=c++14 $(SHARED_FLAGS)
 
@@ -101,10 +101,10 @@ WP_FLAGS += -wp-model Typed+ref
 
 # provers
 WP_PROVER_FLAGS += -wp-prover alt-ergo
-WP_PROVER_FLAGS += -wp-prover why3:cvc4
-WP_PROVER_FLAGS += -wp-prover why3:cvc3
-WP_PROVER_FLAGS += -wp-prover why3:z3
-WP_PROVER_FLAGS += -wp-prover why3:eprover
+WP_PROVER_FLAGS += -wp-prover cvc4-15
+WP_PROVER_FLAGS += -wp-prover cvc3
+WP_PROVER_FLAGS += -wp-prover z3
+WP_PROVER_FLAGS += -wp-prover eprover
 WP_PROVER_FLAGS += -wp-prover coq
 
 

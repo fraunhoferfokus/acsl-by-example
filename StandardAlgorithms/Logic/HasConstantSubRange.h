@@ -10,9 +10,10 @@
       \exists integer i; 0 <= i <= m-n && ConstantRange(a, i, i+n, b);
 
 
-  lemma HasConstantSubRangeSizes:
-    \forall value_type *a, v, integer m, n;
-      HasConstantSubRange(a, m, n, v) ==> n <= m;
+  lemma
+    HasConstantSubRangeSizes:
+      \forall value_type *a, v, integer m, n;
+        HasConstantSubRange(a, m, n, v) ==> n <= m;
 */
 
 #endif /*  HASCONSTANTSUBRANGE_H_INCLUDED */

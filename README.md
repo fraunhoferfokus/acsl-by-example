@@ -13,15 +13,16 @@ The directory
 contains the complete C source code including ACSL annotations of the examples.
 
 This version of *ACSL by Example* is intended for
-Frama-C 15 (20170501 Phosphorus) and relies
-on the following other sofware packages.
+Frama-C 16 (20171101 Sulfur) and relies on the following other sofware packages.
 
-* Why3      0.88.0
-* Alt-Ergo	1.30
-* Z3        4.5.1
-* CVC4		  1.4
-* CVC3		  2.4.1
-* E Prover	2.0
-* Coq       8.5.3
+*Package* | *Version*
+--------- | ---------
+ Why3     | 0.88.2
+ Alt-Ergo | 2.0.0
+ CVC4     | 1.5
+ CVC3     | 2.4.1
+ Z3       | 4.5.1
+ E Prover | 2.0
+ Coq      | 8.6.1
 
 For more details on verifying the examples see the file [README.txt](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/README.txt).

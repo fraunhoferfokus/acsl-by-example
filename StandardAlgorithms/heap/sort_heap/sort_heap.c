@@ -2,7 +2,7 @@
 #include "sort_heap.h"
 #include "../pop_heap/pop_heap.h"
 #include "LowerBound.h"
-#include "SortedLemmas.h"
+#include "SortedUpperBound.h"
 #include "Unchanged.h"
 #include "MultisetUnchangedLemmas.h"
 
@@ -29,7 +29,6 @@ void sort_heap(value_type* a, size_type n)
     */
     pop_heap(a, i);
     //@ assert lower:  LowerBound(a, i, n, a[i-1]);
-
   }
 }
 

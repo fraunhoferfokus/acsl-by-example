@@ -5,8 +5,9 @@
 #include "MultisetUnchangedLemmas.h"
 
 /*@
-   lemma SwapImpliesMultisetUnchanged{K,L}:
-     \forall value_type *a, integer i, k, n;
+  lemma
+    SwapImpliesMultisetUnchanged{K,L}:
+      \forall value_type *a, integer i, k, n;
         0 <= i <= k < n                    ==>
         \at(a[i],K) == \at(a[k],L)         ==>
         \at(a[k],K) == \at(a[i],L)         ==>

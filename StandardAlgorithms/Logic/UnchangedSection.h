@@ -8,10 +8,9 @@
   lemma
     UnchangedSection{K,L}:
       \forall value_type *a, integer m, n, p, q;
-         m <= p <= q <= n         ==>
+         0 <= m <= p <= q <= n    ==>
          Unchanged{K,L}(a, m, n)  ==> 
-         Unchanged{K,L}(a, p, q)  ==>
-         \at(a[m],K) == \at(a[m], L);
+         Unchanged{K,L}(a, p, q);
 */
 
 #endif /* UNCHANGEDSECTION_H_INCLUDED */

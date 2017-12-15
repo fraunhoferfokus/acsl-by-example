@@ -16,11 +16,11 @@
       
   lemma
     MultisetUnchangedUnion{L1,L2}:
-      \forall value_type *a, integer k, n;
-        0 <= k <= n                        ==>
-        MultisetUnchanged{L1,L2}(a, 0, k)  ==>
+      \forall value_type *a, integer i, k, n;
+        0 <= i <= k <= n                   ==>
+        MultisetUnchanged{L1,L2}(a, i, k)  ==>
         MultisetUnchanged{L1,L2}(a, k, n)  ==>
-        MultisetUnchanged{L1,L2}(a, 0, n); 
+        MultisetUnchanged{L1,L2}(a, i, n); 
 
 
   lemma

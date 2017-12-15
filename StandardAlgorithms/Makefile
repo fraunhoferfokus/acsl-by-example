@@ -4,6 +4,7 @@ MAKEFLAGS += --silent --no-print-directory
 FILELIST = filelist.path
 EXAMPLES := $(shell cat $(FILELIST))
 
+it: lib
 
 clean:
 	@($(RM) -rf errorlogs);\
@@ -43,8 +44,6 @@ preport-clean:
 		(echo "delete preport $$i"; $(MAKE) preport-clean -sC $$i);\
 	done
 
-log:
-	@($(MAKE) report > results.txt)
 
 test: lib
 	@for i in $(EXAMPLES);\

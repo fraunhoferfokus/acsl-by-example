@@ -2,7 +2,7 @@
 #ifndef MAX_SEQ_H_INCLUDED
 #define MAX_SEQ_H_INCLUDED
 
-#include "maxmin.h"
+#include "typedefs.h"
 
 /*@
   requires n > 0;
