@@ -1,5 +1,5 @@
 
-Please set the enviroment variable FRAMAC_SHARE whose purpoe is explained here:
+Please set the enviroment variable FRAMAC_SHARE whose purpose is explained here:
 
 FRAMAC_SHARE
     The path of a folder in the Frama C installation where Frama C
