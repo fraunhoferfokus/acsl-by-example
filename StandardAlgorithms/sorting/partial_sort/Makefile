@@ -3,7 +3,6 @@ FILE=partial_sort
 CMD=\\partialsort
 SEC=sec:partial_sort
 
-#WP_TIMEOUT=20
 
 include ../../Makefile.template
 

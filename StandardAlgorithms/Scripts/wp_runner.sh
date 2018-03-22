@@ -32,6 +32,7 @@ generate_tasks() {
 	# nullglob and pass /dev/null so grep doesn't consider stdin if
 	# no file matches.
 	shopt -s nullglob
+	# FIXME "typed_ref_external" depends on memory model and driver
 	for whyfile in $wpdir/typed_ref_external/*.why
 	do
 		sed -n \
@@ -224,6 +225,8 @@ mkdir $wpdir
 true >$log
 
 echo [wprunner] Generating WP files
+#echo "WP = $WP" > foo.log
+#echo "$@" >> foo.log
 $WP "$@" -wp-out $wpdir -wp-gen $source | tee -a $log
 echo [wprunner] Running provers on $NPROC CPUs
 generate_tasks | xargs -P $NPROC -n 1 -- $0 -r $wpdir | tee -a $log

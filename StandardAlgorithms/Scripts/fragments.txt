@@ -1,7 +1,14 @@
 
+# list alt-ergo proof obligations and order them according to their verification time
+find . -name "*Alt-Ergo.out" -exec grep -H Valid {} \; | cut -f 1,3 -d ':' | sed 's/^.*\///' | sed "s/:Valid (/ /" | cut -f 1 -d ')'| awk '{ print $2 "\t" $1 }' | sort -nr
+
+# list why3 proof obligations and order them according to their verification time
+find . -name "*Why3*.out" -exec grep -H Valid  {} \; | cut -f 1,3 -d ":" | sed 's/^.*\///' | sed "s/: Valid (/ /" | sed "s/s)//" | awk '{ print $2 "\t" $1 }' | sort -nr
+
+
 # stupid command to search for largest verfication times
 
-find . -name "*.out" -exec cut -f 2 -d: {} \; | sed "s/ Valid/Valid/" | cut -d " " -f 2 | sed "s/(//" | sed "s/)//" |  sed "s/s//" | sort -unr | less
+find . -name "*.out" -exec cut -f 2 -d: {} \; | sed "s/ Valid/Valid/" | cut -d " " -f 2 | sed "s/(//" | sed "s/)//" |  sed "s/s//" | sort -ru
 
 # list algorithms whose algorithms depends on coq proofs
 find . -name "*_Coq.v" | cut -d "/" -f 3 | sort -u

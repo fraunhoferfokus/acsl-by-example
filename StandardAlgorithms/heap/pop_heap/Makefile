@@ -3,7 +3,6 @@ FILE=pop_heap
 CMD=\\popheap
 SEC=sec:pop_heap
 
-#WP_TIMEOUT=15
 
 include ../../Makefile.template
 

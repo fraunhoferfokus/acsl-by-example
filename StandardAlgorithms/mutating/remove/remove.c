@@ -29,9 +29,9 @@ size_type remove(value_type* a, size_type n, value_type v)
     //@ assert discard:   !HasValue(a, f, f+m, v);
     //@ assert discard:   !HasValue(a, f+m, v);
     //@ assert size:      f+m == n - Count{Pre}(a, 0, n, v);
-    //@ assert retain:    MultisetRetainRest{Pre,Here}(a, 0, f, a, 0, f, v);
-    //@ assert retain:    MultisetRetainRest{Pre,Here}(a, f, n, a, f, f+m, v);
-    //@ assert retain:    MultisetRetainRest{Pre,Here}(a, n, a, f+m, v);
+    //@ assert retain:    MultisetRetainRest{Pre,Here}(a, 0, f+1, a, 0, f, v);
+    //@ assert retain:    MultisetRetainRest{Pre,Here}(a, f+1, n, a, f, f+m, v);
+    //@ assert retain:    MultisetRetainRest{Pre,Here}(a, 0, n, a, 0, f+m, v);
     //@ assert unchanged: Unchanged{Pre,Here}(a, f+m, n);
     return f + m;
   }

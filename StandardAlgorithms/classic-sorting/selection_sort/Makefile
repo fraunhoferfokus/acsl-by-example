@@ -3,9 +3,6 @@ FILE=selection_sort
 CMD=\\selectionsort
 SEC=sec:selection_sort
 
-# for macOS
-WP_TIMEOUT=15
-
 include ../../Makefile.template
 
 #WP_FLAGS += -wp-prop="-@lemma"

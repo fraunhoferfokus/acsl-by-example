@@ -3,7 +3,6 @@ FILE=remove
 CMD=\\remove
 SEC=sec:remove
 
-WP_TIMEOUT=30
 
 include ../../Makefile.template
 

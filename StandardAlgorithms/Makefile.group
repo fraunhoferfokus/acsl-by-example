@@ -62,4 +62,16 @@ format:
                 ( $(MAKE) format -sC $$i);\
         done
 
+vs-pipe:
+	@for i in $(FILE);\
+        do \
+                ( $(MAKE) vs-pipe -sC $$i);\
+        done
+
+vs-par:
+	@for i in $(FILE);\
+        do \
+                ( $(MAKE) vs-par -sC $$i);\
+        done
+
 FORCE:

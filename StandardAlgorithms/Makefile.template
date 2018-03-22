@@ -2,11 +2,10 @@
 MAKEFLAGS += --silent --no-print-directory
 
 SHELL=/bin/bash
-#Variables for counting invalid and valid proof goals; used in make-report targets
-# the variables will be overwritten by function startWP and startJessie in script script_functions.sh
 
 export TOP_DIR=../..
 export SCRIPT_DIR=$(TOP_DIR)/Scripts
+export VS_DIR=$(TOP_DIR)/../Misc/VerificationService
 export DRIVER_DIR=$(TOP_DIR)/drivers
 
 CPPFLAGS = -I$(TOP_DIR)
@@ -157,6 +156,16 @@ test: $(FILE)_test FORCE
 %.wp++:%.cpp FORCE
 	@$(WP) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $<
 
+%.vs-par:%.c FORCE
+	@${VS_DIR}/vs.sh -p $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(notdir $(patsubst %.c,%.wp, $<)) 
+
+%.vs-pipe:%.c FORCE
+	@${VS_DIR}/vs.sh -d $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(notdir $(patsubst %.c,%.wp, $<)) 
+
+vs-par: $(FILE).vs-par
+
+vs-pipe: $(FILE).vs-pipe
+
 %.wprunner:%.c FORCE
 	@${SCRIPT_DIR}/wp_runner.sh $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES)
 
@@ -168,10 +177,10 @@ test: $(FILE)_test FORCE
 	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
 
 $(TOP_DIR)/Results/$(FILE).report: $(FILE).c
-	. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
+	. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(FILE) $(CMD) $(SEC) >$@
 
 $(TOP_DIR)/Results/$(FILE).preport: $(FILE).c
-	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
+	@. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(FILE) $(CMD) $(SEC) >$@
 
 generate: $(FILE).why3
 

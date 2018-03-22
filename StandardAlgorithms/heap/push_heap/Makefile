@@ -3,7 +3,6 @@ FILE=push_heap
 CMD=\\pushheap
 SEC=sec:push_heap
 
-#WP_TIMEOUT=20
 
 include ../../Makefile.template
 

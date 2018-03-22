@@ -54,12 +54,13 @@ extract_data_Wp()
 
     case $REPORT_BACKEND in
     wp_runner) generate_wp_runner ;;
+    vs-par) generate_vs_par ;;
     trust_wp|default) generate_wp ;;
     *) echo Unknown backend $REPORT_BACKEND ; exit 1 ;;
     esac
 
     case $REPORT_BACKEND in
-    trust_wp|wp_runner) extract_statistics_Wp ;;
+    trust_wp|wp_runner|vs-par) extract_statistics_Wp ;;
     default) extract_raw_data_Wp ;;
     *) echo Unknown backend $REPORT_BACKEND ; exit 1 ;;
     esac
@@ -85,6 +86,14 @@ generate_wp_runner()
 	# assume we run from within an algorithm directory
 	local prog="../../Scripts/wp_runner.sh $alg.c $WP_C_FLAGS $WP_PROVER_FLAGS -wp-par $WP_PROCESSES"
 	eval "$prog" >$results
+}
+
+# generate a verification report using vs.sh
+generate_vs_par()
+{
+	# assume we run from within an algorithm directory
+	local prog="../../../Misc/VerificationService/vs.sh -p $alg.c $WP_C_FLAGS $WP_PROVER_FLAGS -wp-par $WP_PROCESSES"
+	eval "$prog" >$results 2>&1		# use stderr
 }
 
 # extract the number of fullfilled proof obligations by manually going
@@ -122,7 +131,8 @@ extract_statistics_Wp()
     # generate report
     sed -e 's,^.*Proved goals: *\([0-9]*\) / *\([0-9]*\),valid=\1;goal_count=\2,p' \
         -e '1,/^valid=/d' \
-        -e 's/^ *\([^:]*\): *\([0-9]*\).*$/valid_\1=\2/' $results |
+        -e 's/^ *\([^:]*\): *\([0-9]*\).*$/valid_\1=\2/' \
+	-e '/\<Done\>/d' $results |
     tr '[:upper:]-' '[:lower:]_' >$statistics
 
     source $statistics

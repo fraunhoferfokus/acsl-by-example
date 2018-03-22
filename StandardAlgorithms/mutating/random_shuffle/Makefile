@@ -3,7 +3,6 @@ FILE=random_shuffle
 CMD=\\randomshuffle
 SEC=sec:randomshuffle
 
-#WP_TIMEOUT=20
 
 include ../../Makefile.template
 

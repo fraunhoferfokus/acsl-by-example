@@ -22,6 +22,7 @@ void random_shuffle(value_type* a, size_type n)
       //@ ghost Before:
       swap(&a[j], &a[i]);
       //@ assert reorder: MultisetUnchanged{Before,Here}(a, 0, j);
+      //@ assert reorder:         Unchanged{Before,Here}(a, j+1, i);
       //@ assert reorder: MultisetUnchanged{Before,Here}(a, j+1, i);
     }
   }

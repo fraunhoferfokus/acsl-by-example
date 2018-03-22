@@ -3,7 +3,6 @@ FILE=insertion_sort
 CMD=\\insertionsort
 SEC=sec:insertion_sort
 
-#WP_TIMEOUT=20
 
 include ../../Makefile.template
 
