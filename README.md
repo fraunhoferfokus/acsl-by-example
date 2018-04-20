@@ -1,12 +1,12 @@
 
 
-#ACSL by Example
+# ACSL by Example
 
 This repository contains
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
 --- a collection of C functions and data types whose
 behavior has been formally specified
-with [ACSL](https://www.frama-c.com/acsl.html) and formally verified with [Frama-C/WP](https://www.frama-c.com/wp.html).
+with [ACSL](https://frama-c.com/acsl.html) and formally verified with [Frama-C/WP](https://frama-c.com/wp.html).
 
 The directory
 [StandardAlgorithms](https://github.com/fraunhoferfokus/acsl-by-example/tree/master/StandardAlgorithms)
