@@ -5,14 +5,14 @@ adjacent_find(const value_type* a, size_type n)
 {
   if (n > 1u) {
     /*@
-      loop invariant bound:   1 <= i <= n;
-      loop invariant not_yet: !HasEqualNeighbors(a, i);
+      loop invariant bound:  0 <= i < n;
+      loop invariant none:   !HasEqualNeighbors(a, i+1);
       loop assigns i;
       loop variant n-i;
     */
-    for (size_type i = 1; i < n ; i++) {
-      if (a[i] == a[i - 1]) {
-        return i - 1;
+    for (size_type i = 0u; i + 1u < n; ++i) {
+      if (a[i] == a[i + 1u]) {
+        return  i;
       }
     }
   }

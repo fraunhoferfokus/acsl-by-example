@@ -10,6 +10,4 @@ rotate
 replace_copy
 replace
 remove_copy
-remove
-remove_copy2
 random_shuffle

@@ -14,8 +14,8 @@
   behavior some:
     assumes  HasEqualNeighbors(a, n);
     ensures  result:    0 <= \result < n-1;
-    ensures  adjacent: a[\result] == a[\result+1];
-    ensures  first:    !HasEqualNeighbors(a, \result);
+    ensures  adjacent:  a[\result] == a[\result+1];
+    ensures  first:     !HasEqualNeighbors(a, \result);
 
   behavior none:
     assumes  !HasEqualNeighbors(a, n);

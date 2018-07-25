@@ -187,7 +187,7 @@ generate: $(FILE).why3
 report: $(TOP_DIR)/Results/$(FILE).report
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
 
-report-clean:
+report-clean: clean
 	@$(RM) $(TOP_DIR)/Results/$(FILE).report
 
 

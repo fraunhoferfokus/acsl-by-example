@@ -114,14 +114,14 @@ Proof.
     intros.
     replace (m + Z.succ z) with (1 + (m+z)) by lia.
 
-    assert (X: t.[ shift a (m+z)] =  v \/
-               t.[ shift a (m+z)] <> v) by lia.
-    destruct X as [eq|neq]. 
-    - rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-      + replace (1 + (m + z) - 1) with (m + z) by lia.
-        auto with zarith.
-      + replace (1 + (m + z) - 1) with (m + z) by lia.
-        auto with zarith.
+    assert (X: t.[ shift_sint32 a (m+z)] =  v \/
+               t.[ shift_sint32 a (m+z)] <> v) by lia.
+    destruct X as [eq|neq].
+    - remember (m+z) as mz.
+      remember (1+mz) as mz1.
+      replace mz with (mz1 - 1) in * by lia.
+      rewrite <- eq in *.
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
     - rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
       + replace (1 + (m + z) - 1) with (m + z) by lia.
         auto with zarith.
@@ -149,18 +149,17 @@ Proof.
   {
     intros.
     replace (n + Z.succ z) with (1 + (n+z)) by lia.
+    apply  Z.ge_le.
 
-    assert (X: t.[ shift a (n+z)] =  v \/
-               t.[ shift a (n+z)] <> v) by lia.
+    assert (X: t.[ shift_sint32 a (n+z)] =  v \/
+               t.[ shift_sint32 a (n+z)] <> v) by lia.
     destruct X as [eq|neq].
-    - apply  Z.ge_le.
+    - remember (n+z) as nz.
+      remember (1+nz) as nz1.
+      replace nz with (nz1 - 1) in * by lia.
+      rewrite <- eq in *.
       rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-      + replace (1 + (n + z) - 1) with (n + z) by lia.
-        auto with zarith.
-      + replace (1 + (n + z) - 1) with (n + z) by lia.
-        auto.
-    - apply  Z.ge_le.
-      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+    - rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
       + replace (1 + (n + z) - 1) with (n + z) by lia.
         auto with zarith.
       + replace (1 + (n + z) - 1) with (n + z) by lia.
@@ -185,20 +184,16 @@ Proof.
     intros.
     replace (m + Z.succ z) with (1 + (m+z)) by lia.
 
-    assert (X: L.[ shift a (m+z)] =  v \/ L.[ shift a (m+z)] <> v) by tauto.
+    assert (X: v = L.[ shift_sint32 a (m+z)] \/ v <> L.[ shift_sint32 a (m+z)]) by tauto.
     destruct X as [eq|neq].
     {
+      rewrite eq in *.
+      remember (m+z) as mz.
+      remember (1+mz) as mz1.
+      replace mz with (mz1 - 1) in * by lia.
+      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
       symmetry.
       rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-      replace (1 + (m + z) - 1) with (m + z) by lia.
-      symmetry.
-      rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-      replace (1 + (m + z) - 1) with (m + z) by lia.
-      auto with zarith.
-      - replace (1 + (m + z) - 1) with (m + z) by lia.
-        auto.
-      - replace (1 + (m + z) - 1) with (m + z) by lia.
-        auto.
     }
     {
       rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
@@ -221,7 +216,6 @@ Proof.
   Require Import Psatz.
   intros v m n t a.
   intros.
-  unfold shift_sint32.
 
   apply natlike_rec2 with (z := n); auto with zarith.
   {
@@ -238,7 +232,7 @@ Proof.
     rewrite <- Q_CountSectionOne; auto with zarith.
 
     cut(L_Count_1_ t a (z + m) (1 + (z + m)) v = 
-        L_Count_1_ t (shift a m) z (1 + z) v).
+        L_Count_1_ t (shift_sint32 a m) z (1 + z) v).
     {
       intros.
       rewrite H3.
@@ -246,40 +240,45 @@ Proof.
       trivial.
     }
     {
-       remember (t.[shift a (z + m)]) as azm.
-       assert (X: azm = v \/ azm <> v) by lia.
-       destruct X as [eq|neq].
-       {
-         rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-         rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
-         rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-         {
-           rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
-         }
-         {
-           subst azm.
-           unfold shift_sint32.
-           rewrite shift_associative.
-           replace (m + (1 + z -1)) with (z + m) by lia.
-           trivial.
-         }
-         unfold shift_sint32.
-         replace (1 + (z + m) - 1) with (z + m) by lia.
-         lia.
-       }
-       {
+      remember (t.[shift_sint32 a (z + m)]) as azm.
+      assert (X: azm = v \/ azm <> v) by lia.
+      destruct X as [eq|neq].
+      {
+        subst azm.
+        remember  (z + m)   as  zm.
+        remember  (1 + zm)  as  zm1.
+        replace zm with (zm1 - 1) in * by lia.
+        rewrite <- eq in *.
+        rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+        rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+
+        remember (shift_sint32 a m) as am.
+        remember (1 + z) as z1.
+        assert(remember_z: z = z1 - 1) by lia.
+        rewrite remember_z in *.
+        enough (Y: t.[ shift_sint32 a (zm1 - 1)] = t.[shift_sint32 am (z1 - 1)]).
+        - rewrite Y in *.
+          rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
+          rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
+        - subst am.
+          rewrite Heqzm in *.
+          rewrite <- remember_z in *.
+          unfold shift_sint32.
+          rewrite shift_associative.
+          now replace (z + m) with (m + z) by lia.
+      }
+      {
          rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
          rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
          rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
          - replace (1 + z - 1) with z by lia.
            rewrite A_Count.Q_CountSectionEmpty; auto with zarith.
-         - unfold shift_sint32.
-           replace (1 + z - 1) with z by lia.
+         - replace (1 + z - 1) with z by lia.
+           unfold shift_sint32 in *.
            rewrite shift_associative.
            replace (m + z) with (z + m) by lia.
            lia.
-         - unfold shift_sint32.
-           replace (1 + (z + m) - 1) with (z + m) by lia.
+         - replace (1 + (z + m) - 1) with (z + m) by lia.
            lia.
        }
     }
@@ -308,62 +307,64 @@ Proof.
     replace (m + Z.succ z) with (1 + (m+z)) by lia.
     replace (p + (1 + (m + z)) - m) with (1 + (p + z)) by lia.
     intros.
-    enough(Y: P_EqualRanges_4_ L K a m (m + z) p).
+    assert(Y: P_EqualRanges_4_ L K a m (m + z) p).
+    {
+      unfold P_EqualRanges_4_ in *.
+      unfold P_EqualRanges_3_ in *.
+      unfold P_EqualRanges_1_ in *.
+      unfold shift_sint32 in *.
+      intros.
+      rewrite H1; auto with zarith.
+    }
 
-    assert (X: K.[ shift a (m+z)] =  v \/
-               K.[ shift a (m+z)] <> v) by lia.
+    assert (X: K.[ shift_sint32 a (m+z)] =  v \/ K.[ shift_sint32 a (m+z)] <> v) by lia.
     destruct X as [eq|neq].
-    { 
+    {
+      assert(APZ: v = L.[ shift_sint32 a (p + z)]).
+      {
+          rewrite <- eq.
+          rewrite <- shift_associative.
+          replace (K .[ shift (shift a m) z]) with (K.[ shift_sint32 (shift_sint32 a m) z]) by auto.
+          rewrite H1; auto with zarith.
+          rewrite shift_associative; auto.
+      }
+      remember  (p + z) as pz.
+      remember  (1 + pz) as pz1.
+      replace   pz with (pz1 - 1) in * by lia.
+      rewrite APZ in *.
       rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-      replace (1 + (p + z) - 1) with (p + z) by lia.
+      rewrite Heqpz in *.
+
       symmetry.
+      remember  (m + z) as mz.
+      remember  (1 + mz) as mz1.
+      replace   mz with (mz1 - 1) in * by lia.
+      rewrite <- APZ in *.
+      rewrite <- eq in *.
       rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-      replace (1 + (m + z) - 1) with (m + z) by lia.
       symmetry.
       auto with zarith.
-
-      replace (1 + (m + z) - 1) with (m + z) by lia.
-      auto.
-     
-      replace (1 + (p + z) - 1) with (p + z) by lia.
-      unfold P_EqualRanges_4_ in H1.
-      unfold P_EqualRanges_3_ in H1.
-      unfold P_EqualRanges_1_ in H1.
-      unfold shift_sint32 in *.
-      rewrite <- shift_associative; auto with zarith.
-      rewrite <- H1; auto with zarith.
-      rewrite shift_associative; auto with zarith.
     }
     {
       rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
-      replace (1 + (p + z) - 1) with (p + z) by lia.
-      symmetry.
-      rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
-      replace (1 + (m + z) - 1) with (m + z) by lia.
-      symmetry.
-      auto with zarith.
-
-      replace (1 + (m + z) - 1) with (m + z) by lia.
-      auto.
-     
-      replace (1 + (p + z) - 1) with (p + z) by lia.
-      unfold P_EqualRanges_4_ in H1.
-      unfold P_EqualRanges_3_ in H1.
-      unfold P_EqualRanges_1_ in H1.
-      unfold shift_sint32 in *.
-      rewrite <- shift_associative; auto with zarith.
-      rewrite <- H1; auto with zarith.
-      rewrite shift_associative; auto with zarith.
+      - replace (1 + (p + z) - 1) with (p + z) by lia.
+        symmetry.
+        rewrite <- A_Count.Q_CountSectionMiss; auto with zarith.
+        + replace (1 + (m + z) - 1) with (m + z) by lia.
+          symmetry.
+          auto with zarith.
+        + replace (1 + (m + z) - 1) with (m + z) by lia.
+          auto.
+      - replace (1 + (p + z) - 1) with (p + z) by lia.
+        unfold P_EqualRanges_4_ in H1.
+        unfold P_EqualRanges_3_ in H1.
+        unfold P_EqualRanges_1_ in H1.
+        unfold shift_sint32 in *.
+        rewrite <- shift_associative; auto with zarith.
+        rewrite <- H1; auto with zarith.
+        rewrite shift_associative; auto with zarith.
     }
-
-    unfold P_EqualRanges_4_ in *.
-    unfold P_EqualRanges_3_ in *.
-    unfold P_EqualRanges_1_ in *.
-    unfold shift_sint32 in *.
-    intros.
-    rewrite H1; auto with zarith.
   }
-
 Qed.
 
 Goal typed_ref_external_lemma_EqualRangesPreservesSorted.
@@ -425,15 +426,20 @@ Proof.
     replace (Z.succ z) with (1 + z) in * by lia.
     replace (m + (1 + z)) with (1 + (m + z)) in * by lia.
 
-    assert (Value: L.[ shift a (m + z)] = v \/ L.[ shift a (m + z)] <> v) by tauto.
+    assert (Value: L.[ shift_sint32 a (m + z)] = v \/ L.[ shift_sint32 a (m + z)] <> v) by lia.
     destruct Value as [eq|neq].
     {
+      remember  (m+z) as mz.
+      remember  (1 + mz) as mz1.
+      replace mz with (mz1 - 1) in * by lia.
+      rewrite <- eq in *.
       rewrite <- A_Count.Q_CountSectionHit; auto with zarith.
-      - replace (1 + (m + z) - 1) with (m + z) by lia.
-        assert (X: 0 <= (L_Count_1_ L a m (m + z) v)).
-        + apply Q_CountSectionBounds; auto with zarith.
-        + auto with zarith.
-      - replace (1 + (m + z) - 1) with (m + z) by lia.
+      assert (X: 0 <= (L_Count_1_ L a m (m + z) v)).
+      - apply Q_CountSectionBounds; auto with zarith.
+        rewrite <- eq in *.
+        auto with zarith.
+      - rewrite Heqmz in *.
+        rewrite <- eq in *.
         auto with zarith.
     }
     {
