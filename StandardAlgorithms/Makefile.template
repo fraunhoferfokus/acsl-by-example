@@ -180,7 +180,7 @@ $(TOP_DIR)/Results/$(FILE).report: $(FILE).c
 	. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(FILE) $(CMD) $(SEC) >$@
 
 $(TOP_DIR)/Results/$(FILE).preport: $(FILE).c
-	@. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(FILE) $(CMD) $(SEC) >$@
+	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
 
 generate: $(FILE).why3
 

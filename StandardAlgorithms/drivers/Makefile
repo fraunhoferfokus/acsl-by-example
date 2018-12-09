@@ -10,9 +10,10 @@ proof: FORCE
 	coqc -R $(FRAMAC_SHARE)/wp/coqwp "" $<
 
 clean: FORCE
-	@$(RM)	lia.cache
-	@$(RM)	Shift_lemmas.glob
-	@$(RM)	Shift_lemmas.vo
+	@$(RM)	.lia.cache
+	@$(RM)	.*.aux
+	@$(RM)	*.glob
+	@$(RM)	*.vo
 	@$(RM)  driver
 
 FORCE:

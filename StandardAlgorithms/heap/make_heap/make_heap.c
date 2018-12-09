@@ -16,7 +16,7 @@ void make_heap(value_type* a, size_type n)
        loop   variant n - i;
     */
     for (size_type i = 1; i < n; ++i) {
-      push_heap(a, i+1u);
+      push_heap(a, i + 1u);
     }
   }
 

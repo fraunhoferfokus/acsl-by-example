@@ -13,8 +13,6 @@ OBJ :=  fill/fill.o\
 	rotate_copy/rotate_copy.o\
 	rotate/rotate.o\
 	replace_copy/replace_copy.o\
-	remove_copy2/remove_copy2.o\
-	remove/remove.o\
 	random_shuffle/random_shuffle.o
 
 lib: libmutating.a

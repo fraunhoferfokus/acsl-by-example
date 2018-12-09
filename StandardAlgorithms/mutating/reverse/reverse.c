@@ -7,6 +7,7 @@ void reverse(value_type* a, size_type n)
 {
   const size_type half = n / 2u;
   //@ assert half: half <= n - half;
+  //@ assert half: 2*half <= n <= 2*half + 1;
 
   /*@
     loop invariant bound:    0 <= i <= half <= n-i;
@@ -19,8 +20,5 @@ void reverse(value_type* a, size_type n)
   for (size_type i = 0u; i < half; ++i) {
     swap(&a[i], &a[n - 1u - i]);
   }
-  //@ assert left:     Reverse{Pre,Here}(a, 0, half, n-half);
-  //@ assert middle: Unchanged{Pre,Here}(a, half, n-half);
-  //@ assert right:    Reverse{Pre,Here}(a, n-half, n, 0);
 }
 

@@ -9,7 +9,7 @@
 
   assigns a[0..n-1];
 
-  ensures constant: ConstantRange(a, 0, n, val);
+  ensures constant: ConstantRange(a, n, val);
 */
 void fill(value_type* a, size_type n, value_type val);
 

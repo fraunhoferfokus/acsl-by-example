@@ -5,7 +5,7 @@ void fill(value_type* a, size_type n,  value_type val)
 {
   /*@
     loop invariant bound:    0 <= i <= n;
-    loop invariant constant: ConstantRange(a, 0, i, val);
+    loop invariant constant: ConstantRange(a, i, val);
     loop assigns i, a[0..n-1];
     loop variant n-i;
   */

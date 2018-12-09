@@ -10,4 +10,6 @@ rotate
 replace_copy
 replace
 remove_copy
+unique_copy
+unique_copy2
 random_shuffle
