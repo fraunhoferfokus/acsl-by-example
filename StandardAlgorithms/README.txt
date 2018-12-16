@@ -10,16 +10,17 @@ FRAMAC_SHARE
 ================================
 
 A number of environment variables affect the generation of reports:
+Please check Makefile.template for their precise definitions (including default values).
 
-WP_TIMEOUT (20)
+WP_TIMEOUT (10)
     The default timeout when running provers.  This value is multiplied
     by 1.1 for each additional process after the first in $WP_PROCESSES.
 
-WP_COQ_TIMEOUT (20)
+WP_COQ_TIMEOUT (10)
     The timeout for coq.  This timeout is scaled in the same way
     WP_TIMEOUT is.
 
-WP_ALT_ERGO_STEPS (1000)
+WP_ALT_ERGO_STEPS (10000)
     The number of steps alt-ergo runs for before it is aborted.
 
 WP_PROCESSES (1)
