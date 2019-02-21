@@ -178,7 +178,7 @@ goals_by_prover() {
 # $1: -r
 # $2: wpdir
 # $3: $whyfile:$theory:$prover
-if [ $1 = '-r' ]
+if [ "$1" = '-r' ]
 then
 	# if there are no proof obligations, do_proof will be called
 	# once without a proof obligation.  Catch that case.
