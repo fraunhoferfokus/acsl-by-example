@@ -1,6 +1,7 @@
 
 
 # ACSL by Example
+[![Replay Status](https://travis-ci.org/evdenis/acsl-by-example.svg?branch=ci)](https://travis-ci.org/evdenis/acsl-by-example)
 
 This repository contains
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
@@ -26,3 +27,7 @@ Frama-C 18.0 (_Argon_) and relies on the following other sofware packages.
  Coq      | 8.7.2
 
 For more details on verifying the examples see the file [README.txt](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/README.txt).
+
+## Travis CI
+
+Travis CI added to demonstrate what steps required to set up the toolchain. Travis performs the tests and replays the proofs with reduced timeouts. That means the results in Travis are downgraded comparing to that we state in the tutorial and the Results folder. Verification results also could be different on your machine either because of the hardware. Please look at [StandardAlgorithms/README.txt](StandardAlgorithms/README.txt) for additional settings.
