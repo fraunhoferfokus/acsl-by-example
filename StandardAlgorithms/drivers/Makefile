@@ -1,3 +1,5 @@
+FRAMAC_SHARE := $(shell frama-c -print-share-path)
+
 compile: Shift_lemmas.vo
 	# use an old date so make won't think that something needs to be
 	# remade just because the coq files were recompiled

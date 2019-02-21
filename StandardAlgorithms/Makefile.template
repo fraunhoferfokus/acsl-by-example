@@ -3,6 +3,8 @@ MAKEFLAGS += --silent --no-print-directory
 
 SHELL=/bin/bash
 
+export FRAMAC_SHARE := $(shell frama-c -print-share-path)
+
 export TOP_DIR=../..
 export SCRIPT_DIR=$(TOP_DIR)/Scripts
 export VS_DIR=$(TOP_DIR)/../Misc/VerificationService

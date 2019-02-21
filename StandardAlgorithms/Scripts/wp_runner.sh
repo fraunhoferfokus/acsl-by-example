@@ -2,6 +2,8 @@
 
 set -e
 
+FRAMAC_SHARE=${FRAMAC_SHARE:-$(frama-c -print-share-path)}
+
 # this exit status is used when wp_runner terminates a process due to
 # it reaching its timeout.
 timeout_status=42
