@@ -1,0 +1,49 @@
+language: c
+os:
+  - linux
+dist: xenial
+addons:
+  apt:
+    packages:
+      - ocaml
+      - aspcud
+      - libgnomecanvas2-dev
+      - libgtk2.0-dev
+      - libgtksourceview2.0-dev
+      - cvc3
+      - z3
+      - coq
+
+cache:
+  directories:
+    - $HOME/.opam
+    - /usr/local/bin
+
+env:
+  global:
+    - WP_TIMEOUT=15
+    - WP_PROCESSES=2
+
+before_install:
+  - sudo apt-get update -qq
+  - wget http://security.ubuntu.com/ubuntu/pool/main/b/bubblewrap/bubblewrap_0.2.1-1ubuntu0.1_amd64.deb
+  - sudo dpkg -i bubblewrap_0.2.1-1ubuntu0.1_amd64.deb
+  - sudo wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.6-x86_64-linux-opt -O /usr/local/bin/cvc4-1.6 || true
+  - sudo chmod +x /usr/local/bin/cvc4-1.6
+  - yes '' | sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+  - opam init --auto-setup --compiler=4.06.1
+  - opam install --yes depext
+
+install:
+  - opam update
+  - opam upgrade --yes
+  - opam depext --yes --noninteractive --install frama-c why3.0.88.3 alt-ergo
+  - opam pin add why3 0.88.3
+  - eval $(opam config env); why3 config --detect
+
+script:
+   - make -C StandardAlgorithms clean
+   - make -C StandardAlgorithms report-clean
+   - make -C StandardAlgorithms test
+   - eval $(opam config env); export FRAMAC_SHARE=$(frama-c -print-share-path); make -C StandardAlgorithms report
+   - git diff
