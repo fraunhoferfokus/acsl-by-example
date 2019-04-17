@@ -5,7 +5,6 @@ dist: xenial
 addons:
   apt:
     packages:
-      - ocaml
       - aspcud
       - libgnomecanvas2-dev
       - libgtk2.0-dev
@@ -21,17 +20,16 @@ cache:
 
 env:
   global:
-    - WP_TIMEOUT=15
+    - WP_TIMEOUT=10
     - WP_PROCESSES=2
 
 before_install:
   - sudo apt-get update -qq
-  - wget http://security.ubuntu.com/ubuntu/pool/main/b/bubblewrap/bubblewrap_0.2.1-1ubuntu0.1_amd64.deb
-  - sudo dpkg -i bubblewrap_0.2.1-1ubuntu0.1_amd64.deb
-  - sudo wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.6-x86_64-linux-opt -O /usr/local/bin/cvc4-1.6 || true
-  - sudo chmod +x /usr/local/bin/cvc4-1.6
-  - yes '' | sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
-  - opam init --auto-setup --compiler=4.06.1
+  - sudo wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.6-x86_64-linux-opt -O /usr/local/bin/cvc4 || true
+  - sudo chmod +x /usr/local/bin/cvc4
+  - sudo wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.4/opam-2.0.4-x86_64-linux -O /usr/local/bin/opam || true
+  - sudo chmod +x /usr/local/bin/opam
+  - opam init --auto-setup --disable-sandboxing --compiler=4.06.1
   - opam install --yes depext
 
 install:
