@@ -20,7 +20,7 @@ cache:
 
 env:
   global:
-    - WP_TIMEOUT=10
+    - WP_TIMEOUT=6
     - WP_PROCESSES=2
 
 before_install:
