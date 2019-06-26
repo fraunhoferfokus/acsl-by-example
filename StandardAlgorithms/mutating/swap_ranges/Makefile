@@ -1,5 +1,4 @@
 
-FILE=swap_ranges
 CMD=\\swapranges
 SEC=sec:swapranges
 

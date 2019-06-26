@@ -2,8 +2,8 @@
 #ifndef SELECT_CHILD_H_INCLUDED
 #define SELECT_CHILD_H_INCLUDED
 
-#include "IsHeap.h"
-#include "HeapMaximumChild.h"
+#include "IsHeap.spec"
+#include "HeapMaximumChild.spec"
 
 /*@
    requires bound: 2 <= n;

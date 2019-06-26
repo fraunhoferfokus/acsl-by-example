@@ -1,5 +1,4 @@
 
-FILE=stack_init
 CMD=\\stackinit
 SEC=sec:stackinit
 

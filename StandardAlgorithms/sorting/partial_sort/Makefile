@@ -1,5 +1,4 @@
 
-FILE=partial_sort
 CMD=\\partialsort
 SEC=sec:partial_sort
 

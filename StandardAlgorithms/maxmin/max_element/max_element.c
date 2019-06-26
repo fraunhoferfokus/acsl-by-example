@@ -1,11 +1,11 @@
 
 #include "max_element.h"
 
-size_type max_element(const value_type* a, size_type n)
+size_type
+max_element(const value_type* a, size_type n)
 {
   if (0u < n) {
-
-    size_type max = 0;
+    size_type max = 0u;
 
     /*@
       loop invariant bound:  0 <= i <= n;
@@ -15,7 +15,7 @@ size_type max_element(const value_type* a, size_type n)
       loop assigns max, i;
       loop variant n-i;
     */
-    for (size_type i = 1; i < n; i++) {
+    for (size_type i = 1u; i < n; i++) {
       if (a[max] < a[i]) {
         max = i;
       }

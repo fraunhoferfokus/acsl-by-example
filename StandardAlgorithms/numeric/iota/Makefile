@@ -1,5 +1,4 @@
 
-FILE=iota
 CMD=\\IOTA
 SEC=sec:iota
 

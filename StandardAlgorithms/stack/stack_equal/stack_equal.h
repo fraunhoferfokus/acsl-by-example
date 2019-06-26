@@ -13,7 +13,8 @@
     ensures equal:     \result == 1  <==>  Equal{Here,Here}(s, t);
     ensures not_equal: \result == 0  <==> !Equal{Here,Here}(s, t);
 */
-bool stack_equal(const Stack* s, const Stack* t);
+bool
+stack_equal(const Stack* s, const Stack* t);
 
 #endif /* STACK_EQUAL_H_INCLUDED */
 

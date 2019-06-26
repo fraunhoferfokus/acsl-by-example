@@ -6,17 +6,16 @@
 #include "equal_range.h"
 #include "../partitioned_test.h"
 
-void equal_range_test(const std::vector<value_type>& a, value_type value,
-                      size_type lower, size_type upper)
+void
+equal_range_test(const std::vector<value_type>& a, value_type value,
+                 size_type lower, size_type upper)
 {
   auto less = [value](value_type x) {
     return x < value;
   };
-
   auto less_equal = [value](value_type x) {
     return x <= value;
   };
-
   {
     auto pair = equal_range(a.data(), a.size(), value);
     assert(lower == pair.first);
@@ -34,10 +33,10 @@ void equal_range_test(const std::vector<value_type>& a, value_type value,
   }
 }
 
-int main(int argc, char** argv)
+int
+main(int argc, char** argv)
 {
   auto a = binary_search_data();
-
   equal_range_test(a, 1, 0,  0);
   equal_range_test(a, 2, 0,  1);
   equal_range_test(a, 3, 1,  4);
@@ -45,7 +44,6 @@ int main(int argc, char** argv)
   equal_range_test(a, 11, 6, 7);
   equal_range_test(a, 14, 7, 9);
   equal_range_test(a, 17, 9, 9);
-
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
   return EXIT_SUCCESS;
 }

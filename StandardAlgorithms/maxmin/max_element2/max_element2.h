@@ -2,8 +2,8 @@
 #ifndef MAX_ELEMENT2_H_INCLUDED
 #define MAX_ELEMENT2_H_INCLUDED
 
-#include "MaxElement.h"
-#include "StrictUpperBound.h"
+#include "MaxElement.spec"
+#include "StrictUpperBound.spec"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));
@@ -23,6 +23,7 @@
   complete behaviors;
   disjoint behaviors;
 */
-size_type max_element(const value_type* a, size_type n);
+size_type
+max_element2(const value_type* a, size_type n);
 
 #endif /* MAX_ELEMENT2_H_INCLUDED */

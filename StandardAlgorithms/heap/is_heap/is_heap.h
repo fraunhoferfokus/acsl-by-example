@@ -2,7 +2,7 @@
 #ifndef IS_HEAP_H_INCLUDED
 #define IS_HEAP_H_INCLUDED
 
-#include "IsHeap.h"
+#include "IsHeap.spec"
 
 /*@
    requires valid: \valid_read(a +(0..n-1));
@@ -11,7 +11,8 @@
 
    ensures heap:  \result <==> IsHeap(a, n);
 */
-bool is_heap(const value_type* a, size_type n);
+bool
+is_heap(const value_type* a, size_type n);
 
 #endif /* IS_HEAP_H_INCLUDED */
 

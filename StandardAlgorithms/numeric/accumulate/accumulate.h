@@ -2,8 +2,8 @@
 #ifndef ACCUMULATE_H_INCLUDED
 #define ACCUMULATE_H_INCLUDED
 
-#include "AccumulateAxiomatic.h"
-#include "AccumulateBounds.h"
+#include "AccumulateDefault.spec"
+#include "AccumulateBounds.spec"
 
 /*@
   requires valid:  \valid_read(a + (0..n-1));

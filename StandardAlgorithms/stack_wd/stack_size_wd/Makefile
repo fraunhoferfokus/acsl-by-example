@@ -1,7 +1,6 @@
 
-FILE=stack_size_wd
 CMD=\\stacksizewd
-SEC=sec:stacksize
+SEC=sec:stacksizewd
 
 include ../../Makefile.template
 

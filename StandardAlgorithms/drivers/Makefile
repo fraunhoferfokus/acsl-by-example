@@ -1,3 +1,5 @@
+FRAMAC_SHARE:=$(shell frama-c -print-share-path)
+
 compile: Shift_lemmas.vo
 	# use an old date so make won't think that something needs to be
 	# remade just because the coq files were recompiled
@@ -10,11 +12,7 @@ proof: FORCE
 	coqc -R $(FRAMAC_SHARE)/wp/coqwp "" $<
 
 clean: FORCE
-	@$(RM)	.lia.cache
-	@$(RM)	.*.aux
-	@$(RM)	*.glob
-	@$(RM)	*.vo
-	@$(RM)  driver
+	@$(RM)	.lia.cache .*.aux *.glob *.vo driver
 
 FORCE:
 

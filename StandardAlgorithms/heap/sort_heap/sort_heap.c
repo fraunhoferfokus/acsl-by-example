@@ -1,12 +1,13 @@
 
 #include "sort_heap.h"
 #include "../pop_heap/pop_heap.h"
-#include "LowerBound.h"
-#include "SortedUpperBound.h"
-#include "Unchanged.h"
-#include "MultisetUnchangedLemmas.h"
+#include "LowerBound.spec"
+#include "SortedUpperBound.spec"
+#include "Unchanged.spec"
+#include "MultisetUnchangedLemmas.spec"
 
-void sort_heap(value_type* a, size_type n)
+void
+sort_heap(value_type* a, size_type n)
 {
   /*@
      loop invariant bound:    0 <= i <= n;
@@ -17,7 +18,7 @@ void sort_heap(value_type* a, size_type n)
      loop assigns i, a[0..n-1];
      loop variant i;
   */
-  for (size_type i = n; i > 1; --i) {
+  for (size_type i = n; i > 1u; --i) {
     /*@
         requires heap:     IsHeap(a, i);
         assigns  a[0..i-1];

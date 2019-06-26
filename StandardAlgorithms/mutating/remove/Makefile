@@ -1,25 +1,16 @@
 
-FILE=remove
 CMD=\\remove
 SEC=sec:remove
 
-
 include ../../Makefile.template
 
-#WP_FLAGS += -wp-split
-
-#WP_FLAGS += -wp-prop size
+#WP_FLAGS += -wp-prop RetainAllButOneMiss
 #WP_FLAGS += -wp-prop retain
-#WP_FLAGS += -wp-prop discard
+#WP_FLAGS += -wp-prop  bound
+#WP_FLAGS += -wp-prop  result
 #WP_FLAGS += -wp-prop unchanged
-
-#WP_FLAGS += -wp-prop="-@lemma"
+#WP_FLAGS += -wp-bhv not_equal
+#WP_FLAGS += -wp-prop remove
 #WP_FLAGS += -wp-prop @lemma
 
-#WP_FLAGS += -wp-prop CountShift
-#WP_FLAGS += -wp-prop UnchangedShift
-#WP_FLAGS += -wp-prop PositiveCountImpliesHasValue
-#WP_FLAGS += -wp-prop HasValueShiftInversion
-
-TESTOBJ += -lmutating -lnonmutating
 

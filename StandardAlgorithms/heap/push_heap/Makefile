@@ -1,5 +1,4 @@
 
-FILE=push_heap
 CMD=\\pushheap
 SEC=sec:push_heap
 

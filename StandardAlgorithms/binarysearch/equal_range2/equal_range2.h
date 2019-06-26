@@ -3,10 +3,10 @@
 #define EQUAL_RANGE_H_INCLUDED
 
 #include "../equal_range/make_pair.h"
-#include "Sorted.h"
-#include "ConstantRange.h"
-#include "StrictUpperBound.h"
-#include "StrictLowerBound.h"
+#include "Sorted.spec"
+#include "ConstantRange.spec"
+#include "StrictUpperBound.spec"
+#include "StrictLowerBound.spec"
 
 /*@
   requires valid:  \valid_read(a + (0..n-1));
@@ -20,7 +20,7 @@
   ensures right:   StrictLowerBound(a, \result.second, n, val);
  */
 size_type_pair
-equal_range(const value_type* a, size_type n, value_type val);
+equal_range2(const value_type* a, size_type n, value_type val);
 
 #endif /* EQUAL_RANGE_H_INCLUDED */
 

@@ -22,7 +22,8 @@
   complete behaviors;
   disjoint behaviors;
 */
-size_type max_element(const value_type* a, size_type n);
+size_type
+max_element(const value_type* a, size_type n);
 
 #endif /* MAX_ELEMENT_H_INCLUDED */
 

@@ -1,5 +1,4 @@
 
-FILE=find_end
 CMD=\\findend
 SEC=sec:find_end
 

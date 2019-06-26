@@ -18,7 +18,8 @@
   ensures empty:     Empty(s);
   ensures storage:   Storage(s) == storage;
 */
-void stack_init(Stack* s, value_type* storage, size_type capacity);
+void
+stack_init(Stack* s, value_type* storage, size_type capacity);
 
 #endif /* STACK_INIT_H_INCLUDED */
 

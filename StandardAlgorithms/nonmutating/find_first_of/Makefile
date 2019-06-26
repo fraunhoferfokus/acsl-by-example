@@ -1,5 +1,4 @@
 
-FILE=find_first_of
 CMD=\\findfirstof
 SEC=sec:findfirstof
 

@@ -1,15 +1,12 @@
 
 include ../Makefile.group
 
-OBJ := max_element2/max_element2.o\
-       min_element/min_element.o
-
-clean::
+clean:: FORCE
 	$(RM) libmaxmin.a
 
 lib: libmaxmin.a
 
-libmaxmin.a: obj FORCE
+libmaxmin.a: obj $(OBJ)
 	@ar cr  $@ $(OBJ)
 	@ranlib  $@
 

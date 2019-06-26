@@ -2,7 +2,7 @@
 #ifndef COPYBACKWARD_H_INCLUDED
 #define COPYBACKWARD_H_INCLUDED
 
-#include "EqualRanges.h"
+#include "EqualRanges.spec"
 
 /*@
   requires valid: \valid_read(a + (0..n-1));
@@ -13,7 +13,8 @@
 
   ensures equal: EqualRanges{Old,Here}(a, n, b);
 */
-void copy_backward(const value_type* a, size_type n, value_type* b);
+void
+copy_backward(const value_type* a, size_type n, value_type* b);
 
 #endif /* COPYBACKWARD_H_INCLUDED */
 

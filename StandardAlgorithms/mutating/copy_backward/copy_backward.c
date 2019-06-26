@@ -1,8 +1,9 @@
 
 #include "copy_backward.h"
-#include "Unchanged.h"
+#include "Unchanged.spec"
 
-void copy_backward(const value_type* a, size_type n, value_type* b)
+void
+copy_backward(const value_type* a, size_type n, value_type* b)
 {
   /*@
     loop invariant bound:     0 <= i <= n;

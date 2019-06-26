@@ -1,7 +1,6 @@
 
-FILE=stack_pop_wd
 CMD=\\stackpopwd
-SEC=sec:stackpop
+SEC=sec:stackpopwd
 
 include ../../Makefile.template
 

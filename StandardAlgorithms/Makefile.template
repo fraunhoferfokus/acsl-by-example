@@ -3,12 +3,14 @@ MAKEFLAGS += --silent --no-print-directory
 
 SHELL=/bin/bash
 
-export TOP_DIR=../..
-export SCRIPT_DIR=$(TOP_DIR)/Scripts
-export VS_DIR=$(TOP_DIR)/../Misc/VerificationService
-export DRIVER_DIR=$(TOP_DIR)/drivers
+export FRAMAC_SHARE:=$(shell frama-c -print-share-path)
 
-CPPFLAGS = -I$(TOP_DIR)
+export TOP_DIR:=../..
+export SCRIPT_DIR:=$(TOP_DIR)/Scripts
+export VS_DIR:=$(TOP_DIR)/../Misc/VerificationService
+export DRIVER_DIR:=$(TOP_DIR)/drivers
+
+CPPFLAGS := -I$(TOP_DIR)
 CPPFLAGS += -I$(TOP_DIR)/Logic
 
 VPATH += $(TOP_DIR)/nonmutating
@@ -26,6 +28,10 @@ LDFLAGS  += -L$(TOP_DIR)/binarysearch
 VPATH += $(TOP_DIR)/mutating
 CPPFLAGS += -I$(TOP_DIR)/mutating
 LDFLAGS  += -L$(TOP_DIR)/mutating
+
+VPATH += $(TOP_DIR)/unique
+CPPFLAG += -I$(TOP_DIR)/unique
+LDFLAGS += -L$(TOP_DIR)/unique
 
 VPATH += $(TOP_DIR)/heap
 CPPFLAGS += -I$(TOP_DIR)/heap
@@ -48,7 +54,7 @@ CPPFLAGS += -I$(TOP_DIR)/stack_wd
 LDFLAGS  += -L$(TOP_DIR)/stack_wd
 
 #setup some basic flags
-INCLUDES  = $(CPPFLAGS)
+INCLUDES := $(CPPFLAGS)
 
 # PREPROCESSOR
 
@@ -56,11 +62,18 @@ SHARED_FLAGS=-Wall -pedantic -Werror -O2
 CFLAGS=-x c++ -std=c++14 $(SHARED_FLAGS)
 CXXFLAGS=-std=c++14 $(SHARED_FLAGS)
 
+export TIMEOUT   ?= 10
+export PROCESSES ?= 1
+
 #setup wp
-export WP_TIMEOUT ?= 10
-export WP_COQ_TIMEOUT ?= 10
+export WP_TIMEOUT        ?= $(TIMEOUT)
+export WP_COQ_TIMEOUT    ?= $(TIMEOUT)
 export WP_ALT_ERGO_STEPS ?= 10000
-export WP_PROCESSES ?= 1
+export WP_PROCESSES      ?= $(PROCESSES)
+
+#setup av
+export AV_TIMEOUT   ?= $(TIMEOUT)
+export AV_PROCESSES ?= $(PROCESSES)
 
 # flags for when we invoke Frama C directly instead of going
 # through script_functions.sh
@@ -84,27 +97,33 @@ WP_RTE_FLAGS ?= -warn-unsigned-overflow -warn-unsigned-downcast
 # This allows us, for example, to start the gui very quickly and then
 # run the prover(s) on select proof obligtions.
 
-WP_BASE_FLAGS += -pp-annot
-WP_BASE_FLAGS += -no-unicode
+BASE_FLAGS := -pp-annot
+BASE_FLAGS += -no-unicode
+
+WP_BASE_FLAGS := $(BASE_FLAGS)
 WP_BASE_FLAGS += -wp
 WP_BASE_FLAGS += -wp-rte $(WP_RTE_FLAGS)
-#WP_BASE_FLAGS += -wp-split
 
-WP_FLAGS = $(WP_BASE_FLAGS)
+AV_BASE_FLAGS := $(BASE_FLAGS)
+AV_BASE_FLAGS += -av
 
+WP_FLAGS := $(WP_BASE_FLAGS)
 WP_FLAGS += -wp-driver $(DRIVER_DIR)/external.driver
 WP_FLAGS += -wp-script $(SCRIPT)
 WP_FLAGS += -wp-model Typed+ref
 
-#WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
+AV_FLAGS     := $(AV_BASE_FLAGS) -av-extract all_annot
+AV_WHY3_CONF := $(shell realpath $(TOP_DIR))/astraver.why3.conf
+
+WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 # provers
 WP_PROVER_FLAGS += -wp-prover alt-ergo
-WP_PROVER_FLAGS += -wp-prover cvc4-15
-WP_PROVER_FLAGS += -wp-prover cvc3
+WP_PROVER_FLAGS += -wp-prover cvc4
 WP_PROVER_FLAGS += -wp-prover z3
-WP_PROVER_FLAGS += -wp-prover eprover
 WP_PROVER_FLAGS += -wp-prover coq
+WP_PROVER_FLAGS += -wp-prover cvc3
+WP_PROVER_FLAGS += -wp-prover eprover
 
 
 #WP_PROVER_FLAGS += -wp-prover gappa
@@ -116,7 +135,7 @@ WP_PROVER_FLAGS += -wp-prover coq
 #WP_PROVER_FLAGS += -wp-prover princess
 #WP_PROVER_FLAGS += -wp-prover psyche
 
-# onnly ppc binary for available for macOS ...
+# only ppc binary for available for macOS ...
 #WP_PROVER_FLAGS += -wp-prover simplify
 #WP_PROVER_FLAGS += -wp-prover spass
 #WP_PROVER_FLAGS += -wp-prover verit
@@ -124,43 +143,91 @@ WP_PROVER_FLAGS += -wp-prover coq
 # yices (version 2.* does not support quantifiers ...)
 #WP_PROVER_FLAGS += -wp-prover Yices
 
-export WP=frama-c
-export WPGUI=frama-c-gui
+export FR    := frama-c
+export FRGUI := frama-c-gui
+
 export WP_PROVER_FLAGS
-export WP_C_FLAGS = -cpp-extra-args="$(INCLUDES)" $(WP_FLAGS)
+export WP_C_FLAGS   = -cpp-extra-args="$(INCLUDES)" $(WP_FLAGS)
 export WP_CXX_FLAGS = -cxx-clang-command="framaCIRGen $(INCLUDES)"  $(WP_FLAGS)
-export WP_C_REPORT=$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par 1
+export WP_C_REPORT  = $(FR) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES)
+
+export AV_C_FLAGS  := -cpp-extra-args="$(INCLUDES)" $(AV_FLAGS)
+export AV_STRATEGY = acslbyexample
+export AV_C_REPORT = $(FR) $(AV_C_FLAGS) -av-target why3sprove -av-why3-opt " --extra-config $(AV_WHY3_CONF) --no-save-session --strategy $(AV_STRATEGY) "
+
+export PERL=perl
+
+ifndef FILE
+	FILE := $(shell basename $$(pwd))
+endif
 
 TESTOBJ = $(FILE)_test.o $(FILE).o
 
 $(DRIVER): FORCE
 	@(cd $(DRIVER_DIR) && $(MAKE) compile)
 
+define av_why3conf
+[main]
+running_provers_max = $(AV_PROCESSES)
+
+[strategy]
+code = "
+start:
+  c Alt-Ergo,, 1 2000
+  c CVC4,,noBV 1 2000
+  c Z3,, 1 2000
+  c CVC3,, 1 2000
+  c Eprover,, 1 2000
+  t split_goal_wp start
+  t introduce_premises next1
+next1:
+  t inline_all next2
+next2:
+  t eliminate_if next3
+next3:
+  t remove_triggers start
+  c Alt-Ergo,, $(AV_TIMEOUT) 4000
+  c CVC4,,noBV $(AV_TIMEOUT) 4000
+  c Z3,, $(AV_TIMEOUT) 4000
+  c CVC3,, $(AV_TIMEOUT) 4000
+  c Eprover,, $(AV_TIMEOUT) 4000"
+desc = "Default strategy for ACSL-By-Example"
+name = "acslbyexample"
+endef
+export av_why3conf
+
+$(AV_WHY3_CONF): FORCE
+	@if [ -f $@ ]; then                          \
+		tfile=$(shell mktemp);               \
+		echo "$$av_why3conf" > $$tfile;      \
+		diff -q $@ $$tfile > /dev/null || mv $$tfile $@; \
+	else echo "$$av_why3conf" > $@; fi
+
 $(FILE)_test: $(TESTOBJ) FORCE
 	@$(CXX) $(LDFLAGS) -o $@ $(TESTOBJ)
 
 test: $(FILE)_test FORCE
-	@./$(FILE)_test
+	@./$(FILE)_test $(TEST_DATA)
 
 %.cpp:%.c
 	cp $< $@
 
 # only generate proof obligations for why3
 %.why3:%.c FORCE
-	@($(WP) $(WP_C_FLAGS) $(WP_TIME_FLAGS) -wp-prover why3 -wp-gen  -wp-out $(patsubst %.c,%.wp, $<)  $<)
+	@$(FR) $(WP_C_FLAGS) $(WP_TIME_FLAGS) -wp-prover why3 -wp-gen -wp-out $(patsubst %.c,%.wp, $<) $<
 
-# start WP on command line and run provers
+# start FR on command line and run provers
 %.wp:%.c $(DRIVER) FORCE
-	@$(WP) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.c,%.wp, $<)  $<
+	@$(FR) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $@ $<
 
 %.wp++:%.cpp FORCE
-	@$(WP) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $<
+	@$(FR) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $@ $<
 
 %.vs-par:%.c FORCE
-	@${VS_DIR}/vs.sh -p $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(notdir $(patsubst %.c,%.wp, $<)) 
+	@${VS_DIR}/vs.sh -p $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(notdir $(patsubst %.c,%.wp, $<))
 
 %.vs-pipe:%.c FORCE
-	@${VS_DIR}/vs.sh -d $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(notdir $(patsubst %.c,%.wp, $<)) 
+	@${VS_DIR}/vs.sh -d $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(notdir $(patsubst %.c,%.wp, $<))
 
 vs-par: $(FILE).vs-par
 
@@ -169,18 +236,36 @@ vs-pipe: $(FILE).vs-pipe
 %.wprunner:%.c FORCE
 	@${SCRIPT_DIR}/wp_runner.sh $< $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES)
 
-# start WP GUI and run provers
+%.av:%.c $(AV_WHY3_CONF) FORCE
+	@$(AV_C_REPORT) -av-out $@ $<
+
+# GUI
+%.avgui:%.c $(AV_WHY3_CONF) FORCE
+	@$(FR) $(AV_C_FLAGS) -av-why3-opt " --extra-config $(AV_WHY3_CONF) " -av-out $(patsubst %.c,%.av, $<) $<
+
+# start FR GUI and run provers
 %.wpgui:%.c $(DRIVER) FORCE
-	@($(WPGUI) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.c,%.wp, $<)  $< &)
+	@($(FRGUI) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.c,%.wp, $<)  $< &)
 
 %.wpgui++:%.cpp FORCE
-	@($(WPGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
+	@($(FRGUI) $(WP_CXX_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $(patsubst %.cpp,%.wp++, $<)  $< )
+
+%.normal.c : %.c FORCE
+	@$(FR) $(WP_C_FLAGS) -wp-no-rte -wp-check -wp-prover none $< -print |\
+	$(PERL) -e 'my $$f = join("", <>); $$f =~ s!\A.*(?=/\*@.*\*/[^/]*$*\([^)]++\)\s*+\{)!!s; print $$f;' > $@
+
+%.normal-rte.c : %.c FORCE
+	@$(FR) $(WP_C_FLAGS) -wp-check -wp-prover none $< -print |\
+	$(PERL) -e 'my $$f = join("", <>); $$f =~ s!\A.*(?=/\*@.*\*/[^/]*$*\([^)]++\)\s*+\{)!!s; print $$f;' > $@
 
 $(TOP_DIR)/Results/$(FILE).report: $(FILE).c
-	. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(FILE) $(CMD) $(SEC) >$@
+	. ${SCRIPT_DIR}/script_functions.sh; extract_data_Wp $(FILE) $(CMD) $(SEC) > $@
 
 $(TOP_DIR)/Results/$(FILE).preport: $(FILE).c
-	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) >$@
+	@. ${SCRIPT_DIR}/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(basename $<) $(CMD) $(SEC) > $@
+
+$(TOP_DIR)/Results/$(FILE).areport: $(AV_WHY3_CONF) $(FILE).c
+	. ${SCRIPT_DIR}/script_functions.sh; extract_data_Av $(FILE) $(CMD) $(SEC) > $@
 
 generate: $(FILE).why3
 
@@ -190,15 +275,20 @@ report: $(TOP_DIR)/Results/$(FILE).report
 report-clean: clean
 	@$(RM) $(TOP_DIR)/Results/$(FILE).report
 
-
 preport: $(TOP_DIR)/Results/$(FILE).preport
 	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
 
 preport-clean:
 	@$(RM) $(TOP_DIR)/Results/$(FILE).preport
 
+areport: $(TOP_DIR)/Results/$(FILE).areport
+	@. ${SCRIPT_DIR}/script_functions.sh; prettyPrintReport $<
+
+areport-clean:
+	@$(RM) $(TOP_DIR)/Results/$(FILE).areport
+
 %.check:%.c
-	@$(WP) $(WP_C_FLAGS) -wp-check -wp-out $(patsubst %.c,%.wp, $<)  $<
+	@$(FR) $(WP_C_FLAGS) -wp-check -wp-out $(patsubst %.c,%.wp, $<)  $<
 
 # display saved results by FRAMA-C GUI
 load:
@@ -210,29 +300,22 @@ obj: $(FILE).o
 
 clean:: FORCE
 	@(cd $(DRIVER_DIR) && $(MAKE) -s clean)
-	@$(RM) *.o
-	@$(RM) *.back
-	@$(RM) *.orig
-	@$(RM) *.exe
-	@$(RM) .lia.cache
-	@$(RM) -rf  *.debug
-	@$(RM) -rf  .frama-c
-	@$(RM) -rf  *.jessie
-	@$(RM) -rf  *.wp
-	@$(RM) -rf  *.wp++
-	@$(RM) -rf  *.ml
-	@$(RM) $(FILE).cpp
-	@$(RM) $(FILE)_test
-	@$(RM) $(FILE).tex
-	@$(RM) $(FILE).sav
+	@$(RM) *.o *.pp.c *.pp.h *.back *.orig *.exe .lia.cache $(FILE).cpp $(FILE)_test $(FILE).tex $(FILE).sav
+	@$(RM) -rf  *.debug .frama-c *.jessie *.av *.wp *.wp++ *.ml
 
-ASTYLEOPTIONS += -A3
+ASTYLEOPTIONS += --quiet
+ASTYLEOPTIONS += -A4
 ASTYLEOPTIONS += --indent=spaces=2
 ASTYLEOPTIONS += --indent-col1-comments
 ASTYLEOPTIONS += --min-conditional-indent=0
 ASTYLEOPTIONS += --lineend=linux
-ASTYLEOPTIONS += --break-closing-braces
+ASTYLEOPTIONS += --break-return-type
+ASTYLEOPTIONS += --break-return-type-decl
 ASTYLEOPTIONS += --add-braces
+ASTYLEOPTIONS += --break-closing-braces
+ASTYLEOPTIONS += --break-one-line-headers
+ASTYLEOPTIONS += --break-blocks
+ASTYLEOPTIONS += --delete-empty-lines
 ASTYLEOPTIONS += --pad-oper
 ASTYLEOPTIONS += --pad-header
 

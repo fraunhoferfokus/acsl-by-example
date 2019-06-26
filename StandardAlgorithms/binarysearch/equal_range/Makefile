@@ -1,5 +1,4 @@
 
-FILE=equal_range
 CMD=\\equalrange
 SEC=sec:equalrange
 

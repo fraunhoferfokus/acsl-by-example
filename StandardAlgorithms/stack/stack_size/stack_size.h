@@ -11,7 +11,8 @@
 
     ensures size: \result == Size(s);
 */
-size_type stack_size(const Stack* s);
+size_type
+stack_size(const Stack* s);
 
 #endif /* STACK_SIZE_H_INCLUDED */
 

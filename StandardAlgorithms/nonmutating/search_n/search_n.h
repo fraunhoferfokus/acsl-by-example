@@ -2,7 +2,7 @@
 #ifndef SEARCH_N_H_INCLUDED
 #define SEARCH_N_H_INCLUDED
 
-#include "HasConstantSubRange.h"
+#include "HasConstantSubRange.spec"
 
 /*@
   requires valid: \valid_read(a + (0..m-1));

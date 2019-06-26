@@ -2,7 +2,7 @@
 #ifndef ADJACENT_FIND_H_INCLUDED
 #define ADJACENT_FIND_H_INCLUDED
 
-#include "HasEqualNeighbors.h"
+#include "HasEqualNeighbors.spec"
 
 /*@
   requires valid: \valid_read(a + (0..n-1));
@@ -24,7 +24,8 @@
   complete behaviors;
   disjoint behaviors;
 */
-size_type adjacent_find(const value_type* a, size_type n);
+size_type
+adjacent_find(const value_type* a, size_type n);
 
 #endif /* ADJACENT_FIND_H_INCLUDED */
 

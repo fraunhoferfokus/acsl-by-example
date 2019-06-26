@@ -2,7 +2,7 @@
 #ifndef FIND_END_H_INCLUDED
 #define FIND_END_H_INCLUDED
 
-#include "HasSubRange.h"
+#include "HasSubRange.spec"
 
 /*@
   requires valid: \valid_read(a + (0..m-1));
@@ -25,8 +25,9 @@
   complete behaviors;
   disjoint behaviors;
 */
-size_type find_end(const value_type* a, size_type m,
-                   const value_type* b, size_type n);
+size_type
+find_end(const value_type* a, size_type m,
+         const value_type* b, size_type n);
 
 #endif /* FIND_END_H_INCLUDED */
 

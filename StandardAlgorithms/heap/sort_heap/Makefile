@@ -1,5 +1,4 @@
 
-FILE=sort_heap
 CMD=\\sortheap
 SEC=sec:sort_heap
 

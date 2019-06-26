@@ -1,5 +1,4 @@
 
-FILE=fill
 CMD=\\fll
 SEC=sec:fill
 

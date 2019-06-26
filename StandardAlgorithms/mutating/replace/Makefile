@@ -1,5 +1,4 @@
 
-FILE=replace
 CMD=\\replace
 SEC=sec:replace
 

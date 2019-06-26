@@ -1,7 +1,6 @@
 
-FILE=stack_top_wd
 CMD=\\stacktopwd
-SEC=sec:stacktop
+SEC=sec:stacktopwd
 
 include ../../Makefile.template
 

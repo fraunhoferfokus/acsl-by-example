@@ -2,9 +2,9 @@
 #ifndef UPPER_BOUND_H_INCLUDED
 #define UPPER_BOUND_H_INCLUDED
 
-#include "Sorted.h"
-#include "UpperBound.h"
-#include "StrictLowerBound.h"
+#include "Sorted.spec"
+#include "UpperBound.spec"
+#include "StrictLowerBound.spec"
 
 /*@
   requires valid:  \valid_read(a + (0..n-1));

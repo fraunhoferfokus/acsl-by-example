@@ -1,5 +1,4 @@
 
-FILE=mismatch
 CMD=\\mismatch
 SEC=sec:mismatch
 

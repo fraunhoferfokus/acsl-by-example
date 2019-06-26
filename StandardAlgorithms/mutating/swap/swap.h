@@ -14,7 +14,8 @@
   ensures *p == \old(*q);
   ensures *q == \old(*p);
 */
-void swap(value_type* p, value_type* q);
+void
+swap(value_type* p, value_type* q);
 
 #endif /* SWAP_H_INCLUDED */
 

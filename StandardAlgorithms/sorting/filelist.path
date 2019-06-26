@@ -1,2 +1,6 @@
 is_sorted
 partial_sort
+heap_sort
+selection_sort
+insertion_sort
+merge

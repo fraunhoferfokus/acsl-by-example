@@ -2,8 +2,8 @@
 #ifndef PARTIAL_SUM_H_INCLUDED
 #define PARTIAL_SUM_H_INCLUDED
 
-#include "PartialSum.h"
-#include "AccumulateBounds.h"
+#include "PartialSum.spec"
+#include "AccumulateBounds.spec"
 
 /*@
   requires valid:     \valid_read(a + (0..n-1));

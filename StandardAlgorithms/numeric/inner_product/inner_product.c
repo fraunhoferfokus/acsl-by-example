@@ -11,7 +11,7 @@ inner_product(const value_type* a, const value_type* b, size_type n,
      loop assigns i, init;
      loop variant n-i;
   */
-  for (size_type i = 0; i < n; ++i) {
+  for (size_type i = 0u; i < n; ++i) {
     /*@
       assert rte_help: init + a[i] * b[i] ==
                        InnerProduct(a, b, i+1, \at(init,Pre));

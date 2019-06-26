@@ -2,9 +2,9 @@
 #ifndef INNER_PRODUCT_H_INCLUDED
 #define INNER_PRODUCT_H_INCLUDED
 
-#include "InnerProduct.h"
-#include "InnerProductBounds.h"
-#include "Unchanged.h"
+#include "InnerProduct.spec"
+#include "InnerProductBounds.spec"
+#include "Unchanged.spec"
 
 /*@
   requires valid:   \valid_read(a + (0..n-1));

@@ -1,5 +1,4 @@
 
-FILE=copy
 CMD=\\cpy
 SEC=sec:copy
 

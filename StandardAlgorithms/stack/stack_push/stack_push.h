@@ -39,7 +39,8 @@
   complete behaviors;
   disjoint behaviors;
 */
-void stack_push(Stack* s, value_type v);
+void
+stack_push(Stack* s, value_type v);
 
 #endif /* STACK_PUSH_H_INCLUDED */
 

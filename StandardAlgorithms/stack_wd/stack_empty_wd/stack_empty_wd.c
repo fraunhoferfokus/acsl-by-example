@@ -10,7 +10,8 @@
 
   ensures equal: \result;
 */
-bool stack_empty_wd(const Stack* s, const Stack* t)
+bool
+stack_empty_wd(const Stack* s, const Stack* t)
 {
   return stack_empty(s) == stack_empty(t);
 }

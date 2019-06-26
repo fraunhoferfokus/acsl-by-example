@@ -1,5 +1,4 @@
 
-FILE=pop_heap
 CMD=\\popheap
 SEC=sec:pop_heap
 

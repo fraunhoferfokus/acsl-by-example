@@ -1,6 +1,5 @@
 
-FILE=equal_range2
-CMD=\\equalrange\(2\)
+CMD=\\equalrangetwo
 SEC=sec:equalrange2
 
 include ../../Makefile.template

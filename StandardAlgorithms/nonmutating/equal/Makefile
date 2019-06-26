@@ -1,5 +1,4 @@
 
-FILE=equal
 CMD=\\equal
 SEC=sec:equal
 

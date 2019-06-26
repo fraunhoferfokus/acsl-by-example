@@ -10,7 +10,7 @@ accumulate(const value_type* a, size_type n, value_type init)
     loop assigns i, init;
     loop variant n-i;
   */
-  for (size_type i = 0; i < n; ++i) {
+  for (size_type i = 0u; i < n; ++i) {
     //@ assert rte_help: init + a[i] == Accumulate(a, i+1, \at(init,Pre));
     init = init + a[i];
   }

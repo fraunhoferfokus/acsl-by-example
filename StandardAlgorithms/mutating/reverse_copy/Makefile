@@ -1,4 +1,3 @@
-FILE=reverse_copy
 CMD=\\reversecopy
 SEC=sec:reversecopy
 

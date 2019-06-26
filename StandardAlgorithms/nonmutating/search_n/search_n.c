@@ -5,10 +5,8 @@ size_type
 search_n(const value_type* a, size_type m, size_type n, value_type b)
 {
   if (0u < n) {
-
     if (n <= m) {
-
-      size_type start = 0;
+      size_type start = 0u;
 
       /*@
         loop invariant constant:  ConstantRange(a, start, i, b);
@@ -18,11 +16,11 @@ search_n(const value_type* a, size_type m, size_type n, value_type b)
         loop assigns i, start;
         loop variant m - i;
       */
-      for (size_type i = 0; i < m; ++i) {
+      for (size_type i = 0u; i < m; ++i) {
         if (a[i] != b) {
-          start = i + 1;
+          start = i + 1u;
         }
-        else if (n == i + 1 - start) {
+        else if (n == i + 1u - start) {
           return start;
         }
       }
@@ -30,6 +28,7 @@ search_n(const value_type* a, size_type m, size_type n, value_type b)
 
     return m;
   }
-  return 0;
+
+  return 0u;
 }
 

@@ -2,8 +2,8 @@
 #ifndef PUSH_HEAP_H_INCLUDED
 #define PUSH_HEAP_H_INCLUDED
 
-#include "IsHeap.h"
-#include "MultisetUnchanged.h"
+#include "IsHeap.spec"
+#include "MultisetUnchanged.spec"
 
 /*@
    requires nonempty: 0 < n;
@@ -15,7 +15,8 @@
    ensures heap:      IsHeap(a, n);
    ensures reorder:   MultisetUnchanged{Old,Here}(a, n);
 */
-void push_heap(value_type* a, size_type n);
+void
+push_heap(value_type* a, size_type n);
 
 #endif /* PUSH_HEAP_H_INCLUDED */
 

@@ -1,5 +1,4 @@
 
-FILE=inner_product
 CMD=\\innerproduct
 SEC=sec:innerproduct
 

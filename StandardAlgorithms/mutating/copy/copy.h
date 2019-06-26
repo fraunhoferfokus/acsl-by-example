@@ -2,8 +2,8 @@
 #ifndef COPY_H_INCLUDED
 #define COPY_H_INCLUDED
 
-#include "EqualRanges.h"
-#include "Unchanged.h"
+#include "EqualRanges.spec"
+#include "Unchanged.spec"
 
 /*@
   requires valid: \valid_read(a + (0..n-1));
@@ -14,7 +14,8 @@
 
   ensures equal:   EqualRanges{Old,Here}(a, n, b);
 */
-void copy(const value_type* a, const size_type n, value_type* b);
+void
+copy(const value_type* a, const size_type n, value_type* b);
 
 #endif /* COPY_H_INCLUDED */
 

@@ -1,5 +1,4 @@
 
-FILE=count
 CMD=\\cnt
 SEC=sec:count
 

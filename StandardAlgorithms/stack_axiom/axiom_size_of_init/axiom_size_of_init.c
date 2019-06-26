@@ -12,7 +12,8 @@
   ensures valid: Invariant(s);
   ensures size:  \result == 0;
 */
-size_type axiom_size_of_init(Stack* s, value_type* a, size_type n)
+size_type
+axiom_size_of_init(Stack* s, value_type* a, size_type n)
 {
   stack_init(s, a, n);
   return stack_size(s);

@@ -1,7 +1,7 @@
 
 #include "../partial_sum/partial_sum.h"
 #include "../adjacent_difference/adjacent_difference.h"
-#include "PartialSumInv.h"
+#include "PartialSumInv.spec"
 
 /*@
   requires valid:     \valid(a + (0..n-1));
@@ -13,7 +13,8 @@
 
   ensures unchanged:   Unchanged{Pre,Here}(a, n);
 */
-void partial_sum_inv(value_type* a, size_type n, value_type* b)
+void
+partial_sum_inv(value_type* a, size_type n, value_type* b)
 {
   partial_sum(a, n, b);
   adjacent_difference(b, n, a);

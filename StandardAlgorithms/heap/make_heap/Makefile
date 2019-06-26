@@ -1,5 +1,4 @@
 
-FILE=make_heap
 CMD=\\makeheap
 SEC=sec:make_heap
 

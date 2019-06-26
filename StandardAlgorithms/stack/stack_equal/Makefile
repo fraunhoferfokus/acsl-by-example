@@ -1,5 +1,4 @@
 
-FILE=stack_equal
 CMD=\\stackequal
 SEC=sec:stack-runtime-equality
 
