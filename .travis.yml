@@ -47,5 +47,5 @@ script:
    - make -C StandardAlgorithms clean
    - make -C StandardAlgorithms report-clean
    - make -C StandardAlgorithms test
-   - eval $(opam config env); export FRAMAC_SHARE=$(frama-c -print-share-path); make -C StandardAlgorithms report
+   - eval $(opam config env); make -C StandardAlgorithms report
    - git diff
