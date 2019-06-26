@@ -1,5 +1,4 @@
 
-FILE=reverse
 CMD=\\reverse
 SEC=sec:reverse
 

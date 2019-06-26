@@ -1,7 +1,8 @@
 
 #include "reverse_copy.h"
 
-void reverse_copy(const value_type* a, size_type n, value_type* b)
+void
+reverse_copy(const value_type* a, size_type n, value_type* b)
 {
   /*@
     loop invariant bound:   0 <= i <= n;

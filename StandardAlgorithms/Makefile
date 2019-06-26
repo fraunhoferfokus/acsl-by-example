@@ -7,8 +7,9 @@ EXAMPLES := $(shell cat $(FILELIST))
 it: lib
 
 clean:
-	@($(RM) -rf errorlogs);\
+	@($(RM) -rf errorlogs)
 	$(RM) *.back
+	$(RM) astraver.why3.conf
 	@for i in drivers $(EXAMPLES);\
         do \
                 (echo "clean $$i"; $(MAKE) clean -sC $$i);\
@@ -27,10 +28,7 @@ report:
 	done
 
 report-clean:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "delete report $$i"; $(MAKE) report-clean -sC $$i);\
-	done
+	@rm -f Results/*.report
 
 preport:
 	@for i in $(EXAMPLES);\
@@ -39,11 +37,16 @@ preport:
 	done
 
 preport-clean:
+	@rm -f Results/*.preport
+
+areport:
 	@for i in $(EXAMPLES);\
 	do \
-		(echo "delete preport $$i"; $(MAKE) preport-clean -sC $$i);\
+		(echo "areport $$i"; $(MAKE) areport -sC $$i);\
 	done
 
+areport-clean:
+	@rm -f Results/*.areport
 
 test: lib
 	@for i in $(EXAMPLES);\

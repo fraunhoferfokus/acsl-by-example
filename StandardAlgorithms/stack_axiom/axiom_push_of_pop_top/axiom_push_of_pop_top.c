@@ -10,7 +10,8 @@
 
   ensures   equal: Equal{Old,Here}(s, s);
 */
-void axiom_push_of_pop_top(Stack* s)
+void
+axiom_push_of_pop_top(Stack* s)
 {
   const value_type val = stack_top(s);
   stack_pop(s);

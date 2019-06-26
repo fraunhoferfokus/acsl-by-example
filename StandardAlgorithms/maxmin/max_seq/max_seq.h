@@ -13,6 +13,7 @@
   ensures \forall integer i; 0 <= i <= n-1 ==> \result >= p[i];
   ensures \exists integer e; 0 <= e <= n-1 &&  \result == p[e];
 */
-value_type max_seq(const value_type* p, size_type n);
+value_type
+max_seq(const value_type* p, size_type n);
 
 #endif /* MAX_SEQ_H_INCLUDED */

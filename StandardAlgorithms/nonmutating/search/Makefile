@@ -1,5 +1,4 @@
 
-FILE=search
 CMD=\\search
 SEC=sec:search
 

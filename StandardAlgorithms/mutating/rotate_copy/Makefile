@@ -1,5 +1,4 @@
 
-FILE=rotate_copy
 CMD=\\rotatecopy
 SEC=sec:rotatecopy
 

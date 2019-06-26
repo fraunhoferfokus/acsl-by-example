@@ -2,8 +2,8 @@
 #ifndef MIN_ELEMENT_H_INCLUDED
 #define MIN_ELEMENT_H_INCLUDED
 
-#include "MinElement.h"
-#include "StrictLowerBound.h"
+#include "MinElement.spec"
+#include "StrictLowerBound.spec"
 
 /*@
   requires valid:   \valid_read(a + (0..n-1));
@@ -23,7 +23,8 @@
   complete behaviors;
   disjoint behaviors;
 */
-size_type min_element(const value_type* a, size_type n);
+size_type
+min_element(const value_type* a, size_type n);
 
 #endif /* MIN_ELEMENT_H_INCLUDED */
 

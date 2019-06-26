@@ -1,9 +1,10 @@
 
 #include "is_sorted.h"
-#include "WeaklySorted.h"
-#include "WeaklySortedImpliesSorted.h"
+#include "WeaklySorted.spec"
+#include "SortedIFFWeaklySorted.spec"
 
-bool is_sorted(const value_type* a, size_type n)
+bool
+is_sorted(const value_type* a, size_type n)
 {
   if (0u < n) {
     /*@

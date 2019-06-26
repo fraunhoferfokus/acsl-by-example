@@ -1,12 +1,12 @@
 
 #include "partial_sum.h"
-#include "PartialSumLemmas.h"
+#include "PartialSumLemmas.spec"
 
 size_type
 partial_sum(const value_type* a, size_type n, value_type* b)
 {
   if (0u < n) {
-    b[0] = a[0];
+    b[0u] = a[0u];
 
     /*@
        loop invariant bound:      1 <= i <= n;

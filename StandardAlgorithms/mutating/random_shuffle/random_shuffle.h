@@ -2,7 +2,7 @@
 #ifndef RANDOM_SHUFFLE_H_INCLUDED
 #define RANDOM_SHUFFLE_H_INCLUDED
 
-#include "MultisetUnchanged.h"
+#include "MultisetUnchanged.spec"
 
 extern unsigned short random_seed[3];
 
@@ -14,7 +14,8 @@ extern unsigned short random_seed[3];
 
   ensures  MultisetUnchanged{Old,Here}(a,n);
 */
-void random_shuffle(value_type* a, size_type n);
+void
+random_shuffle(value_type* a, size_type n);
 
 #endif /* RANDOM_SHUFFLE_H_INCLUDED */
 

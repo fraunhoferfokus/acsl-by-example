@@ -12,7 +12,8 @@
     ensures empty:     \result == 1  <==>  Empty(s);
     ensures not_empty: \result == 0  <==> !Empty(s);
 */
-bool stack_empty(const Stack* s);
+bool
+stack_empty(const Stack* s);
 
 #endif /* STACK_EMPTY_H_INCLUDED */
 

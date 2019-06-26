@@ -2,8 +2,8 @@
 #ifndef ADJACENT_DIFFERENCE_H_INCLUDED
 #define ADJACENT_DIFFERENCE_H_INCLUDED
 
-#include "AdjacentDifference.h"
-#include "AdjacentDifferenceBounds.h"
+#include "AdjacentDifference.spec"
+#include "AdjacentDifferenceBounds.spec"
 
 /*@
    requires valid:      \valid_read(a + (0..n-1));

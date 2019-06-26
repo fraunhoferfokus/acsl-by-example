@@ -1,5 +1,4 @@
 
-FILE=swap
 CMD=\\swap
 SEC=sec:swap
 

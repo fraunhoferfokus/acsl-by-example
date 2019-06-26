@@ -1,7 +1,6 @@
 
-FILE=stack_empty_wd
 CMD=\\stackemptywd
-SEC=sec:stackempty
+SEC=sec:stackemptywd
 
 include ../../Makefile.template
 

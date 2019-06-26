@@ -36,7 +36,8 @@
   complete behaviors;
   disjoint behaviors;
 */
-void stack_pop(Stack* s);
+void
+stack_pop(Stack* s);
 
 #endif /* STACK_POP_H_INCLUDED */
 

@@ -9,7 +9,7 @@
 
   assigns   \nothing;
 
-  ensures   0 <= \result <= \result;
+  ensures   0 <= \result <= n;
 
   behavior some:
     assumes  \exists integer i; 0 <= i < n && a[i] == val;
@@ -24,7 +24,8 @@
   complete behaviors;
   disjoint behaviors;
 */
-size_type find(const value_type* a, size_type n, value_type val);
+size_type
+find(const value_type* a, size_type n, value_type val);
 
 #endif /* FIND_H_INCLUDED */
 

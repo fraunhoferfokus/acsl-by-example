@@ -3,10 +3,10 @@
 #define EQUAL_RANGE_H_INCLUDED
 
 #include "make_pair.h"
-#include "Sorted.h"
-#include "ConstantRange.h"
-#include "StrictUpperBound.h"
-#include "StrictLowerBound.h"
+#include "Sorted.spec"
+#include "ConstantRange.spec"
+#include "StrictUpperBound.spec"
+#include "StrictLowerBound.spec"
 
 /*@
   requires valid: \valid_read(a + (0..n-1));

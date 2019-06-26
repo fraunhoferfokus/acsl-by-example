@@ -1,31 +1,30 @@
 
 #include "push_heap.h"
 #include "../is_heap/heap_aux.h"
-#include "CountLemmas.h"
-#include "MultisetAdd.h"
-#include "MultisetAddDistinct.h"
-#include "MultisetMinus.h"
-#include "MultisetMinusDistinct.h"
-#include "MultisetRetainRest2.h"
-#include "MultisetPushHeapRetain.h"
-#include "MultisetPushHeapClosure.h"
+#include "CountLemmas.spec"
+#include "MultisetAdd.spec"
+#include "MultisetAddDistinct.spec"
+#include "MultisetMinus.spec"
+#include "MultisetMinusDistinct.spec"
+#include "MultisetRetainRest2.spec"
+#include "MultisetPushHeapRetain.spec"
+#include "MultisetPushHeapClosure.spec"
 
-void push_heap(value_type* a, size_type n)
+void
+push_heap(value_type* a, size_type n)
 {
   // start of prologue
   if (1u < n) { // otherwise nothings needs to be done
-
-    const value_type v      = a[n - 1];
-    size_type  hole = heap_parent(n - 1);
+    const value_type v      = a[n - 1u];
+    size_type  hole = heap_parent(n - 1u);
 
     if (a[hole] < v) {
+      a[n - 1u] = a[hole];
 
-      a[n - 1] = a[hole];
       //@ assert heap:   IsHeap(a, n);
       //@ assert add:    MultisetAdd{Pre,Here}(a, n, a[hole]);
       //@ assert minus:  MultisetMinus{Pre,Here}(a, n, v);
       //@ assert retain: MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
-
       // end of prologue
       // start of main act
       if (0u < hole) {
@@ -42,11 +41,10 @@ void push_heap(value_type* a, size_type n)
           loop assigns           hole, parent, a[0..n-1];
           loop variant           hole;
         */
-        while (0u < hole && a[parent] < v) {
+        while ((0u < hole) && (a[parent] < v)) {
           //@ ghost Loop: // LoopEntry not yet supported!
           //@ ghost const value_type old_a = a[hole];
           //@ assert reorder:  old_a == \at(a[hole],Loop);
-
           if (a[hole] < a[parent]) {
             a[hole] = a[parent];
             //@ assert less:    old_a   < v;
@@ -61,14 +59,15 @@ void push_heap(value_type* a, size_type n)
           }
 
           hole = parent;
+
           if (0u < hole) {
             parent = heap_parent(hole);
           }
         }
       }
+
       // end of main act
       // start of epilogue
-
       //@ ghost Epi:
       a[hole] = v;
       //@ assert value:      \at(a[hole],Epi)  != v;
@@ -80,6 +79,7 @@ void push_heap(value_type* a, size_type n)
       //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, n);
     }
   }
+
   // end of epilogue
 }
 

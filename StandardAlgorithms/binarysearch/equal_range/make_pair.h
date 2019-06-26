@@ -19,12 +19,12 @@ typedef struct size_type_pair size_type_pair;
     ensures \result.second == second;
 */
 static inline
-size_type_pair make_pair(size_type first, size_type second)
+size_type_pair
+make_pair(size_type first, size_type second)
 {
   size_type_pair pair;
   pair.first  = first;
   pair.second = second;
-
   return pair;
 }
 

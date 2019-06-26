@@ -10,7 +10,8 @@
 
   ensures equal:  \result;
 */
-bool stack_top_wd(const Stack* s, const Stack* t)
+bool
+stack_top_wd(const Stack* s, const Stack* t)
 {
   return stack_top(s) == stack_top(t);
 }

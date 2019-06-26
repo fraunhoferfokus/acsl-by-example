@@ -2,9 +2,9 @@
 #ifndef POP_HEAP_H_INCLUDED
 #define POP_HEAP_H_INCLUDED
 
-#include "IsHeap.h"
-#include "MaxElement.h"
-#include "MultisetUnchanged.h"
+#include "IsHeap.spec"
+#include "MaxElement.spec"
+#include "MultisetUnchanged.spec"
 #include <limits.h>
 
 /*@
@@ -19,7 +19,8 @@
    ensures max:     MaxElement(a, n, n-1);
    ensures reorder: MultisetUnchanged{Old, Here}(a, n);
 */
-void pop_heap(value_type* a, size_type n);
+void
+pop_heap(value_type* a, size_type n);
 
 #endif /* POP_HEAP_H_INCLUDED */
 

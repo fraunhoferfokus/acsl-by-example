@@ -14,7 +14,8 @@
   ensures valid: Invariant(t);
   ensures equal: Equal{Here,Here}(s, t);
 */
-void stack_pop_wd(Stack* s, Stack* t)
+void
+stack_pop_wd(Stack* s, Stack* t)
 {
   stack_pop(s);
   stack_pop(t);

@@ -2,7 +2,7 @@
 #ifndef MISMTACH_H_INCLUDED
 #define MISMTACH_H_INCLUDED
 
-#include "EqualRanges.h"
+#include "EqualRanges.spec"
 
 /*@
   requires valid:  \valid_read(a + (0..n-1));

@@ -1,9 +1,10 @@
 
 #include "lower_bound.h"
 
-size_type lower_bound(const value_type* a, size_type n, value_type val)
+size_type
+lower_bound(const value_type* a, size_type n, value_type val)
 {
-  size_type left = 0;
+  size_type left  = 0u;
   size_type right = n;
 
   /*@
@@ -15,10 +16,10 @@ size_type lower_bound(const value_type* a, size_type n, value_type val)
     loop variant right - left;
   */
   while (left < right) {
-    const size_type middle = left + (right - left) / 2;
+    const size_type middle = left + (right - left) / 2u;
 
     if (a[middle] < val) {
-      left = middle + 1;
+      left = middle + 1u;
     }
     else {
       right = middle;

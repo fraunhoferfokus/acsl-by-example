@@ -1,6 +1,5 @@
 
-FILE=max_element2
-CMD=\\maxelement\(2\)
+CMD=\\maxelementtwo
 SEC=sec:maxelement2
 
 include ../../Makefile.template

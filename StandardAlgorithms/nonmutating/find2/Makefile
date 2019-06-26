@@ -1,6 +1,5 @@
 
-FILE=find2
-CMD=\\find\(2\)
+CMD=\\findtwo
 SEC=sec:find2
 
 include ../../Makefile.template

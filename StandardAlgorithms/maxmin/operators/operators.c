@@ -1,4 +1,4 @@
 
-#include "LessThanComparable.h"
-#include "LessAndOtherRelations.h"
+#include "LessThanComparable.spec"
+#include "LessAndOtherRelations.spec"
 

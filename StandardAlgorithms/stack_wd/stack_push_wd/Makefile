@@ -1,7 +1,6 @@
 
-FILE=stack_push_wd
 CMD=\\stackpushwd
-SEC=sec:stackpush
+SEC=sec:stackpushwd
 
 include ../../Makefile.template
 

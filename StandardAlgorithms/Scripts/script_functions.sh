@@ -60,10 +60,34 @@ extract_data_Wp()
     esac
 
     case $REPORT_BACKEND in
-    trust_wp|wp_runner|vs-par) extract_statistics_Wp ;;
+    trust_wp|wp_runner|vs-par) extract_statistics ;;
     default) extract_raw_data_Wp ;;
     *) echo Unknown backend $REPORT_BACKEND ; exit 1 ;;
     esac
+
+    rm -f $results
+}
+
+# $1: name of the algorithm
+# $2: tex command
+# $3: tutorial section
+extract_data_Av()
+{
+    if [ $# -ne 3 ]
+    then
+        echo "please provide exactly three arguments" >&2
+        exit 1
+    fi
+
+    alg=$1
+    cmd=$2
+    sec=$3
+
+    results=`mktemp ${TMPDIR-/tmp}/tempResults.XXXXXX`
+
+    generate_av
+
+    extract_statistics
 
     rm -f $results
 }
@@ -77,6 +101,15 @@ generate_wp()
         -wp-timeout $WP_TIMEOUT \
         -wp-coq-timeout $WP_COQ_TIMEOUT \
         -wp-out $alg.wp $alg.c"
+    eval "$prog" >$results
+}
+
+# generate a verification report using WP directly
+generate_av()
+{
+    # generate report
+    local prog="$AV_C_REPORT \
+        -av-out $alg.av $alg.c"
     eval "$prog" >$results
 }
 
@@ -105,23 +138,23 @@ extract_raw_data_Wp()
     goal_count=`grep "goals scheduled" $results | cut -d ' ' -f2`
     valid_qed=`countValid $results Qed`
     valid_alt_ergo=`countValid $results Alt-Ergo`
-    valid_cvc4_15=`countValid $results cvc4-15`
+    valid_cvc4=`countValid $results cvc4`
     valid_cvc3=`countValid $results cvc3`
     valid_z3=`countValid $results z3`
     valid_eprover=`countValid $results eprover`
     valid_coq=`countValid $results Coq`
 
     #calculate all valid goals
-    valid=$(($valid_qed + $valid_alt_ergo + $valid_cvc4_15 + $valid_cvc3 + $valid_z3 + $valid_eprover + $valid_coq))
+    valid=$(($valid_qed + $valid_alt_ergo + $valid_cvc4 + $valid_cvc3 + $valid_z3 + $valid_eprover + $valid_coq))
 
     print_statistics
 }
 
 # parse the report printed by WP (or WP runner) and generate figures from that
-extract_statistics_Wp()
+extract_statistics()
 {
     # initialize validation variables with reasonable default values
-    for i in qed alt_ergo cvc4 cvc3 z3 eprover coq 
+    for i in qed alt_ergo cvc4 cvc3 z3 eprover coq
     do
         eval "valid_$i=0"
     done
@@ -131,9 +164,11 @@ extract_statistics_Wp()
     # generate report
     sed -e 's,^.*Proved goals: *\([0-9]*\) / *\([0-9]*\),valid=\1;goal_count=\2,p' \
         -e '1,/^valid=/d' \
-        -e 's/^ *\([^:]*\): *\([0-9]*\).*$/valid_\1=\2/' \
+        -e 's/cvc4-[[:digit:]]*/cvc4/g' \
+        -e 's/^ *\([^:() ]*\) *\(([^:()]*)\)\? *\(([^:()]*)\)\?:[[:space:]]*\([0-9]*\).*$/valid_\1=\4/' \
+	-e '/+/d' \
 	-e '/\<Done\>/d' $results |
-    tr '[:upper:]-' '[:lower:]_' >$statistics
+    tr '[:upper:]-' '[:lower:]_' > $statistics
 
     source $statistics
     rm -f $statistics
@@ -142,16 +177,16 @@ extract_statistics_Wp()
 }
 
 # print the statistics extracted by extract_raw_data_Wp and
-# extract_statistics_Wp
+# extract_statistics
 print_statistics()
 {
-    if [ $goal_count -ne 0 ]
+    if [ ${goal_count:-0} -ne 0 ]
     then
         invalid=$(($goal_count - $valid))
         percent=$((100 * $valid / $goal_count))
     else
         invalid=0
-        percent=0
+        percent=100
     fi
 
     generate_report
@@ -159,7 +194,7 @@ print_statistics()
 
 # report fields
 fields='alg goal_count valid
-    valid_qed valid_alt_ergo valid_cvc4_15 valid_cvc3 valid_z3 valid_eprover valid_coq
+    valid_qed valid_alt_ergo valid_cvc4 valid_cvc3 valid_z3 valid_eprover valid_coq
     invalid percent cmd sec'
 
 # parse report fileand set variables accordingly
@@ -191,6 +226,6 @@ prettyPrintReport()
     parse_report $1
     printf  "   %-30s [%-4d %3d   (%3d %3d %3d %3d %3d %3d %3d)]     %3d%%\n" \
         $alg $goal_count $valid \
-        $valid_qed $valid_alt_ergo $valid_cvc4_15 $valid_cvc3 $valid_z3 $valid_eprover $valid_coq \
+        $valid_qed $valid_alt_ergo $valid_cvc4 $valid_cvc3 $valid_z3 $valid_eprover $valid_coq \
         $percent
 }

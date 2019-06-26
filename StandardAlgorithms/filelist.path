@@ -2,10 +2,10 @@ nonmutating
 maxmin
 binarysearch
 mutating
+unique
 numeric
 heap
 sorting
-classic-sorting
 stack
 stack_wd
 stack_axiom

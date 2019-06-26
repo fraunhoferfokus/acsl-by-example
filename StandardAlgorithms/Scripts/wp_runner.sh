@@ -2,6 +2,9 @@
 
 set -e
 
+FRAMAC_SHARE=${FRAMAC_SHARE:-$(frama-c -print-share-path)}
+WP_TIMEOUT=${WP_TIMEOUT:-20}
+
 # this exit status is used when wp_runner terminates a process due to
 # it reaching its timeout.
 timeout_status=42
@@ -90,7 +93,7 @@ do_proof() {
 		result="Error $status"
 	elif [ -s $outname.out ]
 	then
-		result="$(sed -n -e "s/ WP / /" \
+		result="$(sed -n -e "s/ WP \?/ /" \
 		    -e "s/^.* [[:alnum:]_]* : \\([[:alnum:]]*\\) .*$/\\1/p" $outname.out)"
 	else
 		result=Unknown
@@ -178,7 +181,7 @@ goals_by_prover() {
 # $1: -r
 # $2: wpdir
 # $3: $whyfile:$theory:$prover
-if [ $1 = '-r' ]
+if [ "$1" = '-r' ]
 then
 	# if there are no proof obligations, do_proof will be called
 	# once without a proof obligation.  Catch that case.
@@ -222,13 +225,13 @@ shift
 
 rm -rf $wpdir
 mkdir $wpdir
-true >$log
+: > $log
 
-echo [wprunner] Generating WP files
-#echo "WP = $WP" > foo.log
-#echo "$@" >> foo.log
-$WP "$@" -wp-out $wpdir -wp-gen $source | tee -a $log
-echo [wprunner] Running provers on $NPROC CPUs
+echo [wprunner] Generating WP files | tee -a $log
+echo "WP = $FR" | tee -a $log
+echo "$@" | tee -a $log
+$FR "$@" -wp-out $wpdir -wp-gen $source | tee -a $log
+echo [wprunner] Running provers on $NPROC CPUs | tee -a $log
 generate_tasks | xargs -P $NPROC -n 1 -- $0 -r $wpdir | tee -a $log
 
 # print statistics

@@ -8,12 +8,12 @@
 #include "lower_bound.h"
 #include "../partitioned_test.h"
 
-void lower_bound_test(const std::vector<value_type>& a, value_type value, size_type pos)
+void
+lower_bound_test(const std::vector<value_type>& a, value_type value, size_type pos)
 {
   auto pred = [value](value_type x) {
     return x < value;
   };
-
   {
     assert(pos == lower_bound(a.data(), a.size(), value));
     auto ptr = a.data();
@@ -26,10 +26,10 @@ void lower_bound_test(const std::vector<value_type>& a, value_type value, size_t
   }
 }
 
-int main(int argc, char** argv)
+int
+main(int argc, char** argv)
 {
   auto a = binary_search_data();
-
   lower_bound_test(a, 1, 0);
   lower_bound_test(a, 2, 0);
   lower_bound_test(a, 3, 1);
@@ -37,7 +37,6 @@ int main(int argc, char** argv)
   lower_bound_test(a, 11, 6);
   lower_bound_test(a, 14, 7);
   lower_bound_test(a, 17, 9);
-
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
   return EXIT_SUCCESS;
 }

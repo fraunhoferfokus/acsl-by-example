@@ -1,5 +1,4 @@
 
-FILE=stack_pop
 CMD=\\stackpop
 SEC=sec:stackpop
 

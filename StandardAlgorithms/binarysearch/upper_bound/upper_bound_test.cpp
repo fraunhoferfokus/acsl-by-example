@@ -6,12 +6,12 @@
 #include "upper_bound.h"
 #include "../partitioned_test.h"
 
-void upper_bound_test(const std::vector<value_type>& a, value_type value, size_type pos)
+void
+upper_bound_test(const std::vector<value_type>& a, value_type value, size_type pos)
 {
   auto pred = [value](value_type x) {
     return x <= value; // or: !(value < x)
   };
-
   {
     assert(pos == upper_bound(a.data(), a.size(), value));
     auto ptr = a.data();
@@ -25,10 +25,10 @@ void upper_bound_test(const std::vector<value_type>& a, value_type value, size_t
 }
 
 
-int main(int argc, char** argv)
+int
+main(int argc, char** argv)
 {
   std::vector<value_type> a = binary_search_data();
-
   upper_bound_test(a, 1, 0);
   upper_bound_test(a, 2, 1);
   upper_bound_test(a, 3, 4);
@@ -37,7 +37,6 @@ int main(int argc, char** argv)
   upper_bound_test(a, 11, 7);
   upper_bound_test(a, 14, 9);
   upper_bound_test(a, 17, 9);
-
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
   return EXIT_SUCCESS;
 }

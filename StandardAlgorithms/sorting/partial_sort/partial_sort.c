@@ -7,22 +7,23 @@
 #include "../../heap/sort_heap/sort_heap.h"
 #include "../../mutating/swap/swap.h"
 
-#include "LowerBound.h"
-#include "MultisetUnchangedLemmas.h"
-#include "HeapMaximum.h"
+#include "LowerBound.spec"
+#include "MultisetUnchangedLemmas.spec"
+#include "HeapMaximum.spec"
 
-#include "ReorderPreservesLowerBound.h"
-#include "ReorderPreservesUpperBound.h"
-#include "PartialReorderPreservesLowerBounds.h"
-#include "SwappedInside.h"
-#include "SwappedInsidePreservesMultisetUnchanged.h"
+#include "ReorderPreservesLowerBound.spec"
+#include "ReorderPreservesUpperBound.spec"
+#include "PartialReorderPreservesLowerBounds.spec"
+#include "SwappedInside.spec"
+#include "SwappedInsidePreservesMultisetUnchanged.spec"
 
-void partial_sort(value_type* a, size_type m, size_type n)
+void
+partial_sort(value_type* a, size_type m, size_type n)
 {
   if (m > 0u) {
     make_heap(a, m);
-    //@ assert reorder: Unchanged{Pre,Here}(a, m, n);
 
+    //@ assert reorder: Unchanged{Pre,Here}(a, m, n);
     /*@
       loop invariant bound:     m <= i <= n;
       loop invariant heap:      IsHeap(a, m);
@@ -34,8 +35,7 @@ void partial_sort(value_type* a, size_type m, size_type n)
       loop variant              n-i;
     */
     for (size_type i = m; i < n; ++i)
-      if (a[i] < a[0]) {
-
+      if (a[i] < a[0u]) {
         /*@
           assigns            a[0..m-1];
           ensures heap:      IsHeap(a, m-1);
@@ -53,7 +53,6 @@ void partial_sort(value_type* a, size_type m, size_type n)
         //@ assert upper:      UpperBound(a, 0, m,   a[m-1]);
         //@ assert partition:  Partition(a, m, i);
         //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, i);
-
         /*@
           assigns            a[m-1], a[i];
           ensures swapped:   SwappedInside{Old,Here}(a, m-1, i, n);
@@ -65,7 +64,6 @@ void partial_sort(value_type* a, size_type m, size_type n)
         //@ assert upper:      UpperBound(a, 0, m-1, a[0]);
         //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, i+1);
         //@ assert unchanged:  Unchanged{Pre,Here}(a, i+1, n);
-
         /*@
           assigns            a[0..m-1];
           ensures heap:      IsHeap(a, m);
@@ -77,8 +75,8 @@ void partial_sort(value_type* a, size_type m, size_type n)
         //@ assert upper:    UpperBound(a, 0, m,   a[0]);
         //@ assert lower:    LowerBound(a, m, i+1, a[0]);
       }
-    //@ assert partition: Partition(a, m, n);
 
+    //@ assert partition: Partition(a, m, n);
     /*@
       assigns           a[0..m-1];
       ensures sorted:   Sorted(a, m);

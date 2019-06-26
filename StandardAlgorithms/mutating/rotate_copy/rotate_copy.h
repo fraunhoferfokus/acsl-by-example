@@ -2,8 +2,8 @@
 #ifndef ROTATE_COPY_H_INCLUDED
 #define ROTATE_COPY_H_INCLUDED
 
-#include "EqualRanges.h"
-#include "Unchanged.h"
+#include "EqualRanges.spec"
+#include "Unchanged.spec"
 
 /*@
   requires bound: 0 <= m <= n;
@@ -17,7 +17,8 @@
   ensures right:     EqualRanges{Old,Here}(a, m, n-m, b, 0);
   ensures unchanged:   Unchanged{Old,Here}(a, n);
 */
-void rotate_copy(const value_type* a, size_type m, size_type n, value_type* b);
+void
+rotate_copy(const value_type* a, size_type m, size_type n, value_type* b);
 
 #endif /* ROTATE_COPY_H_INCLUDED */
 

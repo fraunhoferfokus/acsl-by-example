@@ -2,7 +2,7 @@
 #ifndef SEARCH_H_INCLUDED
 #define SEARCH_H_INCLUDED
 
-#include "HasSubRange.h"
+#include "HasSubRange.spec"
 
 /*@
   requires \valid_read(a + (0..m-1));
@@ -25,8 +25,9 @@
   complete behaviors;
   disjoint behaviors;
 */
-size_type search(const value_type* a, size_type m,
-                 const value_type* b, size_type n);
+size_type
+search(const value_type* a, size_type m,
+       const value_type* b, size_type n);
 
 #endif /* SEARCH_H_INCLUDED */
 

@@ -2,7 +2,7 @@
 #ifndef IOTA_H_INCLUDED
 #define IOTA_H_INCLUDED
 
-#include "IotaLogic.h"
+#include "Iota.spec"
 #include "limits.h"
 
 /*@
@@ -13,7 +13,8 @@
 
   ensures increment: Iota(a, n, val);
 */
-void iota(value_type* a, size_type n, value_type val);
+void
+iota(value_type* a, size_type n, value_type val);
 
 #endif /* IOTA_H_INCLUDED */
 

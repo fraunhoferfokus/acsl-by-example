@@ -1,10 +1,14 @@
 
 MAKEFLAGS += --silent --no-print-directory
 
-FILELIST =  filelist.path
-SCRIPT_DIR  =  ../Scripts
-DIR =	$(shell pwd)/
-FILE := $(shell cat $(FILELIST))
+FILELIST    := filelist.path
+SCRIPT_DIR  := ../Scripts
+DIR         := $(shell pwd)/
+FILE        := $(shell cat $(FILELIST))
+
+ifndef OBJ
+	OBJ := $(join $(addsuffix /,$(FILE)),$(addsuffix .o,$(FILE)))
+endif
 
 
 test:: lib
@@ -20,7 +24,7 @@ obj: FORCE
 		($(MAKE) obj -sC $$i);\
 	done
 
-clean::
+clean:: FORCE
 	@for i in $(FILE);\
         do \
                 (cd "$$i"; $(MAKE) -s clean);\
@@ -54,6 +58,18 @@ preport-clean:
 	@for i in $(FILE);\
         do \
                 ($(MAKE) preport-clean -sC $$i);\
+        done
+
+areport:
+	@for i in $(FILE);\
+        do \
+                ($(MAKE) areport -sC $$i);\
+        done
+
+areport-clean:
+	@for i in $(FILE);\
+        do \
+                ($(MAKE) areport-clean -sC $$i);\
         done
 
 format:

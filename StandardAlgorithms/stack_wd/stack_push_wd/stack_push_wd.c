@@ -1,6 +1,6 @@
 
 #include "stack/stack.h"
-#include "StackPushEqual.h"
+#include "StackPushEqual.spec"
 
 /*@
   requires valid:     \valid(s) && Invariant(s);
@@ -15,7 +15,8 @@
   ensures  valid:     Invariant(s) && Invariant(t);
   ensures  equal:     Equal{Here,Here}(s, t);
 */
-void stack_push_wd(Stack* s, Stack* t, value_type v)
+void
+stack_push_wd(Stack* s, Stack* t, value_type v)
 {
   stack_push(s, v);
   stack_push(t, v);

@@ -1,5 +1,4 @@
 
-FILE=find
 CMD=\\find
 SEC=sec:find
 

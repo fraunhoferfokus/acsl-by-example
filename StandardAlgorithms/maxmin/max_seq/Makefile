@@ -1,5 +1,4 @@
 
-FILE=max_seq
 CMD=\\maxseq
 SEC=sec:maxseq
 

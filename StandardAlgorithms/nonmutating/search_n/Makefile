@@ -1,7 +1,8 @@
 
-FILE=search_n
 CMD=\\searchn
 SEC=sec:search_n
+
+export WP_TIMEOUT=20
 
 include ../../Makefile.template
 

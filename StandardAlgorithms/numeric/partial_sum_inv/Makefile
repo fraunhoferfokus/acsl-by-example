@@ -1,5 +1,4 @@
 
-FILE=partial_sum_inv
 CMD=\\partialsuminv
 SEC=sec:inverting-partialsum
 

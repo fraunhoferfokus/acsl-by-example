@@ -12,7 +12,7 @@ replace_copy(const value_type* a, size_type n, value_type* b, value_type v,
     loop assigns i, b[0..n-1];
     loop variant n-i;
   */
-  for (size_type i = 0; i < n; ++i) {
+  for (size_type i = 0u; i < n; ++i) {
     b[i] = (a[i] == v ? w : a[i]);
   }
 

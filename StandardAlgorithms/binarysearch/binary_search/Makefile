@@ -1,5 +1,4 @@
 
-FILE=binary_search
 CMD=\\binarysearch
 SEC=sec:binarysearch
 

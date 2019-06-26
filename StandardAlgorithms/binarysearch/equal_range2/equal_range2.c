@@ -2,13 +2,13 @@
 #include "equal_range2.h"
 #include "../lower_bound/lower_bound.h"
 #include "../upper_bound/upper_bound.h"
-#include "ShiftLemmas.h"
+#include "ShiftLemmas.spec"
 
 size_type_pair
-equal_range(const value_type* a, size_type n, value_type val)
+equal_range2(const value_type* a, size_type n, value_type val)
 {
-  size_type first  = 0;
-  size_type middle = 0;
+  size_type first  = 0u;
+  size_type middle = 0u;
   size_type last   = n;
 
   /*@
@@ -19,10 +19,10 @@ equal_range(const value_type* a, size_type n, value_type val)
     loop variant last - first;
    */
   while (last > first) {
-    middle = first + (last - first) / 2;
+    middle = first + (last - first) / 2u;
 
     if (a[middle] < val) {
-      first = middle + 1;
+      first = middle + 1u;
     }
     else if (val < a[middle]) {
       last = middle;
@@ -37,14 +37,11 @@ equal_range(const value_type* a, size_type n, value_type val)
     size_type left = first + lower_bound(a + first, middle - first, val);
     //@ assert constant: LowerBound(a, left, middle, val);
     //@ assert strict: StrictUpperBound(a, first, left, val);
-
     ++middle;
-
     //@ assert sorted: Sorted(a, middle, last);
     size_type right = middle + upper_bound(a + middle, last - middle, val);
     //@ assert constant: UpperBound(a, middle, right, val);
     //@ assert strict: StrictLowerBound(a, right, last, val);
-
     return make_pair(left, right);
   }
   else {

@@ -6,25 +6,21 @@
 
 #include "reverse.h"
 
-int main(int argc, char** argv)
+int
+main(int argc, char** argv)
 {
   std::vector<value_type> a{1, 2, 3, 5, 7, 6, 9};
   auto a_backup = a;
-
   std::reverse(a.data(), a.data() + a.size());
   reverse(a.data(), a.size());
   assert(a == a_backup);
-
   // now with even size
   a.push_back(8);
   a_backup = a;
-
   std::reverse(a.data(), a.data() + a.size());
   reverse(a.data(), a.size());
   assert(a == a_backup);
-
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
-
   return EXIT_SUCCESS;
 }
 

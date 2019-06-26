@@ -1,8 +1,8 @@
 include ../Makefile.group
 
-OBJ=
+OBJ :=
 
-clean::
+clean:: FORCE
 	:
 
 # no library here

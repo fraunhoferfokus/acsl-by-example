@@ -1,5 +1,4 @@
 
-FILE=random_shuffle
 CMD=\\randomshuffle
 SEC=sec:randomshuffle
 

@@ -1,3 +1,4 @@
 *_test
 *.tex
 coq/driver
+astraver.why3.conf
