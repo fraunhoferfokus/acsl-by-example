@@ -18,13 +18,13 @@ Frama-C 18.0 (_Argon_) and relies on the following other sofware packages.
 
 *Package* | *Version*
 --------- | ---------
- Why3     | 0.88.3
- Alt-Ergo | 2.2.0
+ Why3     | 1.2.0
+ Alt-Ergo | 2.0.0
  CVC4     | 1.6
  CVC3     | 2.4.1
- Z3       | 4.8.3
- E Prover | 2.2
- Coq      | 8.7.2
+ Z3       | 4.8.4
+ E Prover | 2.3
+ Coq      | 8.9.1
 
 For more details on verifying the examples see the file [README.txt](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/README.txt).
 
