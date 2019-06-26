@@ -11,7 +11,6 @@ addons:
       - libgtksourceview2.0-dev
       - cvc3
       - z3
-      - coq
 
 cache:
   directories:
@@ -40,7 +39,7 @@ install:
   - which eprover || ( wget https://github.com/eprover/eprover/archive/E-2.3.tar.gz && tar xf E-2.3.tar.gz && cd eprover-E-2.3 && ./configure --prefix=$HOME && make -j2 && sudo make install )
   - opam update
   - opam upgrade --yes
-  - opam depext --yes --noninteractive --install frama-c alt-ergo-free coq why3 why3-coq
+  - opam depext --yes --noninteractive --install frama-c alt-ergo-free why3
   - eval $(opam config env); why3 config --detect
 
 script:
