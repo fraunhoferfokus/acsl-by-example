@@ -36,8 +36,7 @@ install:
   - which eprover || ( wget https://github.com/eprover/eprover/archive/E-2.3.tar.gz && tar xf E-2.3.tar.gz && cd eprover-E-2.3 && ./configure --prefix=/usr/local && make -j2 && sudo make install )
   - opam update
   - opam upgrade --yes
-  - opam depext --yes --noninteractive --install frama-c why3.0.88.3 alt-ergo
-  - opam pin add why3 0.88.3
+  - opam depext --yes --noninteractive --install frama-c alt-ergo-free coq why3 why3-coq
   - eval $(opam config env); why3 config --detect
 
 script:
