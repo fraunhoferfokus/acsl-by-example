@@ -15,8 +15,8 @@ addons:
 
 cache:
   directories:
+    - $HOME/bin
     - $HOME/.opam
-    - /usr/local/bin
 
 env:
   global:
@@ -25,15 +25,19 @@ env:
 
 before_install:
   - sudo apt-get update -qq
-  - sudo wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.6-x86_64-linux-opt -O /usr/local/bin/cvc4 || true
-  - sudo chmod +x /usr/local/bin/cvc4
-  - sudo wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.4/opam-2.0.4-x86_64-linux -O /usr/local/bin/opam || true
-  - sudo chmod +x /usr/local/bin/opam
+  - which cvc4 || (
+      wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.6-x86_64-linux-opt -O $HOME/bin/cvc4 &&
+      chmod +x $HOME/bin/cvc4
+    )
+  - which opam || (
+      wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.4/opam-2.0.4-x86_64-linux -O $HOME/bin/opam &&
+      chmod +x $HOME/bin/opam
+    )
   - opam init --auto-setup --disable-sandboxing --compiler=4.06.1
   - opam install --yes depext
 
 install:
-  - which eprover || ( wget https://github.com/eprover/eprover/archive/E-2.3.tar.gz && tar xf E-2.3.tar.gz && cd eprover-E-2.3 && ./configure --prefix=/usr/local && make -j2 && sudo make install )
+  - which eprover || ( wget https://github.com/eprover/eprover/archive/E-2.3.tar.gz && tar xf E-2.3.tar.gz && cd eprover-E-2.3 && ./configure --prefix=$HOME && make -j2 && sudo make install )
   - opam update
   - opam upgrade --yes
   - opam depext --yes --noninteractive --install frama-c alt-ergo-free coq why3 why3-coq
