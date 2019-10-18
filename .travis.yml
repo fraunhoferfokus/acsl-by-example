@@ -5,6 +5,7 @@ dist: eoan
 addons:
   apt:
     packages:
+      - opam
       - astyle
       - aspcud
       - libgnomecanvas2-dev
@@ -26,10 +27,6 @@ env:
 
 before_install:
   - sudo apt update -qq
-  - which opam || (
-      wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.4/opam-2.0.4-x86_64-linux -O $HOME/bin/opam &&
-      chmod +x $HOME/bin/opam
-    )
   - opam init --auto-setup --disable-sandboxing 
   - opam install --yes depext
 
