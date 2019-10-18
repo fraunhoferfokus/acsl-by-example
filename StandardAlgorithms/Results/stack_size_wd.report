@@ -1,4 +1,4 @@
-alg='stack_size_wd'
+example='stack_size_wd'
 goal_count='12'
 valid='12'
 valid_qed='8'

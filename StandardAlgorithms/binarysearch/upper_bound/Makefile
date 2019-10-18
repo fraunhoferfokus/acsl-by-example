@@ -1,6 +1,3 @@
 
-CMD=\\upperbound
-SEC=sec:upperbound
-
-include ../../Makefile.template
+include ../../example.mk
 

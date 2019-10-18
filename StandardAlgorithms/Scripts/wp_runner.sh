@@ -2,6 +2,27 @@
 
 set -e
 
+gnutime=/usr/bin/time
+gnuxargs=/usr/bin/xargs
+gnugrep=/bin/grep
+gnused=/bin/sed
+
+case $OSTYPE in
+	linux*)
+		#printf "running on Linux\n" >&2
+		;;
+	darwin*)
+		#printf "running on macOS\n" >&2
+		gnutime=/usr/local/bin/gtime
+		gnuxargs=/usr/local/bin/gxargs
+                gnugrep=/usr/local/bin/ggrep
+                gnused=/usr/local/bin/gsed
+		;;
+	*)
+		#printf "running on untested $OSTYPE\n" >&2
+esac
+
+
 FRAMAC_SHARE=${FRAMAC_SHARE:-$(frama-c -print-share-path)}
 WP_TIMEOUT=${WP_TIMEOUT:-20}
 
@@ -38,7 +59,7 @@ generate_tasks() {
 	# FIXME "typed_ref_external" depends on memory model and driver
 	for whyfile in $wpdir/typed_ref_external/*.why
 	do
-		sed -n \
+		$gnused -n \
 		    -e 's/^theory \(VC.*\)$/\1/p' \
 		    -e 's/^lemma \(Q_.*\):$/\1/p' \
 		    $whyfile | while read -r theory
@@ -93,7 +114,7 @@ do_proof() {
 		result="Error $status"
 	elif [ -s $outname.out ]
 	then
-		result="$(sed -n -e "s/ WP \?/ /" \
+		result="$($gnused -n -e "s/ WP \?/ /" \
 		    -e "s/^.* [[:alnum:]_]* : \\([[:alnum:]]*\\) .*$/\\1/p" $outname.out)"
 	else
 		result=Unknown
@@ -150,10 +171,10 @@ call_coqc() {
 # a report line showing how many goals have been proven.
 proved_goals() {
 	# first count how many goals we found
-	goals=`sed -n -e 's/^\[wp.*] Goal \([[:alnum:]_]*\) : .*$/\1/p' $log | sort -u | wc -l`
+	goals=`$gnused -n -e 's/^\[wp.*] Goal \([[:alnum:]_]*\) : .*$/\1/p' $log | sort -u | wc -l`
 
 	# next, extract goal names and count how many were found to be valid
-	valid=`sed -n -e 's/^\[wp.*] Goal \([[:alnum:]_]*\) : Valid$/\1/p' $log | sort -u | wc -l`
+	valid=`$gnused -n -e 's/^\[wp.*] Goal \([[:alnum:]_]*\) : Valid$/\1/p' $log | sort -u | wc -l`
 
 	printf '[wprunner] Proved goals:  %3d /%3d\n' $valid $goals
 }
@@ -162,9 +183,10 @@ proved_goals() {
 # print a line for the statistics
 goals_by_prover() {
 	prover=$1
+	#printf "$prover\n" >&2 
 
 	set +e
-	count=`grep -c -E '^\[wp(runner)?] \['$prover'] .* : Valid$' $log`
+	count=`$gnugrep -c -E '^\[wp(runner)?] \['$prover'] .* : Valid$' $log`
 	set -e
 
 	printf "           %-15s%3d\n" $prover: $count
@@ -216,7 +238,7 @@ then
 	fi
 fi
 
-provers=`get_provers "$@" | sed s/why3:// | sort -f`
+provers=`get_provers "$@" | $gnused s/why3:// | sort -f`
 echo [wprunner] Provers: $provers
 source=$1
 wpdir=${source%.c}.wp
@@ -230,9 +252,15 @@ mkdir $wpdir
 echo [wprunner] Generating WP files | tee -a $log
 echo "WP = $FR" | tee -a $log
 echo "$@" | tee -a $log
-$FR "$@" -wp-out $wpdir -wp-gen $source | tee -a $log
+($gnutime -a -o $log -f "\t%e seconds to generate VC" $FR "$@" -wp-out $wpdir -wp-gen $source) | tee -a $log
+echo | tee -a $log
+
 echo [wprunner] Running provers on $NPROC CPUs | tee -a $log
-generate_tasks | xargs -P $NPROC -n 1 -- $0 -r $wpdir | tee -a $log
+
+tasks=$(mktemp)
+trap "rm -f $tasks" EXIT
+eval generate_tasks > $tasks
+$gnutime -a -o $log -f "\t%e seconds to discharge VC" $gnuxargs -P $NPROC -n 1 -a $tasks -- $0 -r $wpdir | tee -a $log
 
 # print statistics
 proved_goals
@@ -240,3 +268,4 @@ for prover in $provers
 do
 	goals_by_prover $prover
 done
+#printf "printing proved goals done\n" >&2

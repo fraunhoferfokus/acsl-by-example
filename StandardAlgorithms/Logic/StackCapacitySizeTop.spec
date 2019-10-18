@@ -2,7 +2,7 @@
 #ifndef STACKCAPACITYSIZETOP_SPEC_INCLUDED
 #define STACKCAPACITYSIZETOP_SPEC_INCLUDED
 
-#include "stack/stack_definition.h"
+#include "stack.h"
 
 /*@
   logic integer Capacity{L}(Stack* s) = s->capacity;

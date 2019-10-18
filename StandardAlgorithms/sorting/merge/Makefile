@@ -1,14 +1,8 @@
-CMD=\\merge
-SEC=sec:merge
 
-include ../../Makefile.template
+include ../../example.mk
 
-#WP_FLAGS += -wp-prop=sorted
-#WP_FLAGS += -wp-prop="-@lemma"
-#WP_FLAGS += -wp-prop="-@assert"
+show:
+	echo $(TESTOBJ)
 
 WP_FLAGS += -wp-split
-
-TESTOBJ += -lmutating
-
 

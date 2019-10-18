@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include "push_heap.h"
-#include "../is_heap/is_heap.h"
+#include "is_heap.h"
 
 int
 main(int argc, char** argv)

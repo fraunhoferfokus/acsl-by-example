@@ -6,33 +6,30 @@
 
 /*@
   logic integer
-    RemoveSize(value_type* a, integer m, integer n, value_type v) = n - m - Count(a, m, n, v);
-
-  logic integer
-    RemoveSize(value_type* a, integer n, value_type v) = RemoveSize(a, 0, n, v);
+    RemoveSize(value_type* a, integer n, value_type v) = n - Count(a, n, v);
 
   lemma
     RemoveSizeEmpty:
-      \forall value_type *a, v, integer m, n;
-        n <= m  ==>  RemoveSize(a, m, n, v) == n - m;
+      \forall value_type *a, v, integer n;
+        n <= 0  ==>  RemoveSize(a, n, v) == n;
 
   lemma
     RemoveSizeHit:
-      \forall value_type *a, v, integer m, n;
-        m <= n  ==>  a[n] == v  ==> 
-        RemoveSize(a, m, n+1, v) == RemoveSize(a, m, n, v);
+      \forall value_type *a, v, integer n;
+        0 <= n  ==>  a[n] == v  ==> 
+        RemoveSize(a, n+1, v) == RemoveSize(a, n, v);
 
   lemma
     RemoveSizeMiss:
-     \forall value_type *a, v, integer m, n;
-       m <= n  ==>  a[n] != v  ==>
-       RemoveSize(a, m, n+1, v) == RemoveSize(a, m, n, v) + 1;
+     \forall value_type *a, v, integer n;
+       0 <= n  ==>  a[n] != v  ==>
+       RemoveSize(a, n+1, v) == RemoveSize(a, n, v) + 1;
 
   lemma
     RemoveSizeRead{L1,L2}:
-     \forall value_type *a, v, integer m, n;
-       Unchanged{L1,L2}(a, m, n)  ==>
-       RemoveSize{L1}(a, m, n, v) == RemoveSize{L2}(a, m, n, v);
+     \forall value_type *a, v, integer n;
+       Unchanged{L1,L2}(a, n)  ==>
+       RemoveSize{L1}(a, n, v) == RemoveSize{L2}(a, n, v);
 */
 
 #endif /* REMOVESIZE_H_INCLUDED */

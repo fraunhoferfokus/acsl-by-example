@@ -3,7 +3,8 @@
 #include <algorithm>
 #include <iostream>
 #include <cassert>
-#include "heap.h"
+#include "make_heap.h"
+#include "sort_heap.h"
 
 int
 main(int argc, char** argv)

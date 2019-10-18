@@ -1,10 +1,3 @@
-include ../Makefile.group
 
-OBJ :=
+include ../group.mk
 
-clean:: FORCE
-	:
-
-# no library here
-lib:
-	:

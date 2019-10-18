@@ -3,7 +3,6 @@
 #define COPY_H_INCLUDED
 
 #include "EqualRanges.spec"
-#include "Unchanged.spec"
 
 /*@
   requires valid: \valid_read(a + (0..n-1));

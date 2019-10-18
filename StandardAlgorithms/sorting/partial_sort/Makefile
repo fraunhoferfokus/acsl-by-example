@@ -1,9 +1,8 @@
 
-CMD=\\partialsort
-SEC=sec:partial_sort
 
+include ../../example.mk
 
-include ../../Makefile.template
+#WP_FLAGS += -wp-split
 
 #WP_FLAGS += -wp-prop="-@lemma"
 #WP_FLAGS += -wp-prop=@lemma
@@ -19,7 +18,4 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-prop lower
 #WP_FLAGS += -wp-prop upper
 #WP_FLAGS += -wp-prop partition
-
-
-TESTOBJ += -lheap -lmutating
 

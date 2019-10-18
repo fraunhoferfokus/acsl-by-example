@@ -1,6 +1,6 @@
 
 #include "rotate.h"
-#include "../reverse/reverse.h"
+#include "reverse.h"
 
 size_type
 rotate(value_type* a, size_type m, size_type n)

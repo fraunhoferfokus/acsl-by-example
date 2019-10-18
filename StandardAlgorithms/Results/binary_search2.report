@@ -1,4 +1,4 @@
-alg='binary_search2'
+example='binary_search2'
 goal_count='10'
 valid='10'
 valid_qed='8'

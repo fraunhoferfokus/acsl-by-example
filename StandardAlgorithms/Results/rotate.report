@@ -1,4 +1,4 @@
-alg='rotate'
+example='rotate'
 goal_count='24'
 valid='24'
 valid_qed='10'

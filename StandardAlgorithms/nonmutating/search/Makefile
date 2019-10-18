@@ -1,13 +1,8 @@
 
-CMD=\\search
-SEC=sec:search
-
-include ../../Makefile.template
-
+include ../../example.mk
 
 # verify "first"
 #WP_FLAGS += -wp-prop first
-#WP_FLAGS += -wp-prop lucy
 
 # verify all but "first"
 # WP_FLAGS += -wp-prop="-first"
@@ -17,8 +12,4 @@ include ../../Makefile.template
 
 # verify everything but lemmas
 #WP_FLAGS += -wp-prop="-@lemma"
-
-
-
-TESTOBJ += ../libnonmutating.a
 

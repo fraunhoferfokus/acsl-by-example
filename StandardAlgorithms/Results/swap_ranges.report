@@ -1,4 +1,4 @@
-alg='swap_ranges'
+example='swap_ranges'
 goal_count='22'
 valid='22'
 valid_qed='5'

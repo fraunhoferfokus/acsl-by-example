@@ -1,4 +1,4 @@
-alg='fill'
+example='fill'
 goal_count='12'
 valid='12'
 valid_qed='4'

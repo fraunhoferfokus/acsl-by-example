@@ -1,5 +1,7 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_empty.h"
+#include "stack_size.h"
 
 bool
 stack_empty(const Stack* s)

@@ -1,4 +1,4 @@
-alg='swap'
+example='swap'
 goal_count='2'
 valid='2'
 valid_qed='0'

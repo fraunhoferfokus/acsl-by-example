@@ -1,4 +1,4 @@
-alg='inner_product'
+example='inner_product'
 goal_count='3'
 valid='2'
 valid_qed='0'

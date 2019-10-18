@@ -1,4 +1,4 @@
-alg='stack_pop'
+example='stack_pop'
 goal_count='32'
 valid='32'
 valid_qed='20'

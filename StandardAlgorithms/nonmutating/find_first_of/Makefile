@@ -1,8 +1,5 @@
 
-CMD=\\findfirstof
-SEC=sec:findfirstof
-
-include ../../Makefile.template
+include ../../example.mk
 
 TESTOBJ += ../libnonmutating.a
 

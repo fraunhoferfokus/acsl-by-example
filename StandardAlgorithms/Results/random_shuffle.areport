@@ -1,4 +1,4 @@
-alg='random_shuffle'
+example='random_shuffle'
 goal_count='59'
 valid='53'
 valid_qed='0'

@@ -1,7 +1,7 @@
 
 #include "selection_sort.h"
-#include "../../maxmin/min_element/min_element.h"
-#include "../../mutating/swap/swap.h"
+#include "min_element.h"
+#include "swap.h"
 #include "LowerBound.spec"
 #include "ShiftLemmas.spec"
 #include "SwapImpliesMultisetUnchanged.spec"

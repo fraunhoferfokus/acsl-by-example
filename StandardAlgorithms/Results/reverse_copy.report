@@ -1,4 +1,4 @@
-alg='reverse_copy'
+example='reverse_copy'
 goal_count='17'
 valid='17'
 valid_qed='4'

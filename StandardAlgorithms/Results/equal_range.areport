@@ -1,4 +1,4 @@
-alg='equal_range'
+example='equal_range'
 goal_count='13'
 valid='12'
 valid_qed='0'

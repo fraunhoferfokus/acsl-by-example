@@ -1,6 +1,6 @@
 
 #include "rotate_copy.h"
-#include "../copy/copy.h"
+#include "copy.h"
 
 void
 rotate_copy(const value_type* a, size_type m, size_type n, value_type* b)

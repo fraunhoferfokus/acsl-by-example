@@ -1,10 +1,7 @@
 
-CMD=\\stackfull
-SEC=sec:stackfull
 
-include ../../Makefile.template
-
-TESTOBJ += -lstack
+include ../../example.mk
 
 clean::
 	$(RM) check_full
+

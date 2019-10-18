@@ -13,6 +13,8 @@
 
   ensures result:    0 <= \result <= n;
   ensures unchanged: Unchanged{Old, Here}(b, \result, n);
+  ensures unchanged: Unchanged{Old, Here}(a, n);
+
 */
 size_type
 unique_copy2(const value_type* a, size_type n, value_type* b);

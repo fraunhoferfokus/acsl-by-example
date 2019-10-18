@@ -1,4 +1,4 @@
-alg='find_first_of'
+example='find_first_of'
 goal_count='4'
 valid='4'
 valid_qed='0'

@@ -1,4 +1,4 @@
-alg='axiom_push_of_pop_top'
+example='axiom_push_of_pop_top'
 goal_count='15'
 valid='15'
 valid_qed='9'

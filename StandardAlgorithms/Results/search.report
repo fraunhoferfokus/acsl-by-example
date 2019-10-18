@@ -1,4 +1,4 @@
-alg='search'
+example='search'
 goal_count='30'
 valid='30'
 valid_qed='18'

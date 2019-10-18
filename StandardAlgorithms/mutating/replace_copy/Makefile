@@ -1,6 +1,3 @@
 
-CMD=\\replacecopy
-SEC=sec:replacecopy
-
-include ../../Makefile.template
+include ../../example.mk
 

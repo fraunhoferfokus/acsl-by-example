@@ -1,13 +1,13 @@
 
-#include "../partial_sum/partial_sum.h"
-#include "../adjacent_difference/adjacent_difference.h"
+#include "partial_sum.h"
+#include "adjacent_difference.h"
 #include "UnchangedTransitive.spec"
 #include "AdjacentDifferenceInv.spec"
 
 /*@
   requires valid:     \valid(a + (0..n-1));
   requires valid:     \valid(b + (0..n-1));
-  requires separated: \separated(a + (0..n-1), b + (0..n-1));
+  requires sep:       \separated(a + (0..n-1), b + (0..n-1));
   requires bounds:    AdjacentDifferenceBounds(a, n+1);
 
   assigns a[0..n-1], b[0..n-1];

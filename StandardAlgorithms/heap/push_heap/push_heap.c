@@ -1,6 +1,6 @@
 
 #include "push_heap.h"
-#include "../is_heap/heap_aux.h"
+#include "heap_parent.h"
 #include "CountLemmas.spec"
 #include "MultisetAdd.spec"
 #include "MultisetAddDistinct.spec"

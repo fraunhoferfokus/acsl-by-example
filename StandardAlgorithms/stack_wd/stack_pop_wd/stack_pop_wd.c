@@ -1,11 +1,12 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_pop.h"
 
 /*@
   requires valid:     \valid(s) && Invariant(s);
   requires valid:     \valid(t) && Invariant(t);
   requires equal:     Equal{Here,Here}(s, t);
-  requires separated: Separated(s, t);
+  requires sep:       Separated(s, t);
 
   assigns s->size;
   assigns t->size;

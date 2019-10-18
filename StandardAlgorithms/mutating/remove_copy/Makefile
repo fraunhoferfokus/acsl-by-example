@@ -1,8 +1,5 @@
 
-CMD=\\removecopy
-SEC=sec:removecopy
-
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop RetainAllButOneMiss
 #WP_FLAGS += -wp-prop retain

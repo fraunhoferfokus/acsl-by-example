@@ -11,7 +11,7 @@ max_element(const value_type* a, size_type n)
       loop invariant bound:  0 <= i <= n;
       loop invariant max:    0 <= max <  n;
       loop invariant upper:  \forall integer k; 0 <= k < i   ==> a[k] <= a[max];
-      loop invariant strict: \forall integer k; 0 <= k < max ==> a[k] <  a[max];
+      loop invariant first:  \forall integer k; 0 <= k < max ==> a[k] <  a[max];
       loop assigns max, i;
       loop variant n-i;
     */

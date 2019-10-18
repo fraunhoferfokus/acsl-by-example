@@ -1,4 +1,4 @@
-alg='min_element'
+example='min_element'
 goal_count='24'
 valid='24'
 valid_qed='12'

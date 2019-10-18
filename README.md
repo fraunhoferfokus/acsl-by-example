@@ -14,15 +14,15 @@ The directory
 contains the complete C source code including ACSL annotations of the examples.
 
 This version of *ACSL by Example* is intended for
-Frama-C 19.0 and relies among others on the following sofware packages.
+Frama-C 19.1 and relies among others on the following sofware packages.
 
 *Package* | *Version*
 --------- | ---------
  Why3     | 1.2.0
- Alt-Ergo | 2.0.0
+ Alt-Ergo | 2.3.0
  CVC4     | 1.6
  CVC3     | 2.4.1
- Z3       | 4.8.4
+ Z3       | 4.8.6
  E Prover | 2.3
  Coq      | 8.9.1
 

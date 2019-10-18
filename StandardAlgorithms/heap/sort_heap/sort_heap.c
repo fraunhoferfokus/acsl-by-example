@@ -1,6 +1,6 @@
 
 #include "sort_heap.h"
-#include "../pop_heap/pop_heap.h"
+#include "pop_heap.h"
 #include "LowerBound.spec"
 #include "SortedUpperBound.spec"
 #include "Unchanged.spec"

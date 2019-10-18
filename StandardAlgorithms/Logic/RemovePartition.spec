@@ -10,57 +10,50 @@
   axiomatic RemovePartitionAxiomatic
   {
     logic integer
-      RemovePartition(value_type* a, integer m, integer n,
-                      value_type  v, integer p) reads a[m..n-1];
+      RemovePartition(value_type* a,  integer n,
+                      value_type  v, integer p) reads a[0..n-1];
 
     axiom RemovePartitionEmpty:
-      \forall value_type *a, v, integer m, n, p;
-        n <= m ==> RemovePartition(a, m, n, v, p) == m;
+      \forall value_type *a, v, integer n, p;
+        n <= 0 ==> RemovePartition(a, n, v, p) == 0;
 
     axiom RemovePartitionLeft:
-      \forall value_type *a, v, integer m, n, p;
-        p < m < n ==> RemovePartition(a, m, n, v, p) == m;
+      \forall value_type *a, v, integer n, p;
+        p < 0 < n ==> RemovePartition(a, n, v, p) == 0;
 
     axiom RemovePartitionRight:
-      \forall value_type *a, v, integer m, n, p;
-        m < n ==> RemoveSize(a, m, n, v) <= p ==>
-       	  RemovePartition(a, m, n, v, p) == n;
+      \forall value_type *a, v, integer n, p;
+        0 < n ==> RemoveSize(a, n, v) <= p ==> RemovePartition(a, n, v, p) == n;
 
     axiom RemovePartitionMonotone:
-      \forall value_type *a, v, integer m, n, p, q;
-        m <= p < q <= RemoveSize(a, m, n, v) ==>
-          m <= RemovePartition(a, m, n, v, p) < RemovePartition(a, m, n, v, q) < n;
+      \forall value_type *a, v, integer n, p, q;
+        0 <= p < q <= RemoveSize(a, n, v) ==>
+          0 <= RemovePartition(a, n, v, p) < RemovePartition(a, n, v, q) < n;
     
     axiom RemovePartitionSegment:
-      \forall value_type *a, v, integer i, m, n, p;
-         m <= p < RemoveSize(a, m, n, v) ==>
-           RemovePartition(a, m, n, v, p) < i < RemovePartition(a, m, n, v, p+1)
-	   ==> a[i] == v;
+      \forall value_type *a, v, integer i, n, p;
+         0 <= p < RemoveSize(a, n, v) ==>
+           RemovePartition(a, n, v, p) < i < RemovePartition(a, n, v, p+1)
+           ==> a[i] == v;
 
     axiom RemovePartitionInitial:
       \forall value_type *a, v, integer i, m, n, p;
-        m <= i < RemovePartition(a, m, n, v, m) ==> a[i] == v;
+        0 <= i < RemovePartition(a, n, v, m) ==> a[i] == v;
 
     axiom RemovePartitionNotValue:
-      \forall value_type *a, v, integer m, n, p;
-        m <= p < RemoveSize(a, m, n, v) ==>
-          a[RemovePartition(a, m, n, v, p)] != v;
+      \forall value_type *a, v, integer n, p;
+        0 <= p < RemoveSize(a, n, v) ==> a[RemovePartition(a, n, v, p)] != v;
 
     axiom RemovePartitionEqual:
-      \forall value_type *a, v, integer m, n1, n2, p;
-        m <= n1 < n2 ==>
-	  m <= p < RemoveSize(a, n1, v) ==>
-	    RemovePartition(a, m, n1, v, p) == RemovePartition(a, m, n2, v, p);
+      \forall value_type *a, v, integer n1, n2, p;
+        0 <= n1 < n2  ==>  0 <= p  < RemoveSize(a, n1, v)  ==>
+        RemovePartition(a, n1, v, p) == RemovePartition(a, n2, v, p);
 
     axiom RemovePartitionRead{K,L}:
-      \forall value_type *a, v, integer m, n, p;
-        Unchanged{K,L}(a, m, n) ==>
-          RemovePartition{K}(a, m, n, v, p) == RemovePartition{L}(a, m, n, v, p);
-  }	  
-
-  logic integer
-    RemovePartition(value_type* a, integer n, value_type  v, integer p) 
-      = RemovePartition(a, 0, n, v, p);
+      \forall value_type *a, v, integer n, p;
+        Unchanged{K,L}(a, n) ==>
+          RemovePartition{K}(a, n, v, p) == RemovePartition{L}(a, n, v, p);
+  }  
 */
 
 #endif /* REMOVEPARTITION_H_INCLUDED */

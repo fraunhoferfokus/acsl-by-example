@@ -1,5 +1,6 @@
+
 #include "merge.h"
-#include "../../mutating/copy/copy.h"
+#include "copy.h"
 
 void
 merge(const value_type* a, size_type n,
@@ -18,9 +19,9 @@ merge(const value_type* a, size_type n,
       loop invariant 0 <= j <= m;
       loop invariant x == i + j;
       loop invariant 0 <= x <= n + m - 1;
-      loop invariant ordnung: \forall integer k; 0 <= k < x && i < n ==>
+      loop invariant order:  \forall integer k; 0 <= k < x && i < n ==>
                                  result[k] <= a[i];
-      loop invariant ordnung: \forall integer k; 0 <= k < x && j < m ==>
+      loop invariant order:  \forall integer k; 0 <= k < x && j < m ==>
                                  result[k] <= b[j];
       loop invariant sorted: WeaklySorted(result, x);
       loop assigns i, j, x, result[0 .. n+m-1];

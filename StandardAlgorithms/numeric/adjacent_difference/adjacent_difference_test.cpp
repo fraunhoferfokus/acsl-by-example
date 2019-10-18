@@ -3,7 +3,6 @@
 #include <numeric>
 #include <iostream>
 #include <cassert>
-#include "numeric.h"
 #include "adjacent_difference.h"
 
 int

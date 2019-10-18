@@ -1,5 +1,5 @@
 
-#include "../swap/swap.h"
+#include "swap.h"
 #include "random_shuffle.h"
 #include "CountLemmas.spec"
 

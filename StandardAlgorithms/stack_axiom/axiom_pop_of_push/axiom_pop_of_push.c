@@ -1,5 +1,7 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_pop.h"
+#include "stack_push.h"
 
 /*@
   requires  valid:    \valid(s) && Invariant(s);
@@ -8,7 +10,7 @@
   assigns   s->size;
   assigns   s->obj[s->size];
 
-  ensures   equal:    Equal{Pre,Here}(s, s);
+  ensures   equal:    Equal{Old,Here}(s, s);
 */
 void
 axiom_pop_of_push(Stack* s, value_type v)

@@ -2,7 +2,7 @@
 #ifndef STACKEMPTYFULL_SPEC_INCLUDED
 #define STACKEMPTYFULL_SPEC_INCLUDED
 
-#include "stack/stack_definition.h"
+#include "StackCapacitySizeTop.spec"
 
 /*@
   predicate

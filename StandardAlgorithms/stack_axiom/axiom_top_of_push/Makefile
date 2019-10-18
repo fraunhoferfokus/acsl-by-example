@@ -1,8 +1,3 @@
 
-CMD=\\axiomtopofpush
-SEC=sec:axiomtopofpush
-
-include ../../Makefile.template
-
-TESTOBJ += -lstack
+include ../../example.mk
 

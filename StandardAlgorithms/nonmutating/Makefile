@@ -1,12 +1,6 @@
 
-include ../Makefile.group
+include ../group.mk
 
-clean:: FORCE
-	$(RM) libnonmutating.a
-
-lib: libnonmutating.a
-
-libnonmutating.a: obj $(OBJ)
-	@ar cr  $@ $(OBJ)
-	@ranlib  $@
+#show:
+	#echo $(LIB)
 

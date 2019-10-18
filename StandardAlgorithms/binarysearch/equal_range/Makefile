@@ -1,8 +1,5 @@
 
-CMD=\\equalrange
-SEC=sec:equalrange
+include ../../example.mk
 
-include ../../Makefile.template
 #WP_FLAGS+=-wp-prop right
-TESTOBJ += -lbinarysearch
 

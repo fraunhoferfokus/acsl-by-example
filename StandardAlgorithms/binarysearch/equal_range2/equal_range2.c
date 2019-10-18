@@ -1,7 +1,8 @@
 
 #include "equal_range2.h"
-#include "../lower_bound/lower_bound.h"
-#include "../upper_bound/upper_bound.h"
+#include "lower_bound.h"
+#include "upper_bound.h"
+#include "make_pair.h"
 #include "ShiftLemmas.spec"
 
 size_type_pair

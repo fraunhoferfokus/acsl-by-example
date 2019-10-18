@@ -1,6 +1,3 @@
 
-CMD=\\maxelement
-SEC=sec:maxelement
-
-include ../../Makefile.template
+include ../../example.mk
 

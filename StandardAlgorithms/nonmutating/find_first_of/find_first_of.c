@@ -1,6 +1,6 @@
 
 #include "find_first_of.h"
-#include "../find2/find2.h"
+#include "find2.h"
 
 size_type
 find_first_of (const value_type* a, size_type m,

@@ -1,9 +1,7 @@
 
-CMD=\\pushheap
-SEC=sec:push_heap
+WP_TIMEOUT=15
 
-
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop="@lemma"
 #WP_FLAGS += -wp-prop="-@lemma"
@@ -25,6 +23,4 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-prop rte
 #WP_FLAGS += -wp-prop @assigns
 #WP_FLAGS += -wp-prop="-@invariant"
-
-TESTOBJ += -lheap
 

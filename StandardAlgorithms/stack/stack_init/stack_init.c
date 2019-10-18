@@ -1,5 +1,6 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_init.h"
 
 void
 stack_init(Stack* s, value_type* storage, size_type capacity)

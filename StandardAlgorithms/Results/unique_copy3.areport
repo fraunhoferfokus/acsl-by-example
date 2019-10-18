@@ -1,4 +1,4 @@
-alg='unique_copy3'
+example='unique_copy3'
 goal_count='12'
 valid='12'
 valid_qed='0'

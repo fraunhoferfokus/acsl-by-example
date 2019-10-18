@@ -1,11 +1,5 @@
 
-CMD=\\reverse
-SEC=sec:reverse
-
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop=right
-
-
-TESTOBJ += -lmutating
 

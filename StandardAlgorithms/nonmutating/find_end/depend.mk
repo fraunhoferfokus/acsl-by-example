@@ -1,0 +1,3 @@
+
+DEPENDENCIES += nonmutating/equal
+

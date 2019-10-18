@@ -1,4 +1,4 @@
-alg='mismatch'
+example='mismatch'
 goal_count='20'
 valid='20'
 valid_qed='10'

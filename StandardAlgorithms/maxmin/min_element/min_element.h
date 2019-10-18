@@ -16,9 +16,9 @@
 
   behavior not_empty:
     assumes 0 < n;
-    ensures result:  0 <= \result < n;
-    ensures min:     MinElement(a, n, \result);
-    ensures strict:  StrictLowerBound(a, \result, a[\result]);
+    ensures result: 0 <= \result < n;
+    ensures min:    MinElement(a, n, \result);
+    ensures first:  StrictLowerBound(a, \result, a[\result]);
 
   complete behaviors;
   disjoint behaviors;

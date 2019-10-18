@@ -1,10 +1,7 @@
 
-CMD=\\searchn
-SEC=sec:search_n
+include ../../example.mk
 
-export WP_TIMEOUT=20
-
-include ../../Makefile.template
-
-TESTOBJ += ../libnonmutating.a
+WP_FLAGS += -wp-split
+#WP_FLAGS += -wp-prop="-@lemma"
+#WP_FLAGS += -wp-prop match
 

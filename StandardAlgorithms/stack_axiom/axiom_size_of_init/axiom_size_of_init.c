@@ -1,11 +1,13 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_init.h"
+#include "stack_size.h"
 
 /*@
   requires valid:     \valid(s);
   requires size:      0 < n;
   requires valid:     \valid(a + (0..n-1));
-  requires separated: \separated(s, a + (0..n-1));
+  requires sep:       \separated(s, a + (0..n-1));
 
   assigns s->obj, s->capacity, s->size;
 

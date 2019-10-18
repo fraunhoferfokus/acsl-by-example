@@ -13,9 +13,10 @@
 
   assigns a[0..n-1];
 
-  ensures size:      \result == RemoveSize{Pre}(a, n, v);
+  ensures size:      \result == RemoveSize{Old}(a, n, v);
   ensures bound:     0 <= \result <= n;
   ensures remove:    Remove{Old, Here}(a, n, v);
+  ensures discard:   !HasValue{Here}(a, \result, v);
   ensures unchanged: Unchanged{Old, Here}(a, \result, n);
 */
 size_type

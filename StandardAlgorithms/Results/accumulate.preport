@@ -1,4 +1,4 @@
-alg='accumulate'
+example='accumulate'
 goal_count='19'
 valid='14'
 valid_qed='6'

@@ -3,6 +3,7 @@
     requires sep: \separated(a + (0 .. n - 1), b + (0 .. n - 1));
     ensures result: 0 <= \result <= \old(n);
     ensures unchanged: Unchanged{Old, Here}(\old(b), \result, \old(n));
+    ensures unchanged: Unchanged{Old, Here}(\old(a), \old(n));
     assigns *(b + (0 .. n - 1));
  */
 size_type

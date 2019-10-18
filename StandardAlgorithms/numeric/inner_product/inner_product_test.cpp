@@ -3,7 +3,7 @@
 #include <numeric>
 #include <iostream>
 #include <cassert>
-#include <numeric.h>
+#include "inner_product.h"
 
 int
 main(int argc, char** argv)

@@ -1,8 +1,5 @@
 
-CMD=\\remove
-SEC=sec:remove
-
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop RetainAllButOneMiss
 #WP_FLAGS += -wp-prop retain
@@ -12,5 +9,4 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-bhv not_equal
 #WP_FLAGS += -wp-prop remove
 #WP_FLAGS += -wp-prop @lemma
-
 

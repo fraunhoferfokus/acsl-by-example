@@ -5,29 +5,29 @@
 #include "HasSubRange.spec"
 
 /*@
-  requires \valid_read(a + (0..m-1));
-  requires \valid_read(b + (0..n-1));
+  requires \valid_read(a + (0..n-1));
+  requires \valid_read(b + (0..p-1));
 
   assigns  \nothing;
 
-  ensures  result: 0 <= \result <= m;
+  ensures  result: 0 <= \result <= n;
 
   behavior has_match:
-    assumes HasSubRange(a, 0, m, b, n);
-    ensures bound:  0 <= \result <= m-n;
-    ensures result: EqualRanges{Here,Here}(a+\result, n, b);
-    ensures first:  !HasSubRange(a, 0, \result+n-1, b, n);
+    assumes HasSubRange(a, n, b, p);
+    ensures bound:  0 <= \result <= n-p;
+    ensures result: EqualRanges{Here,Here}(a+\result, p, b);
+    ensures first:  !HasSubRange(a, \result+p-1, b, p);
 
   behavior no_match:
-    assumes !HasSubRange(a, 0, m, b, n);
-    ensures result: \result == m;
+    assumes !HasSubRange(a, n, b, p);
+    ensures result: \result == n;
 
   complete behaviors;
   disjoint behaviors;
 */
 size_type
-search(const value_type* a, size_type m,
-       const value_type* b, size_type n);
+search(const value_type* a, size_type n,
+       const value_type* b, size_type p);
 
 #endif /* SEARCH_H_INCLUDED */
 

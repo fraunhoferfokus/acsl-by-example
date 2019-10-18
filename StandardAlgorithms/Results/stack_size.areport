@@ -1,4 +1,4 @@
-alg='stack_size'
+example='stack_size'
 goal_count='5'
 valid='5'
 valid_qed='0'

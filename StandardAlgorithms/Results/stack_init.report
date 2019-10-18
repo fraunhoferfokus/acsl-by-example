@@ -1,4 +1,4 @@
-alg='stack_init'
+example='stack_init'
 goal_count='14'
 valid='14'
 valid_qed='4'

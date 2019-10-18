@@ -1,4 +1,4 @@
-alg='reverse'
+example='reverse'
 goal_count='13'
 valid='13'
 valid_qed='0'

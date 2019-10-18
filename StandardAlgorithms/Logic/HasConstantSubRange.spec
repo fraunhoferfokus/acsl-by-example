@@ -6,14 +6,17 @@
 
 /*@
   predicate
-    HasConstantSubRange{A}(value_type* a, integer m, integer n, value_type b) =
-      \exists integer i; 0 <= i <= m-n && ConstantRange(a, i, i+n, b);
+    HasConstantSubRange{L}(value_type* a, integer m, integer n, value_type v, integer p) =
+      \exists integer k; m <= k <= n-p && ConstantRange(a, k, k+p, v);
 
+  predicate
+    HasConstantSubRange{L}(value_type* a, integer n, value_type v, integer p) =
+      HasConstantSubRange(a, 0, n, v, p);
 
   lemma
     HasConstantSubRangeSizes:
-      \forall value_type *a, v, integer m, n;
-        HasConstantSubRange(a, m, n, v) ==> n <= m;
+      \forall value_type *a, v, integer n, p;
+        HasConstantSubRange(a, n, v, p) ==> p <= n;
 */
 
 #endif /*  HASCONSTANTSUBRANGE_SPEC_INCLUDED */

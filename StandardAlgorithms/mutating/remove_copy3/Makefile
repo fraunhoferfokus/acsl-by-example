@@ -1,8 +1,8 @@
 
-CMD=\\removecopy\(3\)
+CMD=\\removecopythree
 SEC=sec:removecopy3
 
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop  RemovePartitionUpperBound
 #WP_FLAGS += -wp-prop  size

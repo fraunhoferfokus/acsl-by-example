@@ -2,6 +2,7 @@
 #ifndef MULTISETADDDISTINCT_SPEC_INCLUDED
 #define MULTISETADDDISTINCT_SPEC_INCLUDED
 
+#include "MultisetUnchanged.spec"
 #include "MultisetAdd.spec"
 
 /*@

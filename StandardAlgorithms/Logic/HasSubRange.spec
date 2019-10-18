@@ -6,17 +6,17 @@
 
 /*@
   predicate
-    HasSubRange{A}(value_type* a, integer f, integer l, value_type* b, integer n) =
-      \exists integer k; (f <= k <= l-n) && EqualRanges{A,A}(a+k, n, b);
+    HasSubRange{L}(value_type* a, integer m, integer n, value_type* b, integer p) =
+      \exists integer k; (m <= k <= n-p) && EqualRanges{L,L}(a+k, p, b);
 
   predicate
-    HasSubRange{A}(value_type* a, integer m, value_type* b, integer n) =
-      HasSubRange{A}(a, 0, m, b, n);
+    HasSubRange{L}(value_type* a, integer n, value_type* b, integer p) =
+      HasSubRange{L}(a, 0, n, b, p);
 
   lemma
     HasSubRangeSizes:
-      \forall value_type *a, *b, integer f, t, n;
-        HasSubRange(a, f, t, b, n) ==> n <= t-f;
+      \forall value_type *a, *b, integer m, n, p;
+        HasSubRange(a, m, n, b, p) ==> p <= n-m;
 */
 
 #endif /*  HASSUBRANGE_SPEC_INCLUDED */

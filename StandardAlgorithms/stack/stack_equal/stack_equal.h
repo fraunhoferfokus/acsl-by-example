@@ -2,7 +2,7 @@
 #ifndef STACK_EQUAL_H_INCLUDED
 #define STACK_EQUAL_H_INCLUDED
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
 
 /*@
     requires valid: \valid(s) && Invariant(s);

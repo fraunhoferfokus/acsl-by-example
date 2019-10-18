@@ -1,4 +1,4 @@
-alg='axiom_size_of_init'
+example='axiom_size_of_init'
 goal_count='15'
 valid='15'
 valid_qed='11'

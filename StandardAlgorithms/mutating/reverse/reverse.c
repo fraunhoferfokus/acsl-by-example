@@ -1,7 +1,7 @@
 
 #include "reverse.h"
 #include "Unchanged.spec"
-#include "../swap/swap.h"
+#include "swap.h"
 
 void
 reverse(value_type* a, size_type n)

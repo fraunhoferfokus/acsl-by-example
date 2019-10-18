@@ -1,5 +1,7 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_pop.h"
+#include "stack_empty.h"
 
 void
 stack_pop(Stack* s)

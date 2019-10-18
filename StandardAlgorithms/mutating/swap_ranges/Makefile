@@ -1,10 +1,5 @@
 
-CMD=\\swapranges
-SEC=sec:swapranges
-
-include ../../Makefile.template
-
-TESTOBJ += -lmutating
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop equal_a,@lemma
 

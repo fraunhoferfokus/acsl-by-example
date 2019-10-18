@@ -1,5 +1,3 @@
 
-CMD=\\swap
-SEC=sec:swap
+include ../../example.mk
 
-include ../../Makefile.template

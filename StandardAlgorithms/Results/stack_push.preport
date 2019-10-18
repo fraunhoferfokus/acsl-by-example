@@ -1,4 +1,4 @@
-alg='stack_push'
+example='stack_push'
 goal_count='44'
 valid='41'
 valid_qed='28'

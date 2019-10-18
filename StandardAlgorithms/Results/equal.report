@@ -1,4 +1,4 @@
-alg='equal'
+example='equal'
 goal_count='7'
 valid='7'
 valid_qed='6'

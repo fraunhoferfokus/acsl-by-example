@@ -1,4 +1,4 @@
-alg='axiom_top_of_push'
+example='axiom_top_of_push'
 goal_count='11'
 valid='8'
 valid_qed='8'

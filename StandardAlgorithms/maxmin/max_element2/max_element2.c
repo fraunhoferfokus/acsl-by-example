@@ -11,7 +11,7 @@ max_element2(const value_type* a, size_type n)
       loop invariant bound:   0 <= i <= n;
       loop invariant max:     0 <= max < n;
       loop invariant upper:   UpperBound(a, i, a[max]);
-      loop invariant strict:  StrictUpperBound(a, max, a[max]);
+      loop invariant first:   StrictUpperBound(a, max, a[max]);
       loop assigns max, i;
       loop variant n-i;
     */

@@ -1,8 +1,5 @@
 
-CMD=\\replace
-SEC=sec:replace
-
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop replace
 

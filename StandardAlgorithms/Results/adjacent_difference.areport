@@ -1,4 +1,4 @@
-alg='adjacent_difference'
+example='adjacent_difference'
 goal_count='11'
 valid='11'
 valid_qed='0'

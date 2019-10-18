@@ -1,4 +1,4 @@
-alg='count2'
+example='count2'
 goal_count='31'
 valid='31'
 valid_qed='7'

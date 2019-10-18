@@ -1,4 +1,4 @@
-alg='rotate_copy'
+example='rotate_copy'
 goal_count='5'
 valid='5'
 valid_qed='0'

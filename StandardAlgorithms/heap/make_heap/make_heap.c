@@ -1,6 +1,6 @@
 
 #include "make_heap.h"
-#include "../push_heap/push_heap.h"
+#include "push_heap.h"
 #include "Unchanged.spec"
 
 void

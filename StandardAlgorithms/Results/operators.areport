@@ -1,4 +1,4 @@
-alg='operators'
+example='operators'
 goal_count='6'
 valid='6'
 valid_qed='0'

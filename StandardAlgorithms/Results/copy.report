@@ -1,4 +1,4 @@
-alg='copy'
+example='copy'
 goal_count='15'
 valid='15'
 valid_qed='4'

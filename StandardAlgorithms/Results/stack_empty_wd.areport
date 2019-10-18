@@ -1,4 +1,4 @@
-alg='stack_empty_wd'
+example='stack_empty_wd'
 goal_count='5'
 valid='5'
 valid_qed='0'

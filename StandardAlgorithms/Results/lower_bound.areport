@@ -1,4 +1,4 @@
-alg='lower_bound'
+example='lower_bound'
 goal_count='13'
 valid='13'
 valid_qed='0'

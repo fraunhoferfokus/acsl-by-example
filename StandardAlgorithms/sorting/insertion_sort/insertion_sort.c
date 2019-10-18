@@ -1,7 +1,7 @@
 
 #include "insertion_sort.h"
-#include "../../binarysearch/upper_bound/upper_bound.h"
-#include "../../mutating/rotate/rotate.h"
+#include "upper_bound.h"
+#include "rotate.h"
 #include "LowerBound.spec"
 #include "MultisetUnchangedLemmas.spec"
 #include "EqualRangesPreservesSorted.spec"

@@ -1,6 +1,6 @@
 
 #include "selection_sort.h"
-#include "../../maxmin/min_element/min_element.h"
+#include "min_element.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>

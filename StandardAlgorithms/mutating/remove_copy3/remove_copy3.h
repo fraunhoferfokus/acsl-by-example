@@ -16,7 +16,8 @@
   ensures size:      \result == RemoveSize{Old}(a, n, v);
   ensures bound:     0 <= \result <= n;
   ensures remove:    Remove{Old,Here}(a, n, b, v);
-  ensures unchanged: Unchanged{Old, Here}(a, \result-1, n);
+  ensures discard:   !HasValue(b, \result, v);
+  ensures unchanged: Unchanged{Old, Here}(a, n);
   ensures unchanged: Unchanged{Old, Here}(b, \result,   n);
 */
 size_type

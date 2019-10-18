@@ -2,5 +2,5 @@
 CMD=\\cnttwo
 SEC=sec:count2
 
-include ../../Makefile.template
+include ../../example.mk
 

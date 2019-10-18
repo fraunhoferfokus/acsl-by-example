@@ -1,8 +1,3 @@
 
-CMD=\\stackpopwd
-SEC=sec:stackpopwd
-
-include ../../Makefile.template
-
-TESTOBJ += -lstack
+include ../../example.mk
 

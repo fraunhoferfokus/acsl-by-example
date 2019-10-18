@@ -1,3 +1,6 @@
+heap_parent
+heap_child_max
+is_heap_until
 is_heap
 push_heap
 pop_heap

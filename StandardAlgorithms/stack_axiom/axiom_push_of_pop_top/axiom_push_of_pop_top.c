@@ -1,5 +1,8 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_pop.h"
+#include "stack_push.h"
+#include "stack_top.h"
 
 /*@
   requires  valid:      \valid(s) && Invariant(s);

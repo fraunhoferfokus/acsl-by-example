@@ -5,27 +5,29 @@
 #include "HasConstantSubRange.spec"
 
 /*@
-  requires valid: \valid_read(a + (0..m-1));
+  requires valid: \valid_read(a + (0..n-1));
 
   assigns  \nothing;
 
-  ensures  result:  0 <= \result <= m;
+  ensures  result:  0 <= \result <= n;
 
   behavior has_match:
-    assumes HasConstantSubRange(a, m, n, b);
-    ensures result:  0 <= \result <= m-n;
-    ensures match:   ConstantRange(a, \result, \result+n, b);
-    ensures first:   !HasConstantSubRange(a, \result+n-1, n, b);
+    assumes HasConstantSubRange(a, n, v, p);
+    assigns \nothing;
+    ensures result:  0 <= \result <= n-p;
+    ensures match:   ConstantRange(a, \result, \result+p, v);
+    ensures first:   !HasConstantSubRange(a, \result+p-1, v, p);
 
   behavior no_match:
-    assumes !HasConstantSubRange(a, m, n, b);
-    ensures result:  \result == m;
+    assumes !HasConstantSubRange(a, n, v, p);
+    assigns \nothing;
+    ensures result:  \result == n;
 
   complete behaviors;
   disjoint behaviors;
 */
 size_type
-search_n(const value_type* a, size_type m, size_type n, value_type b);
+search_n(const value_type* a, size_type n, value_type v, size_type p);
 
 #endif /* SEARCH_N_H_INCLUDED */
 

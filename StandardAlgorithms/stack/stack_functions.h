@@ -2,7 +2,7 @@
 #ifndef STACK_FUNCTIONS_H_INCLUDED
 #define STACK_FUNCTIONS_H_INCLUDED
 
-#include "stack_definition.h"
+#include "stack.h"
 
 void        stack_init(Stack* s, value_type* a, size_type n);
 

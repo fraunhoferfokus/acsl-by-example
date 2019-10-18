@@ -1,4 +1,4 @@
-alg='max_seq'
+example='max_seq'
 goal_count='8'
 valid='8'
 valid_qed='5'

@@ -1,4 +1,4 @@
-alg='stack_full'
+example='stack_full'
 goal_count='11'
 valid='8'
 valid_qed='5'

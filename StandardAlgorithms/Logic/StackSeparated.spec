@@ -2,7 +2,7 @@
 #ifndef STACKSEPARATED_SPEC_INCLUDED
 #define STACKSEPARATED_SPEC_INCLUDED
 
-#include "stack/stack_definition.h"
+#include "stack.h"
 
 /*@
    predicate

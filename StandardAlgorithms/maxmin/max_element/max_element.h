@@ -17,7 +17,7 @@
     assumes 0 < n;
     ensures result:  0 <= \result < n;
     ensures upper:   \forall integer i; 0 <= i < n       ==> a[i] <= a[\result];
-    ensures strict:  \forall integer i; 0 <= i < \result ==> a[i] <  a[\result];
+    ensures first:   \forall integer i; 0 <= i < \result ==> a[i] <  a[\result];
 
   complete behaviors;
   disjoint behaviors;

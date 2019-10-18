@@ -1,8 +1,7 @@
 
 CMD=\\ALGrotate
-SEC=sec:rotate
 
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop left
 #WP_FLAGS += -wp-prop middle
@@ -11,6 +10,4 @@ include ../../Makefile.template
 #WP_FLAGS += -wp-prop="@lemma"
 
 #WP_FLAGS += -wp-fct rotate
-
-TESTOBJ += -lmutating
 

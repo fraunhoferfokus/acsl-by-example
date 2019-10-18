@@ -2,6 +2,19 @@
 
 set -e
 
+gnugrep=/bin/grep
+gnused=/bin/sed
+
+case $OSTYPE in
+        darwin*)
+                #printf "running on macOS\n" >&2
+                gnugrep=/usr/local/bin/ggrep
+                gnused=/usr/local/bin/gsed
+                ;;
+esac
+
+
+
 # adjust the timeout for n cores by increasing it by 20% for each core
 # after the first one.  This compensates for the runtime lost through
 # the shared memory bandwidth.
@@ -20,7 +33,7 @@ adjustTimeout()
 # $2: Pattern to look for
 countValid()
 {
-    grep "\\[$2\\].*Valid$" $1 | cut -d ' ' -f4 | sort -u | wc -l | tr -d ' \t'
+    $gnugrep "\\[$2\\].*Valid$" $1 | cut -d ' ' -f4 | sort -u | wc -l | tr -d ' \t'
 }
 
 # depending on whether TRUST_WP is defined, either collect counts
@@ -33,13 +46,14 @@ countValid()
 # $3: tutorial section
 extract_data_Wp()
 {
+    #printf "enter extract_data_Wp\n" >&2
     if [ $# -ne 3 ]
     then
         echo "please provide exactly three arguments" >&2
         exit 1
     fi
 
-    alg=$1
+    example=$1
     cmd=$2
     sec=$3
 
@@ -49,6 +63,7 @@ extract_data_Wp()
     export WP_PROCESSES=${WP_PROCESSES:-1}
     export WP_TIMEOUT=`adjustTimeout ${WP_TIMEOUT:-0} $WP_PROCESSES`
     export WP_COQ_TIMEOUT=`adjustTimeout ${WP_COQ_TIMEOUT:-0} $WP_PROCESSES`
+    export SCRIPT_DIR=${SCRIPT_DIR}
 
     REPORT_BACKEND=${REPORT_BACKEND:-default}
 
@@ -61,11 +76,12 @@ extract_data_Wp()
 
     case $REPORT_BACKEND in
     trust_wp|wp_runner|vs-par) extract_statistics ;;
-    default) extract_raw_data_Wp ;;
+    default) extract_raw_data_Wp $results ;;
     *) echo Unknown backend $REPORT_BACKEND ; exit 1 ;;
     esac
 
     rm -f $results
+    #printf "exit extract_data_Wp\n" >&2
 }
 
 # $1: name of the algorithm
@@ -79,7 +95,7 @@ extract_data_Av()
         exit 1
     fi
 
-    alg=$1
+    example=$1
     cmd=$2
     sec=$3
 
@@ -95,13 +111,18 @@ extract_data_Av()
 # generate a verification report using WP directly
 generate_wp()
 {
+    # generate directory for examples where everything is verified by Qed
+    mkdir $example.wp
+
     # generate report
     local prog="$WP_C_REPORT \
         -wp-par $WP_PROCESSES \
         -wp-timeout $WP_TIMEOUT \
         -wp-coq-timeout $WP_COQ_TIMEOUT \
-        -wp-out $alg.wp $alg.c"
+        -wp-out $example.wp $example.c"
     eval "$prog" >$results
+
+    cp $results $example.wp/console.log
 }
 
 # generate a verification report using WP directly
@@ -109,7 +130,7 @@ generate_av()
 {
     # generate report
     local prog="$AV_C_REPORT \
-        -av-out $alg.av $alg.c"
+        -av-out $example.av $example.c"
     eval "$prog" >$results
 }
 
@@ -117,7 +138,7 @@ generate_av()
 generate_wp_runner()
 {
 	# assume we run from within an algorithm directory
-	local prog="../../Scripts/wp_runner.sh $alg.c $WP_C_FLAGS $WP_PROVER_FLAGS -wp-par $WP_PROCESSES"
+	local prog="$SCRIPT_DIR/wp_runner.sh $example.c $WP_C_FLAGS $WP_PROVER_FLAGS -wp-par $WP_PROCESSES"
 	eval "$prog" >$results
 }
 
@@ -125,7 +146,7 @@ generate_wp_runner()
 generate_vs_par()
 {
 	# assume we run from within an algorithm directory
-	local prog="../../../Misc/VerificationService/vs.sh -p $alg.c $WP_C_FLAGS $WP_PROVER_FLAGS -wp-par $WP_PROCESSES"
+	local prog="../../../Misc/VerificationService/vs.sh -p $example.c $WP_C_FLAGS $WP_PROVER_FLAGS -wp-par $WP_PROCESSES"
 	eval "$prog" >$results 2>&1		# use stderr
 }
 
@@ -133,16 +154,19 @@ generate_vs_par()
 # through the output of WP and counting lines.
 extract_raw_data_Wp()
 {
-
     # pick up the number of generated goals
-    goal_count=`grep "goals scheduled" $results | cut -d ' ' -f2`
-    valid_qed=`countValid $results Qed`
-    valid_alt_ergo=`countValid $results Alt-Ergo`
-    valid_cvc4=`countValid $results cvc4`
-    valid_cvc3=`countValid $results cvc3`
-    valid_z3=`countValid $results z3`
-    valid_eprover=`countValid $results eprover`
-    valid_coq=`countValid $results Coq`
+    local raw_output=$1
+    goal_count=`$gnugrep "goals scheduled" $raw_output | cut -d ' ' -f2`
+    valid_qed=`countValid $raw_output Qed`
+    # use the following line for native alt_ergo
+    #valid_alt_ergo=`countValid $raw_output Alt-Ergo`
+    # use the following line for why3:alt_ergo
+    valid_alt_ergo=`countValid $raw_output alt-ergo`
+    valid_cvc4=`countValid $raw_output cvc4`
+    valid_cvc3=`countValid $raw_output cvc3`
+    valid_z3=`countValid $raw_output z3`
+    valid_eprover=`countValid $raw_output eprover`
+    valid_coq=`countValid $raw_output Coq`
 
     #calculate all valid goals
     valid=$(($valid_qed + $valid_alt_ergo + $valid_cvc4 + $valid_cvc3 + $valid_z3 + $valid_eprover + $valid_coq))
@@ -161,8 +185,11 @@ extract_statistics()
 
     local statistics=`mktemp ${TMPDIR-/tmp}/tempStatistics.XXXXXX`
 
+    # copy data for debugging
+    #cp $results results.save
+
     # generate report
-    sed -e 's,^.*Proved goals: *\([0-9]*\) / *\([0-9]*\),valid=\1;goal_count=\2,p' \
+    $gnused -e 's,^.*Proved goals: *\([0-9]*\) / *\([0-9]*\),valid=\1;goal_count=\2,p' \
         -e '1,/^valid=/d' \
         -e 's/cvc4-[[:digit:]]*/cvc4/g' \
         -e 's/^ *\([^:() ]*\) *\(([^:()]*)\)\? *\(([^:()]*)\)\?:[[:space:]]*\([0-9]*\).*$/valid_\1=\4/' \
@@ -170,10 +197,14 @@ extract_statistics()
 	-e '/\<Done\>/d' $results |
     tr '[:upper:]-' '[:lower:]_' > $statistics
 
-    source $statistics
-    rm -f $statistics
+    # copy data for debugging
+    #cp $statistics statistics.save
+    . $statistics
+
+    #printf "extract_statistics::valid_alt_ergo = $valid_alt_ergo\n" >&2
 
     print_statistics
+    rm -f $statistics
 }
 
 # print the statistics extracted by extract_raw_data_Wp and
@@ -193,7 +224,7 @@ print_statistics()
 }
 
 # report fields
-fields='alg goal_count valid
+fields='example goal_count valid
     valid_qed valid_alt_ergo valid_cvc4 valid_cvc3 valid_z3 valid_eprover valid_coq
     invalid percent cmd sec'
 
@@ -225,7 +256,7 @@ prettyPrintReport()
 {
     parse_report $1
     printf  "   %-30s [%-4d %3d   (%3d %3d %3d %3d %3d %3d %3d)]     %3d%%\n" \
-        $alg $goal_count $valid \
+        $example $goal_count $valid \
         $valid_qed $valid_alt_ergo $valid_cvc4 $valid_cvc3 $valid_z3 $valid_eprover $valid_coq \
         $percent
 }

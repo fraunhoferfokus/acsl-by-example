@@ -1,4 +1,4 @@
-alg='find2'
+example='find2'
 goal_count='19'
 valid='19'
 valid_qed='10'

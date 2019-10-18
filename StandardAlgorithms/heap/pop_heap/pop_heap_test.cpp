@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cassert>
 #include "pop_heap.h"
-#include "../is_heap/is_heap.h"
+#include "is_heap.h"
 #include "../../support/vector_io.h"
 
 void

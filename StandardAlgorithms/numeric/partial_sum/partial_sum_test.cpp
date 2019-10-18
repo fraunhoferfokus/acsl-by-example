@@ -3,7 +3,7 @@
 #include <numeric>
 #include <iostream>
 #include <cassert>
-#include "numeric.h"
+#include "partial_sum.h"
 
 int
 main(int argc, char** argv)

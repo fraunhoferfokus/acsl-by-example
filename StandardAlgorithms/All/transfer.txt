@@ -1,9 +1,0 @@
-
-# copy recursivly
-scp -r all.wp jens@192.168.2.108:Tmp
-
-rsync -r -e ssh all.wp jens@192.168.2.108:Tmp
-
-# execute script 'local' script 'foo.sh' on remote machine
-ssh jens@192.168.2.108 'bash -s' < foo.sh
-

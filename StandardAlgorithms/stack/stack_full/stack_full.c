@@ -1,5 +1,7 @@
 
+#include "StackLogic.spec"
 #include "stack_full.h"
+#include "stack_size.h"
 
 bool
 stack_full(const Stack* s)

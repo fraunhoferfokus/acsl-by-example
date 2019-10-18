@@ -1,4 +1,4 @@
-alg='stack_top'
+example='stack_top'
 goal_count='5'
 valid='5'
 valid_qed='0'

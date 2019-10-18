@@ -1,4 +1,4 @@
-alg='stack_top_wd'
+example='stack_top_wd'
 goal_count='12'
 valid='12'
 valid_qed='8'

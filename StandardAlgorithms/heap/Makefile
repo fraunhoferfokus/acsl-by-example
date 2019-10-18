@@ -5,12 +5,5 @@
 clean:: FORCE
 	$(RM) libheap.a
 
-
-include ../Makefile.group
-
-lib: libheap.a
-
-libheap.a: obj $(OBJ)
-	@ar cr  $@ $(OBJ)
-	@ranlib  $@
+include ../group.mk
 

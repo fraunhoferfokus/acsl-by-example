@@ -1,13 +1,7 @@
 
-include ../Makefile.group
+include ../group.mk
 
-clean:: FORCE
-	$(RM) libmaxmin.a
-
-lib: libmaxmin.a
-
-libmaxmin.a: obj $(OBJ)
-	@ar cr  $@ $(OBJ)
-	@ranlib  $@
-
+debug:
+	echo $(OS)
+	echo $(RANLIBFLAGS)
 

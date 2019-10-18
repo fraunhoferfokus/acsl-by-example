@@ -1,4 +1,4 @@
-alg='axiom_size_of_pop'
+example='axiom_size_of_pop'
 goal_count='5'
 valid='5'
 valid_qed='0'

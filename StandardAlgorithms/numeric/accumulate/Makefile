@@ -1,5 +1,3 @@
 
-CMD=\\accumulate
-SEC=sec:accumulate
+include ../../example.mk
 
-include ../../Makefile.template

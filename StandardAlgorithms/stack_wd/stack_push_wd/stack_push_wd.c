@@ -1,5 +1,6 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_push.h"
 #include "StackPushEqual.spec"
 
 /*@
@@ -7,7 +8,7 @@
   requires valid:     \valid(t) && Invariant(t);
   requires equal:     Equal{Here,Here}(s, t);
   requires not_full:  !Full(s) && !Full(t);
-  requires separated: Separated(s, t);
+  requires sep:       Separated(s, t);
 
   assigns s->size, s->obj[s->size];
   assigns t->size, t->obj[t->size];

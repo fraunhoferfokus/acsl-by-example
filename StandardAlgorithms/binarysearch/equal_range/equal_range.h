@@ -2,7 +2,7 @@
 #ifndef EQUAL_RANGE_H_INCLUDED
 #define EQUAL_RANGE_H_INCLUDED
 
-#include "make_pair.h"
+#include "SizeTypePairTrivial.spec"
 #include "Sorted.spec"
 #include "ConstantRange.spec"
 #include "StrictUpperBound.spec"

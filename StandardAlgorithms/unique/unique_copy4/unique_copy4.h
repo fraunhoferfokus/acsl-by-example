@@ -16,6 +16,7 @@
   ensures bound:     0 <= \result <= n;
   ensures size:      \result == UniqueSize(a, n);
   ensures unique:    Unique(a, n, b);
+  ensures solitary:  !HasEqualNeighbors (b, \result);
   ensures unchanged: Unchanged{Old, Here}(a, n);
   ensures unchanged: Unchanged{Old, Here}(b, \result, n);
  */

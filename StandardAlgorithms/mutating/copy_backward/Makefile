@@ -1,9 +1,5 @@
 
-CMD=\\copybackward
-SEC=sec:copybackward
-
-include ../../Makefile.template
+include ../../example.mk
 
 #export WP_FLAGS += -wp-prop equal
-
 

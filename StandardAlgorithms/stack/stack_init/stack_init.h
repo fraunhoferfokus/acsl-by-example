@@ -2,7 +2,7 @@
 #ifndef STACK_INIT_H_INCLUDED
 #define STACK_INIT_H_INCLUDED
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
 
 /*@
   requires valid:    \valid(s);

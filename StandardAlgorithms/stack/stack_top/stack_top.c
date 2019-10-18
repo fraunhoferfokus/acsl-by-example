@@ -1,5 +1,7 @@
 
-#include "stack/stack.h"
+#include "StackLogic.spec"
+#include "stack_top.h"
+#include "stack_empty.h"
 
 value_type
 stack_top(const Stack* s)

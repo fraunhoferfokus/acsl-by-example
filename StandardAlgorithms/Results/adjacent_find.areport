@@ -1,4 +1,4 @@
-alg='adjacent_find'
+example='adjacent_find'
 goal_count='4'
 valid='4'
 valid_qed='0'

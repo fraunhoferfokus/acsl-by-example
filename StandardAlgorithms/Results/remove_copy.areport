@@ -1,4 +1,4 @@
-alg='remove_copy'
+example='remove_copy'
 goal_count='2'
 valid='2'
 valid_qed='0'

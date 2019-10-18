@@ -1,6 +1,3 @@
 
-CMD=\\find
-SEC=sec:find
-
-include ../../Makefile.template
+include ../../example.mk
 

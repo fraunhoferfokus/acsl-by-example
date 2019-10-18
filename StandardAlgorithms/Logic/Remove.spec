@@ -6,14 +6,10 @@
 
 /*@
   predicate
-    Remove{A,B}(value_type* a, integer m, integer n,
+    Remove{A,B}(value_type* a, integer n,
                 value_type* b, value_type v) =
-      \forall integer k; m <= k < RemoveSize{A}(a, m, n, v) ==>
-        \at(b[k],B) == \at(a[RemovePartition(a, m, n, v, k)],A);
-
-  predicate
-    Remove{A,B}(value_type* a, integer n, value_type* b, value_type v) =
-      Remove{A,B}(a, 0, n, b, v);
+      \forall integer k; 0 <= k < RemoveSize{A}(a, n, v) ==>
+        \at(b[k],B) == \at(a[RemovePartition(a, n, v, k)],A);
 
   predicate
     Remove{A,B}(value_type* a, integer n, value_type v) =

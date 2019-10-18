@@ -1,4 +1,4 @@
-alg='max_element'
+example='max_element'
 goal_count='4'
 valid='4'
 valid_qed='0'

@@ -1,4 +1,4 @@
-alg='axiom_size_of_push'
+example='axiom_size_of_push'
 goal_count='5'
 valid='5'
 valid_qed='0'

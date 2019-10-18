@@ -1,6 +1,6 @@
 
 #include "swap_ranges.h"
-#include "../swap/swap.h"
+#include "swap.h"
 #include "Unchanged.spec"
 
 void

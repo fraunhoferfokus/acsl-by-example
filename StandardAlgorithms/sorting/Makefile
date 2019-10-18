@@ -1,7 +1,3 @@
 
-include ../Makefile.group
-
-clean:: FORCE
-
-lib:
+include ../group.mk
 

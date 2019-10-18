@@ -1,9 +1,5 @@
 
-CMD=\\popheap
-SEC=sec:pop_heap
-
-
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop PopHeapUpdate
 #WP_FLAGS += -wp-prop heap

@@ -1,6 +1,6 @@
 
 #include "insertion_sort.h"
-#include "../../binarysearch/upper_bound/upper_bound.h"
+#include "upper_bound.h"
 #include <vector>
 #include <algorithm>
 #include <iostream>

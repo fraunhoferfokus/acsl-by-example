@@ -1,14 +1,9 @@
 
-CMD=\\partialsum
-SEC=sec:partialsum
+export WP_TIMEOUT=25
 
-export WP_TIMEOUT=20
-
-include ../../Makefile.template
+include ../../example.mk
 
 #WP_FLAGS += -wp-prop rte
 #WP_FLAGS += -wp-prop partialsum
 #WP_FLAGS += -wp-prop @lemma
-
-TESTOBJ += -lnumeric
 
