@@ -27,7 +27,7 @@ env:
 
 before_install:
   - sudo apt update -qq
-  - opam init --auto-setup --disable-sandboxing 
+  - opam init --comp=4.05.0
   - opam install --yes depext
 
 install:
