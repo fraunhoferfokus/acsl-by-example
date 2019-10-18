@@ -1,7 +1,7 @@
 language: c
 os:
   - linux
-dist: xenial
+dist: eoan
 addons:
   apt:
     packages:
@@ -10,6 +10,7 @@ addons:
       - libgnomecanvas2-dev
       - libgtk2.0-dev
       - libgtksourceview2.0-dev
+      - cvc4
       - cvc3
       - z3
 
@@ -24,23 +25,19 @@ env:
     - WP_PROCESSES=2
 
 before_install:
-  - sudo apt-get update -qq
-  - which cvc4 || (
-      wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.6-x86_64-linux-opt -O $HOME/bin/cvc4 &&
-      chmod +x $HOME/bin/cvc4
-    )
+  - sudo apt update -qq
   - which opam || (
       wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.4/opam-2.0.4-x86_64-linux -O $HOME/bin/opam &&
       chmod +x $HOME/bin/opam
     )
-  - opam init --auto-setup --disable-sandboxing --compiler=4.06.1
+  - opam init --auto-setup --disable-sandboxing 
   - opam install --yes depext
 
 install:
   - which eprover || ( wget https://github.com/eprover/eprover/archive/E-2.3.tar.gz && tar xf E-2.3.tar.gz && cd eprover-E-2.3 && ./configure --prefix=$HOME && make -j2 && sudo make install )
   - opam update
   - opam upgrade --yes
-  - opam depext --yes --noninteractive --install frama-c alt-ergo-free why3
+  - opam depext --yes --noninteractive --install frama-c alt-ergo why3
   - eval $(opam config env); why3 config --detect
 
 script:
