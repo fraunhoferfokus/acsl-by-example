@@ -5,7 +5,6 @@ dist: bionic
 addons:
   apt:
     packages:
-      - opam
       - astyle
       - aspcud
       - libgnomecanvas2-dev
@@ -22,12 +21,16 @@ cache:
 
 env:
   global:
-    - WP_TIMEOUT=6
+    - WP_TIMEOUT=1
     - WP_PROCESSES=2
 
 before_install:
   - sudo apt update -qq
-  - opam init --yes --comp=4.05.0
+  - which opam || (
+      wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.5/opam-2.0.5-x86_64-linux -O $HOME/bin/opam &&
+      chmod +x $HOME/bin/opam
+    )
+  - opam init --auto-setup --disable-sandboxing --comp=4.06.0
   - opam install --yes depext
 
 install:

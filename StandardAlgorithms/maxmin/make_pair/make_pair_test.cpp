@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <utility>
+#include <cassert>
 #include "make_pair.h"
 
 int
