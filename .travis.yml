@@ -36,7 +36,7 @@ before_install:
 install:
   - opam update
   - opam upgrade --yes
-  - opam depext --yes --noninteractive --install frama-c alt-ergo why3
+  - opam depext --yes --noninteractive --install frama-c.19.1 alt-ergo why3
   - eval $(opam config env); why3 config --detect
 
 script:
