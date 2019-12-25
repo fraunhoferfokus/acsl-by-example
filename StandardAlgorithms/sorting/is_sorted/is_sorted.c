@@ -1,14 +1,14 @@
 
 #include "is_sorted.h"
-#include "WeaklySorted.spec"
-#include "SortedIFFWeaklySorted.spec"
+#include "WeaklyIncreasing.spec"
+#include "IncreasingIFFWeaklyIncreasing.spec"
 
 bool
 is_sorted(const value_type* a, size_type n)
 {
   if (0u < n) {
     /*@
-        loop invariant sorted: WeaklySorted(a, i+1);
+        loop invariant increasing: WeaklyIncreasing(a, i+1);
         loop assigns i;
         loop variant n - i;
     */

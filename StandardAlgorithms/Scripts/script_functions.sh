@@ -33,7 +33,11 @@ adjustTimeout()
 # $2: Pattern to look for
 countValid()
 {
-    $gnugrep "\\[$2\\].*Valid$" $1 | cut -d ' ' -f4 | sort -u | wc -l | tr -d ' \t'
+    # $gnugrep "\\[$2\\].*Valid$" $1 | cut -d ' ' -f4 | sort -u | wc -l | tr -d ' \t'
+
+    #             "[wp] [PROVER opt_version] Goal NAME ..."
+    SED_PATTERN="s/\\[wp\\] \\[$2.*\\] Goal \\([^\\ ]*\\).* Valid.*/\\1/p"
+    $gnused -n "$SED_PATTERN" $1 | sort -u | wc -l | tr -d ' \t'
 }
 
 # depending on whether TRUST_WP is defined, either collect counts
@@ -161,10 +165,10 @@ extract_raw_data_Wp()
     # use the following line for native alt_ergo
     #valid_alt_ergo=`countValid $raw_output Alt-Ergo`
     # use the following line for why3:alt_ergo
-    valid_alt_ergo=`countValid $raw_output alt-ergo`
-    valid_cvc4=`countValid $raw_output cvc4`
-    valid_cvc3=`countValid $raw_output cvc3`
-    valid_z3=`countValid $raw_output z3`
+    valid_alt_ergo=`countValid $raw_output Alt-Ergo`
+    valid_cvc4=`countValid $raw_output CVC4`
+    valid_cvc3=`countValid $raw_output CVC3`
+    valid_z3=`countValid $raw_output Z3`
     valid_eprover=`countValid $raw_output eprover`
     valid_coq=`countValid $raw_output Coq`
 
@@ -255,8 +259,8 @@ generate_report()
 prettyPrintReport()
 {
     parse_report $1
-    printf  "   %-30s [%-4d %3d   (%3d %3d %3d %3d %3d %3d %3d)]     %3d%%\n" \
+    printf  "   %-30s [%-4d %3d   (%3d %3d %3d %3d %3d %3d)]     %3d%%\n" \
         $example $goal_count $valid \
-        $valid_qed $valid_alt_ergo $valid_cvc4 $valid_cvc3 $valid_z3 $valid_eprover $valid_coq \
+        $valid_qed $valid_alt_ergo $valid_cvc4 $valid_cvc3 $valid_z3 $valid_coq \
         $percent
 }

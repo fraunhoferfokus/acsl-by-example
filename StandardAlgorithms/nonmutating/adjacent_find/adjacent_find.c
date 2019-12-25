@@ -3,7 +3,7 @@
 size_type
 adjacent_find(const value_type* a, size_type n)
 {
-  if (n > 1u) {
+  if (1u < n) {
     /*@
       loop invariant bound:  0 <= i < n;
       loop invariant none:   !HasEqualNeighbors(a, i+1);

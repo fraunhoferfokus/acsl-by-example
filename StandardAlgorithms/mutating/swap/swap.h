@@ -5,14 +5,12 @@
 #include "typedefs.h"
 
 /*@
-  requires \valid(p);
-  requires \valid(q);
-
-  assigns *p;
-  assigns *q;
-
-  ensures *p == \old(*q);
-  ensures *q == \old(*p);
+  requires valid:    \valid(p);
+  requires valid:    \valid(q);
+  assigns            *p;
+  assigns            *q;
+  ensures  exchange: *p == \old(*q);
+  ensures  exchange: *q == \old(*p);
 */
 void
 swap(value_type* p, value_type* q);

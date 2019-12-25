@@ -6,10 +6,8 @@
 
 /*@
     requires valid: \valid(s) && Invariant(s);
-
-    assigns \nothing;
-
-    ensures top: !Empty(s) ==> \result == Top(s);
+    assigns         \nothing;
+    ensures  top:   !Empty(s) ==> \result == Top(s);
 */
 value_type
 stack_top(const Stack* s);

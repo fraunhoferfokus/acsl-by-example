@@ -1,14 +1,4 @@
 
-Please set the enviroment variable FRAMAC_SHARE whose purpose is explained here:
-
-FRAMAC_SHARE
-    The path of a folder in the Frama C installation where Frama C
-    stores a number importantant scripts and resources.  This variable
-    is typically set in ~/.profile according to the location of your
-    Frama C installation.
-
-================================
-
 A number of environment variables affect the generation of reports:
 Please check Makefile.template for their precise definitions (including default values).
 
@@ -20,8 +10,6 @@ WP_COQ_TIMEOUT (10)
     The timeout for coq.  This timeout is scaled in the same way
     WP_TIMEOUT is.
 
-WP_ALT_ERGO_STEPS (10000)
-    The number of steps alt-ergo runs for before it is aborted.
 
 WP_PROCESSES (1)
     The number of provers to run in parallel.
@@ -52,9 +40,8 @@ If some obligations are proven with Coq, then there is a file 'wp0.script' which
 In addition each subfolder contains a makefile, see usage below.
 Besides there is directory 'Scripts' to enable the makefile oppurtunities.
 
-The directory 'LogicSpecifications' is a collection of lemmas and logic functions used 
+The directory 'Logic' is a collection of lemmas and logic functions used 
 in the ACSL specifications. 
-The directory 'tactics_lemmas_coq' contains tactics and lemmas to simplify proofs with Coq.
 
 USAGE:
 ========
@@ -88,7 +75,5 @@ make <algorithm>.wp
 
 make format
 - uses astyle to format the source code
-
-interesting environment variables
 
 ---------------------------------

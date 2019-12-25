@@ -3,16 +3,15 @@
 #define PARTIAL_SUM_H_INCLUDED
 
 #include "PartialSum.spec"
-#include "AccumulateBounds.spec"
+#include "AccumulateDefaultBounds.spec"
+
 
 /*@
   requires valid:     \valid_read(a + (0..n-1));
   requires valid:     \valid(b + (0..n-1));
   requires sep:       \separated(a + (0..n-1), b + (0..n-1));
-  requires bounds:    AccumulateBounds(a, n+1);
-
-  assigns b[0..n-1];
-
+  requires bounds:    AccumulateDefaultBounds(a, n);
+  assigns             b[0..n-1];
   ensures result:     \result == n;
   ensures partialsum: PartialSum(a, n, b);
   ensures unchanged:  Unchanged{Old,Here}(a, n);

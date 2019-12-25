@@ -9,10 +9,8 @@
   requires equal:     Equal{Here,Here}(s, t);
   requires not_full:  !Full(s) && !Full(t);
   requires sep:       Separated(s, t);
-
-  assigns s->size, s->obj[s->size];
-  assigns t->size, t->obj[t->size];
-
+  assigns             s->size, s->obj[s->size];
+  assigns             t->size, t->obj[t->size];
   ensures  valid:     Invariant(s) && Invariant(t);
   ensures  equal:     Equal{Here,Here}(s, t);
 */

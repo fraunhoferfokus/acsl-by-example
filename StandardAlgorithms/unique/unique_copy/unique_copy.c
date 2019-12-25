@@ -5,10 +5,8 @@
 size_type
 unique_copy(const value_type* a, size_type n, value_type* b)
 {
-  if (n == 0u) {
-    return n;
-  }
-  else {
+  if (0u < n) {
+  
     size_type k = 0u;
     b[k] = a[0];
 
@@ -21,6 +19,9 @@ unique_copy(const value_type* a, size_type n, value_type* b)
     }
 
     return ++k;
+  }
+  else {
+    return n;
   }
 }
 

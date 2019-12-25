@@ -2,7 +2,7 @@
 #ifndef UNIQUESIZE_SPEC_INCLUDED
 #define UNIQUESIZE_SPEC_INCLUDED
 
-#include "Unchanged.spec"
+#include "UnchangedSection.spec"
 
 /*@
   axiomatic UniqueSizeAxiomatic

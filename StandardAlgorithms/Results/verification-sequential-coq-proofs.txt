@@ -2,7 +2,7 @@ equal_range2 LowerBoundShift
 equal_range2 StrictLowerBoundShift
 insertion_sort CountSectionUnion
 insertion_sort EqualRangesPreservesCount
-insertion_sort EqualRangesPreservesSorted
+insertion_sort EqualRangesPreservesIncreasing
 insertion_sort RotatePreservesStrictLowerBound
 is_sorted WeaklySortedImpliesSorted
 partial_sort CountSectionBounds

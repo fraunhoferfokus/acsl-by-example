@@ -6,10 +6,8 @@
 #include "Unchanged.spec"
 
 /*@
-  requires valid: \valid(a + (0..n-1));
-
-  assigns a[0..n-1];
-
+  requires valid:   \valid(a + (0..n-1));
+  assigns           a[0..n-1];
   ensures replace:  Replace{Old,Here}(a, n, v, w);
 */
 void

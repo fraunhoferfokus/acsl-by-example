@@ -5,10 +5,9 @@
 #include "SizeTypePairTrivial.spec"
 
 /*@
-    assigns \nothing;
-
-    ensures \result.first  == first;
-    ensures \result.second == second;
+    assigns         \nothing;
+    ensures result: \result.first  == first;
+    ensures result: \result.second == second;
 */
 static inline
 size_type_pair

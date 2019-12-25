@@ -6,10 +6,8 @@
 
 /*@
     requires valid: \valid(s) && Invariant(s);
-
-    assigns \nothing;
-
-    ensures size: \result == Size(s);
+    assigns         \nothing;
+    ensures  size:  \result == Size(s);
 */
 size_type
 stack_size(const Stack* s);

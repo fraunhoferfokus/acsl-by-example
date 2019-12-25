@@ -5,13 +5,10 @@
 #include "stack_top.h"
 
 /*@
-  requires  valid:      \valid(s) && Invariant(s);
-  requires  not_empty:  !Empty(s);
-
-  assigns   s->size;
-  assigns   s->obj[s->size-1];
-
-  ensures   equal: Equal{Old,Here}(s, s);
+  requires  valid:     \valid(s) && Invariant(s);
+  requires  not_empty: !Empty(s);
+  assigns              s->size, s->obj[s->size-1];
+  ensures   equal:     Equal{Old,Here}(s, s);
 */
 void
 axiom_push_of_pop_top(Stack* s)

@@ -24,19 +24,19 @@
   lemma
     PartialSumStep{L}:
       \forall value_type *a, *b, integer n;
-        1 <= n                     ==>
-        PartialSum(a, n, b)        ==>
-        b[n] == Accumulate(a, n+1) ==>
+        0 <= n                           ==>
+        PartialSum(a, n, b)              ==>
+        b[n] == AccumulateDefault(a, n)  ==>
         PartialSum(a, n+1, b);
 
   lemma
     PartialSumStep2{K,L}:
       \forall value_type *a, *b, integer n;
-        1 <= n                            ==>
-        PartialSum{K}(a, n, b)            ==>
-        Unchanged{K,L}(a, n+1)            ==>
-        Unchanged{K,L}(b, n)              ==>
-        \at(b[n] == Accumulate(a, n+1),L) ==>
+        1 <= n                                  ==>
+        PartialSum{K}(a, n, b)                  ==>
+        Unchanged{K,L}(a, n)                    ==>
+        Unchanged{K,L}(b, n)                    ==>
+        \at(b[n] == AccumulateDefault(a, n),L)  ==>
         PartialSum{L}(a, n+1, b);
 */
 

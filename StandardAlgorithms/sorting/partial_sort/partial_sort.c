@@ -7,9 +7,9 @@
 #include "sort_heap.h"
 #include "swap.h"
 
+#include "HeapMaximum.spec"
 #include "LowerBound.spec"
 #include "MultisetUnchangedLemmas.spec"
-#include "HeapMaximum.spec"
 #include "ReorderPreservesLowerBound.spec"
 #include "ReorderPreservesUpperBound.spec"
 #include "PartialReorderPreservesLowerBounds.spec"
@@ -77,10 +77,10 @@ partial_sort(value_type* a, size_type m, size_type n)
 
     //@ assert partition: Partition(a, m, n);
     /*@
-      assigns             a[0..m-1];
-      ensures sorted:     Sorted(a, m);
-      ensures reorder:    MultisetUnchanged{Old,Here}(a, m);
-      ensures reorder:    MultisetUnchanged{Old,Here}(a, m, n);
+      assigns                 a[0..m-1];
+      ensures reorder:        MultisetUnchanged{Old,Here}(a, m);
+      ensures reorder:        MultisetUnchanged{Old,Here}(a, m, n);
+      ensures increasing:     Increasing(a, m);
     */
     sort_heap(a, m);
     //@ assert reorder:   MultisetUnchanged{Pre,Here}(a, n);

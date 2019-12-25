@@ -4,15 +4,23 @@
 
 #include "typedefs.h"
 
-extern unsigned short random_seed[3];
-
 /*@
-  requires 0 < n;
-  assigns random_seed[0..2];
-  ensures 0 <= \result < n;
+  requires  pos:    0 < n;
+  requires  valid:  \valid(state + (0..2));
+  assigns           state[0..2];
+  ensures   result: 0 <= \result < n;
 */
 size_type
-random_number(size_type n);
+random_number(unsigned short* state, size_type n);
+
+
+/*@
+  requires  \valid(state + (0..2));
+
+  assigns   state[0..2];
+*/
+void
+random_init(unsigned short* state);
 
 #endif /* RANDOM_NUMBER_H_INCLUDED */
 

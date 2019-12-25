@@ -1,6 +1,7 @@
 
 #include "unique_copy_compare_test.h"
 #include <fstream>
+#include <cassert>
 
 int
 main(int argc, char** argv)

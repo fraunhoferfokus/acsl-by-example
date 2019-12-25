@@ -5,22 +5,22 @@
 #include "EqualRanges.spec"
 
 /*@
-  requires valid:  \valid_read(a + (0..n-1));
-  requires valid:  \valid_read(b + (0..n-1));
-
-  assigns \nothing;
-
-  ensures  result: 0 <= \result <= n;
+  requires valid:   \valid_read(a + (0..n-1));
+  requires valid:   \valid_read(b + (0..n-1));
+  assigns           \nothing;
+  ensures  result:  0 <= \result <= n;
 
   behavior all_equal:
-    assumes EqualRanges{Here,Here}(a, n, b);
+    assumes         EqualRanges{Here,Here}(a, n, b);
+    assigns         \nothing;
     ensures result: \result == n;
 
   behavior some_not_equal:
-    assumes !EqualRanges{Here,Here}(a, n, b);
-    ensures bound:   0 <= \result < n;
-    ensures result:  a[\result] != b[\result];
-    ensures first:   EqualRanges{Here,Here}(a, \result, b);
+    assumes         !EqualRanges{Here,Here}(a, n, b);
+    assigns         \nothing;
+    ensures bound:  0 <= \result < n;
+    ensures result: a[\result] != b[\result];
+    ensures first:  EqualRanges{Here,Here}(a, \result, b);
 
   complete behaviors;
   disjoint behaviors;

@@ -1,8 +1,5 @@
 #include "count.h"
 
-#include "CountMonotonic.spec"
-#include "CountShift.spec"
-
 size_type
 count(const value_type* a, size_type n, value_type val)
 {

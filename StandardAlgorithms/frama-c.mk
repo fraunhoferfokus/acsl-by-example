@@ -1,13 +1,12 @@
 
 export FRAMAC_SHARE:=$(shell frama-c -print-share-path)
 
-export TIMEOUT   ?= 10
+export TIMEOUT   ?= 2
 export PROCESSES ?= 1
 
 #setup wp
 export WP_TIMEOUT        ?= $(TIMEOUT)
-export WP_COQ_TIMEOUT    ?= $(TIMEOUT)
-export WP_ALT_ERGO_STEPS ?= 100000
+export WP_COQ_TIMEOUT    ?= 5
 export WP_PROCESSES      ?= $(PROCESSES)
 
 #setup av
@@ -19,7 +18,6 @@ export AV_PROCESSES ?= $(PROCESSES)
 WP_TIME_FLAGS= \
 	-wp-timeout $(WP_TIMEOUT) \
 	-wp-coq-timeout $(WP_COQ_TIMEOUT) \
-	-wp-steps $(WP_ALT_ERGO_STEPS) \
 	-wp-par $(WP_PROCESSES)
 
 #setup coq
@@ -48,21 +46,21 @@ AV_BASE_FLAGS += -av
 
 WP_FLAGS := $(WP_BASE_FLAGS)
 WP_FLAGS += -wp-driver $(DRIVER_DIR)/external.driver
-WP_FLAGS += -wp-script $(SCRIPT)
-WP_FLAGS += -wp-model Typed+ref
+WP_FLAGS += -wp-coq-script $(SCRIPT)
+WP_FLAGS += -wp-model Typed
 
 AV_FLAGS     := $(AV_BASE_FLAGS) -av-extract all_annot
 AV_WHY3_CONF := $(shell realpath $(TOP_DIR))/astraver.why3.conf
 
-WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
+# WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 # provers
-WP_PROVER_FLAGS += -wp-prover why3:alt-ergo
+WP_PROVER_FLAGS += -wp-prover alt-ergo
 WP_PROVER_FLAGS += -wp-prover cvc4
 WP_PROVER_FLAGS += -wp-prover cvc3
 WP_PROVER_FLAGS += -wp-prover z3
-WP_PROVER_FLAGS += -wp-prover eprover
-WP_PROVER_FLAGS += -wp-prover coq
+#WP_PROVER_FLAGS += -wp-prover eprover
+WP_PROVER_FLAGS += -wp-prover native:coq
 
 
 export FR    := frama-c

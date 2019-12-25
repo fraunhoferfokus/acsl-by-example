@@ -2,7 +2,7 @@
 #ifndef COUNTSECTION_SPEC_INCLUDED
 #define COUNTSECTION_SPEC_INCLUDED
 
-#include "Unchanged.spec"
+#include "UnchangedSection.spec"
 
 /*@
   axiomatic CountAxiomatic

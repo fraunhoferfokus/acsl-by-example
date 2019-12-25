@@ -7,15 +7,17 @@
 
 /*@
   requires valid:   \valid_read(a + (0..n-1));
-  assigns  \nothing;
+  assigns           \nothing;
   ensures  result:  0 <= \result <= n;
 
   behavior empty:
-    assumes n == 0;
-    ensures result:  \result == 0;
+    assumes         n == 0;
+    assigns         \nothing;
+    ensures result: \result == 0;
 
   behavior not_empty:
-    assumes 0 < n;
+    assumes         0 < n;
+    assigns         \nothing;
     ensures result: 0 <= \result < n;
     ensures min:    MinElement(a, n, \result);
     ensures first:  StrictLowerBound(a, \result, a[\result]);

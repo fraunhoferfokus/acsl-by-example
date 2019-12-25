@@ -5,10 +5,8 @@
 #include "ConstantRange.spec"
 
 /*@
-  requires valid: \valid(a + (0..n-1));
-
-  assigns a[0..n-1];
-
+  requires valid:   \valid(a + (0..n-1));
+  assigns           a[0..n-1];
   ensures constant: ConstantRange(a, n, val);
 */
 void

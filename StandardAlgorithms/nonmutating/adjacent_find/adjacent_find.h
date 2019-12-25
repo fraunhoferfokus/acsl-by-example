@@ -5,20 +5,20 @@
 #include "HasEqualNeighbors.spec"
 
 /*@
-  requires valid: \valid_read(a + (0..n-1));
-
-  assigns \nothing;
-
-  ensures result:  0 <= \result <= n;
+  requires valid:       \valid_read(a + (0..n-1));
+  assigns               \nothing;
+  ensures result:       0 <= \result <= n;
 
   behavior some:
-    assumes  HasEqualNeighbors(a, n);
+    assumes             HasEqualNeighbors(a, n);
+    assigns             \nothing;
     ensures  result:    0 <= \result < n-1;
     ensures  adjacent:  a[\result] == a[\result+1];
     ensures  first:     !HasEqualNeighbors(a, \result);
 
   behavior none:
-    assumes  !HasEqualNeighbors(a, n);
+    assumes             !HasEqualNeighbors(a, n);
+    assigns             \nothing;
     ensures  result:    \result == n;
 
   complete behaviors;

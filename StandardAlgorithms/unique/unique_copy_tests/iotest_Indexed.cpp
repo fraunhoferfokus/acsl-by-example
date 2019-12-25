@@ -2,6 +2,7 @@
 
 #include "Indexed.h"
 #include <fstream>
+#include <cassert>
 
 
 int main()

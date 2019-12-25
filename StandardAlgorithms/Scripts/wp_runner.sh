@@ -52,12 +52,12 @@ get_provers() {
 # For each verification condition, generate task strings that can be
 # passed to xargs for parallel execution.
 generate_tasks() {
-	# there may not be any why file in $wpdir/typed_ref_external, so enable
+	# there may not be any why file in $wpdir/typed_external, so enable
 	# nullglob and pass /dev/null so grep doesn't consider stdin if
 	# no file matches.
 	shopt -s nullglob
-	# FIXME "typed_ref_external" depends on memory model and driver
-	for whyfile in $wpdir/typed_ref_external/*.why
+	# FIXME "typed_external" depends on memory model and driver
+	for whyfile in $wpdir/typed_external/*.why
 	do
 		$gnused -n \
 		    -e 's/^theory \(VC.*\)$/\1/p' \
@@ -85,12 +85,12 @@ do_proof() {
 	case $vc in
 	VC*)
 		theory=$vc
-		theoryname=typed_ref_external_${theory#VC}
+		theoryname=typed_external_${theory#VC}
 		;;
 	Q_*)
 		theory=${whyfile##*/}
 		theory=${theory%.why}
-		theoryname=typed_ref_external_lemma_${vc#Q_}
+		theoryname=typed_external_lemma_${vc#Q_}
 		goalopt="-G $vc"
 		;;
 	*)
@@ -98,7 +98,7 @@ do_proof() {
 		exit 1
 	esac
 
-	outname=$wpdir/typed_ref_external/${theoryname}_Why3_$prover
+	outname=$wpdir/typed_external/${theoryname}_Why3_$prover
 	set +e
 	(
 		case $prover in
@@ -140,7 +140,7 @@ call_why3() {
 	why3 prove "$@" \
 		-t $WP_TIMEOUT \
 		--extra-config $FRAMAC_SHARE/wp/why3/why3.conf \
-		-L $wpdir/typed_ref_external \
+		-L $wpdir/typed_external \
 		-L $FRAMAC_SHARE/wp/why3/ \
 		-T $theory \
 		-P $prover \
@@ -164,7 +164,7 @@ call_coqc() {
 		-R $FRAMAC_SHARE/wp/coqwp/real real \
 		-R $FRAMAC_SHARE/wp/coqwp/map map \
 		-R $DRIVER_DIR '' \
-		-noglob $wpdir/typed_ref_external/$coqscript
+		-noglob $wpdir/typed_external/$coqscript
 }
 
 # read the logfile $log, compute the number of proved goals and generate

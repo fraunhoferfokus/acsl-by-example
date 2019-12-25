@@ -2,9 +2,9 @@
 #ifndef MULTISETUNCHANGEDLEMMAS_SPEC_INCLUDED
 #define MULTISETUNCHANGEDLEMMAS_SPEC_INCLUDED
 
-#include "MultisetUnchanged.spec"
-#include "CountLemmas.spec"
 #include "Unchanged.spec"
+#include "CountLemmas.spec"
+#include "MultisetUnchanged.spec"
 
 /*@
   lemma

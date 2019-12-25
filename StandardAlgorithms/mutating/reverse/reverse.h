@@ -5,10 +5,8 @@
 #include "Reverse.spec"
 
 /*@
-  requires valid: \valid(a + (0..n-1));
-
-  assigns a[0..n-1];
-
+  requires valid:  \valid(a + (0..n-1));
+  assigns          a[0..n-1];
   ensures reverse: Reverse{Old,Here}(a, n);
 */
 void

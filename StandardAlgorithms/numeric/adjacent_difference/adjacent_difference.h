@@ -10,9 +10,7 @@
    requires valid:      \valid(b + (0..n-1));
    requires sep:        \separated(a + (0..n-1), b + (0..n-1));
    requires bounds:     AdjacentDifferenceBounds(a, n);
-
-   assigns b[0..n-1];
-
+   assigns              b[0..n-1];
    ensures result:      \result == n;
    ensures difference:  AdjacentDifference(a, n, b);
    ensures unchanged:   Unchanged{Old,Here}(a, n);

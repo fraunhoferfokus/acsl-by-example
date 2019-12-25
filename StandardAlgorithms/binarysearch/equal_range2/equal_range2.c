@@ -34,12 +34,12 @@ equal_range2(const value_type* a, size_type n, value_type val)
   }
 
   if (first < last) {
-    //@ assert sorted: Sorted(a, first, middle);
+    //@ assert increasing: Increasing(a, first, middle);
     size_type left = first + lower_bound(a + first, middle - first, val);
     //@ assert constant: LowerBound(a, left, middle, val);
     //@ assert strict: StrictUpperBound(a, first, left, val);
     ++middle;
-    //@ assert sorted: Sorted(a, middle, last);
+    //@ assert increasing: Increasing(a, middle, last);
     size_type right = middle + upper_bound(a + middle, last - middle, val);
     //@ assert constant: UpperBound(a, middle, right, val);
     //@ assert strict: StrictLowerBound(a, right, last, val);

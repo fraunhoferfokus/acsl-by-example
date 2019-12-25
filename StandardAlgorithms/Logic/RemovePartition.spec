@@ -3,8 +3,8 @@
 #ifndef REMOVEPARTITION_SPEC_INCLUDED
 #define REMOVEPARTITION_SPEC_INCLUDED
 
-#include "Unchanged.spec"
 #include "RemoveSize.spec"
+#include "UnchangedSection.spec"
 
 /*@
   axiomatic RemovePartitionAxiomatic

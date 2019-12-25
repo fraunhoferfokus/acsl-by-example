@@ -4,6 +4,7 @@
 
 #include "UniqueSize.spec"
 #include "ConstantRange.spec"
+#include "UnchangedSection.spec"
 
 /*@
   axiomatic UniquePartitionAxiomatic

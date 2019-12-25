@@ -6,23 +6,16 @@
     ensures unchanged: Unchanged{Old, Here}(\old(a), \old(n));
     assigns *(b + (0 .. n - 1));
  */
-size_type
-unique_copy2(value_type const *a, size_type n, value_type *b)
+size_type unique_copy2(value_type const *a, size_type n, value_type *b)
 {
   size_type __retres;
-
-  if (n == 0u) {
-    __retres = n;
-    goto return_label;
-  }
-  else {
+  if (0u < n) {
     size_type k = 0u;
     /*@ assert rte: mem_access: \valid(b + k); */
     /*@ assert rte: mem_access: \valid_read(a + 0); */
     *(b + k) = *(a + 0);
     {
       size_type i = 1u;
-
       /*@ loop invariant bound: 0 <= k < i <= n;
           loop invariant unchanged: Unchanged{Pre, Here}(b, k + 1, n);
           loop assigns i, k, *(b + (0 .. n - 1));
@@ -32,7 +25,6 @@ unique_copy2(value_type const *a, size_type n, value_type *b)
         {
           /*@ assert rte: mem_access: \valid_read(a + i); */
           value_type const val = *(a + i);
-
           /*@ assert rte: mem_access: \valid_read(b + k); */
           if (*(b + k) != val) {
             /*@ assert rte: unsigned_overflow: k + 1 <= 4294967295; */
@@ -50,9 +42,11 @@ unique_copy2(value_type const *a, size_type n, value_type *b)
     __retres = k;
     goto return_label;
   }
-
-return_label:
-  return __retres;
+  else {
+    __retres = n;
+    goto return_label;
+  }
+  return_label: return __retres;
 }
 
 

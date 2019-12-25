@@ -2,6 +2,7 @@
 
 #include "vector_io.h"
 #include <fstream>
+#include <cassert>
 
 int main()
 {

@@ -5,16 +5,14 @@
 #include <limits.h>
 #include "IsHeap.spec"
 #include "MultisetUnchanged.spec"
-#include "Sorted.spec"
+#include "Increasing.spec"
 
 /*@
-   requires valid:  \valid(a + (0..n-1));
-   requires heap:   IsHeap(a, n);
-
-   assigns a[0..n-1];
-
-   ensures sorted:   Sorted(a, n);
-   ensures reorder:  MultisetUnchanged{Old, Here}(a, n);
+   requires valid:       \valid(a + (0..n-1));
+   requires heap:        IsHeap(a, n);
+   assigns               a[0..n-1];
+   ensures reorder:      MultisetUnchanged{Old, Here}(a, n);
+   ensures increasing:   Increasing(a, n);
 */
 void
 sort_heap(value_type* a, size_type n);

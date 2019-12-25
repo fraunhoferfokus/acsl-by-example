@@ -5,21 +5,21 @@
 #include "HasValue.spec"
 
 /*@
-  requires  valid:  \valid_read(a + (0..n-1));
-
-  assigns   \nothing;
-
-  ensures   result: 0 <= \result <= n;
+  requires valid:    \valid_read(a + (0..n-1));
+  assigns            \nothing;
+  ensures result:    0 <= \result <= n;
 
   behavior some:
-    assumes  HasValue(a, n, val);
-    ensures  bound:   0 <= \result < n;
-    ensures  result:  a[\result] == val;
-    ensures  first:   !HasValue(a, \result, val);
+    assumes          HasValue(a, n, val);
+    assigns          \nothing;
+    ensures  bound:  0 <= \result < n;
+    ensures  result: a[\result] == val;
+    ensures  first:  !HasValue(a, \result, val);
 
   behavior none:
-    assumes  !HasValue(a, n, val);
-    ensures  result:  \result == n;
+    assumes          !HasValue(a, n, val);
+    assigns          \nothing;
+    ensures  result: \result == n;
 
   complete behaviors;
   disjoint behaviors;

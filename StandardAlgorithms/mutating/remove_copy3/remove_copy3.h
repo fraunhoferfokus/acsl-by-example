@@ -7,12 +7,10 @@
 #include "RemoveImpliesNotHasValue.spec"
 
 /*@
-  requires valid: \valid_read(a + (0..n-1));
-  requires valid: \valid(b + (0..n-1));
-  requires sep:   \separated(a + (0..n-1), b);
-
-  assigns b[0..n-1];
-
+  requires valid:    \valid_read(a + (0..n-1));
+  requires valid:    \valid(b + (0..n-1));
+  requires sep:      \separated(a + (0..n-1), b);
+  assigns            b[0..n-1];
   ensures size:      \result == RemoveSize{Old}(a, n, v);
   ensures bound:     0 <= \result <= n;
   ensures remove:    Remove{Old,Here}(a, n, b, v);

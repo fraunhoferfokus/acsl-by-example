@@ -17,7 +17,3 @@
 */
 coq.file += "Shift_lemmas.v";
 
-library memory:
-     altergo.file += "shift_lemmas.mlw";
-     why3.file    += "shift_lemmas.why";
-

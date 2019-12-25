@@ -22,7 +22,7 @@ cache:
 env:
   global:
     - WP_TIMEOUT=1
-    - WP_PROCESSES=2
+    - WP_PROCESSES=3
 
 before_install:
   - sudo apt update -qq
@@ -31,12 +31,13 @@ before_install:
       chmod +x $HOME/bin/opam
     )
   - opam init --auto-setup --disable-sandboxing --comp=4.06.0
-  - opam install --yes depext
 
 install:
   - opam update
-  - opam upgrade --yes
-  - opam depext --yes --noninteractive --install frama-c.19.1 alt-ergo why3
+  - opam install --yes depext
+  - opam depext  --yes frama-c
+  - opam install --yes alt-ergo why3 why3-coq coq
+  - opam pin add --yes frama-c 20.0
   - eval $(opam config env); why3 config --detect
 
 script:

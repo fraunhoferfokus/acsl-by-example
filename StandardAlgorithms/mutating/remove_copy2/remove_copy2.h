@@ -7,12 +7,10 @@
 #include "RemoveSize.spec"
 
 /*@
-  requires valid: \valid_read(a + (0..n-1));
-  requires valid: \valid(b + (0..n-1));
-  requires sep:   \separated(a + (0..n-1), b + (0..n-1));
-
-  assigns b[0..n-1];
-
+  requires valid:    \valid_read(a + (0..n-1));
+  requires valid:    \valid(b + (0..n-1));
+  requires sep:      \separated(a + (0..n-1), b + (0..n-1));
+  assigns            b[0..n-1];
   ensures size:      \result == RemoveSize(a, n, v);
   ensures bound:     0 <= \result <= n;
   ensures discard:   !HasValue(b, \result, v);

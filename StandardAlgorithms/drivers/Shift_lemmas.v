@@ -5,19 +5,6 @@ Require Import Psatz.
 
 Open Scope Z_scope.
 
-Lemma foo :
-  forall i k m n: Z,
-     m <= i < n ->
-     m <  k < n ->
-     m <= i < k \/ k <= i <= n.
-Proof.
-  intros.
-  assert(IK: i < k \/ i = k \/ i > k) by apply Ztrichotomy.
-     destruct IK as [L|[M|R]].
-     left; lia.
-     right; lia.
-     right; lia.
-Qed.
 
 Lemma shift_associative :
   forall a, forall m n,

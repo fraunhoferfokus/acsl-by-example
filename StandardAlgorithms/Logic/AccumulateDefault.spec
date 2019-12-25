@@ -5,27 +5,32 @@
 #include "Accumulate.spec"
 
 /*@
-  logic integer Accumulate{L}(value_type* a, integer n) =
-    Accumulate{L}(a, n, (value_type) 0);
+  axiomatic AccumulateDefaultAxiomatic
+  {
+    logic integer
+      AccumulateDefault{L}(value_type* a, integer n) =
+        Accumulate(a+1, n, (value_type)(a[0]));
+
+    lemma
+      AccumulateDefaultRead{K,L}:
+        \forall value_type *a, integer n;
+          0 <= n                  ==>
+          Unchanged{K,L}(a, n+1)  ==>
+            AccumulateDefault{K}(a, n) == AccumulateDefault{L}(a, n);
+  }
 
   lemma
     AccumulateDefault0{L}:
-      \forall value_type* a; Accumulate(a, 0) == 0;
+      \forall value_type* a; AccumulateDefault(a, 0) == a[0];
 
   lemma
     AccumulateDefault1{L}:
-      \forall value_type* a; Accumulate(a, 1) == a[0];
+      \forall value_type* a; AccumulateDefault(a, 1) == a[0] + a[1];
 
   lemma
     AccumulateDefaultNext{L}:
       \forall value_type* a, integer n;
-        0 <= n  ==>  Accumulate(a, n+1) == Accumulate(a, n) + a[n];
-
-  lemma
-    AccumulateDefaultRead{L1,L2}:
-      \forall value_type *a, integer n;
-        Unchanged{L1,L2}(a, n)  ==>
-        Accumulate{L1}(a, n) == Accumulate{L2}(a, n);
+        0 <= n  ==>  AccumulateDefault(a, n+1) == AccumulateDefault(a, n) + a[n+1];
 */
 
 #endif /* ACCUMULATEDEFAULT_SPEC_INCLUDED */

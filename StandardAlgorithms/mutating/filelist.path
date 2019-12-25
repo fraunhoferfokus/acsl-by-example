@@ -13,5 +13,5 @@ remove_copy
 remove_copy2
 remove_copy3
 remove
-random_shuffle
+shuffle
 random_number

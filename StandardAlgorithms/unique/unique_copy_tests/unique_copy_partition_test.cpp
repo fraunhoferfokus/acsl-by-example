@@ -1,6 +1,8 @@
 
 #include "unique_copy_partition_test.h"
 #include <fstream>
+#include <cassert>
+
 
 int main(int argc, char** argv)
 {

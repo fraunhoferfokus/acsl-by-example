@@ -7,6 +7,8 @@ TEST_DATA=../unique_copy_tests/test-data-compare.txt
 include ../../example.mk
 CPPFLAGS += -I../unique_copy_tests
 
+WP_TIMEOUT=15
+
 #WP_FLAGS += -wp-split
 #WP_FLAGS += -wp-prop  UniquePreserve
 #WP_FLAGS += -wp-prop  unique

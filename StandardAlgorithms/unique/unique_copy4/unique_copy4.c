@@ -5,10 +5,7 @@
 size_type
 unique_copy4(const value_type* a, size_type n, value_type* b)
 {
-  if (n == 0u) {
-    return n;
-  }
-  else {
+  if (0u < n) {
     size_type k = 0u;
     b[k] = a[0];
     //@ assert mapping:   0 == UniquePartition(a, n, k);
@@ -30,11 +27,10 @@ unique_copy4(const value_type* a, size_type n, value_type* b)
 
       if (b[k] != val) {
         //@ assert distinct:  a[i-1] != a[i];
-        //@ ghost Before:
         b[++k] = val;
-        //@ assert unchanged: Unchanged{Before,Here}(b, k);
-        //@ assert unchanged: Unchanged{Before,Here}(a, n);
-        //@ assert unchanged: Unchanged{Before,Here}(a, i);
+        //@ assert unchanged: Unchanged{LoopCurrent,Here}(b, k);
+        //@ assert unchanged: Unchanged{LoopCurrent,Here}(a, n);
+        //@ assert unchanged: Unchanged{LoopCurrent,Here}(a, i);
         //@ assert mapping:   i == UniquePartition(a, n, k);
         //@ assert size:      k == UniqueSize(a, i);
         //@ assert unique:    Unique(a, i, b);
@@ -45,6 +41,9 @@ unique_copy4(const value_type* a, size_type n, value_type* b)
     }
 
     return ++k;
+  }
+  else {
+    return n;
   }
 }
 

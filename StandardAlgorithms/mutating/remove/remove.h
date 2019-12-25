@@ -9,10 +9,8 @@
 #include "RemoveImpliesNotHasValue.spec"
 
 /*@
-  requires valid: \valid(a + (0..n-1));
-
-  assigns a[0..n-1];
-
+  requires valid:    \valid(a + (0..n-1));
+  assigns            a[0..n-1];
   ensures size:      \result == RemoveSize{Old}(a, n, v);
   ensures bound:     0 <= \result <= n;
   ensures remove:    Remove{Old, Here}(a, n, v);

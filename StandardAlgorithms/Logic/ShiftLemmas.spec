@@ -1,7 +1,7 @@
 #ifndef SHIFTLEMMAS_SPEC_INCLUDED
 #define SHIFTLEMMAS_SPEC_INCLUDED
 
-#include "Sorted.spec"
+#include "Increasing.spec"
 #include "LowerBound.spec"
 #include "StrictLowerBound.spec"
 #include "StrictUpperBound.spec"
@@ -9,9 +9,9 @@
 
 /*@
   lemma
-    SortedShift{L}:
+    IncreasingShift{L}:
       \forall value_type *a, integer l, r;
-      0 <= l <= r  ==>  Sorted{L}(a, l, r)  ==>  Sorted{L}(a+l, r-l);
+      0 <= l <= r  ==>  Increasing{L}(a, l, r)  ==>  Increasing{L}(a+l, r-l);
 
   lemma
     LowerBoundShift{L}:

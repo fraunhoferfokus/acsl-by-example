@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <vector>
 #include <iostream>
-#include <assert.h>
+#include <cassert>
 
 #include "remove_copy.h"
 

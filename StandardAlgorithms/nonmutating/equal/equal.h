@@ -7,9 +7,7 @@
 /*@
   requires valid:  \valid_read(a + (0..n-1));
   requires valid:  \valid_read(b + (0..n-1));
-
-  assigns \nothing;
-
+  assigns          \nothing;
   ensures result:  \result <==> EqualRanges{Here,Here}(a, n, b);
 */
 bool

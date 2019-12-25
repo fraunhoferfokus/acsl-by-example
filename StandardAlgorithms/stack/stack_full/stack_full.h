@@ -5,12 +5,10 @@
 #include "StackLogic.spec"
 
 /*@
-    requires valid: \valid(s) && Invariant(s);
-
-    assigns \nothing;
-
-    ensures full:     \result == 1  <==>  Full(s);
-    ensures not_full: \result == 0  <==> !Full(s);
+    requires valid:    \valid(s) && Invariant(s);
+    assigns            \nothing;
+    ensures  full:     \result == 1  <==>  Full(s);
+    ensures  not_full: \result == 0  <==> !Full(s);
 */
 bool
 stack_full(const Stack* s);

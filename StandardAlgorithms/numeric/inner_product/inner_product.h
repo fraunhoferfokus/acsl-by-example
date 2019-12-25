@@ -7,13 +7,11 @@
 #include "Unchanged.spec"
 
 /*@
-  requires valid:   \valid_read(a + (0..n-1));
-  requires valid:   \valid_read(b + (0..n-1));
-  requires bounds:  ProductBounds(a, b, n);
-  requires bounds:  InnerProductBounds(a, b, n, init);
-
-  assigns \nothing;
-
+  requires valid:    \valid_read(a + (0..n-1));
+  requires valid:    \valid_read(b + (0..n-1));
+  requires bounds:   ProductBounds(a, b, n);
+  requires bounds:   InnerProductBounds(a, b, n, init);
+  assigns            \nothing;
   ensures result:    \result == InnerProduct(a, b, n, init);
   ensures unchanged: Unchanged{Old,Here}(a, n);
   ensures unchanged: Unchanged{Old,Here}(b, n);

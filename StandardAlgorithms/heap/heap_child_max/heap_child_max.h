@@ -10,9 +10,7 @@
    requires bound: 0 <= parent < n - 1;
    requires valid: \valid(a + (0..n-1));
    requires heap:  IsHeap(a, n);
-
    assigns         \nothing;
-
    ensures heap:   IsHeap(a, n);
    ensures max:    HeapChildMax(a, n, parent, \result);
    ensures less:   parent < \result;

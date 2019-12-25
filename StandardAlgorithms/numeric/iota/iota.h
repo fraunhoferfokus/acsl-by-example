@@ -6,11 +6,9 @@
 #include "limits.h"
 
 /*@
-  requires valid:  \valid(a + (0..n-1));
-  requires limit:  val + n <= VALUE_TYPE_MAX;
-
-  assigns a[0..n-1];
-
+  requires valid:    \valid(a + (0..n-1));
+  requires limit:    val + n <= VALUE_TYPE_MAX;
+  assigns            a[0..n-1];
   ensures increment: Iota(a, n, val);
 */
 void

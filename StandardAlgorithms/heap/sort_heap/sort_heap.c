@@ -2,7 +2,7 @@
 #include "sort_heap.h"
 #include "pop_heap.h"
 #include "LowerBound.spec"
-#include "SortedUpperBound.spec"
+#include "IncreasingUpperBound.spec"
 #include "Unchanged.spec"
 #include "MultisetUnchangedLemmas.spec"
 
@@ -10,11 +10,11 @@ void
 sort_heap(value_type* a, size_type n)
 {
   /*@
-     loop invariant bound:    0 <= i <= n;
-     loop invariant heap:     IsHeap(a, i);
-     loop invariant sorted:   Sorted(a, i, n);
-     loop invariant lower:    LowerBound(a, i, n, a[0]);
-     loop invariant reorder:  MultisetUnchanged{Pre,Here}(a, 0, n);
+     loop invariant bound:        0 <= i <= n;
+     loop invariant heap:         IsHeap(a, i);
+     loop invariant lower:        LowerBound(a, i, n, a[0]);
+     loop invariant reorder:      MultisetUnchanged{Pre,Here}(a, 0, n);
+     loop invariant increasing:   Increasing(a, i, n);
      loop assigns i, a[0..n-1];
      loop variant i;
   */

@@ -6,15 +6,17 @@
 
 /*@
   requires valid:   \valid_read(a + (0..n-1));
-  assigns  \nothing;
+  assigns           \nothing;
   ensures  result:  0 <= \result <= n;
 
   behavior empty:
-    assumes n == 0;
+    assumes          n == 0;
+    assigns          \nothing;
     ensures result:  \result == 0;
 
   behavior not_empty:
-    assumes 0 < n;
+    assumes          0 < n;
+    assigns          \nothing;
     ensures result:  0 <= \result < n;
     ensures upper:   \forall integer i; 0 <= i < n       ==> a[i] <= a[\result];
     ensures first:   \forall integer i; 0 <= i < \result ==> a[i] <  a[\result];

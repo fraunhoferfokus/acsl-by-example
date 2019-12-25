@@ -6,9 +6,7 @@
 
 /*@
   requires valid: \valid_read(a + (0..n-1));
-
-  assigns \nothing;
-
+  assigns         \nothing;
   ensures bound:  0 <= \result <= n;
   ensures count:  Count2(a, n, val, \result);
 */

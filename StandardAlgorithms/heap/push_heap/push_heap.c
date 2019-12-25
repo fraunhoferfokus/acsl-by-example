@@ -15,8 +15,8 @@ push_heap(value_type* a, size_type n)
 {
   // start of prologue
   if (1u < n) { // otherwise nothings needs to be done
-    const value_type v      = a[n - 1u];
-    size_type  hole = heap_parent(n - 1u);
+    const value_type v  = a[n - 1u];
+    size_type hole      = heap_parent(n - 1u);
 
     if (a[hole] < v) {
       a[n - 1u] = a[hole];
@@ -42,19 +42,16 @@ push_heap(value_type* a, size_type n)
           loop variant           hole;
         */
         while ((0u < hole) && (a[parent] < v)) {
-          //@ ghost Loop: // LoopEntry not yet supported!
-          //@ ghost const value_type old_a = a[hole];
-          //@ assert reorder:  old_a == \at(a[hole],Loop);
           if (a[hole] < a[parent]) {
             a[hole] = a[parent];
-            //@ assert less:    old_a   < v;
+            //@ assert less:    \at(a[hole],LoopCurrent) < v;
             //@ assert less:    a[hole] < v;
-            //@ assert retain:  MultisetUnchanged{Loop,Here}(a, 0, hole);
-            //@ assert retain:  MultisetUnchanged{Loop,Here}(a, hole + 1, n);
-            //@ assert minus:   MultisetMinus{Loop,Here}(a, n, old_a);
-            //@ assert add:     MultisetAdd{Loop,Here}(a, n, a[hole]);
-            //@ assert retain:  MultisetRetain{Loop,Here}(a, n, v);
-            //@ assert retain:  MultisetRetain{Pre,Here}(a, n, old_a);
+            //@ assert retain:  MultisetUnchanged{LoopCurrent,Here}(a, 0, hole);
+            //@ assert retain:  MultisetUnchanged{LoopCurrent,Here}(a, hole + 1, n);
+            //@ assert minus:   MultisetMinus{LoopCurrent,Here}(a, n, \at(a[hole],LoopCurrent));
+            //@ assert add:     MultisetAdd{LoopCurrent,Here}(a, n, a[hole]);
+            //@ assert retain:  MultisetRetain{LoopCurrent,Here}(a, n, v);
+            //@ assert retain:  MultisetRetain{Pre,Here}(a, n, \at(a[hole],LoopCurrent));
             //@ assert retain:  MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
           }
 
@@ -68,14 +65,14 @@ push_heap(value_type* a, size_type n)
 
       // end of main act
       // start of epilogue
-      //@ ghost Epi:
+      /*@
+        requires value:      a[hole] != v;
+        assigns              a[hole];
+        ensures  value:      a[hole] == v;
+        ensures  unchanged:  MultisetUnchanged{Old,Here}(a, 0, hole);
+        ensures  unchanged:  MultisetUnchanged{Old,Here}(a, hole+1, n);
+      */
       a[hole] = v;
-      //@ assert value:      \at(a[hole],Epi)  != v;
-      //@ assert value:      \at(a[hole],Here) == v;
-      //@ assert unchanged:  MultisetUnchanged{Epi,Here}(a, 0, hole);
-      //@ assert unchanged:  MultisetUnchanged{Epi,Here}(a, hole+1, n);
-      //@ assert add:        MultisetAdd{Epi,Here}(a, n, v);
-      //@ assert minus:      MultisetMinus{Epi,Here}(a, n, \at(a[hole],Epi));
       //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, n);
     }
   }

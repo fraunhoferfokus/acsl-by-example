@@ -1,8 +1,8 @@
 stack_equal
 stack_init
 stack_size
-stack_empty
 stack_full
+stack_empty
 stack_top
 stack_push
 stack_pop

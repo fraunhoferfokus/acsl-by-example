@@ -2,7 +2,7 @@
 #ifndef INNERPRODUCT_SPEC_INCLUDED
 #define INNERPRODUCT_SPEC_INCLUDED
 
-#include "Unchanged.spec"
+#include "UnchangedSection.spec"
 
 /*@
   axiomatic InnerProductAxiomatic

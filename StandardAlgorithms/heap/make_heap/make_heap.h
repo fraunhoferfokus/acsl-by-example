@@ -7,9 +7,7 @@
 
 /*@
    requires valid:  \valid(a + (0..n-1));
-
-   assigns a[0..n-1];
-
+   assigns          a[0..n-1];
    ensures heap:    IsHeap(a, n);
    ensures reorder: MultisetUnchanged{Old,Here}(a, n);
 */

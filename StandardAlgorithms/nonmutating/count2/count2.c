@@ -21,6 +21,7 @@ count2(const value_type* a, size_type n, value_type val)
   for (size_type i = 0u; i < n; ++i) {
     if (a[i] == val) {
       counted++;
+      //@ assert count: Count2(a, i+1, val, counted);
     }
   }
 

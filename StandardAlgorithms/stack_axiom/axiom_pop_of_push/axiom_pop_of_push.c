@@ -6,10 +6,7 @@
 /*@
   requires  valid:    \valid(s) && Invariant(s);
   requires  not_full: !Full(s);
-
-  assigns   s->size;
-  assigns   s->obj[s->size];
-
+  assigns             s->size, s->obj[s->size];
   ensures   equal:    Equal{Old,Here}(s, s);
 */
 void

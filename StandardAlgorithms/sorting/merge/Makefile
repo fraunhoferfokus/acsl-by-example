@@ -1,8 +1,6 @@
 
 include ../../example.mk
 
-show:
-	echo $(TESTOBJ)
-
 WP_FLAGS += -wp-split
+WP_TIMEOUT=20
 
