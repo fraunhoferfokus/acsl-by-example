@@ -30,13 +30,13 @@ before_install:
       wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.5/opam-2.0.5-x86_64-linux -O $HOME/bin/opam &&
       chmod +x $HOME/bin/opam
     )
-  - opam init --auto-setup --disable-sandboxing --comp=4.06.0
+  - opam init --auto-setup --disable-sandboxing --comp=4.08.1
 
 install:
   - opam update
   - opam install --yes depext
   - opam depext  --yes frama-c
-  - opam install --yes alt-ergo why3 why3-coq coq
+  - opam install --yes alt-ergo why3 
   - opam pin add --yes frama-c 20.0
   - eval $(opam config env); why3 config --detect
 
