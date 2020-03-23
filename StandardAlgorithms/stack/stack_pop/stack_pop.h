@@ -2,30 +2,27 @@
 #ifndef STACK_POP_H_INCLUDED
 #define STACK_POP_H_INCLUDED
 
-#include "StackLogic.spec"
+#include "Stack.spec"
 
 /*@
-  requires valid: \valid(s) && Invariant(s);
+  requires valid: \valid(s) && StackInvariant(s);
   assigns         s->size;
-  ensures  valid: \valid(s) && Invariant(s);
-
-  behavior not_empty:
-    assumes            !Empty(s);
-    assigns            s->size;
-    ensures size:      Size(s) == Size{Old}(s) - 1;
-    ensures full:      !Full(s);
-    ensures storage:   Storage(s) == Storage{Old}(s);
-    ensures capacity:  Capacity(s) == Capacity{Old}(s);
-    ensures unchanged: Unchanged{Old,Here}(Storage(s), Size(s));
+  ensures  valid: \valid(s) && StackInvariant(s);
 
   behavior empty:
-    assumes            Empty(s);
+    assumes            StackEmpty(s);
     assigns            \nothing;
-    ensures empty:     Empty(s);
-    ensures size:      Size(s) == Size{Old}(s);
-    ensures storage:   Storage(s) == Storage{Old}(s);
-    ensures capacity:  Capacity(s) == Capacity{Old}(s);
-    ensures unchanged: Unchanged{Old,Here}(Storage(s), Size(s));
+    ensures empty:     StackEmpty(s);
+    ensures unchanged: StackUnchanged{Old,Here}(s);
+
+  behavior not_empty:
+    assumes            !StackEmpty(s);
+    assigns            s->size;
+    ensures size:      StackSize(s) == StackSize{Old}(s) - 1;
+    ensures full:      !StackFull(s);
+    ensures storage:   StackStorage(s) == StackStorage{Old}(s);
+    ensures capacity:  StackCapacity(s) == StackCapacity{Old}(s);
+    ensures unchanged: Unchanged{Old,Here}(StackStorage(s), StackSize(s));
 
   complete behaviors;
   disjoint behaviors;

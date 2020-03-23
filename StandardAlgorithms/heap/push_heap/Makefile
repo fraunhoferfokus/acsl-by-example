@@ -1,8 +1,9 @@
 
-WP_TIMEOUT=15
 
 include ../../example.mk
 
+# long timeout for cvc4 under linux
+WP_TIMEOUT=80
 #WP_FLAGS += -wp-prop="@lemma"
 #WP_FLAGS += -wp-prop="-@lemma"
 

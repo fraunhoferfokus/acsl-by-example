@@ -1,7 +1,6 @@
 
 #include "is_sorted.h"
-#include "WeaklyIncreasing.spec"
-#include "IncreasingIFFWeaklyIncreasing.spec"
+#include "IncreasingLemmas.spec"
 
 bool
 is_sorted(const value_type* a, size_type n)

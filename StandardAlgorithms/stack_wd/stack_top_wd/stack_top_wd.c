@@ -1,11 +1,10 @@
 
-#include "StackLogic.spec"
 #include "stack_top.h"
 
 /*@
-  requires valid:  \valid(s) && Invariant(s) && !Empty(s);
-  requires valid:  \valid(t) && Invariant(t) && !Empty(t);
-  requires equal:  Equal{Here,Here}(s, t);
+  requires valid:  \valid(s) && StackInvariant(s) && !StackEmpty(s);
+  requires valid:  \valid(t) && StackInvariant(t) && !StackEmpty(t);
+  requires equal:  StackEqual{Here,Here}(s, t);
   assigns          \nothing;
   ensures  equal:  \result;
 */

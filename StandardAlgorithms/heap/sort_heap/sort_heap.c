@@ -1,17 +1,16 @@
 
 #include "sort_heap.h"
 #include "pop_heap.h"
-#include "LowerBound.spec"
+#include "ArrayBounds.spec"
 #include "IncreasingUpperBound.spec"
-#include "Unchanged.spec"
-#include "MultisetUnchangedLemmas.spec"
+#include "MultisetUnchanged.spec"
 
 void
 sort_heap(value_type* a, size_type n)
 {
   /*@
      loop invariant bound:        0 <= i <= n;
-     loop invariant heap:         IsHeap(a, i);
+     loop invariant heap:         Heap(a, i);
      loop invariant lower:        LowerBound(a, i, n, a[0]);
      loop invariant reorder:      MultisetUnchanged{Pre,Here}(a, 0, n);
      loop invariant increasing:   Increasing(a, i, n);
@@ -20,9 +19,9 @@ sort_heap(value_type* a, size_type n)
   */
   for (size_type i = n; i > 1u; --i) {
     /*@
-        requires heap:     IsHeap(a, i);
+        requires heap:     Heap(a, i);
         assigns  a[0..i-1];
-        ensures  heap:     IsHeap(a, i-1);
+        ensures  heap:     Heap(a, i-1);
         ensures  max:      a[i-1] == \old(a[0]);
         ensures  max:      MaxElement(a, i, i-1);
         ensures  reorder:  MultisetUnchanged{Old,Here}(a, 0, i);

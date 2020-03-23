@@ -1,5 +1,4 @@
 
-#include "StackLogic.spec"
 #include "stack_top.h"
 #include "stack_empty.h"
 

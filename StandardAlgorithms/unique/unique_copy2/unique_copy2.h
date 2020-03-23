@@ -10,8 +10,8 @@
   requires sep:      \separated(a + (0..n-1), b + (0..n-1));
   assigns            b[0..n-1];
   ensures result:    0 <= \result <= n;
-  ensures unchanged: Unchanged{Old, Here}(b, \result, n);
-  ensures unchanged: Unchanged{Old, Here}(a, n);
+  ensures unchanged: Unchanged{Old,Here}(b, \result, n);
+  ensures unchanged: Unchanged{Old,Here}(a, n);
 
 */
 size_type

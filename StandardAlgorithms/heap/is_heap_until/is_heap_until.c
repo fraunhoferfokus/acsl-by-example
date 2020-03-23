@@ -9,8 +9,8 @@ is_heap_until(const value_type* a, size_type n)
   /*@
     loop invariant bound:    0 <= parent < child <= n+1;
     loop invariant parent:   parent == HeapParent(child);
-    loop invariant heap:     IsHeap(a, child);
-    loop invariant not_heap: a[parent] < a[child] ==> \forall integer i; child < i <= n ==> !IsHeap(a, i);
+    loop invariant heap:     Heap(a, child);
+    loop invariant not_heap: a[parent] < a[child] ==> \forall integer i; child < i <= n ==> !Heap(a, i);
 
     loop assigns child, parent;
     loop variant n - child;

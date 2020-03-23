@@ -6,7 +6,7 @@ find2(const value_type* a, size_type n, value_type val)
 {
   /*@
     loop invariant bound:     0 <= i <= n;
-    loop invariant not_found: !HasValue(a, i, val);
+    loop invariant not_found: NoneEqual(a, i, val);
     loop assigns i;
     loop variant n-i;
    */

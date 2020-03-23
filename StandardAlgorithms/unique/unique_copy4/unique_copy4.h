@@ -3,8 +3,6 @@
 #define UNIQUE_COPY4_H_INCLUDED
 
 #include "Unique.spec"
-#include "UniqueImpliesNoEqualNeighbors.spec"
-
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));
@@ -15,8 +13,8 @@
   ensures size:      \result == UniqueSize(a, n);
   ensures unique:    Unique(a, n, b);
   ensures solitary:  !HasEqualNeighbors (b, \result);
-  ensures unchanged: Unchanged{Old, Here}(a, n);
-  ensures unchanged: Unchanged{Old, Here}(b, \result, n);
+  ensures unchanged: Unchanged{Old,Here}(a, n);
+  ensures unchanged: Unchanged{Old,Here}(b, \result, n);
  */
 size_type
 unique_copy4(const value_type* a, size_type n, value_type* b);

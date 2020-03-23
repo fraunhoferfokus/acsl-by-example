@@ -14,7 +14,7 @@
     assumes         HasValueOf(a, m, b, n);
     assigns         \nothing;
     ensures bound:  0 <= \result < m;
-    ensures result: HasValue(b, n, a[\result]);
+    ensures result: SomeEqual(b, n, a[\result]);
     ensures first:  !HasValueOf(a, \result, b, n);
 
   behavior not_found:

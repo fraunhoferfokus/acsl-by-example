@@ -2,16 +2,15 @@
 #ifndef HEAP_CHILD_MAX_H_INCLUDED
 #define HEAP_CHILD_MAX_H_INCLUDED
 
-#include "IsHeap.spec"
-#include "HeapChildMax.spec"
+#include "Heap.spec"
 
 /*@
    requires bound: 2 <= n;
    requires bound: 0 <= parent < n - 1;
    requires valid: \valid(a + (0..n-1));
-   requires heap:  IsHeap(a, n);
+   requires heap:  Heap(a, n);
    assigns         \nothing;
-   ensures heap:   IsHeap(a, n);
+   ensures heap:   Heap(a, n);
    ensures max:    HeapChildMax(a, n, parent, \result);
    ensures less:   parent < \result;
    ensures less:   \result < n - 1  ==>  parent == HeapParent(\result);

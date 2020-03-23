@@ -12,7 +12,15 @@ GROUP		:= $(shell basename $$(pwd))
 LIB		:= $(addprefix lib, $(addsuffix .a, $(GROUP)))
 EXAMPLES        := $(shell cat $(FILELIST))
 GROUP_SOURCES	:= $(join $(addsuffix /,$(EXAMPLES)),$(addsuffix .c,$(EXAMPLES)))
-GROUP_OBJECTS	:= $(GROUP_SOURCES:.c=.o)
+
+# We need to change the variable GROUP_OBJECTS for some examples (see
+# unique_copy). If a variable is declared with ':=' it is just expanded and not
+# recursively expanded (as it is the case for
+# '=' and '+=' for example).
+# Therefore we need to use '+=' to ensure, that we can add something to the
+# definition of GROUP_OBJECTS. Otherwise we would have to redefine the whole
+# variable.
+GROUP_OBJECTS	+= $(GROUP_SOURCES:.c=.o)
 
 DEPENDENCIES  :=
 include $(addsuffix /depend.mk, $(EXAMPLES))
@@ -30,7 +38,7 @@ LDFLAGS    += $(addprefix -L, $(addprefix $(TOP_DIR)/, $(EXAMPLE_LIBS)))
 lib: $(LIB)
 
 $(LIB): $(GROUP_OBJECTS)
-	@ar cr  $@ $(GROUP_OBJECTS)
+	@ar cr $@ $(GROUP_OBJECTS)
 	@ranlib $(RANLIBFLAGS) $@
 	@$(RM) $(GROUP_OBJECTS)
 

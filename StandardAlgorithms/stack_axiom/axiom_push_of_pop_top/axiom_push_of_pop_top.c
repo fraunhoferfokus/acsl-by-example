@@ -1,14 +1,13 @@
 
-#include "StackLogic.spec"
 #include "stack_pop.h"
 #include "stack_push.h"
 #include "stack_top.h"
 
 /*@
-  requires  valid:     \valid(s) && Invariant(s);
-  requires  not_empty: !Empty(s);
+  requires  valid:     \valid(s) && StackInvariant(s);
+  requires  not_empty: !StackEmpty(s);
   assigns              s->size, s->obj[s->size-1];
-  ensures   equal:     Equal{Old,Here}(s, s);
+  ensures   equal:     StackEqual{Old,Here}(s, s);
 */
 void
 axiom_push_of_pop_top(Stack* s)

@@ -1,6 +1,5 @@
 
 #include "adjacent_difference.h"
-#include "AdjacentDifferenceLemmas.spec"
 
 size_type
 adjacent_difference(const value_type* a, size_type n, value_type* b)

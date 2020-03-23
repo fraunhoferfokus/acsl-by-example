@@ -1,52 +1,28 @@
 
-#Version 20.0.0
+#Version 20.0.1
 
-- remove why3 and alt-ergo lemmas from driver
+- add a third version for specifying linear search (find3)
 
-- switch from memory model 'Typed+Ref' to 'Typed'
+- refactor definition of logic function Count
 
-- add new example bubble_sort
+- adjacent_differenrcve_inv
+	- reformulate AdjacentDifferenceInv to AdjacentDifferenceThenPartialSum
+	- improve verification rate
 
-- rewrite random_shuffle to shuffle
-	- change signature of random_number 
-	- add random_init
+- partial_sum_inv
+	- reformulate PartialSumInv to PartialSumThenAdjacentDifference
 
-- improve specification and verification rate of numeric algorithms
-	- resolve overloaded version of Accumulate into AccumulateDefault
-	- resolve overloaded version of AccumulateBounds into AccumulateDefaultBounds
-	- improve definition of predicate PartialSum
-	- add lemmas Difference0 and DifferenceNext
-	- add predicate DefaultBounds
+- random_number
+        - fixed disabling of 'unsigned overflow' warnings for bit operations
 
-- rename Sorted -> Increasing
-	- remove SortedDownIsHeap
-	- rename EqualRangesPreservesSorted -> EqualRangesPreservesIncreasing
-	- rename SortedUpperBound -> IncreasingUpperBound
-	- rename WeaklySortedAddElement -> WeaklyIncreasingAddElement
-	- rename WeaklySortedShift -> WeaklyIncreasingShift
-	- rename EqualRangesWeaklySorted -> EqualRangesWeaklyIncreasing
-	- rename WeaklySortedJoin -> WeaklyIncreasingJoin
-	- rename WeaklySortedLemmas -> WeaklyIncreasingLemmas
-	- rename SortedIFFWeaklySorted -> IncreasingIFFWeaklyIncreasing
-	- rename SortedImpliesWeaklySorted -> IncreasingImpliesWeaklyIncreasing
-	- rename WeaklySortedImpliesSorted -> WeaklyIncreasingImpliesIncreasing
-	- rename WeaklySorted -> WeaklyIncreasing
-	- rename SortedShift -> IncreasingShift
+- unique_copy
+        - adjusted makefiles to enable non-trivial test cases 
+        - test cases for unique_copy are now also executed 
 
-- add assigns in behaviors of maxmin and nonmutating algorithms
-        - search
-        - find
-        - find_end
-        - adjacent_find
-        - find2
-        - mismatch
-        - find_first_of
-        - max_element
-        - max_element2
-        - min_element
-        - minmax_element
-
-- replace, where applicable, ghost labels by loop labels or statement labels
-
-- remove lemma SwapImpliesMultisetUnchanged by using predicate Swapped
-
+- RemovePartition
+	- add logic function FindNotEqual
+	- rename logic function RemoveSize to CountNotEqual
+	- rename predicate ConstantRange to AllEqual
+	- fix wrong definition of RemovePartitionInitial
+	- use AllEqual in RemovePartitionInitial and Remove PartitionSegment
+	- rename RemovePartitionNotValue to RemovePartitionNotEqual

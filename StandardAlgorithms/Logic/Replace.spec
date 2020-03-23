@@ -5,17 +5,20 @@
 #include "typedefs.h"
 
 /*@
-  predicate
+  axiomatic Replace
+  {
+    predicate
     Replace{K,L}(value_type* a, integer n, value_type* b,
                  value_type v, value_type w) =
-       \forall integer i; 0 <= i < n ==>
-         \let ai = \at(a[i],K); \let bi = \at(b[i],L);
-              (ai == v ==> bi == w) && (ai != v ==> bi == ai) ;
+      \forall integer i; 0 <= i < n  ==>
+        \let ai = \at(a[i],K);
+        \let bi = \at(b[i],L);
+        (ai == v  ==>  bi == w) && (ai != v  ==>  bi == ai) ;
 
-
-  predicate
+    predicate
     Replace{K,L}(value_type* a, integer n, value_type v, value_type w) =
       Replace{K,L}(a, n, a, v, w);
+  }
 */
 
 #endif /* REPLACE_SPEC_INCLUDED */

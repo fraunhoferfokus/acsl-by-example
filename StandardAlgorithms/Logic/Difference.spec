@@ -2,29 +2,26 @@
 #ifndef DIFFERENCE_SPEC_INCLUDED
 #define DIFFERENCE_SPEC_INCLUDED
 
-#include "UnchangedSection.spec"
+#include "Unchanged.spec"
 
 /*@
-  axiomatic DifferenceAxiomatic
+  axiomatic Difference
   {
     logic integer
-      Difference{L}(value_type* a, integer n) =
-        n <= 0 ? a[0] : a[n] - a[n-1];
+    Difference{L}(value_type* a, integer n) =
+      n <= 0 ? a[0] : a[n] - a[n-1];
 
-    lemma
-      Difference0{L}:
-        \forall value_type *a; Difference(a, 0) == a[0];
+    lemma Difference_Zero{L}:
+      \forall value_type *a; Difference(a, 0) == a[0];
 
-    lemma
-      DifferenceNext{L}:
-        \forall value_type *a, integer n;
-          0 < n  ==> Difference(a, n) == a[n] - a[n-1];
+    lemma Difference_Next{L}:
+      \forall value_type *a, integer n;
+        0 < n  ==>  Difference(a, n) == a[n] - a[n-1];
 
-    lemma
-      DifferenceRead{K,L}:
-        \forall value_type *a, integer n;
-          0 <= n ==> Unchanged{K,L}(a, n+1) ==>
-            Difference{K}(a, n) == Difference{L}(a, n);
+    lemma Difference_Read{K,L}:
+      \forall value_type *a, integer n;
+        0 <= n  ==>  Unchanged{K,L}(a, n+1)  ==>
+        Difference{K}(a, n) == Difference{L}(a, n);
   }
 */
 

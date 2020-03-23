@@ -3,7 +3,6 @@
 #define INNER_PRODUCT_H_INCLUDED
 
 #include "InnerProduct.spec"
-#include "InnerProductBounds.spec"
 #include "Unchanged.spec"
 
 /*@

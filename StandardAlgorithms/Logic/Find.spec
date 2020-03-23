@@ -1,0 +1,98 @@
+
+#ifndef FIND_SPEC_INCLUDED
+#define FIND_SPEC_INCLUDED
+
+#include "SomeNone.spec"
+
+/*@
+  axiomatic Find
+  {
+    logic integer
+    Find(value_type* a, integer m, integer n, value_type v) =
+      (n <= m) ? 
+       0 : ((0 <= Find(a, m, n-1, v) < n-m-1) ?
+         Find(a, m, n-1, v) : ((a[n-1] == v) ? n-m-1 : n-m));
+
+    logic integer
+    Find(value_type* a, integer n, value_type v) = Find(a, 0, n, v);
+
+    lemma Find_Empty:
+      \forall value_type *a, v, integer m, n;
+        n <= m  ==>  Find(a, m, n, v) == 0;
+
+    lemma Find_Hit:
+      \forall value_type *a, v, integer m, n;
+        m <= n                  ==>
+        Find(a, m, n, v) < n-m  ==>
+        Find(a, m, n+1, v) == Find(a, m, n, v);
+
+    lemma Find_MissHit:
+      \forall value_type *a, v, integer m, n;
+        m <= n                     ==>
+        a[n] == v                  ==>
+        Find(a, m, n, v)   == n-m  ==>
+        Find(a, m, n+1, v) == n-m;
+
+    lemma Find_MissMiss:
+      \forall value_type *a, v, integer m, n;
+        m <= n                     ==>
+        a[n] != v                  ==>
+        Find(a, m, n, v)   == n-m  ==>
+        Find(a, m, n+1, v) == (n+1)-m;
+
+    lemma Find_Lower:
+      \forall value_type *a, v, integer m, n;
+        0 <= Find(a, m, n, v);
+
+    lemma Find_Upper:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  Find(a, m, n, v) <= n-m;
+
+    lemma Find_WeaklyIncreasing:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  Find(a, m, n, v) <= Find(a, m, n+1, v);
+
+    lemma Find_Extend:
+      \forall value_type *a, v, integer k, m, n;
+        m <= k < n                ==>
+        a[k] == v                 ==>
+        Find(a, m, k, v) == k-m   ==>
+        Find(a, m, n, v) == k-m;
+
+    lemma Find_Increasing:
+      \forall value_type *a, v, integer k, m, n;
+        m <= k <= n  ==>
+        Find(a, m, k, v) <= Find(a, m, n, v);
+
+    lemma Find_Limit:
+      \forall value_type *a, v, integer k, m, n;
+        m <= k < n  ==>
+        a[k] == v   ==>
+        Find(a, m, n, v) <= k-m;
+
+    lemma Find_NoneEqual:
+      \forall value_type *a, v, integer m, n;
+        m <= n                 ==>
+        NoneEqual(a, m, n, v)  ==>
+        Find(a, m, n, v) == n-m;
+
+    lemma Find_SomeEqual:
+      \forall value_type *a, v, integer k, m, n;
+        m <= k < n             ==> 
+        a[k] == v              ==>
+        NoneEqual(a, m, k, v)  ==> 
+        Find(a, m, n, v) == k-m;
+
+    lemma Find_ResultNoneEqual:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  NoneEqual(a, m, m + Find(a, m, n, v), v);
+
+    lemma Find_ResultEqual:
+      \forall value_type *a, v, integer m, n;
+        0 <= Find(a, m, n, v) < n-m  ==>
+        a[m + Find(a, m, n, v)] == v;
+  }
+*/
+
+#endif /* FIND_SPEC_INCLUDED */
+

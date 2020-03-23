@@ -1,58 +1,109 @@
 
-
 #ifndef REMOVEPARTITION_SPEC_INCLUDED
 #define REMOVEPARTITION_SPEC_INCLUDED
 
-#include "RemoveSize.spec"
-#include "UnchangedSection.spec"
+#include "CountFindNotEqual.spec"
 
 /*@
-  axiomatic RemovePartitionAxiomatic
+  axiomatic RemovePartition
   {
     logic integer
-      RemovePartition(value_type* a,  integer n,
-                      value_type  v, integer p) reads a[0..n-1];
+    NextNotEqual(value_type* a, integer x, integer n, value_type v) =
+      x + FindNotEqual(a, x, n, v);
 
-    axiom RemovePartitionEmpty:
+    logic integer
+    RemovePartition(value_type* a, integer n, value_type v, integer p) =
+      \let c = CountNotEqual(a, n, v);
+      \let x = RemovePartition(a, n, v, p-1) + 1;
+        p < 0 ? -1 : // 0 <= p
+          (n <= 0 ? 0 : // 0 < n
+            p < c ? NextNotEqual(a, x, n, v) : n
+          );
+
+    lemma RemovePartition_Empty:
       \forall value_type *a, v, integer n, p;
-        n <= 0 ==> RemovePartition(a, n, v, p) == 0;
+        n <= 0 <= p  ==>
+        RemovePartition(a, n, v, p) == 0;
 
-    axiom RemovePartitionLeft:
+    lemma RemovePartition_Left:
       \forall value_type *a, v, integer n, p;
-        p < 0 < n ==> RemovePartition(a, n, v, p) == 0;
+        p < 0  ==>  RemovePartition(a, n, v, p) == -1;
 
-    axiom RemovePartitionRight:
+    lemma RemovePartition_Right:
       \forall value_type *a, v, integer n, p;
-        0 < n ==> RemoveSize(a, n, v) <= p ==> RemovePartition(a, n, v, p) == n;
+        0 <= n                       ==>
+        CountNotEqual(a, n, v) <= p  ==>  RemovePartition(a, n, v, p) == n;
 
-    axiom RemovePartitionMonotone:
-      \forall value_type *a, v, integer n, p, q;
-        0 <= p < q <= RemoveSize(a, n, v) ==>
-          0 <= RemovePartition(a, n, v, p) < RemovePartition(a, n, v, q) < n;
-    
-    axiom RemovePartitionSegment:
+    lemma RemovePartition_Next:
+      \forall value_type *a, v, integer n, p;
+        \let x = RemovePartition(a, n, v, p-1) + 1;
+        0 <= n                           ==>
+        0 <= p < CountNotEqual(a, n, v)  ==> 
+        RemovePartition(a, n, v, p) == x + FindNotEqual(a, x, n, v);
+
+    lemma RemovePartition_Lower:
       \forall value_type *a, v, integer i, n, p;
-         0 <= p < RemoveSize(a, n, v) ==>
-           RemovePartition(a, n, v, p) < i < RemovePartition(a, n, v, p+1)
-           ==> a[i] == v;
+        0 < n                            ==>
+        0 <= p < CountNotEqual(a, n, v)  ==>
+        0 <= RemovePartition(a, n, v, p);
 
-    axiom RemovePartitionInitial:
-      \forall value_type *a, v, integer i, m, n, p;
-        0 <= i < RemovePartition(a, n, v, m) ==> a[i] == v;
+    lemma RemovePartition_Core:
+      \forall value_type *a, v, integer i, n, p;
+        \let R = RemovePartition(a, n, v, p);
+        0 < n                            ==>
+        0 <= p < CountNotEqual(a, n, v)  ==>
+        (R < n      &&
+         a[R] != v  &&
+         CountNotEqual(a, R, n, v) == CountNotEqual(a, 0, n, v) - p);
 
-    axiom RemovePartitionNotValue:
+    lemma RemovePartition_Upper:
+      \forall value_type *a, v, integer i, n, p;
+        0 < n                            ==>
+        0 <= p < CountNotEqual(a, n, v)  ==>
+        RemovePartition(a, n, v, p) < n;
+
+    lemma RemovePartition_NotEqual:
       \forall value_type *a, v, integer n, p;
-        0 <= p < RemoveSize(a, n, v) ==> a[RemovePartition(a, n, v, p)] != v;
+        0 < n  ==>
+        0 <= p < CountNotEqual(a, n, v) < n  ==>
+        a[RemovePartition(a, n, v, p)] != v;
 
-    axiom RemovePartitionEqual:
-      \forall value_type *a, v, integer n1, n2, p;
-        0 <= n1 < n2  ==>  0 <= p  < RemoveSize(a, n1, v)  ==>
-        RemovePartition(a, n1, v, p) == RemovePartition(a, n2, v, p);
-
-    axiom RemovePartitionRead{K,L}:
+    lemma RemovePartition_Count:
       \forall value_type *a, v, integer n, p;
-        Unchanged{K,L}(a, n) ==>
-          RemovePartition{K}(a, n, v, p) == RemovePartition{L}(a, n, v, p);
+        0 < n                            ==>
+        0 <= p < CountNotEqual(a, n, v)  ==>
+        CountNotEqual(a, RemovePartition(a, n, v, p), n, v) ==
+        CountNotEqual(a, 0, n, v) - p;
+
+    lemma RemovePartition_StrictlyWeakIncreasing:
+      \forall value_type *a, v, integer n, p;
+        0 < n                           ==>
+        0 < p < CountNotEqual(a, n, v)  ==>
+        RemovePartition(a, n, v, p-1) < RemovePartition(a, n, v, p);
+
+    lemma RemovePartition_StrictlyIncreasing:
+      \forall value_type *a, v, integer n, p, q;
+        0 < n                           ==>
+        0 <= p < q < CountNotEqual(a, n, v)  ==>
+        RemovePartition(a, n, v, p) < RemovePartition(a, n, v, q);
+
+    lemma RemovePartition_Segment:
+      \forall value_type *a, v, integer i, n, p;
+        0 < n                            ==>
+        0 < p <= CountNotEqual(a, n, v)  ==>
+          AllEqual(a, RemovePartition(a, n, v, p-1) + 1,
+                      RemovePartition(a, n, v, p), v);
+
+    lemma RemovePartition_Extend:
+      \forall value_type *a, v, integer n, p;
+        0 < n                            ==>
+        0 <= p < CountNotEqual(a, n, v)  ==>
+        RemovePartition(a, n, v, p) == RemovePartition(a, n+1, v, p);
+
+    lemma RemovePartition_Read{K,L}:
+      \forall value_type *a, v, integer n, p;
+        Unchanged{K,L}(a, n)  ==>
+        RemovePartition{K}(a, n, v, p) == RemovePartition{L}(a, n, v, p);
   }  
 */
 

@@ -1,0 +1,35 @@
+
+#ifndef UNCHANGEDLEMMAS_SPEC_INCLUDED
+#define UNCHANGEDLEMMAS_SPEC_INCLUDED
+
+#include "Unchanged.spec"
+
+/*@
+  axiomatic UnchangedLemmas
+  {
+    lemma Unchanged_Shrink{K,L}:
+      \forall value_type *a, integer m, n, p, q;
+         m <= p <= q <= n         ==>
+         Unchanged{K,L}(a, m, n)  ==>
+         Unchanged{K,L}(a, p, q);
+
+    lemma Unchanged_Extend{K,L}:
+      \forall value_type *a, integer n;
+        Unchanged{K,L}(a, n)        ==>
+        \at(a[n],K) == \at(a[n],L)  ==>
+        Unchanged{K,L}(a, n+1);
+
+    lemma Unchanged_Shift{K,L}:
+      \forall value_type *a, integer p, q, r;
+        Unchanged{K,L}(a+p, q, r)  ==>  Unchanged{K,L}(a, p+q, p+r);
+
+    lemma Unchanged_Transitive{K,L,M}:
+      \forall value_type *a, integer n;
+        Unchanged{K,L}(a, n)  ==>
+        Unchanged{L,M}(a, n)  ==>
+        Unchanged{K,M}(a, n);
+  }
+*/
+
+#endif /* UNCHANGEDLEMMAS_SPEC_INCLUDED */
+

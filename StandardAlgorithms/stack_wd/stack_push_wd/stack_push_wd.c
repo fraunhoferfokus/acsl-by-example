@@ -1,26 +1,25 @@
 
-#include "StackLogic.spec"
 #include "stack_push.h"
-#include "StackPushEqual.spec"
+#include "StackLemmas.spec"
 
 /*@
-  requires valid:     \valid(s) && Invariant(s);
-  requires valid:     \valid(t) && Invariant(t);
-  requires equal:     Equal{Here,Here}(s, t);
-  requires not_full:  !Full(s) && !Full(t);
-  requires sep:       Separated(s, t);
+  requires valid:     \valid(s) && StackInvariant(s);
+  requires valid:     \valid(t) && StackInvariant(t);
+  requires equal:     StackEqual{Here,Here}(s, t);
+  requires not_full:  !StackFull(s) && !StackFull(t);
+  requires sep:       StackSeparated(s, t);
   assigns             s->size, s->obj[s->size];
   assigns             t->size, t->obj[t->size];
-  ensures  valid:     Invariant(s) && Invariant(t);
-  ensures  equal:     Equal{Here,Here}(s, t);
+  ensures  valid:     StackInvariant(s) && StackInvariant(t);
+  ensures  equal:     StackEqual{Here,Here}(s, t);
 */
 void
 stack_push_wd(Stack* s, Stack* t, value_type v)
 {
   stack_push(s, v);
   stack_push(t, v);
-  //@ assert top:   Top(s) == v;
-  //@ assert top:   Top(t) == v;
-  //@ assert equal: EqualRanges{Here,Here}(Storage(s), Size{Pre}(s), Storage(t));
+  //@ assert top:   StackTop(s) == v;
+  //@ assert top:   StackTop(t) == v;
+  //@ assert equal: EqualRanges{Here,Here}(StackStorage(s), StackSize{Pre}(s), StackStorage(t));
 }
 

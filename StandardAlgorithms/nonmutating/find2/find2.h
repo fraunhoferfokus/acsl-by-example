@@ -2,7 +2,7 @@
 #ifndef FIND2_H_INCLUDED
 #define FIND2_H_INCLUDED
 
-#include "HasValue.spec"
+#include "SomeNone.spec"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));
@@ -10,14 +10,14 @@
   ensures result:    0 <= \result <= n;
 
   behavior some:
-    assumes          HasValue(a, n, val);
+    assumes          SomeEqual(a, n, val);
     assigns          \nothing;
     ensures  bound:  0 <= \result < n;
     ensures  result: a[\result] == val;
-    ensures  first:  !HasValue(a, \result, val);
+    ensures  first:  NoneEqual(a, \result, val);
 
   behavior none:
-    assumes          !HasValue(a, n, val);
+    assumes          NoneEqual(a, n, val);
     assigns          \nothing;
     ensures  result: \result == n;
 

@@ -2,8 +2,8 @@
 #include "bubble_sort.h"
 #include "swap.h"
 #include "Unchanged.spec"
-#include "MaxElement.spec"
-#include "SwappedInsideMultisetUnchanged.spec"
+#include "ArrayExtrema.spec"
+#include "SwappedInside.spec"
 
 void
 bubble_sort(value_type* a, size_type n)

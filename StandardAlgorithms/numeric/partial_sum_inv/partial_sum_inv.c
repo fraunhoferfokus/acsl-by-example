@@ -2,8 +2,7 @@
 #include "partial_sum.h"
 #include "adjacent_difference.h"
 #include "DefaultBounds.spec"
-#include "PartialSumInv.spec"
-
+#include "NumericInverse.spec"
 
 /*@
   requires valid:     \valid(a + (0..n-1));

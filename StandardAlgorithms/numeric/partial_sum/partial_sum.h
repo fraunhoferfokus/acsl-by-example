@@ -3,8 +3,6 @@
 #define PARTIAL_SUM_H_INCLUDED
 
 #include "PartialSum.spec"
-#include "AccumulateDefaultBounds.spec"
-
 
 /*@
   requires valid:     \valid_read(a + (0..n-1));

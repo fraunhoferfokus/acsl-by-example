@@ -2,7 +2,7 @@
 #ifndef ACCUMULATE_H_INCLUDED
 #define ACCUMULATE_H_INCLUDED
 
-#include "AccumulateBounds.spec"
+#include "Accumulate.spec"
 
 /*@
   requires valid:  \valid_read(a + (0..n-1));

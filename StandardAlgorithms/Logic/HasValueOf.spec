@@ -2,12 +2,15 @@
 #ifndef HASVALUEOF_SPEC_INCLUDED
 #define HASVALUEOF_SPEC_INCLUDED
 
-#include "HasValue.spec"
+#include "SomeNone.spec"
 
 /*@
-  predicate
+  axiomatic HasValueOf
+  {
+    predicate
     HasValueOf{A}(value_type* a, integer m, value_type* b, integer n) =
-      \exists integer i; 0 <= i < m && HasValue{A}(b, n, a[i]);
+      \exists integer i; 0 <= i < m && SomeEqual{A}(b, n, a[i]);
+  }
 */
 
 #endif /* HASVALUEOF_SPEC_INCLUDED */

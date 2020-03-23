@@ -9,7 +9,7 @@ make_heap(value_type* a, size_type n)
   if (0u < n) {
     /*@
        loop invariant bounds:     1 <= i <= n;
-       loop invariant heap:       IsHeap(a, i);
+       loop invariant heap:       Heap(a, i);
        loop invariant reorder:    MultisetUnchanged{Pre,Here}(a, i+1);
        loop invariant unchanged:  Unchanged{Pre,Here}(a, i+1, n);
        loop assigns   i, a[0..n-1];
@@ -20,6 +20,6 @@ make_heap(value_type* a, size_type n)
     }
   }
 
-  //@ assert  heap: IsHeap(a, n);
+  //@ assert  heap: Heap(a, n);
 }
 

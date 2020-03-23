@@ -2,15 +2,36 @@
 #ifndef STACKINVARIANT_SPEC_INCLUDED
 #define STACKINVARIANT_SPEC_INCLUDED
 
-#include "StackCapacitySizeTop.spec"
+#include "stack.h"
 
 /*@
-  predicate
-    Invariant{L}(Stack* s) =
-      0 < Capacity(s) &&
-      0 <= Size(s) <= Capacity(s) &&
-      \valid(Storage(s) + (0..Capacity(s)-1)) &&
-      \separated(s, Storage(s) + (0..Capacity(s)-1));
+  axiomatic StackInvariant
+  {
+    logic integer
+    StackCapacity{L}(Stack* s) = s->capacity;
+
+    logic integer
+    StackSize{L}(Stack* s) = s->size;
+
+    logic value_type*
+    StackStorage{L}(Stack* s) = s->obj;
+
+    logic integer
+    StackTop{L}(Stack* s) = s->obj[s->size-1];
+
+    predicate
+    StackEmpty{L}(Stack* s) =  StackSize(s) == 0;
+
+    predicate
+    StackFull{L}(Stack* s)  =  StackSize(s) == StackCapacity(s);
+
+    predicate
+    StackInvariant{L}(Stack* s) =
+      0 < StackCapacity(s) &&
+      0 <= StackSize(s) <= StackCapacity(s) &&
+      \valid(StackStorage(s) + (0..StackCapacity(s)-1)) &&
+      \separated(s, StackStorage(s) + (0..StackCapacity(s)-1));
+  }
 */
 
 #endif /* STACKINVARIANT_SPEC_INCLUDED */

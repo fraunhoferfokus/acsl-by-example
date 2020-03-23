@@ -2,8 +2,7 @@
 #ifndef MERGE_H_INCLUDED
 #define MERGE_H_INCLUDED
 
-#include "WeaklyIncreasingLemmas.spec"
-#include "IncreasingIFFWeaklyIncreasing.spec"
+#include "IncreasingLemmas.spec"
 
 
 /*@

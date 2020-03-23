@@ -87,9 +87,9 @@ $(EXAMPLE_TEST): $(EXAMPLE_TEST).o
 test: $(EXAMPLE_TEST) 
 	@./$(EXAMPLE_TEST) $(TEST_DATA)
 
-vs-pipe: $(EXAMPLE).vs-pipe
+wp: $(EXAMPLE).wp
 
-vs-par: $(EXAMPLE).vs-par
+wpgui: $(EXAMPLE).wpgui
 
 $(TOP_DIR)/Results/$(EXAMPLE).report: $(EXAMPLE).c
 	. $(SCRIPT_DIR)/script_functions.sh; extract_data_Wp $(EXAMPLE) $(CMD) $(SEC) > $@

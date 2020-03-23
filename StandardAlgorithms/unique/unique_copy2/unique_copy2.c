@@ -9,7 +9,7 @@ unique_copy2(const value_type* a, size_type n, value_type* b)
 
     /*@
       loop invariant bound:     0 <= k < i <= n;
-      loop invariant unchanged: Unchanged{Pre, Here}(b, k+1, n);
+      loop invariant unchanged: Unchanged{Pre,Here}(b, k+1, n);
       loop assigns i, k, b[0..n-1];
       loop variant n-i;
     */

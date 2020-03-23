@@ -2,21 +2,23 @@
 #ifndef  HASCONSTANTSUBRANGE_SPEC_INCLUDED
 #define  HASCONSTANTSUBRANGE_SPEC_INCLUDED
 
-#include "ConstantRange.spec"
+#include "AllSomeNot.spec"
 
 /*@
-  predicate
+  axiomatic HasConstantSubRange
+  {
+    predicate
     HasConstantSubRange{L}(value_type* a, integer m, integer n, value_type v, integer p) =
-      \exists integer k; m <= k <= n-p && ConstantRange(a, k, k+p, v);
+      \exists integer k; m <= k <= n-p && AllEqual(a, k, k+p, v);
 
-  predicate
+    predicate
     HasConstantSubRange{L}(value_type* a, integer n, value_type v, integer p) =
       HasConstantSubRange(a, 0, n, v, p);
 
-  lemma
-    HasConstantSubRangeSizes:
+    lemma HasConstantSubRangeSizes:
       \forall value_type *a, v, integer n, p;
-        HasConstantSubRange(a, n, v, p) ==> p <= n;
+        HasConstantSubRange(a, n, v, p)  ==>  p <= n;
+  }
 */
 
 #endif /*  HASCONSTANTSUBRANGE_SPEC_INCLUDED */

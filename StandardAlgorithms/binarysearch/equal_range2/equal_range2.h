@@ -4,9 +4,8 @@
 
 #include "SizeTypePairTrivial.spec"
 #include "Increasing.spec"
-#include "ConstantRange.spec"
-#include "StrictUpperBound.spec"
-#include "StrictLowerBound.spec"
+#include "AllSomeNot.spec"
+#include "ArrayBounds.spec"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));
@@ -14,7 +13,7 @@
   assigns              \nothing;
   ensures result:      0 <= \result.first <= \result.second <= n;
   ensures left:        StrictUpperBound(a, 0, \result.first, val);
-  ensures middle:      ConstantRange(a, \result.first, \result.second, val);
+  ensures middle:      AllEqual(a, \result.first, \result.second, val);
   ensures right:       StrictLowerBound(a, \result.second, n, val);
  */
 size_type_pair

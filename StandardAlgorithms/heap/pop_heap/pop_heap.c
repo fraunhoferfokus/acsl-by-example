@@ -1,7 +1,6 @@
 
 #include "pop_heap.h"
 #include "heap_child_max.h"
-#include "HeapMaximum.spec"
 
 void
 pop_heap(value_type* a, size_type n)
@@ -19,7 +18,7 @@ pop_heap(value_type* a, size_type n)
       /*@
           loop invariant bounds: 0 <= hole < n-1;
           loop invariant bounds: hole < child;
-          loop invariant heap:   IsHeap(a, n);
+          loop invariant heap:   Heap(a, n);
           loop invariant heap:   a[n-1] < a[HeapParent(hole)];
           loop invariant heap:   child < n - 1  ==>  hole == HeapParent(child);
           loop invariant child:  HeapChildMax(a, n, hole, child);
@@ -30,18 +29,18 @@ pop_heap(value_type* a, size_type n)
       while ((child < n - 1u) && (a[n - 1u] < a[child])) {
         a[hole] = a[child];
         hole    = child;
-        //@ assert heap: IsHeap(a, n);
+        //@ assert heap: Heap(a, n);
         child = heap_child_max(a, n, hole);
       }
 
       //@ assert child: child < n-1 ==> a[n-1] >= a[child];
       //@ assert child: HeapChildMax(a, n, hole, child);
-      //@ assert heap: IsHeap(a, n);
-      //@ assert heap: a[n-1] < a[HeapParent(hole)];
+      //@ assert heap:  Heap(a, n);
+      //@ assert heap:  a[n-1] < a[HeapParent(hole)];
       a[hole]   = a[n - 1u];
-      //@ assert heap: IsHeap(a, n-1);
+      //@ assert heap:  Heap(a, n-1);
       a[n - 1u] = v;
-      //@ assert heap: IsHeap(a, n-1);
+      //@ assert heap:  Heap(a, n-1);
     }
   }
 }

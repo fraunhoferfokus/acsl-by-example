@@ -13,7 +13,7 @@
     assumes           HasConstantSubRange(a, n, v, p);
     assigns           \nothing;
     ensures result:   0 <= \result <= n-p;
-    ensures match:    ConstantRange(a, \result, \result+p, v);
+    ensures match:    AllEqual(a, \result, \result+p, v);
     ensures first:    !HasConstantSubRange(a, \result+p-1, v, p);
 
   behavior no_match:

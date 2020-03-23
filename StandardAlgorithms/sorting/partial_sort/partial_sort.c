@@ -7,14 +7,8 @@
 #include "sort_heap.h"
 #include "swap.h"
 
-#include "HeapMaximum.spec"
-#include "LowerBound.spec"
-#include "MultisetUnchangedLemmas.spec"
-#include "ReorderPreservesLowerBound.spec"
-#include "ReorderPreservesUpperBound.spec"
-#include "PartialReorderPreservesLowerBounds.spec"
-#include "SwappedInsideMultisetUnchanged.spec"
-#include "SwappedInsidePreservesMultisetUnchanged.spec"
+#include "PartitionLemmas.spec"
+#include "SwappedInside.spec"
 
 void
 partial_sort(value_type* a, size_type m, size_type n)
@@ -25,7 +19,7 @@ partial_sort(value_type* a, size_type m, size_type n)
     //@ assert reorder: Unchanged{Pre,Here}(a, m, n);
     /*@
       loop invariant bound:     m <= i <= n;
-      loop invariant heap:      IsHeap(a, m);
+      loop invariant heap:      Heap(a, m);
       loop invariant upper:     UpperBound(a, 0, m, a[0]);
       loop invariant lower:     LowerBound(a, m, i, a[0]);
       loop invariant reorder:   MultisetUnchanged{Pre,Here}(a, i);
@@ -37,12 +31,12 @@ partial_sort(value_type* a, size_type m, size_type n)
       if (a[i] < a[0u]) {
         /*@
           assigns              a[0..m-1];
-          ensures heap:        IsHeap(a, m-1);
+          ensures heap:        Heap(a, m-1);
           ensures max:         a[m-1] == \old(a[0]);
           ensures max:         MaxElement(a, m, m-1);
-          ensures reorder:     MultisetUnchanged{Old, Here}(a, m);
-          ensures unchanged:   Unchanged{Old, Here}(a, m, i);
-          ensures unchanged:   Unchanged{Old, Here}(a, m, n);
+          ensures reorder:     MultisetUnchanged{Old,Here}(a, m);
+          ensures unchanged:   Unchanged{Old,Here}(a, m, i);
+          ensures unchanged:   Unchanged{Old,Here}(a, m, n);
         */
         pop_heap(a, m);
         //@ assert lower:      a[0] <= a[m-1];
@@ -65,7 +59,7 @@ partial_sort(value_type* a, size_type m, size_type n)
 
         /*@
           assigns              a[0..m-1];
-          ensures heap:        IsHeap(a, m);
+          ensures heap:        Heap(a, m);
           ensures reorder:     MultisetUnchanged{Old,Here}(a, m);
           ensures unchanged:   Unchanged{Old,Here}(a, m, i+1);
           ensures unchanged:   Unchanged{Old,Here}(a, i+1, n);

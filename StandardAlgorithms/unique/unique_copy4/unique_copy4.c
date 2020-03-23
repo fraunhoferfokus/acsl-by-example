@@ -1,6 +1,5 @@
 
 #include "unique_copy4.h"
-#include "UniquePreserve.spec"
 
 size_type
 unique_copy4(const value_type* a, size_type n, value_type* b)
@@ -17,8 +16,8 @@ unique_copy4(const value_type* a, size_type n, value_type* b)
       loop invariant mapping:   UniquePartition(a, n, k) < i;
       loop invariant mapping:   i <= UniquePartition(a, n, k+1);
       loop invariant unique:    Unique(a, i, b);
-      loop invariant unchanged: Unchanged{Pre, Here}(a, n);
-      loop invariant unchanged: Unchanged{Pre, Here}(b, k+1, n);
+      loop invariant unchanged: Unchanged{Pre,Here}(a, n);
+      loop invariant unchanged: Unchanged{Pre,Here}(b, k+1, n);
       loop assigns i, k, b[0..n-1];
       loop variant n-i;
     */
@@ -37,7 +36,7 @@ unique_copy4(const value_type* a, size_type n, value_type* b)
       }
 
       //@ assert mapping:   i <= UniquePartition(a, n, k+1);
-      //@ assert unchanged: Unchanged{Pre, Here}(b, k+1, n);
+      //@ assert unchanged: Unchanged{Pre,Here}(b, k+1, n);
     }
 
     return ++k;

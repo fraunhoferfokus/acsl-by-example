@@ -2,12 +2,12 @@
 #ifndef STACK_TOP_H_INCLUDED
 #define STACK_TOP_H_INCLUDED
 
-#include "StackLogic.spec"
+#include "Stack.spec"
 
 /*@
-    requires valid: \valid(s) && Invariant(s);
+    requires valid: \valid(s) && StackInvariant(s);
     assigns         \nothing;
-    ensures  top:   !Empty(s) ==> \result == Top(s);
+    ensures  top:   !StackEmpty(s) ==> \result == StackTop(s);
 */
 value_type
 stack_top(const Stack* s);

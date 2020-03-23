@@ -2,44 +2,23 @@
 #ifndef HEAP_SPEC_INCLUDED
 #define HEAP_SPEC_INCLUDED
 
-#include "typedefs.h"
+#include "HeapBasics.spec"
+#include "ArrayExtrema.spec"
+#include "C_Division.spec"
 
 /*@
-  logic integer HeapLeft(integer i) = 2*i + 1;
+  axiomatic Heap
+  {
+    predicate
+    Heap{L}(value_type* a, integer n) =
+      \forall integer i; 0 < i < n  ==>  a[i] <= a[HeapParent(i)];
 
-  logic integer HeapRight(integer i) = 2*i + 2;
-
-  logic integer HeapParent(integer i) = (i-1) / 2;
-
-  lemma
-    HeapParentOfLeft:
-      \forall integer p; 0 <= p ==> HeapParent(HeapLeft(p)) == p;
-
-  lemma
-    HeapParentOfRight:
-      \forall integer p; 0 <= p ==> HeapParent(HeapRight(p)) == p;
-
-  lemma
-    HeapParentChild:
-      \forall integer c, p;
-        0 < c ==> HeapParent(c) == p ==>
-        (c == HeapLeft(p) || c == HeapRight(p));
-
-  lemma
-    HeapChilds:
-      \forall integer a, b;
-        0 < a ==> 0 < b ==>
-        HeapParent(a) == HeapParent(b) ==>
-        (a == b || a+1 == b || a == b+1);
-
-  lemma
-    HeapParentBounds:
-      \forall integer c; 0 < c ==> 0 <= HeapParent(c) < c;
-
-  lemma
-    HeapChildBounds:
-      \forall integer p;
-        0 <= p ==> p < HeapLeft(p) < HeapRight(p);
+    lemma HeapMaximum{L} :
+      \forall value_type* a, integer n;
+        0 < n       ==>
+        Heap(a, n)  ==>
+        MaxElement(a, n, 0);
+  }
 */
 
 #endif /* HEAP_SPEC_INCLUDED */

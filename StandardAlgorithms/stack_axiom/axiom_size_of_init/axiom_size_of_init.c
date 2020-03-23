@@ -1,5 +1,4 @@
 
-#include "StackLogic.spec"
 #include "stack_init.h"
 #include "stack_size.h"
 
@@ -10,7 +9,7 @@
   requires pos:    0 < n;
   assigns          s->obj, s->capacity, s->size;
   ensures  size:   \result == 0;
-  ensures  valid:  Invariant(s);
+  ensures  valid:  StackInvariant(s);
 */
 size_type
 axiom_size_of_init(Stack* s, value_type* a, size_type n)

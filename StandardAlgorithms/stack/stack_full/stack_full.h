@@ -2,13 +2,13 @@
 #ifndef STACK_FULL_H_INCLUDED
 #define STACK_FULL_H_INCLUDED
 
-#include "StackLogic.spec"
+#include "Stack.spec"
 
 /*@
-    requires valid:    \valid(s) && Invariant(s);
+    requires valid:    \valid(s) && StackInvariant(s);
     assigns            \nothing;
-    ensures  full:     \result == 1  <==>  Full(s);
-    ensures  not_full: \result == 0  <==> !Full(s);
+    ensures  full:     \result == 1  <==>  StackFull(s);
+    ensures  not_full: \result == 0  <==> !StackFull(s);
 */
 bool
 stack_full(const Stack* s);

@@ -16,9 +16,9 @@ main(int argc, char** argv)
   auto b = a;
 
   {
-     std::vector<unsigned short> seed(3);
-     random_init(seed.data());
-     shuffle(a.data(), a.size(), seed.data());
+    std::vector<unsigned short> seed(3);
+    random_init(seed.data());
+    shuffle(a.data(), a.size(), seed.data());
   }
   {
     std::random_device rd;

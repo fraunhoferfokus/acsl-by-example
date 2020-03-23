@@ -8,7 +8,7 @@ remove_copy(const value_type *a, size_type n, value_type *b, value_type v)
 
   /*@
     loop invariant bound:     0 <= k <= i <= n;
-    loop invariant discard:   !HasValue(b, k, v);
+    loop invariant discard:   NoneEqual(b, k, v);
     loop invariant unchanged: Unchanged{Pre,Here}(b, k, n);
     loop assigns   k, i, b[0..n-1];
     loop variant   n-i;

@@ -3,7 +3,6 @@
 #define ADJACENT_DIFFERENCE_H_INCLUDED
 
 #include "AdjacentDifference.spec"
-#include "AdjacentDifferenceBounds.spec"
 
 /*@
    requires valid:      \valid_read(a + (0..n-1));

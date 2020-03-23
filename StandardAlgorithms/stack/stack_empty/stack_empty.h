@@ -2,13 +2,13 @@
 #ifndef STACK_EMPTY_H_INCLUDED
 #define STACK_EMPTY_H_INCLUDED
 
-#include "StackLogic.spec"
+#include "Stack.spec"
 
 /*@
-    requires valid:    \valid(s) && Invariant(s);
+    requires valid:    \valid(s) && StackInvariant(s);
     assigns            \nothing;
-    ensures empty:     \result == 1  <==>  Empty(s);
-    ensures not_empty: \result == 0  <==> !Empty(s);
+    ensures empty:     \result == 1  <==>  StackEmpty(s);
+    ensures not_empty: \result == 0  <==> !StackEmpty(s);
 */
 bool
 stack_empty(const Stack* s);

@@ -2,6 +2,6 @@
 
 include ../../example.mk
 
+WP_TIMEOUT=10
 #WP_FLAGS += -wp-prop bounds
-#WP_FLAGS += -wp-prop AdjacentDifferenceInvBounds
 

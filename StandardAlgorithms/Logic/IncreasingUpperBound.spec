@@ -3,15 +3,17 @@
 #define INCREASINGUPPERBOUND_SPEC_INCLUDED
 
 #include "Increasing.spec"
-#include "UpperBound.spec"
+#include "ArrayBounds.spec"
 
 /*@
-  lemma
-    IncreasingUpperBound{L}:
+  axiomatic IncreasingUpperBound
+  {
+    lemma IncreasingUpperBound{L}:
       \forall value_type *a, integer n;
         UpperBound(a, n, a[n])  ==>
-        Increasing(a, n)            ==>
+        Increasing(a, n)        ==>
         Increasing(a, n+1);
+  }
 */
 
 #endif /* INCREASINGUPPERBOUND_SPEC_INCLUDED */

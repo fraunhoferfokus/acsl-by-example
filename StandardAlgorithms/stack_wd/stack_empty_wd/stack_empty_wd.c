@@ -1,11 +1,10 @@
 
-#include "StackLogic.spec"
 #include "stack_empty.h"
 
 /*@
-  requires valid:  \valid(s) && Invariant(s);
-  requires valid:  \valid(t) && Invariant(t);
-  requires equal:  Equal{Here,Here}(s, t);
+  requires valid:  \valid(s) && StackInvariant(s);
+  requires valid:  \valid(t) && StackInvariant(t);
+  requires equal:  StackEqual{Here,Here}(s, t);
   assigns          \nothing;
   ensures  equal:  \result;
 */

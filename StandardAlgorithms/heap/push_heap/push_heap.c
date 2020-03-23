@@ -1,14 +1,8 @@
 
 #include "push_heap.h"
 #include "heap_parent.h"
-#include "CountLemmas.spec"
-#include "MultisetAdd.spec"
-#include "MultisetAddDistinct.spec"
-#include "MultisetMinus.spec"
-#include "MultisetMinusDistinct.spec"
-#include "MultisetRetainRest2.spec"
-#include "MultisetPushHeapRetain.spec"
-#include "MultisetPushHeapClosure.spec"
+#include "MultisetOperations.spec"
+#include "MultisetPushHeap.spec"
 
 void
 push_heap(value_type* a, size_type n)
@@ -21,7 +15,7 @@ push_heap(value_type* a, size_type n)
     if (a[hole] < v) {
       a[n - 1u] = a[hole];
 
-      //@ assert heap:   IsHeap(a, n);
+      //@ assert heap:   Heap(a, n);
       //@ assert add:    MultisetAdd{Pre,Here}(a, n, a[hole]);
       //@ assert minus:  MultisetMinus{Pre,Here}(a, n, v);
       //@ assert retain: MultisetRetainRest{Pre,Here}(a, n, v, a[hole]);
@@ -32,7 +26,7 @@ push_heap(value_type* a, size_type n)
 
         /*@
           loop invariant bound:  0 <= hole < n-1;
-          loop invariant heap:   IsHeap(a, n);
+          loop invariant heap:   Heap(a, n);
           loop invariant heap:   parent == HeapParent(hole);
           loop invariant less:   a[hole] < v;
           loop invariant add:    MultisetAdd{Pre,Here}(a, n, a[hole]);

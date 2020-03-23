@@ -2,11 +2,9 @@
 #include "insertion_sort.h"
 #include "upper_bound.h"
 #include "rotate.h"
-#include "LowerBound.spec"
-#include "MultisetUnchangedLemmas.spec"
-#include "EqualRangesPreservesIncreasing.spec"
-#include "RotateImpliesMultisetUnchanged.spec"
-#include "RotatePreservesStrictLowerBound.spec"
+#include "ArrayBounds.spec"
+#include "EqualRangesLemmas.spec"
+#include "CircularShiftLemmas.spec"
 
 void
 insertion_sort(value_type* a, size_type n)

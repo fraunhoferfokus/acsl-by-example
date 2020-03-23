@@ -1,6 +1,6 @@
 
 CMD=properties\\\;of\\\;operator\\\;\\inl\{\<\}
-SEC=sec:relationaloperator
+SEC=sec:relationaloperators
 
 include ../../example.mk
 

@@ -2,7 +2,7 @@
 #ifndef STACK_INIT_H_INCLUDED
 #define STACK_INIT_H_INCLUDED
 
-#include "StackLogic.spec"
+#include "Stack.spec"
 
 /*@
   requires valid:     \valid(s);
@@ -11,10 +11,10 @@
   requires sep:       \separated(s, storage + (0..capacity-1));
   assigns             s->obj, s->capacity, s->size;
   ensures  valid:     \valid(s);
-  ensures  capacity:  Capacity(s) == capacity;
-  ensures  storage:   Storage(s) == storage;
-  ensures  invariant: Invariant(s);
-  ensures  empty:     Empty(s);
+  ensures  capacity:  StackCapacity(s) == capacity;
+  ensures  storage:   StackStorage(s) == storage;
+  ensures  invariant: StackInvariant(s);
+  ensures  empty:     StackEmpty(s);
 */
 void
 stack_init(Stack* s, value_type* storage, size_type capacity);

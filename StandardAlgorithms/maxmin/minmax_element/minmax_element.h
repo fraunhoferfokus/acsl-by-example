@@ -3,10 +3,7 @@
 #define MINMAX_ELEMENT_H_INCLUDED
 
 #include "SizeTypePairTrivial.spec"
-#include "MinElement.spec"
-#include "MaxElement.spec"
-#include "StrictLowerBound.spec"
-#include "StrictUpperBound.spec"
+#include "ArrayExtrema.spec"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));

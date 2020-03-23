@@ -2,31 +2,61 @@
 #ifndef COUNT_SPEC_INCLUDED
 #define COUNT_SPEC_INCLUDED
 
-#include "CountSection.spec"
+#include "UnchangedLemmas.spec"
 
 /*@
-  logic integer
-    Count{L}(value_type* a, integer n, value_type v) = Count{L}(a, 0, n, v);
+  axiomatic Count
+  {
+    logic integer
+    Count(value_type* a, integer m, integer n, value_type v) =
+      n <= m ? 0 : Count(a, m, n-1, v) + (a[n-1] == v ? 1 : 0);
 
-  lemma
-    CountEmpty:
-      \forall value_type *a, v, integer n;
-        n <= 0  ==>  Count(a, n, v) == 0;
+    logic integer
+    Count(value_type* a, integer n, value_type v) = Count(a, 0, n, v);
 
-  lemma
-    CountHit:
-      \forall value_type *a, v, integer n;
-        0 < n  ==>  a[n-1] == v  ==>  Count(a, n, v) == Count(a, n-1, v) + 1;
+    lemma Count_Empty:
+      \forall value_type *a, v, integer m, n;
+        n <= m  ==>  Count(a, m, n, v) == 0;
 
-  lemma
-    CountMiss:
-      \forall value_type *a, v, integer n;
-        0 < n  ==>  a[n-1] != v  ==>  Count(a, n, v) == Count(a, n-1, v);
+    lemma Count_Hit:
+      \forall value_type *a, v, integer n, m;
+        m < n        ==>
+        a[n-1] == v  ==>
+        Count(a, m, n, v) == Count(a, m, n-1, v) + 1;
 
-  lemma
-    CountRead{L1,L2}:
-      \forall value_type *a, v, integer n;
-        Unchanged{L1,L2}(a, n)  ==>  Count{L1}(a, n, v) == Count{L2}(a, n, v);
+    lemma Count_Miss:
+      \forall value_type *a, v, integer n, m;
+        m < n        ==>
+        a[n-1] != v  ==>
+        Count(a, m, n, v) == Count(a, m, n-1, v);
+
+    lemma Count_Read{K,L}:
+      \forall value_type *a, v, integer m, n;
+        Unchanged{K,L}(a, m, n)  ==>  Count{K}(a, m, n, v) == Count{L}(a, m, n, v);
+
+    lemma Count_One:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  Count(a, m, n+1, v) == Count(a, m, n, v) + Count(a, n, n+1, v);
+
+    lemma Count_Union:
+      \forall value_type *a, v, integer k, m, n;
+        0 <= k <= m <= n  ==>
+        Count(a, k, n, v) == Count(a, k, m, v) + Count(a, m, n, v);
+
+    lemma Count_Bounds:
+      \forall value_type *a, v, integer m, n;
+        0 <= m <= n  ==>  0 <= Count(a, m, n, v) <= n-m;
+
+    lemma Count_Increasing:
+      \forall value_type *a, v, integer m, n, p;
+        m <= n <= p  ==>  Count(a, m, n, v) <= Count(a, m, p, v);
+
+    lemma Count_Shift:
+      \forall value_type *a, v, integer m, n;
+        0 <= m  ==>
+        0 <= n  ==>
+        Count(a+m, 0, n, v) == Count(a, m, m+n, v);
+  }
 */
 
 #endif /* COUNT_SPEC_INCLUDED */

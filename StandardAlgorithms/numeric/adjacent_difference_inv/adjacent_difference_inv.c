@@ -1,9 +1,9 @@
 
 #include "partial_sum.h"
 #include "adjacent_difference.h"
-#include "UnchangedTransitive.spec"
 #include "DefaultBounds.spec"
-#include "AdjacentDifferenceInv.spec"
+#include "NumericInverse.spec"
+
 
 /*@
   requires size:      0 <= n;
@@ -19,7 +19,6 @@ void
 adjacent_difference_inv(value_type* a, size_type n, value_type* b)
 {
   adjacent_difference(a, n, b);
-  //@ assert bounds:     AccumulateDefaultBounds(b, n);
   partial_sum(b, n, a);
 }
 

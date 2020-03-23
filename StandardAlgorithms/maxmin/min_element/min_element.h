@@ -2,8 +2,7 @@
 #ifndef MIN_ELEMENT_H_INCLUDED
 #define MIN_ELEMENT_H_INCLUDED
 
-#include "MinElement.spec"
-#include "StrictLowerBound.spec"
+#include "ArrayExtrema.spec"
 
 /*@
   requires valid:   \valid_read(a + (0..n-1));

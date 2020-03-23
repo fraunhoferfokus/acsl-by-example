@@ -2,8 +2,8 @@
 #include "shuffle.h"
 #include "random_number.h"
 #include "swap.h"
-#include "MultisetUnchangedLemmas.spec"
-#include "SwappedInsideMultisetUnchanged.spec"
+#include "MultisetUnchanged.spec"
+#include "SwappedInside.spec"
 
 
 void

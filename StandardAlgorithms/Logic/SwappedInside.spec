@@ -3,9 +3,13 @@
 #define SWAPPEDINSIDE_SPEC_INCLUDED
 
 #include "Unchanged.spec"
+#include "MultisetUnchanged.spec"
+#include "EqualRangesLemmas.spec"
 
 /*@
-  predicate
+  axiomatic SwappedInside
+  {
+    predicate
     SwappedInside{K,L}(value_type* a, integer i, integer k, integer n) =
       0 <= i < k < n              &&
       \at(a[i],K) == \at(a[k],L)  &&
@@ -13,6 +17,19 @@
       Unchanged{K,L}(a, 0,   i)   &&
       Unchanged{K,L}(a, i+1, k)   &&
       Unchanged{K,L}(a, k+1, n);
+
+    lemma SwappedInsideReorder{K,L}:
+      \forall value_type* a, integer i, k, n;
+        SwappedInside{K,L}(a, i, k, n)  ==>
+        MultisetUnchanged{K,L}(a, i, k+1);
+
+    lemma SwappedInsidePreserve{K,L,M}:
+      \forall value_type* a, integer i, k, n;
+        MultisetUnchanged{K,L}(a, k)    ==>
+        Unchanged{K,L}(a, k, n)         ==>
+        SwappedInside{L,M}(a, i, k, n)  ==>
+        MultisetUnchanged{K,M}(a, k+1);
+  }
 */
 
 #endif /* SWAPPEDINSIDE_SPEC_INCLUDED */

@@ -1,6 +1,6 @@
 
 #include "random_number.h"
-#include "RandomNumberModulo.spec"
+#include "C_Bit.spec"
 
 // see IEEE 1003.1-2008, 2016 Edition for specification
 /*@

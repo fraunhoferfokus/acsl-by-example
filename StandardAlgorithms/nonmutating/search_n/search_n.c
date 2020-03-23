@@ -9,7 +9,7 @@ search_n(const value_type* a, size_type n, value_type v, size_type p)
       size_type start = 0u;
 
       /*@
-        loop invariant match:     ConstantRange(a, start, i, v);
+        loop invariant match:     AllEqual(a, start, i, v);
         loop invariant start:     0 < start ==> a[start-1] != v;
         loop invariant bound:     start <= i + 1 <= start + p;
         loop invariant not_found: !HasConstantSubRange(a, i, v, p);
@@ -23,11 +23,11 @@ search_n(const value_type* a, size_type n, value_type v, size_type p)
         }
         else {
           //@ assert match: a[i] == v;
-          //@ assert match: ConstantRange(a, start, i+1, v);
+          //@ assert match: AllEqual(a, start, i+1, v);
           if (p == i + 1u - start) {
             //@ assert bound: start + p == i + 1;
-            //@ assert match: ConstantRange(a, start, start+p, v);
-            //@ assert match: \exists integer k; 0 <= k <= n-p && ConstantRange(a, k, k+p, v);
+            //@ assert match: AllEqual(a, start, start+p, v);
+            //@ assert match: \exists integer k; 0 <= k <= n-p && AllEqual(a, k, k+p, v);
             //@ assert match: HasConstantSubRange(a, n, v, p);
             return start;
           }
@@ -51,7 +51,7 @@ search_n(const value_type* a, size_type n, value_type v, size_type p)
   }
   else {
     //@ assert bound: p == 0;
-    //@ assert match: ConstantRange(a, 0, 0, v);
+    //@ assert match: AllEqual(a, 0, 0, v);
     //@ assert match: HasConstantSubRange(a, n, v, 0);
     return 0u;
   }

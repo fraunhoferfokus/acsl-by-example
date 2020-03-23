@@ -1,7 +1,7 @@
 
 include ../../example.mk
 
-#WP_FLAGS += -wp-prop PopHeapUpdate
+#WP_FLAGS += -wp-prop HeapMaximum
 #WP_FLAGS += -wp-prop heap
 #WP_FLAGS += -wp-prop="-@lemma"
 #WP_FLAGS += -wp-prop="@lemma"

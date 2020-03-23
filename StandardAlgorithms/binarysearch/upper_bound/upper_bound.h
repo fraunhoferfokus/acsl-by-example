@@ -3,8 +3,7 @@
 #define UPPER_BOUND_H_INCLUDED
 
 #include "Increasing.spec"
-#include "UpperBound.spec"
-#include "StrictLowerBound.spec"
+#include "ArrayBounds.spec"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));
