@@ -27,7 +27,7 @@ env:
 before_install:
   - sudo apt update -qq
   - which opam || (
-      wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.5/opam-2.0.5-x86_64-linux -O $HOME/bin/opam &&
+      wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.6/opam-2.0.6-x86_64-linux -O $HOME/bin/opam &&
       chmod +x $HOME/bin/opam
     )
   - opam init --auto-setup --disable-sandboxing --comp=4.08.1
@@ -35,8 +35,7 @@ before_install:
 install:
   - opam update
   - opam install --yes depext
-  - opam depext  --yes frama-c
-  - opam install --yes alt-ergo why3 
+  - opam depext  --yes --install frama-c alt-ergo why3
   - opam pin add --yes frama-c 20.0
   - eval $(opam config env); why3 config --detect
 
@@ -44,5 +43,6 @@ script:
    - make -C StandardAlgorithms clean
    - make -C StandardAlgorithms report-clean
    - make -C StandardAlgorithms test
+   - sed -i -e '/WP_TIMEOUT/d' $(find StandardAlgorithms -type f -name Makefile)
    - eval $(opam config env); make -C StandardAlgorithms report
-   - git diff
+   - git diff StandardAlgorithms/Results
