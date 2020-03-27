@@ -35,8 +35,7 @@ before_install:
 install:
   - opam update
   - opam install --yes depext
-  - opam depext  --yes frama-c
-  - opam install --yes alt-ergo why3 
+  - opam depext  --yes --install frama-c alt-ergo why3
   - opam pin add --yes frama-c 20.0
   - eval $(opam config env); why3 config --detect
 
