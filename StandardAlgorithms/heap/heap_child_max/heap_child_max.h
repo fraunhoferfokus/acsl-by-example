@@ -2,7 +2,7 @@
 #ifndef HEAP_CHILD_MAX_H_INCLUDED
 #define HEAP_CHILD_MAX_H_INCLUDED
 
-#include "Heap.spec"
+#include "Heap.acsl"
 
 /*@
    requires bound: 2 <= n;

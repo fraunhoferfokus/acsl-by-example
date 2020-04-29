@@ -2,10 +2,10 @@
 #ifndef EQUAL_RANGE_H_INCLUDED
 #define EQUAL_RANGE_H_INCLUDED
 
-#include "SizeTypePairTrivial.spec"
-#include "Increasing.spec"
-#include "AllSomeNot.spec"
-#include "ArrayBounds.spec"
+#include "SizeTypePairTrivial.acsl"
+#include "Increasing.acsl"
+#include "AllSomeNot.acsl"
+#include "ArrayBounds.acsl"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));

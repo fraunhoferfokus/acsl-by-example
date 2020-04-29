@@ -2,8 +2,8 @@
 #ifndef REPLACE_COPY_H_INCLUDED
 #define REPLACE_COPY_H_INCLUDED
 
-#include "Replace.spec"
-#include "Unchanged.spec"
+#include "Replace.acsl"
+#include "Unchanged.acsl"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));

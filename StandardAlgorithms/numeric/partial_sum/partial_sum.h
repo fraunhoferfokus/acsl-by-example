@@ -2,7 +2,7 @@
 #ifndef PARTIAL_SUM_H_INCLUDED
 #define PARTIAL_SUM_H_INCLUDED
 
-#include "PartialSum.spec"
+#include "PartialSum.acsl"
 
 /*@
   requires valid:     \valid_read(a + (0..n-1));

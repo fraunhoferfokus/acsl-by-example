@@ -1,8 +1,5 @@
 
-CMD=\\cnttwo
-SEC=sec:count2
-
-include ../../example.mk
+include ../../Config/example.mk
 
 #WP_FLAGS += -wp-prop count
 

@@ -1,0 +1,14 @@
+Alt-Ergo : typed_external_axiom_size_of_init_ensures_size
+Alt-Ergo : typed_external_lemma_StackEqualReflexive
+Alt-Ergo : typed_external_lemma_StackEqualSymmetric
+Alt-Ergo : typed_external_lemma_StackEqualTransitive
+CVC3 : typed_external_axiom_size_of_init_ensures_size
+CVC3 : typed_external_lemma_StackEqualReflexive
+CVC3 : typed_external_lemma_StackEqualSymmetric
+CVC3 : typed_external_lemma_StackEqualTransitive
+CVC4 : typed_external_axiom_size_of_init_ensures_size
+CVC4 : typed_external_lemma_StackEqualReflexive
+CVC4 : typed_external_lemma_StackEqualSymmetric
+CVC4 : typed_external_lemma_StackEqualTransitive
+Z3 : typed_external_axiom_size_of_init_ensures_size
+Z3 : typed_external_lemma_StackEqualReflexive

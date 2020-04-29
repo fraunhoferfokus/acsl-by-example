@@ -2,8 +2,8 @@
 #ifndef REVERSE_COPY_H_INCLUDED
 #define REVERSE_COPY_H_INCLUDED
 
-#include "Reverse.spec"
-#include "Unchanged.spec"
+#include "Reverse.acsl"
+#include "Unchanged.acsl"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));

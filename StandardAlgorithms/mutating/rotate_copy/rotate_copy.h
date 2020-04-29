@@ -2,8 +2,8 @@
 #ifndef ROTATE_COPY_H_INCLUDED
 #define ROTATE_COPY_H_INCLUDED
 
-#include "EqualRanges.spec"
-#include "Unchanged.spec"
+#include "EqualRanges.acsl"
+#include "Unchanged.acsl"
 
 /*@
   requires bound:      0 <= m <= n;

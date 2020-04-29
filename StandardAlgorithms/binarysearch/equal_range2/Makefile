@@ -1,8 +1,5 @@
 
-CMD=\\equalrangetwo
-SEC=sec:equalrange2
-
-include ../../example.mk
+include ../../Config/example.mk
 
 #WP_FLAGS+=-wp-prop right
 #WP_FLAGS+=-wp-prop StrictLowerBoundExpansion

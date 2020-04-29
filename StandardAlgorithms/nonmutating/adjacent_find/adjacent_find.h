@@ -2,7 +2,7 @@
 #ifndef ADJACENT_FIND_H_INCLUDED
 #define ADJACENT_FIND_H_INCLUDED
 
-#include "HasEqualNeighbors.spec"
+#include "HasEqualNeighbors.acsl"
 
 /*@
   requires valid:       \valid_read(a + (0..n-1));

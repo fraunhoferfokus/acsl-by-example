@@ -2,7 +2,7 @@
 #ifndef MERGE_H_INCLUDED
 #define MERGE_H_INCLUDED
 
-#include "IncreasingLemmas.spec"
+#include "IncreasingLemmas.acsl"
 
 
 /*@

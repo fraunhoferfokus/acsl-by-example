@@ -2,9 +2,9 @@
 #include "selection_sort.h"
 #include "min_element.h"
 #include "swap.h"
-#include "ShiftLemmas.spec"
-#include "MultisetUnchanged.spec"
-#include "SwappedInside.spec"
+#include "ShiftLemmas.acsl"
+#include "MultisetUnchanged.acsl"
+#include "SwappedInside.acsl"
 
 void
 selection_sort(value_type* a, size_type n)

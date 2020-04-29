@@ -2,8 +2,8 @@
 #ifndef INNER_PRODUCT_H_INCLUDED
 #define INNER_PRODUCT_H_INCLUDED
 
-#include "InnerProduct.spec"
-#include "Unchanged.spec"
+#include "InnerProduct.acsl"
+#include "Unchanged.acsl"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));

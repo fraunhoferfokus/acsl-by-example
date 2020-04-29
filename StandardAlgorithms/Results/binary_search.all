@@ -1,0 +1,7 @@
+Alt-Ergo : typed_external_binary_search_assert_rte_mem_access
+Alt-Ergo : typed_external_binary_search_ensures_result
+CVC3 : typed_external_binary_search_assert_rte_mem_access
+CVC3 : typed_external_binary_search_ensures_result
+CVC4 : typed_external_binary_search_assert_rte_mem_access
+CVC4 : typed_external_binary_search_ensures_result
+Z3 : typed_external_binary_search_assert_rte_mem_access

@@ -2,7 +2,7 @@
 #ifndef FIND_FIRST_OF_H_INCLUDED
 #define FIND_FIRST_OF_H_INCLUDED
 
-#include "HasValueOf.spec"
+#include "HasValueOf.acsl"
 
 /*@
   requires valid:   \valid_read(a + (0..m-1));

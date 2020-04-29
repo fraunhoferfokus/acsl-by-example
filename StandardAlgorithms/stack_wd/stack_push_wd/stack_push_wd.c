@@ -1,6 +1,6 @@
 
 #include "stack_push.h"
-#include "StackLemmas.spec"
+#include "StackLemmas.acsl"
 
 /*@
   requires valid:     \valid(s) && StackInvariant(s);

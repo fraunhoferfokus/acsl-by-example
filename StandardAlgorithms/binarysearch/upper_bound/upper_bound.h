@@ -2,8 +2,8 @@
 #ifndef UPPER_BOUND_H_INCLUDED
 #define UPPER_BOUND_H_INCLUDED
 
-#include "Increasing.spec"
-#include "ArrayBounds.spec"
+#include "Increasing.acsl"
+#include "ArrayBounds.acsl"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));

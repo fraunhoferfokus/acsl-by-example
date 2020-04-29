@@ -3,8 +3,8 @@
 #define BUBBLESORT_H_INCLUDED
 
 #include "typedefs.h"
-#include "Increasing.spec"
-#include "MultisetUnchanged.spec"
+#include "Increasing.acsl"
+#include "MultisetUnchanged.acsl"
 
 /*@
   requires valid:       \valid(a + (0..n-1));

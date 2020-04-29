@@ -1,7 +1,7 @@
 
 #include "make_heap.h"
 #include "push_heap.h"
-#include "Unchanged.spec"
+#include "Unchanged.acsl"
 
 void
 make_heap(value_type* a, size_type n)

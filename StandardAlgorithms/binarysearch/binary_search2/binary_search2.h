@@ -2,8 +2,8 @@
 #ifndef BINARY_SEARCH2_H_INCLUDED
 #define BINARY_SEARCH2_H_INCLUDED
 
-#include "SomeNone.spec"
-#include "Increasing.spec"
+#include "SomeNone.acsl"
+#include "Increasing.acsl"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));

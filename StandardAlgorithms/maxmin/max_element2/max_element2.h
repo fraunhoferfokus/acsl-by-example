@@ -2,7 +2,7 @@
 #ifndef MAX_ELEMENT2_H_INCLUDED
 #define MAX_ELEMENT2_H_INCLUDED
 
-#include "ArrayExtrema.spec"
+#include "ArrayExtrema.acsl"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));

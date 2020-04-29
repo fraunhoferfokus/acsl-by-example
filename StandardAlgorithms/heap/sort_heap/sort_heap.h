@@ -3,9 +3,9 @@
 #define SORT_HEAP_H_INCLUDED
 
 #include <limits.h>
-#include "Heap.spec"
-#include "MultisetUnchanged.spec"
-#include "Increasing.spec"
+#include "Heap.acsl"
+#include "MultisetUnchanged.acsl"
+#include "Increasing.acsl"
 
 /*@
    requires valid:       \valid(a + (0..n-1));

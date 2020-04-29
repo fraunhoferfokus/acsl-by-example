@@ -2,7 +2,6 @@ nonmutating
 maxmin
 binarysearch
 mutating
-unique
 numeric
 heap
 sorting

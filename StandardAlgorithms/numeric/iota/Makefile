@@ -1,5 +1,3 @@
 
-CMD=\\IOTA
-
-include ../../example.mk
+include ../../Config/example.mk
 

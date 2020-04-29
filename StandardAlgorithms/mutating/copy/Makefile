@@ -1,5 +1,3 @@
 
-CMD=\\cpy
-
-include ../../example.mk
+include ../../Config/example.mk
 

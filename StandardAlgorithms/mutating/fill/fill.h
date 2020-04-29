@@ -2,7 +2,7 @@
 #ifndef FILL_H_INCLUDED
 #define FILL_H_INCLUDED
 
-#include "AllSomeNot.spec"
+#include "AllSomeNot.acsl"
 
 /*@
   requires valid:   \valid(a + (0..n-1));

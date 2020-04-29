@@ -1,5 +1,3 @@
 
-CMD=\\cnt
-
-include ../../example.mk
+include ../../Config/example.mk
 

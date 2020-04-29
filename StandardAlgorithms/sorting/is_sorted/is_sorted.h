@@ -2,7 +2,7 @@
 #ifndef IS_SORTED_H_INCLUDED
 #define IS_SORTED_H_INCLUDED
 
-#include "Increasing.spec"
+#include "Increasing.acsl"
 
 /*@
   requires valid: \valid_read(a + (0..n-1));

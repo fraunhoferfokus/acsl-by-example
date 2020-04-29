@@ -1,7 +1,5 @@
 
-CMD=\\ALGrotate
-
-include ../../example.mk
+include ../../Config/example.mk
 
 #WP_FLAGS += -wp-prop left
 #WP_FLAGS += -wp-prop middle

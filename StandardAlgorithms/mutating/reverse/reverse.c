@@ -1,6 +1,6 @@
 
 #include "reverse.h"
-#include "Unchanged.spec"
+#include "Unchanged.acsl"
 #include "swap.h"
 
 void

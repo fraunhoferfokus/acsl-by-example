@@ -1,28 +1,29 @@
 
-#Version 20.0.1
+#Version 20.0.2
 
-- add a third version for specifying linear search (find3)
 
-- refactor definition of logic function Count
+- verify properties of operator < within example 'clamp'
 
-- adjacent_differenrcve_inv
-	- reformulate AdjacentDifferenceInv to AdjacentDifferenceThenPartialSum
-	- improve verification rate
+- reduce very long verification times
+  - add another assertion 'heap' to 'push_heap'
+  - rewrite assertion 'update' of 'remove'
+  - add assertion 'reorder' to empty else branch of 'shuffle'
+  - add assertion 'unchanged' to empty else branch of 'remove_copy3'
 
-- partial_sum_inv
-	- reformulate PartialSumInv to PartialSumThenAdjacentDifference
+- add examples find4 and find5 that show the equivalence of the contracts of
+  find2 and find3
 
-- random_number
-        - fixed disabling of 'unsigned overflow' warnings for bit operations
+- add find_if_not
 
-- unique_copy
-        - adjusted makefiles to enable non-trivial test cases 
-        - test cases for unique_copy are now also executed 
+- add index of examples to tutorial
 
-- RemovePartition
-	- add logic function FindNotEqual
-	- rename logic function RemoveSize to CountNotEqual
-	- rename predicate ConstantRange to AllEqual
-	- fix wrong definition of RemovePartitionInitial
-	- use AllEqual in RemovePartitionInitial and Remove PartitionSegment
-	- rename RemovePartitionNotValue to RemovePartitionNotEqual
+- add index of logic definitions to tutorial
+
+- remove chapter on unique_copy due to its reliance on axioms
+
+- adapt to stricter rule for labels in partial_sort (thanks to Virgile Prevosto)
+
+- generate command names by python script
+
+- improve admitted Coq proof of Reorder_Match
+

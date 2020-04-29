@@ -2,7 +2,7 @@
 #ifndef ROTATE_H_INCLUDED
 #define ROTATE_H_INCLUDED
 
-#include "EqualRanges.spec"
+#include "EqualRanges.acsl"
 
 /*@
   requires valid: \valid(a + (0..n-1));

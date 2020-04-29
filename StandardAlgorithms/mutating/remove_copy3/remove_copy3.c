@@ -19,12 +19,18 @@ remove_copy3(const value_type* a, size_type n, value_type* b, value_type v)
   for (size_type i = 0u; i < n; ++i) {
     if (a[i] != v) {
       b[k++] = a[i];
-      //@ assert size:    k == CountNotEqual{Pre}(a, 0, i+1, v);
-      //@ assert mapping: i == RemovePartition{Pre}(a, n, v, k-1);
-      //@ assert update:  b[k-1] == \at(a[\at(i,Here)], Pre);
-      //@ assert remove:  Remove{Pre,Here}(a, i,   b, v);
-      //@ assert remove:  Remove{Pre,Here}(a, i+1, b, v);
+      //@ assert size:      k == CountNotEqual{Pre}(a, 0, i+1, v);
+      //@ assert mapping:   i == RemovePartition{Pre}(a, n, v, k-1);
+      //@ assert update:    b[k-1] == \at(a[\at(i,Here)], Pre);
+      //@ assert remove:    Remove{Pre,Here}(a, i,   b, v);
+      //@ assert remove:    Remove{Pre,Here}(a, i+1, b, v);
+      //@ assert unchanged: Unchanged{Pre,Here}(a, n);
     }
+    else {
+      //@ assert unchanged: Unchanged{Pre,Here}(a, n);
+    }
+
+    //@ assert unchanged: Unchanged{Pre,Here}(a, n);
   }
 
   return k;

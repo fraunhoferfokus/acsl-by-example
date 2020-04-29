@@ -7,8 +7,8 @@
 #include "sort_heap.h"
 #include "swap.h"
 
-#include "PartitionLemmas.spec"
-#include "SwappedInside.spec"
+#include "PartitionLemmas.acsl"
+#include "SwappedInside.acsl"
 
 void
 partial_sort(value_type* a, size_type m, size_type n)
@@ -47,10 +47,10 @@ partial_sort(value_type* a, size_type m, size_type n)
         //@ assert partition:  Partition(a, m, i);
         //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, i);
 
-        //@ ghost BeforeSwap:
+        //@ ghost Before: ;
         swap(a + m - 1u, a + i);
-        //@ assert swapped:    SwappedInside{BeforeSwap,Here}(a, m-1, i, n);
-        //@ assert reorder:    MultisetUnchanged{BeforeSwap,Here}(a, i+1);
+        //@ assert swapped:    SwappedInside{Before,Here}(a, m-1, i, n);
+        //@ assert reorder:    MultisetUnchanged{Before,Here}(a, i+1);
         //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, i+1);
         //@ assert unchanged:  Unchanged{Pre,Here}(a, i+1, n);
         //@ assert lower:      a[m-1] < a[i];

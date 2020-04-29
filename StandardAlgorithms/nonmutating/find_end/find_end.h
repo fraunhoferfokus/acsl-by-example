@@ -2,7 +2,7 @@
 #ifndef FIND_END_H_INCLUDED
 #define FIND_END_H_INCLUDED
 
-#include "HasSubRange.spec"
+#include "HasSubRange.acsl"
 
 /*@
   requires valid:   \valid_read(a + (0..n-1));

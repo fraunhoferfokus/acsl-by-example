@@ -2,7 +2,7 @@
 #ifndef HEAP_AUX_H_INCLUDED
 #define HEAP_AUX_H_INCLUDED
 
-#include "HeapBasics.spec"
+#include "HeapBasics.acsl"
 
 /*@
    requires bound:  0 < child;

@@ -2,7 +2,7 @@
 #ifndef ADJACENT_DIFFERENCE_H_INCLUDED
 #define ADJACENT_DIFFERENCE_H_INCLUDED
 
-#include "AdjacentDifference.spec"
+#include "AdjacentDifference.acsl"
 
 /*@
    requires valid:      \valid_read(a + (0..n-1));

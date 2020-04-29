@@ -1,4 +1,4 @@
-alg='stack_axiom.union'
+example='stack_axiom.union'
 goal_count='59'
 valid='59'
 valid_qed='51'

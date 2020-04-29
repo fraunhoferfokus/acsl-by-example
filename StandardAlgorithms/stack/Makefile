@@ -1,3 +1,3 @@
 
-include ../group.mk
+include ../Config/group.mk
 

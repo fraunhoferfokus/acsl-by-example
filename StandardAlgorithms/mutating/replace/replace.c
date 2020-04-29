@@ -1,6 +1,6 @@
 
 #include "replace.h"
-#include "Unchanged.spec"
+#include "Unchanged.acsl"
 
 void
 replace(value_type* a, size_type n, value_type v, value_type w)

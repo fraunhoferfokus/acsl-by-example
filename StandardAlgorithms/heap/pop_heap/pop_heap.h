@@ -2,8 +2,8 @@
 #ifndef POP_HEAP_H_INCLUDED
 #define POP_HEAP_H_INCLUDED
 
-#include "Heap.spec"
-#include "MultisetUnchanged.spec"
+#include "Heap.acsl"
+#include "MultisetUnchanged.acsl"
 
 /*@
    requires bounds:     0 < n;

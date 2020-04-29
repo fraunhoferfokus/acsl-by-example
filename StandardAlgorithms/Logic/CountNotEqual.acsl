@@ -1,0 +1,70 @@
+
+#ifndef COUNTNOTEQUAL_SPEC_INCLUDED
+#define COUNTNOTEQUAL_SPEC_INCLUDED
+
+
+#include "FindNotEqual.acsl"
+#include "Count.acsl"
+
+/*@
+  axiomatic CountNotEqual
+  {
+    logic integer
+    CountNotEqual(value_type* a, integer m, integer n, value_type v) = 
+      n <= m ? 0 : CountNotEqual(a, m, n-1, v) + (a[n-1] == v ? 0 : 1);
+
+    logic integer
+    CountNotEqual(value_type* a, integer n, value_type v) =
+      CountNotEqual(a, 0, n, v);
+
+    lemma CountNotEqual_Empty:
+      \forall value_type *a, v, integer m, n;
+        n <= m  ==>  CountNotEqual(a, m, n, v) == 0;
+
+    lemma CountNotEqual_Hit:
+      \forall value_type *a, v, integer m, n;
+        m <= n     ==>
+        a[n] != v  ==> 
+        CountNotEqual(a, m, n+1, v) == CountNotEqual(a, m, n, v) + 1;
+
+    lemma CountNotEqual_Miss:
+      \forall value_type *a, v, integer m, n;
+        m <= n     ==>
+        a[n] == v  ==>
+        CountNotEqual(a, m, n+1, v) == CountNotEqual(a, m, n, v);
+
+    lemma CountNotEqual_Lower:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  0 <= CountNotEqual(a, m, n, v);
+
+    lemma CountNotEqual_Upper:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  CountNotEqual(a, m, n, v) <= n-m;
+
+    lemma CountNotEqual_WeaklyIncreasing:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  CountNotEqual(a, m, n, v) <= CountNotEqual(a, m, n+1, v);
+
+    lemma CountNotEqual_Increasing:
+      \forall value_type *a, v, integer k, m, n;
+        m <= k <= n  ==>  CountNotEqual(a, m, k, v) <= CountNotEqual(a, m, n, v);
+
+    lemma CountNotEqual_Read{K,L}:
+      \forall value_type *a, v, integer m, n;
+        Unchanged{K,L}(a, m, n)  ==>
+        CountNotEqual{K}(a, m, n, v) == CountNotEqual{L}(a, m, n, v);
+
+    lemma CountNotEqual_Count:
+      \forall value_type *a, v, integer m, n;
+        m <= n  ==>  CountNotEqual(a, m, n, v) == n - m - Count(a, m, n, v);
+
+    lemma CountNotEqual_Union:
+      \forall value_type *a, v, integer k, m, n;
+        0 <= k <= m <= n  ==>
+        CountNotEqual(a, k, n, v) ==
+        CountNotEqual(a, k, m, v) + CountNotEqual(a, m, n, v);
+  }
+*/
+
+#endif /* COUNTNOTEQUAL_SPEC_INCLUDED */
+

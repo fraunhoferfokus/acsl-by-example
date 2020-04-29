@@ -2,7 +2,7 @@
 #ifndef FIND3_H_INCLUDED
 #define FIND3_H_INCLUDED
 
-#include "Find.spec"
+#include "Find.acsl"
 
 
 /*@

@@ -5,5 +5,5 @@
 clean:: FORCE
 	$(RM) libheap.a
 
-include ../group.mk
+include ../Config/group.mk
 

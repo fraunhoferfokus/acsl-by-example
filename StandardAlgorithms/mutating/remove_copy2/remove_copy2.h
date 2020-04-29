@@ -1,10 +1,10 @@
 
-#ifndef REMOVE_COPY_H_INCLUDED
-#define REMOVE_COPY_H_INCLUDED
+#ifndef REMOVE_COPY2_H_INCLUDED
+#define REMOVE_COPY2_H_INCLUDED
 
-#include "SomeNone.spec"
-#include "Unchanged.spec"
-#include "CountNotEqual.spec"
+#include "SomeNone.acsl"
+#include "Unchanged.acsl"
+#include "CountNotEqual.acsl"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));
@@ -20,5 +20,5 @@
 size_type
 remove_copy2(const value_type* a, size_type n, value_type* b, value_type v);
 
-#endif /* REMOVE_COPY_H_INCLUDED */
+#endif /* REMOVE_COPY2_H_INCLUDED */
 

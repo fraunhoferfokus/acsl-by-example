@@ -1,5 +1,5 @@
 
-include ../group.mk
+include ../Config/group.mk
 
 debug:
 	echo $(OS)

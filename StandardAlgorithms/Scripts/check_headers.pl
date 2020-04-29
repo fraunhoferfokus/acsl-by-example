@@ -178,7 +178,7 @@ find(sub {
          name => abs2rel($File::Find::name, $topdir),
          file => read_file($File::Find::name)
       }
-      if $_ =~ /\.(?:spec|h|c|cpp)\Z/;
+      if $_ =~ /\.(?:acsl|spec|h|c|cpp)\Z/;
 
       $alldirs{$File::Find::dir} = 1;
    },
@@ -193,7 +193,7 @@ foreach my $f (values %files) {
 
    foreach my $i (map {/\A\h*+#\h*+include\h*+([<"][^">]++)[">]/ ? $1 : ()} @{$f->{file}}) {
       my $br    = substr($i, 0, 1, '');
-      my $is_h  = $i =~ m/\.(?:spec|h)$/;
+      my $is_h  = $i =~ m/\.(?:acsl|spec|h)$/;
       my $found = 0;
       foreach my $dir ($f->{dir}, $logicdir, @alldirs) {
          my $if = abs_path(catfile($dir, $i));
@@ -246,7 +246,7 @@ if ($print_c_to_h) {
    print_map("C file => [list of headers]", \%c_to_h);
 }
 
-my @isolated = sort grep {m/\.(?:spec|h)\Z/} $g->isolated_vertices();
+my @isolated = sort grep {m/\.(?:acsl|spec|h)\Z/} $g->isolated_vertices();
 if (@isolated) {
    print BOLD . "Isolated (no one uses them) header files: \n" . RESET;
    print "\t - " . RED . join(RESET . "\n\t - " . RED, @isolated) . RESET . "\n\n";

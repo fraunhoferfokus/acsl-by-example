@@ -2,7 +2,7 @@
 #ifndef MAKE_PAIR_H_INCLUDED
 #define MAKE_PAIR_H_INCLUDED
 
-#include "SizeTypePairTrivial.spec"
+#include "SizeTypePairTrivial.acsl"
 
 /*@
     assigns         \nothing;

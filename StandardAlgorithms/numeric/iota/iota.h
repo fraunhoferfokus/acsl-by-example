@@ -2,7 +2,7 @@
 #ifndef IOTA_H_INCLUDED
 #define IOTA_H_INCLUDED
 
-#include "IotaGenerate.spec"
+#include "IotaGenerate.acsl"
 #include "limits.h"
 
 /*@

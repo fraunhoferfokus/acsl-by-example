@@ -2,8 +2,8 @@
 #ifndef LOWER_H_BOUND_INCLUDED
 #define LOWER_H_BOUND_INCLUDED
 
-#include "Increasing.spec"
-#include "ArrayBounds.spec"
+#include "Increasing.acsl"
+#include "ArrayBounds.acsl"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));

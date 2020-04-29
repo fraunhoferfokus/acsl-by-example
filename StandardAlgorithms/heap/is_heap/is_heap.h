@@ -2,7 +2,7 @@
 #ifndef IS_HEAP_H_INCLUDED
 #define IS_HEAP_H_INCLUDED
 
-#include "Heap.spec"
+#include "Heap.acsl"
 
 /*@
    requires valid: \valid_read(a +(0..n-1));

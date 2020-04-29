@@ -2,8 +2,8 @@
 #include "shuffle.h"
 #include "random_number.h"
 #include "swap.h"
-#include "MultisetUnchanged.spec"
-#include "SwappedInside.spec"
+#include "MultisetUnchanged.acsl"
+#include "SwappedInside.acsl"
 
 
 void
@@ -25,6 +25,9 @@ shuffle(value_type* a, size_type n, unsigned short* seed)
         swap(&a[k], &a[i]);
         //@ assert swapped: SwappedInside{LoopCurrent,Here}(a, k, i, n);
         //@ assert reorder: MultisetUnchanged{LoopCurrent,Here}(a, i+1);
+        //@ assert reorder: MultisetUnchanged{Pre,Here}(a, i+1);
+      }
+      else {
         //@ assert reorder: MultisetUnchanged{Pre,Here}(a, i+1);
       }
 

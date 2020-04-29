@@ -2,7 +2,7 @@
 #ifndef STACK_TOP_H_INCLUDED
 #define STACK_TOP_H_INCLUDED
 
-#include "Stack.spec"
+#include "Stack.acsl"
 
 /*@
     requires valid: \valid(s) && StackInvariant(s);

@@ -1,5 +1,5 @@
 
-include ../../example.mk
+include ../../Config/example.mk
 
 # verify "first"
 #WP_FLAGS += -wp-prop first

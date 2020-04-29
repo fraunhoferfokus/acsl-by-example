@@ -2,8 +2,8 @@
 #ifndef REMOVE_H_INCLUDED
 #define REMOVE_H_INCLUDED
 
-#include "Remove.spec"
-#include "SomeNone.spec"
+#include "Remove.acsl"
+#include "SomeNone.acsl"
 
 /*@
   requires valid:    \valid(a + (0..n-1));

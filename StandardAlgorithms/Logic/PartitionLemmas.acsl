@@ -1,0 +1,46 @@
+
+#ifndef PARTITIONLEMMAS_SPEC_INCLUDED
+#define PARTITIONLEMMAS_SPEC_INCLUDED
+
+#include "MultisetUnchanged.acsl"
+#include "ArrayBounds.acsl"
+#include "CountFind.acsl"
+
+/*@
+  axiomatic PartitionLemmas
+  {
+    lemma Reorder_Match{K,L}:
+      \forall value_type *a, integer n, i;
+        0 < n                         ==>
+        0 <= i < n                    ==>
+        MultisetUnchanged{K,L}(a, n)  ==>
+        SomeEqual{K}(a, n, \at(a[i],L));
+
+    lemma Reorder_LowerBound{K,L}:
+      \forall value_type* a, integer n, value_type v;
+        0 <= n                        ==>
+        MultisetUnchanged{K,L}(a, n)  ==>
+        LowerBound{K}(a, n, v)        ==>
+        LowerBound{L}(a, n, v);
+
+    lemma Reorder_LowerBounds{K,L}:
+      \forall value_type* a, integer m, n;
+        0 < m <= n                              ==>
+
+        (\forall integer k; 0 <= k < m  ==> 
+          LowerBound{K}(a, m, n, \at(a[k],K)))  ==>
+        MultisetUnchanged{K,L}(a, 0, m)         ==>
+        Unchanged{K,L}(a, m, n)                 ==>
+        LowerBound{L}(a, m, n, \at(a[0],L));
+
+    lemma Reorder_UpperBound{K,L}:
+      \forall value_type* a, integer n, value_type v;
+        0 <= n                        ==>
+        MultisetUnchanged{K,L}(a, n)  ==>
+        UpperBound{K}(a, n, v)        ==>
+        UpperBound{L}(a, n, v);
+  }
+*/
+
+#endif /* PARTITIONLEMMAS_SPEC_INCLUDED */
+

@@ -1,0 +1,12 @@
+Alt-Ergo : typed_external_swap_assert_rte_mem_access
+Alt-Ergo : typed_external_swap_assert_rte_mem_access_3
+Alt-Ergo : typed_external_swap_ensures_exchange
+CVC3 : typed_external_swap_assert_rte_mem_access
+CVC3 : typed_external_swap_assert_rte_mem_access_3
+CVC3 : typed_external_swap_ensures_exchange
+CVC4 : typed_external_swap_assert_rte_mem_access
+CVC4 : typed_external_swap_assert_rte_mem_access_3
+CVC4 : typed_external_swap_ensures_exchange
+Z3 : typed_external_swap_assert_rte_mem_access
+Z3 : typed_external_swap_assert_rte_mem_access_3
+Z3 : typed_external_swap_ensures_exchange

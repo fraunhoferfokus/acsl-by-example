@@ -231,7 +231,7 @@ foreach my $file (@logic_files) {
 my @check_files;
 find(sub {
       push @check_files, $File::Find::name
-         if m/\.(?:spec|h|cpp|c)$/;
+         if m/\.(?:acsl|spec|h|cpp|c)$/;
    }, get_topdir(1));
 
 my $detect_ids = '(?:' . join('|', sort keys %defs) . ')';

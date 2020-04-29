@@ -2,8 +2,8 @@
 #ifndef MINMAX_ELEMENT_H_INCLUDED
 #define MINMAX_ELEMENT_H_INCLUDED
 
-#include "SizeTypePairTrivial.spec"
-#include "ArrayExtrema.spec"
+#include "SizeTypePairTrivial.acsl"
+#include "ArrayExtrema.acsl"
 
 /*@
   requires valid:    \valid_read(a + (0..n-1));

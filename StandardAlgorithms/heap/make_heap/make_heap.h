@@ -2,8 +2,8 @@
 #ifndef MAKE_HEAP_H_INCLUDED
 #define MAKE_HEAP_H_INCLUDED
 
-#include "Heap.spec"
-#include "MultisetUnchanged.spec"
+#include "Heap.acsl"
+#include "MultisetUnchanged.acsl"
 
 /*@
    requires valid:  \valid(a + (0..n-1));

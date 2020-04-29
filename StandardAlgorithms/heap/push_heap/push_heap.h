@@ -2,8 +2,8 @@
 #ifndef PUSH_HEAP_H_INCLUDED
 #define PUSH_HEAP_H_INCLUDED
 
-#include "Heap.spec"
-#include "MultisetUnchanged.spec"
+#include "Heap.acsl"
+#include "MultisetUnchanged.acsl"
 
 /*@
    requires nonempty:   0 < n;

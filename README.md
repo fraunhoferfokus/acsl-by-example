@@ -19,7 +19,7 @@ Frama-C 20.0 and relies among others on the following sofware packages.
 *Package* | *Version*
 --------- | ---------
  Why3     | 1.2.1
- Alt-Ergo | 2.3.1
+ Alt-Ergo | 2.3.2
  CVC4     | 1.6
  CVC3     | 2.4.1
  Z3       | 4.8.6

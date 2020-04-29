@@ -1,6 +1,6 @@
 
 #include "random_number.h"
-#include "C_Bit.spec"
+#include "C_Bit.acsl"
 
 // see IEEE 1003.1-2008, 2016 Edition for specification
 /*@

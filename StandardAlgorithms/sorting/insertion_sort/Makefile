@@ -1,5 +1,5 @@
 
-include ../../example.mk
+include ../../Config/example.mk
 
 WP_TIMEOUT=25
 

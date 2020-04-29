@@ -2,7 +2,7 @@
 #ifndef BINARY_SEARCH_H_INCLUDED
 #define BINARY_SEARCH_H_INCLUDED
 
-#include "Increasing.spec"
+#include "Increasing.acsl"
 
 /*@
   requires valid:      \valid_read(a + (0..n-1));

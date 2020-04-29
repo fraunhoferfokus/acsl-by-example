@@ -687,24 +687,21 @@ Hint Count_SomeEqual,property.
 Proof.
   Require Import Psatz.
   intros v m n L a.
-  intros A B.
+  intros NN Less.
 
-  pose (p := (n - m)%Z).
-  assert (non_negative: (p >= 0)%Z); auto with zarith.
+  remember (n - m)%Z as p.
+  assert (Pos: (0 < p)%Z) by lia.
 
-  replace n with (m + p)%Z in * by (subst p; lia).
+  replace n with (m + p)%Z in * by lia.
   apply natlike_rec3 with (z := p); auto with zarith.
   {
-   replace (m + 0)%Z with m by lia.
-   intros.
-   rewrite A_Count.Q_Count_Empty in H; auto with zarith.
-   exfalso.
-   intuition.
+    intros.
+    rewrite A_Count.Q_Count_Empty in H; auto with zarith.
+    lia.
   }
   {
-    intros.
-    rename H0 into IndStep.
-    rename H1 into IndHyp.
+    intros z zPOs IHz IH V.
+
     replace (Z.pred z) with (z-1)%Z in * by lia.
     replace (m + (z - 1))%Z with (m + z - 1)%Z in * by lia.
 
@@ -716,14 +713,14 @@ Proof.
       split; auto with zarith.
     }
     {
-      rewrite <- A_Count.Q_Count_Miss in IndHyp; auto with zarith.
+      rewrite <- A_Count.Q_Count_Miss in IH; auto with zarith.
       cut (P_SomeEqual_1_ L a m (m + z - 1) v).
       + unfold P_SomeEqual_1_ .
         intros X.
         destruct X as [k [P Q]].
         exists k.
         split; auto with zarith.
-      + now apply IndStep.
+      + now apply IHz.
     }
   }
 Qed.
@@ -1765,25 +1762,34 @@ Goal typed_external_lemma_Reorder_Match.
 Hint Reorder_Match,property.
 Proof.
   intros n i L K a.
-  intros nPos Lower Upper Unchanged.
-  unfold P_SomeEqual_2_.
-  unfold P_MultisetUnchanged_2_ in Unchanged.
-  unfold P_MultisetUnchanged_1_ in Unchanged.
-  (* unfold shift_sint32 in *. *)
+  intros nPos Lower Upper Reorder.
 
-  remember (L .[ shift_sint32 a i]) as v.
+  unfold P_SomeEqual_2_.
+  unfold P_MultisetUnchanged_2_ in Reorder.
+  unfold P_MultisetUnchanged_1_ in Reorder.
+
 
   (* work around for https://bts.frama-c.com/view.php?id=2332 *)
-  assert(CType: Cint.is_sint32 v) by admit.
+  assert(CType: Cint.is_sint32 (L .[ shift_sint32 a i])) by admit.
 
-  assert(Has: P_SomeEqual_1_ L a 0 n v).
-  - unfold P_SomeEqual_1_.
-    exists i.
-    auto with zarith.
-  - assert (Pos: (0 < A_Count.L_Count_1_ L a 0 n v)%Z).
-    + apply A_Some_Count.Q_SomeEqual_Count; auto with zarith.
-    + apply A_Some_Count.Q_Count_SomeEqual; auto with zarith.
-      now rewrite Unchanged.
+  apply A_CountFind.Q_Count_SomeEqual; auto with zarith.
+  rewrite Reorder; auto with zarith.
+  rewrite <- A_Count.Q_Count_Union with (i_1:=i); auto with zarith.
+  assert(X: (0 <= A_Count.L_Count_1_ L a 0 i (L .[ shift_sint32 a i]))) by 
+    (apply A_Count.Q_Count_Bounds; auto with zarith).
+
+  enough(0 < A_Count.L_Count_1_ L a i n (L .[ shift_sint32 a i])) by auto with zarith.
+  rewrite <- A_Count.Q_Count_Union with (i_1:=(1+i)%Z); auto with zarith.
+
+  assert(Y:(0 <= A_Count.L_Count_1_ L a (1 + i) n (L .[ shift_sint32 a i])))by 
+    (apply A_Count.Q_Count_Bounds; auto with zarith).
+
+  enough (0 < A_Count.L_Count_1_ L a i (1 + i) (L .[ shift_sint32 a i])) by auto with zarith.
+  rewrite <- A_Count.Q_Count_Hit; auto with zarith.
+  - replace (1+i-1) with i by auto with zarith.
+    rewrite A_Count.Q_Count_Empty; auto with zarith.
+  - replace (1+i-1) with i by auto with zarith.
+    trivial.
 Admitted.
 
 Goal typed_external_lemma_Reorder_UpperBound.

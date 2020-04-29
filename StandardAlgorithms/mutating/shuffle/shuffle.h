@@ -2,7 +2,7 @@
 #ifndef SHUFFLE_H_INCLUDED
 #define SHUFFLE_H_INCLUDED
 
-#include "MultisetUnchanged.spec"
+#include "MultisetUnchanged.acsl"
 
 /*@
   requires valid:   \valid(a + (0..n-1));

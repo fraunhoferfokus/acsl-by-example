@@ -1,6 +1,6 @@
 
 #include "remove.h"
-#include "At.spec"
+#include "At.acsl"
 
 size_type
 remove(value_type* a, size_type n, value_type v)
@@ -21,8 +21,8 @@ remove(value_type* a, size_type n, value_type v)
     if (a[i] != v) {
       a[k++] = a[i];
       //@ assert size:    k == CountNotEqual{Pre}(a, 0, i+1, v);
-      //@ assert mapping: i == RemovePartition{Pre}(a, n, v, k-1);
-      //@ assert update:  a[k-1] == At{Pre}(a, RemovePartition{Pre}(a, i+1, v, k-1));
+      //@ assert mapping: i == RemovePartition{Pre}(a, i+1, v, k-1);
+      //@ assert update:  a[k-1] == At{Pre}(a, i);
       //@ assert remove:  Remove{Pre,Here}(a, i, v);
       //@ assert remove:  Remove{Pre,Here}(a, i+1, v);
     }

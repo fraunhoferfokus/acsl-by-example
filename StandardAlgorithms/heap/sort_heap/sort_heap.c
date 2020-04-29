@@ -1,9 +1,9 @@
 
 #include "sort_heap.h"
 #include "pop_heap.h"
-#include "ArrayBounds.spec"
-#include "IncreasingUpperBound.spec"
-#include "MultisetUnchanged.spec"
+#include "ArrayBounds.acsl"
+#include "IncreasingUpperBound.acsl"
+#include "MultisetUnchanged.acsl"
 
 void
 sort_heap(value_type* a, size_type n)

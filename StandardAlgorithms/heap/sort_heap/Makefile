@@ -1,5 +1,5 @@
 
-include ../../example.mk
+include ../../Config/example.mk
 
 #WP_FLAGS += -wp-prop reorder
 #WP_FLAGS += -wp-prop max

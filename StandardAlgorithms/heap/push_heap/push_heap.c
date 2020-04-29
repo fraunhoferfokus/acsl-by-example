@@ -1,8 +1,8 @@
 
 #include "push_heap.h"
 #include "heap_parent.h"
-#include "MultisetOperations.spec"
-#include "MultisetPushHeap.spec"
+#include "MultisetOperations.acsl"
+#include "MultisetPushHeap.acsl"
 
 void
 push_heap(value_type* a, size_type n)
@@ -56,6 +56,8 @@ push_heap(value_type* a, size_type n)
           }
         }
       }
+
+      //@ assert heap: Heap(a, n);
 
       // end of main act
       // start of epilogue

@@ -2,8 +2,8 @@
 #ifndef INSERTION_SORT_H_INCLUDED
 #define INSERTION_SORT_H_INCLUDED
 
-#include "MultisetUnchanged.spec"
-#include "Increasing.spec"
+#include "MultisetUnchanged.acsl"
+#include "Increasing.acsl"
 
 /*@
    requires valid:       \valid(a + (0..n-1));

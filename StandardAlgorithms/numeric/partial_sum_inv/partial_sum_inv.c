@@ -1,8 +1,8 @@
 
 #include "partial_sum.h"
 #include "adjacent_difference.h"
-#include "DefaultBounds.spec"
-#include "NumericInverse.spec"
+#include "DefaultBounds.acsl"
+#include "NumericInverse.acsl"
 
 /*@
   requires valid:     \valid(a + (0..n-1));

@@ -1,6 +1,6 @@
 
 #include "copy.h"
-#include "Unchanged.spec"
+#include "Unchanged.acsl"
 
 void
 copy(const value_type* a, size_type n, value_type* b)

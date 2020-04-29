@@ -1,6 +1,9 @@
 find
 find2
 find3
+find4
+find5
+find_if_not
 find_first_of
 adjacent_find
 mismatch

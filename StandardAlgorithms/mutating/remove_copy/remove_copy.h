@@ -2,8 +2,8 @@
 #ifndef REMOVE_COPY_H_INCLUDED
 #define REMOVE_COPY_H_INCLUDED
 
-#include "Unchanged.spec"
-#include "SomeNone.spec"
+#include "Unchanged.acsl"
+#include "SomeNone.acsl"
 /*@
   requires valid:    \valid_read(a + (0..n-1));
   requires valid:    \valid(b + (0..n-1));

@@ -1,6 +1,6 @@
 
 #include "is_sorted.h"
-#include "IncreasingLemmas.spec"
+#include "IncreasingLemmas.acsl"
 
 bool
 is_sorted(const value_type* a, size_type n)

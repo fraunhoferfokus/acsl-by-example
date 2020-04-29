@@ -3,7 +3,7 @@
 #include "lower_bound.h"
 #include "upper_bound.h"
 #include "make_pair.h"
-#include "ShiftLemmas.spec"
+#include "ShiftLemmas.acsl"
 
 size_type_pair
 equal_range2(const value_type* a, size_type n, value_type val)

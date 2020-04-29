@@ -1,10 +1,7 @@
 
-CMD=\\removecopythree
-SEC=sec:removecopy3
+include ../../Config/example.mk
 
-include ../../example.mk
-
-WP_TIMEOUT=5
+WP_TIMEOUT=20
 #WP_FLAGS += -wp-prop  remove
 #WP_FLAGS += -wp-prop  partition
 #WP_FLAGS += -wp-prop unchanged

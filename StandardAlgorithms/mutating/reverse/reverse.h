@@ -2,7 +2,7 @@
 #ifndef REVERSE_H_INCLUDED
 #define REVERSE_H_INCLUDED
 
-#include "Reverse.spec"
+#include "Reverse.acsl"
 
 /*@
   requires valid:  \valid(a + (0..n-1));

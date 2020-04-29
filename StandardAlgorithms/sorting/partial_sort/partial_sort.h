@@ -2,9 +2,9 @@
 #ifndef PARTIAL_SORT_H_INCLUDED
 #define PARTIAL_SORT_H_INCLUDED
 
-#include "Increasing.spec"
-#include "Partition.spec"
-#include "MultisetUnchanged.spec"
+#include "Increasing.acsl"
+#include "Partition.acsl"
+#include "MultisetUnchanged.acsl"
 
 /*@
   requires valid:        \valid(a + (0..n-1));
