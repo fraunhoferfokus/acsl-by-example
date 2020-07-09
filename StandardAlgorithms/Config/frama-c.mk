@@ -6,7 +6,7 @@ export PROCESSES ?= 1
 
 #setup wp
 export WP_TIMEOUT        ?= $(TIMEOUT)
-export WP_COQ_TIMEOUT    ?= 5
+export WP_COQ_TIMEOUT    ?= 10
 export WP_PROCESSES      ?= $(PROCESSES)
 
 #setup av
@@ -70,9 +70,9 @@ else ifeq ($(PROVERS), eprover)
 	WP_PROVER_FLAGS += -wp-prover eprover
 else ifneq ($(PROVERS),)
 @echo "Prover unknown. Continue using default provers:"
-PROVERS = alt-ergo cvc4 cvc3 z3 
+PROVERS = alt-ergo native:coq cvc4 cvc3 z3 
 WP_PROVER_FLAGS += $(addprefix -wp-prover , $(PROVERS))
-WP_PROVER_FLAGS += -wp-prover native:coq
+#WP_PROVER_FLAGS += -wp-prover native:coq
 endif
 
 export FR    := frama-c

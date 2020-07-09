@@ -1,3 +1,9 @@
-Alt-Ergo : typed_external_equal_ensures_result
-CVC3 : typed_external_equal_ensures_result
-CVC4 : typed_external_equal_ensures_result
+qed : typed_external_equal_assigns_exit
+qed : typed_external_equal_assigns_normal_part1
+qed : typed_external_equal_assigns_normal_part2
+qed : typed_external_equal_assigns_normal_part3
+qed : typed_external_equal_call_mismatch_requires_valid
+qed : typed_external_equal_call_mismatch_requires_valid_2
+alt-ergo : typed_external_equal_ensures_result
+cvc4 : typed_external_equal_ensures_result
+cvc3 : typed_external_equal_ensures_result

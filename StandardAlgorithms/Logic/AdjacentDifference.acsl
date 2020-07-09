@@ -17,7 +17,7 @@
       \forall integer i; 1 <= i < n  ==>
         VALUE_TYPE_MIN <= Difference(a, i) <= VALUE_TYPE_MAX;
 
-    lemma AdjacentDifferenceStep{K,L}:
+    lemma AdjacentDifference_Step{K,L}:
       \forall value_type *a, *b, integer n;
         AdjacentDifference{K}(a, n, b)      ==>
         Unchanged{K,L}(b, n)                ==>
@@ -25,7 +25,7 @@
         \at(b[n],L) == Difference{L}(a, n)  ==>
         AdjacentDifference{L}(a, n+1, b);
 
-    lemma AdjacentDifferenceSection{K}:
+    lemma AdjacentDifference_Section{K}:
       \forall value_type *a, *b, integer m, n;
         0 <= m <= n                     ==>
         AdjacentDifference{K}(a, n, b)  ==>

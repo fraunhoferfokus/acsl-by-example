@@ -9,13 +9,13 @@
 /*@
   axiomatic NumericInverse
   {
-    lemma PartialSumInverse:
+    lemma PartialSum_Inverse:
       \forall value_type *a, *b, integer n;
         0 <= n               ==>
         PartialSum(a, n, b)  ==>
         AdjacentDifference(b, n, a);
 
-    lemma AdjacentDifferenceInverse:
+    lemma AdjacentDifference_Inverse:
       \forall value_type *a, *b, integer n;
         0 <= n                       ==>
         AdjacentDifference(a, n, b)  ==>

@@ -15,7 +15,7 @@
     HasConstantSubRange{L}(value_type* a, integer n, value_type v, integer p) =
       HasConstantSubRange(a, 0, n, v, p);
 
-    lemma HasConstantSubRangeSizes:
+    lemma HasConstantSubRange_Sizes:
       \forall value_type *a, v, integer n, p;
         HasConstantSubRange(a, n, v, p)  ==>  p <= n;
   }

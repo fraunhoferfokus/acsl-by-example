@@ -1,0 +1,40 @@
+
+#ifndef WEAKLYINCREASINGLEMMAS_SPEC_INCLUDED
+#define WEAKLYINCREASINGLEMMAS_SPEC_INCLUDED
+
+#include "WeaklyIncreasing.acsl"
+#include "EqualRanges.acsl"
+
+/*@
+  axiomatic WeaklyIncreasingLemmas
+  {
+    lemma WeaklyIncreasing_AddElement{L}:
+      \forall value_type *a, integer n;
+        1 < n                     ==>
+        a[n-2] <= a[n-1]          ==>
+        WeaklyIncreasing(a, n-1)  ==>
+        WeaklyIncreasing(a, n);
+
+    lemma WeaklyIncreasing_Shift{L}:
+      \forall value_type *a, integer m, n;
+        WeaklyIncreasing(a + m, 0, n)  <==>
+        WeaklyIncreasing(a, m, n + m);
+
+    lemma WeaklyIncreasing_EqualRanges{L}:
+      \forall value_type *a, *b, integer m, n;
+        WeaklyIncreasing(a, m, n)     ==>
+        EqualRanges{L,L}(a, m, n, b)  ==>
+        WeaklyIncreasing(b, m, n);
+
+    lemma WeaklyIncreasing_Join{L}:
+      \forall value_type *a, integer m, n;
+        0 < m < n                  ==>
+        WeaklyIncreasing(a, m)     ==>
+        WeaklyIncreasing(a, m, n)  ==>
+        a[m-1] <= a[m]             ==>
+        WeaklyIncreasing(a, n);
+  }
+*/
+
+#endif /* WEAKLYINCREASINGLEMMAS_SPEC_INCLUDED */
+

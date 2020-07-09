@@ -15,7 +15,7 @@
     HasSubRange{L}(value_type* a, integer n, value_type* b, integer p) =
       HasSubRange{L}(a, 0, n, b, p);
 
-    lemma HasSubRangeSizes:
+    lemma HasSubRange_Sizes:
       \forall value_type *a, *b, integer m, n, p;
         HasSubRange(a, m, n, b, p)  ==>  p <= n-m;
   }

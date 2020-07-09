@@ -12,12 +12,12 @@
   requires increasing: Increasing(a, n);
   assigns              \nothing;
   ensures result:      0 <= \result.first <= \result.second <= n;
-  ensures left:        StrictUpperBound(a, 0, \result.first, val);
-  ensures middle:      AllEqual(a, \result.first, \result.second, val);
-  ensures right:       StrictLowerBound(a, \result.second, n, val);
+  ensures left:        StrictUpperBound(a, 0, \result.first, v);
+  ensures middle:      AllEqual(a, \result.first, \result.second, v);
+  ensures right:       StrictLowerBound(a, \result.second, n, v);
  */
 size_type_pair
-equal_range(const value_type* a, size_type n, value_type val);
+equal_range(const value_type* a, size_type n, value_type v);
 
 #endif /* EQUAL_RANGE_H_INCLUDED */
 

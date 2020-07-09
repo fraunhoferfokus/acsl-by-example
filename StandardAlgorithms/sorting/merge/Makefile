@@ -1,6 +1,7 @@
 
 include ../../Config/example.mk
 
+WP_TIMEOUT=5
 WP_FLAGS += -wp-split
-WP_TIMEOUT=20
+#WP_FLAGS += -wp-prop increasing
 

@@ -1,68 +1,71 @@
 
 #include "merge.h"
 #include "copy.h"
+#include "IncreasingLemmas.acsl"
+#include "WeaklyIncreasingLemmas.acsl"
 
 void
-merge(const value_type* a, size_type n,
-      const value_type* b, size_type m,
-      value_type* result)
+merge(const value_type* a, size_type m,
+      const value_type* b, size_type n, value_type* c)
 {
   size_type i = 0;
   size_type j = 0;
   size_type x = 0;
 
-  if (0 < n || 0 < m) {
-    /*@ loop invariant 0 <= i <= n;
-        loop invariant 0 <= j <= m;
-        loop invariant x == i + j;
-        loop invariant 0 <= x <= n + m - 1;
-        loop invariant order:  \forall integer k; 0 <= k < x && i < n ==>
-                                   result[k] <= a[i];
-        loop invariant order:  \forall integer k; 0 <= k < x && j < m ==>
-                                   result[k] <= b[j];
-        loop invariant sorted: WeaklyIncreasing(result, x);
-        loop assigns i, j, x, result[0 .. n+m-1];
-        loop variant (n + m) - (i + j);
+  if (0 < m || 0 < n) {
+    /*@ loop invariant increasing:  0 <= i <= m;
+        loop invariant increasing:  0 <= j <= n;
+        loop invariant increasing:  x == i+j;
+        loop invariant increasing:  0 <= x <= m+n-1;
+        loop invariant increasing:  \forall integer k;
+                                    0 <= k < x ==> i < m  ==>  c[k] <= a[i];
+        loop invariant increasing:  \forall integer k;
+                                    0 <= k < x ==> j < n  ==>  c[k] <= b[j];
+        loop invariant increasing:  WeaklyIncreasing(c, x);
+        loop assigns i, j, x, c[0 .. m+n-1];
+        loop variant (m+n) - (i+j);
      */
-    while (i < n && j < m) {
+    while (i < m && j < n) {
       if (a[i] < b[j]) {
-        result[x++] = a[i++];
+        c[x++] = a[i++];
       }
       else {
-        result[x++] = b[j++];
+        c[x++] = b[j++];
       }
     }
 
-    //@ assert i == n ^^ j == m;
-    //@ assert i < n ^^ j < m;
-    //@ assert WeaklyIncreasing(result, 0, x);
+    //@ assert increasing:  i == m  ^^  j == n;
+    //@ assert increasing:  i <  m  ^^  j <  n;
+    //@ assert increasing:  WeaklyIncreasing(c, 0, x);
 
-    if (i < n) {
-      //@ assert 0 < x ==> result[x-1] <= a[i];
-      //@ assert WeaklyIncreasing(a + i, 0, n - i);
-      copy(a + i, n - i, result + x);
-      //@ assert result[x] == a[i];
-      /*@ assert WeaklyIncreasing(a + i, 0, n - i) &&
-                 EqualRanges{Here,Here}(a + i, 0, n - i, result + x) ==>
-                    WeaklyIncreasing(result + x, 0, n - i);
+    if (i < m) {
+      //@ assert increasing:  0 < x  ==>  c[x-1] <= a[i];
+      //@ assert increasing:  WeaklyIncreasing(a+i, 0, m-i);
+      copy(a + i, m - i, c + x);
+      //@ assert increasing:  c[x] == a[i];
+      /*@ assert increasing:  WeaklyIncreasing(a+i, 0, m-i)             ==>
+                              EqualRanges{Here,Here}(a+i, 0, m-i, c+x)  ==>
+                              WeaklyIncreasing(c+x, 0, m-i);
        */
-      //@ assert n - i + x == n + m;
+      //@ assert increasing:  m-i+x == m+n;
     }
     else {
-      //@ assert 0 < x ==> result[x-1] <= b[j];
-      //@ assert WeaklyIncreasing(b + j, 0, m - j);
-      copy(b + j, m - j, result + x);
-      //@ assert result[x] == b[j];
-      /*@ assert WeaklyIncreasing(b + j, 0, m - j) &&
-                 EqualRanges{Here,Here}(b + j, 0, m - j, result + x) ==>
-                    WeaklyIncreasing(result + x, 0, m - j);
+      //@ assert increasing:  0 < x  ==>  c[x-1] <= b[j];
+      //@ assert increasing:  WeaklyIncreasing(b, 0, n);
+      //@ assert increasing:  WeaklyIncreasing(b+j, 0, n-j);
+      copy(b + j, n - j, c + x);
+      //@ assert increasing:  c[x] == b[j];
+      /*@ assert increasing:  WeaklyIncreasing(b+j, 0, n-j)             ==>
+                              EqualRanges{Here,Here}(b+j, 0, n-j, c+x)  ==>
+                              WeaklyIncreasing(c+x, 0, n-j);
        */
-      //@ assert m - j + x == n + m;
+      //@ assert increasing:  n-j+x == m+n;
     }
 
-    //@ assert WeaklyIncreasing(result, x, n + m);
-    //@ assert x > 0 ==> result[x-1] <= result[x];
-    //@ assert WeaklyIncreasing(result, 0, n + m);
+    //@ assert increasing:  WeaklyIncreasing(c, x, m+n);
+    //@ assert increasing:  0 < x  ==>  c[x-1] <= c[x];
+    //@ assert increasing:  0 < x  ==>  WeaklyIncreasing(c, x-1, m+n);
+    //@ assert increasing:  WeaklyIncreasing(c, 0, m+n);
   }
   else {
     return;

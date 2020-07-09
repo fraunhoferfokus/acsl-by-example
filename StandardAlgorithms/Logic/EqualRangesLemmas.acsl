@@ -9,13 +9,13 @@
 /*@
   axiomatic EqualRangeLemmas
   {
-    lemma EqualRangesIncreasing{K,L}:
+    lemma EqualRanges_Increasing{K,L}:
       \forall value_type* a, integer m, n, p;
         Increasing{K}(a, m, n)          ==>
         EqualRanges{K,L}(a, m, n, m+p)  ==>
         Increasing{L}(a, m+p, n+p);
 
-    lemma EqualRangesCount{K,L}:
+    lemma EqualRanges_Count{K,L}:
       \forall value_type *a, v, integer m, n, p;
         0 <= m <= n                   ==>
         EqualRanges{K,L}(a, m, n, p)  ==>

@@ -14,6 +14,7 @@ test:			$(EXAMPLES)
 clean::			$(EXAMPLES)
 format:			$(EXAMPLES)
 report-clean:		$(EXAMPLES)
+qreport-clean:		$(EXAMPLES)
 preport-clean:		$(EXAMPLES)
 areport-clean:		$(EXAMPLES)
 group-files:		$(EXAMPLES)
@@ -28,6 +29,7 @@ clean::
 	@$(RM) -rf errorlogs
 	@$(RM) *.back
 	@$(RM) astraver.why3.conf
+	@$(MAKE) clean -sC Scripts
 	@$(MAKE) clean -sC Drivers
 	@$(MAKE) -f $(ALLMAKE) clean
 
@@ -35,6 +37,12 @@ report:
 	@for i in $(EXAMPLES);\
 	do \
 		(echo "report $$i"; $(MAKE) report -sC $$i);\
+	done
+
+qreport:
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "qreport $$i"; $(MAKE) qreport -sC $$i);\
 	done
 
 preport:

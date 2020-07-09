@@ -1,0 +1,53 @@
+
+#ifndef PUSHHEAPADJUST_SPEC_INCLUDED
+#define PUSHHEAPADJUST_SPEC_INCLUDED
+
+#include "MultisetOperations.acsl"
+#include "MultisetRetain.acsl"
+#include "MultisetUnchanged.acsl"
+
+/*@
+  axiomatic PushHeapAdjust
+  {
+    predicate
+      PushHeapAdjust{K,L}(value_type* a, integer n, value_type u, value_type v) =
+        MultisetAdd{K,L}(a, n, u)    &&
+        MultisetMinus{K,L}(a, n, v)  &&
+        MultisetRetainRest{K,L}(a, n, v, u);
+
+    lemma PushHeapAdjust_Init{K,L}:
+      \forall value_type *a, u, v, integer n;
+        0 < n ==>
+        v != u                  ==>
+        \at(a[n-1],K) == v      ==>
+        \at(a[n-1],L) == u      ==>
+        Unchanged{K,L}(a, n-1)  ==>
+        PushHeapAdjust{K,L}(a, n, u, v);
+
+    lemma PushHeapAdjust_Retain{K,L,M}:
+      \forall value_type *a, ap, ah, v, integer h, p, n;
+         0 <= p < h < n-1                      ==>
+         ah < ap < v                           ==>
+         \at(a[h],L)  ==  ah                   ==>
+         \at(a[p],L)  ==  ap                   ==>
+         \at(a[h],M)  ==  ap                   ==>
+         PushHeapAdjust{K,L}(a, n, ah, v)      ==>
+         MultisetUnchanged{L,M}(a, 0, h)       ==>
+         MultisetUnchanged{L,M}(a, h+1, n)     ==>
+         MultisetRetainRest{K,M}(a, n, v, ap);
+
+    lemma PushHeapAdjust_Finish{K,L,M}:
+      \forall value_type *a, u, v, integer m, n;
+        0 <= m < n                       ==>
+        v != u                           ==>
+        \at(a[m],L) == u                 ==>
+        \at(a[m],M) == v                 ==>
+        Unchanged{L,M}(a, 0, m)          ==>
+        Unchanged{L,M}(a, m+1, n)        ==>
+        PushHeapAdjust{K,L}(a, n, u, v)  ==>
+        MultisetUnchanged{K,M}(a, n);
+  }
+*/
+
+#endif /* PUSHHEAPADJUST_SPEC_INCLUDED */
+

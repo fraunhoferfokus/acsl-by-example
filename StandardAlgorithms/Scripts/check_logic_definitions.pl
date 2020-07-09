@@ -138,7 +138,7 @@ sub get_topdir
 my $varname_re    = qr/[a-zA-Z_]\w*+/;
 my $logic_defn_re = qr/\b
    (?:predicate|inductive|type|logic[\wℤ𝔹\s\*]+)
-   \s++(?<name>${varname_re})                   # id
+   \s*+\b(?<name>${varname_re})                 # id
    (?:\s*+\{[\s,\w]++\})?                       # label
    (?:\s*+\([\s,\w*]++\))?                      # args
    (?:\s*+reads\s*+                             # reads

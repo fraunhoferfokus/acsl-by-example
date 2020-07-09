@@ -2,30 +2,33 @@
 #ifndef MULTISETRETAIN_SPEC_INCLUDED
 #define MULTISETRETAIN_SPEC_INCLUDED
 
-#include "Count.acsl"
+#include "MultisetUnchanged.acsl"
 
 /*@
   axiomatic MultisetRetain
   {
     predicate
     MultisetRetain{K,L}(value_type* a, integer n, value_type v) =
-      Count{K}(a, n, v) == Count{L}(a, n, v);
+      Count{K}(a, 0, n, v) == Count{L}(a, 0, n, v);
 
     predicate
-    MultisetRetainRest{K,L}(value_type* a, integer m1, integer m2,
-                            value_type* b, integer n1, integer n2, value_type  v) =
+    MultisetRetainRest{K,L}(value_type* a, integer n, value_type  v) =
       \forall value_type x;
-        x != v  ==>  Count{K}(a, m1, m2, x) == Count{L}(b, n1, n2, x);
-
-    predicate
-    MultisetRetainRest{K,L}(value_type* a, integer m,
-                            value_type* b, integer n, value_type  v) =
-      MultisetRetainRest{K,L}(a, 0, m, b, 0, n, v);
+        x != v  ==>  MultisetRetain{K,L}(a, n, x);
 
     predicate
     MultisetRetainRest{K,L}(value_type* a, integer n, value_type  v, value_type w) =
       \forall value_type x;
         x != v  ==>  x != w  ==>  MultisetRetain{K,L}(a, n, x);
+
+    lemma Multiset_UpdateRetain{K,L}:
+      \forall value_type *a, v, integer m, n;
+        0 <= m < n                         ==>
+        \at(a[m],K) != v                   ==>
+        \at(a[m],L) != v                   ==>
+        MultisetUnchanged{K,L}(a, 0, m)    ==>
+        MultisetUnchanged{K,L}(a, m+1, n)  ==>
+        MultisetRetain{K,L}(a, n, v);
   }
 */
 

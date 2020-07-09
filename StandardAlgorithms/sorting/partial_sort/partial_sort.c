@@ -27,7 +27,7 @@ partial_sort(value_type* a, size_type m, size_type n)
       loop assigns              i, a[0..n-1];
       loop variant              n-i;
     */
-    for (size_type i = m; i < n; ++i)
+    for (size_type i = m; i < n; ++i) {
       if (a[i] < a[0u]) {
         /*@
           assigns              a[0..m-1];
@@ -50,6 +50,8 @@ partial_sort(value_type* a, size_type m, size_type n)
         //@ ghost Before: ;
         swap(a + m - 1u, a + i);
         //@ assert swapped:    SwappedInside{Before,Here}(a, m-1, i, n);
+        //@ assert unchanged:  Unchanged{Before,Here}(a, m-1);
+        //@ assert reorder:    MultisetUnchanged{Before,Here}(a, m-1, i+1);
         //@ assert reorder:    MultisetUnchanged{Before,Here}(a, i+1);
         //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, i+1);
         //@ assert unchanged:  Unchanged{Pre,Here}(a, i+1, n);
@@ -65,15 +67,17 @@ partial_sort(value_type* a, size_type m, size_type n)
           ensures unchanged:   Unchanged{Old,Here}(a, i+1, n);
         */
         push_heap(a, m);
+        //@ assert reorder:    MultisetUnchanged{Pre,Here}(a, i+1);
         //@ assert upper:      UpperBound(a, 0, m,   a[0]);
         //@ assert lower:      LowerBound(a, m, i+1, a[0]);
       }
+    }
 
     //@ assert partition: Partition(a, m, n);
     /*@
       assigns                 a[0..m-1];
       ensures reorder:        MultisetUnchanged{Old,Here}(a, m);
-      ensures reorder:        MultisetUnchanged{Old,Here}(a, m, n);
+      ensures unchanged:      Unchanged{Old,Here}(a, m, n);
       ensures increasing:     Increasing(a, m);
     */
     sort_heap(a, m);

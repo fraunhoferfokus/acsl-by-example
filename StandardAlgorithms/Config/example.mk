@@ -102,33 +102,35 @@ report: $(TOP_DIR)/Results/$(EXAMPLE).report
 report-clean: clean
 	@$(RM) $(TOP_DIR)/Results/$(EXAMPLE).report
 
+qreport: $(TOP_DIR)/Results/$(EXAMPLE).qreport
+	@. $(SCRIPT_DIR)/script_functions.sh; prettyPrintReport $<
+
+qreport-clean: clean
+	@$(RM) *.qlog
+	@$(RM) $(TOP_DIR)/Results/$(EXAMPLE).qreport
+
+$(TOP_DIR)/Results/$(EXAMPLE).qreport: $(EXAMPLE).c
+	@ $(SCRIPT_DIR)/qreport.py $(EXAMPLE) $(CMD) $(SEC) $(PROVERS)
+
 # watch out for qed!
 WP_SESSION_FLAGS = -wp-session=$(EXAMPLE_OUT) -wp-cache=update
 FR_SESSION       = $(FR) $(WP_C_FLAGS) $(WP_TIME_FLAGS) $(WP_SESSION_FLAGS) 
 CONSOLE          = $(EXAMPLE).wp/console.log
 
 # I would rather like to use make's "foreach" function here
-preport-sessions: $(EXAMPLE).c  
-	mkdir -p $(EXAMPLE_OUT)
-	for i in $(PROVERS); do\
-  	  $(FR_SESSION) -wp-prover=$$i  $<; \
-	done > $(CONSOLE);
 
-qreport-sessions: $(EXAMPLE).c 
-	mkdir $(EXAMPLE_OUT)
-	for i in $(PROVERS); do\
-  	  $(FR_SESSION) -wp-prover=$$i  $<; \
-	done >> $(CONSOLE);
-
-$(TOP_DIR)/Results/$(EXAMPLE).preport: preport-sessions
-	@. $(SCRIPT_DIR)/script_preport.sh $(EXAMPLE) $(CMD) $(SEC) $(TOP_DIR)
+$(TOP_DIR)/Results/$(EXAMPLE).preport: $(EXAMPLE).c
+	@ $(SCRIPT_DIR)/preport.py $(EXAMPLE) $(CMD) $(SEC) $(PROVERS)
 
 preport: $(TOP_DIR)/Results/$(EXAMPLE).preport
 	@. $(SCRIPT_DIR)/script_functions.sh; prettyPrintReport $<
 
 preport-clean: clean
+	@$(RM) *.plog
 	@$(RM) $(TOP_DIR)/Results/$(EXAMPLE).preport
+	@$(RM) $(TOP_DIR)/Results/$(EXAMPLE).preport-python
 	@$(RM) $(TOP_DIR)/Results/$(EXAMPLE).all
+
 
 
 $(TOP_DIR)/Results/$(EXAMPLE).areport: $(AV_WHY3_CONF) $(EXAMPLE).c
@@ -144,8 +146,9 @@ areport-clean:
 
 clean:: FORCE
 	@($(MAKE) clean -sC $(DRIVER_DIR))
-	@$(RM) $(EXAMPLE_TEST) *.o *.pp.c *.pp.h *.back *.orig .lia.cache *.log
 	@$(RM) -rf  $(EXAMPLE).wp session .frama-c *.jessie *.av *.wp *.wp++ *.ml
+	@$(RM) -r $(EXAMPLE).alt-ergo $(EXAMPLE).cvc4 $(EXAMPLE).cvc3 $(EXAMPLE).z3 $(EXAMPLE).coq
+	@$(RM) $(EXAMPLE_TEST) *.o *.pp.c *.pp.h *.back *.orig .lia.cache *.log
 
 
 FORCE:

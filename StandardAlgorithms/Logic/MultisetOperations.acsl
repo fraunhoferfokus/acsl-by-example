@@ -8,14 +8,14 @@
   axiomatic MultisetOperations
   {
     predicate
-    MultisetAdd{K,L}(value_type* a, integer n, value_type val) =
-      Count{L}(a, n, val) == Count{K}(a, n, val) + 1;
+    MultisetAdd{K,L}(value_type* a, integer n, value_type v) =
+      Count{L}(a, 0, n, v) == Count{K}(a, 0, n, v) + 1;
 
     predicate
-    MultisetMinus{K,L}(value_type* a, integer n, value_type val) =
-      Count{L}(a, n, val) == Count{K}(a, n, val) - 1;
+    MultisetMinus{K,L}(value_type* a, integer n, value_type v) =
+      MultisetAdd{L,K}(a, n, v);
 
-    lemma MultisetAddDistinct{K,L}:
+    lemma MultisetAdd_Distinct{K,L}:
       \forall value_type *a, v, integer i, n;
         0 <= i < n                         ==>
         \at(a[i],K) != v                   ==>
@@ -24,7 +24,7 @@
         MultisetUnchanged{K,L}(a, i+1, n)  ==>
         MultisetAdd{K,L}(a, n, v);
 
-    lemma MultisetMinusDistinct{K,L}:
+    lemma MultisetMinus_Distinct{K,L}:
       \forall value_type *a, v, integer i, n;
         0 <= i < n                         ==>
         \at(a[i],K) == v                   ==>

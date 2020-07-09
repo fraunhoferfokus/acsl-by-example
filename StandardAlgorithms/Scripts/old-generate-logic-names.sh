@@ -35,7 +35,7 @@ INDUCTIVES=`$gnugrep -oPhw 'inductive \K\w+' $FILES | sort -u`
 
 PREDICATES=`$gnugrep -h -A1 -w predicate $FILES | $gnugrep -v predicate | $gnugrep -ve -- | $gnugrep -ve '^$' | $gnugrep -oP '^\s+\K\w+' | sort -u`
 
-FUNCTIONS=`$gnugrep -Pzohe "(?:logic[\wℤ𝔹\s\*]+)\s+\K[a-zA-Z_]\w*" $FILES | tr '\0' '\n' | sort -u`
+FUNCTIONS=`$gnugrep -Pzohe '(?:logic[\wℤ𝔹\s\*]+)\s*\b\K[a-zA-Z_]\w*' $FILES | tr '\0' '\n' | sort -u`
 
 
 RAWNAMES="$LEMMAS $AXIOMATICS $AXIOMS $INDUCTIVES $PREDICATES $FUNCTIONS"

@@ -42,6 +42,7 @@ clean::		$(EXAMPLES)
 format:		$(EXAMPLES)
 generate:	$(EXAMPLES)
 report-clean:	$(EXAMPLES)
+qreport-clean:	$(EXAMPLES)
 preport-clean:	$(EXAMPLES)
 areport-clean:	$(EXAMPLES)
 
@@ -71,6 +72,12 @@ preport:
 	@for i in $(EXAMPLES);\
         do \
                 ($(MAKE) preport -sC $$i);\
+        done
+
+qreport:
+	@for i in $(EXAMPLES);\
+        do \
+                ($(MAKE) qreport -sC $$i);\
         done
 
 areport:

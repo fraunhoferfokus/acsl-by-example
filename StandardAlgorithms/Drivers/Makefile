@@ -12,7 +12,7 @@ proof: FORCE
 	coqc -R $(FRAMAC_SHARE)/wp/coqwp "" $<
 
 clean: FORCE
-	@$(RM)	.lia.cache .*.aux *.glob *.vo driver
+	@$(RM)	.lia.cache .*.aux *.glob *.vo *.vok *.vos driver
 
 FORCE:
 

@@ -8,31 +8,36 @@
   axiomatic MultisetUnchanged
   {
     predicate
-    MultisetUnchanged{L1,L2}(value_type* a, integer first, integer last) =
+    MultisetUnchanged{K,L}(value_type* a, integer m, integer n) =
       \forall value_type v;
-        Count{L1}(a, first, last, v) == Count{L2}(a, first, last, v);
+        Count{K}(a, m, n, v) == Count{L}(a, m, n, v);
 
     predicate
-    MultisetUnchanged{L1,L2}(value_type* a, integer n) =
-      MultisetUnchanged{L1,L2}(a, 0, n);
+    MultisetUnchanged{K,L}(value_type* a, integer n) =
+      MultisetUnchanged{K,L}(a, 0, n);
 
-    lemma UnchangedImpliesMultisetUnchanged{L1,L2}:
+    lemma Unchanged_MultisetUnchanged{K,L}:
       \forall value_type *a, integer k, n;
-        Unchanged{L1,L2}(a, k, n)  ==>
-        MultisetUnchanged{L1,L2}(a, k, n);
+        Unchanged{K,L}(a, k, n)  ==>
+        MultisetUnchanged{K,L}(a, k, n);
 
-    lemma MultisetUnchangedUnion{L1,L2}:
+    lemma MultisetUnchanged_Union{K,L}:
       \forall value_type *a, integer i, k, n;
-        0 <= i <= k <= n                   ==>
-        MultisetUnchanged{L1,L2}(a, i, k)  ==>
-        MultisetUnchanged{L1,L2}(a, k, n)  ==>
-        MultisetUnchanged{L1,L2}(a, i, n);
+        0 <= i <= k <= n                 ==>
+        MultisetUnchanged{K,L}(a, i, k)  ==>
+        MultisetUnchanged{K,L}(a, k, n)  ==>
+        MultisetUnchanged{K,L}(a, i, n);
 
-    lemma MultisetUnchangedTransitive{L1,L2,L3}:
-      \forall value_type *a, integer n;
-        MultisetUnchanged{L1,L2}(a, n)  ==>
-        MultisetUnchanged{L2,L3}(a, n)  ==>
-        MultisetUnchanged{L1,L3}(a, n);
+    lemma MultisetUnchanged_Symmetric{K,L}:
+      \forall value_type *a, integer m, n;
+        MultisetUnchanged{K,L}(a, m, n)  ==>
+        MultisetUnchanged{L,K}(a, m, n);
+
+    lemma MultisetUnchanged_Transitive{K,L,M}:
+      \forall value_type *a, integer m, n;
+        MultisetUnchanged{K,L}(a, m, n)  ==>
+        MultisetUnchanged{L,M}(a, m, n)  ==>
+        MultisetUnchanged{K,M}(a, m, n);
   }
 */
 

@@ -1,10 +1,33 @@
 
 Require Import ZArith.
 Require Import Memory.
+Require Import Qedlib.
 Require Import Psatz.
 
 Open Scope Z_scope.
 
+Lemma cdiv_lower :
+  forall a b, 0 <= a -> 0 < b ->  0 <= (Cdiv a b).
+Proof.
+  intros.
+  replace (Cdiv a b) with (a/b).
+  - apply Z_div_pos; lia.
+  - destruct Cdiv_cases with (a) (b); lia.
+Qed.
+
+Lemma cdiv_upper :
+  forall a b, 0 <= a -> 1 < b ->  (Cdiv a b) <= a.
+Proof.
+  intros.
+  replace (Cdiv a b) with (a/b).
+  - assert(zero_pos: 0 = a \/ 0 < a) by lia.
+    destruct zero_pos as [zero|pos].
+    + rewrite <- zero.
+      rewrite Zdiv_0_l; lia.
+    + enough (a/b < a) by lia.
+      apply Z_div_lt; lia.
+  - destruct Cdiv_cases with (a) (b); lia.
+Qed.
 
 Lemma shift_associative :
   forall a, forall m n,

@@ -7,10 +7,10 @@
 /*@
   requires valid:   \valid(a + (0..n-1));
   assigns           a[0..n-1];
-  ensures constant: AllEqual(a, n, val);
+  ensures constant: AllEqual(a, n, v);
 */
 void
-fill(value_type* a, size_type n, value_type val);
+fill(value_type* a, size_type n, value_type v);
 
 #endif /* FILL_H_INCLUDED */
 

@@ -1,7 +1,7 @@
 
 MAKEFLAGS += --silent --no-print-directory
 
-export TOP_DIR    := $(CURDIR)
+export TOP_DIR    := .
 export CONFIG_DIR := $(TOP_DIR)/Config
 export SCRIPT_DIR := $(TOP_DIR)/Scripts
 export DRIVER_DIR := $(TOP_DIR)/Drivers

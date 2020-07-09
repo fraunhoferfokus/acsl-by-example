@@ -7,12 +7,12 @@
 
 /*@
   requires valid:    \valid(a + (0..n-1));
-  requires limit:    val + n <= VALUE_TYPE_MAX;
+  requires limit:    v + n <= VALUE_TYPE_MAX;
   assigns            a[0..n-1];
-  ensures increment: IotaGenerate(a, n, val);
+  ensures increment: IotaGenerate(a, n, v);
 */
 void
-iota(value_type* a, size_type n, value_type val);
+iota(value_type* a, size_type n, value_type v);
 
 #endif /* IOTA_H_INCLUDED */
 

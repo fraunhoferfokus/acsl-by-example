@@ -4,7 +4,8 @@
 
 #include "HeapBasics.acsl"
 #include "ArrayExtrema.acsl"
-#include "C_Division.acsl"
+#include "At.acsl"
+#include "Unchanged.acsl"
 
 /*@
   axiomatic Heap
@@ -13,11 +14,34 @@
     Heap{L}(value_type* a, integer n) =
       \forall integer i; 0 < i < n  ==>  a[i] <= a[HeapParent(i)];
 
-    lemma HeapMaximum{L} :
+    lemma Heap_Maximum{L} :
       \forall value_type* a, integer n;
-        0 < n       ==>
-        Heap(a, n)  ==>
-        MaxElement(a, n, 0);
+        0 < n  ==>  Heap(a, n)  ==>  MaxElement(a, n, 0);
+
+   lemma Heap_Shrink{L}:
+     \forall value_type *a, integer m, n;
+       0 <= m <= n  ==>  Heap(a, n)   ==>  Heap(a, m);
+
+   lemma Heap_Unchanged{K,L}:
+     \forall value_type *a, integer n;
+       0 <= n  ==>  Unchanged{K,L}(a, n)  ==>  Heap{K}(a, n)  ==>  Heap{L}(a, n);
+
+   predicate
+     HeapCompatible{L}(value_type* a, integer n, integer m, value_type v) =
+       (0 <= m < n)                                      &&
+       (0 <= HeapParent(m)  ==>  v <= a[HeapParent(m)])  &&
+       (HeapLeft(m)  <  n   ==>  a[HeapLeft(m)]  <= v)   &&
+       (HeapRight(m) <  n   ==>  a[HeapRight(m)] <= v);
+
+   lemma Heap_Update{K,L}:
+     \forall value_type *a, v, integer m, n;
+       0 <= m < n                      ==>
+       Heap{K}(a, n)                   ==>
+       HeapCompatible{K}(a, n, m, v)   ==>
+       Unchanged{K,L}(a, 0, m)         ==>
+       Unchanged{K,L}(a, m+1, n)       ==>
+       At{L}(a, m) == v                ==>
+       Heap{L}(a, n);
   }
 */
 

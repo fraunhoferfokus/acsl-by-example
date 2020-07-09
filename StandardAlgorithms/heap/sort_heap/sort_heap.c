@@ -1,9 +1,7 @@
 
 #include "sort_heap.h"
 #include "pop_heap.h"
-#include "ArrayBounds.acsl"
-#include "IncreasingUpperBound.acsl"
-#include "MultisetUnchanged.acsl"
+#include "IncreasingLemmas.acsl"
 
 void
 sort_heap(value_type* a, size_type n)
@@ -13,7 +11,7 @@ sort_heap(value_type* a, size_type n)
      loop invariant heap:         Heap(a, i);
      loop invariant lower:        LowerBound(a, i, n, a[0]);
      loop invariant reorder:      MultisetUnchanged{Pre,Here}(a, 0, n);
-     loop invariant increasing:   Increasing(a, i, n);
+     loop invariant increasing:   WeaklyIncreasing(a, i, n);
      loop assigns i, a[0..n-1];
      loop variant i;
   */
@@ -30,5 +28,7 @@ sort_heap(value_type* a, size_type n)
     pop_heap(a, i);
     //@ assert lower:  LowerBound(a, i, n, a[i-1]);
   }
+
+  //@ assert increasing: Increasing(a, n);
 }
 

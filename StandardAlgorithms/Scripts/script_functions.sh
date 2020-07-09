@@ -168,7 +168,7 @@ extract_raw_data_Wp()
     valid_alt_ergo=`countValid $raw_output Alt-Ergo`
     valid_cvc4=`countValid $raw_output CVC4`
     valid_cvc3=`countValid $raw_output CVC3`
-    valid_z3=`countValid $raw_output Z3`
+    valid_z3=`countValid $raw_output z3`
     valid_eprover=`countValid $raw_output eprover`
     valid_coq=`countValid $raw_output Coq`
 

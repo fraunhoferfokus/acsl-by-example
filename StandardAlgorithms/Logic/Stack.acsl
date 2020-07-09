@@ -13,14 +13,14 @@
       StackSize{S}(s) == StackSize{T}(t) &&
       EqualRanges{S,T}(StackStorage{S}(s), StackSize{S}(s), StackStorage{T}(t));
 
-    lemma StackEqualReflexive{S} :
+    lemma StackEqual_Reflexive{S} :
       \forall Stack* s; StackEqual{S,S}(s, s);
 
-    lemma StackEqualSymmetric{S,T} :
+    lemma StackEqual_Symmetric{S,T} :
       \forall Stack *s, *t;
         StackEqual{S,T}(s, t)  ==>  StackEqual{T,S}(t, s);
 
-    lemma StackEqualTransitive{S,T,U}:
+    lemma StackEqual_Transitive{S,T,U}:
       \forall Stack *s, *t, *u;
         StackEqual{S,T}(s, t)  ==>
         StackEqual{T,U}(t, u)  ==>

@@ -28,7 +28,8 @@ shuffle(value_type* a, size_type n, unsigned short* seed)
         //@ assert reorder: MultisetUnchanged{Pre,Here}(a, i+1);
       }
       else {
-        //@ assert reorder: MultisetUnchanged{Pre,Here}(a, i+1);
+        //@ assert unchanged: Unchanged{LoopCurrent,Here}(a, i+1);
+        //@ assert reorder:   MultisetUnchanged{Pre,Here}(a, i+1);
       }
 
       //@ assert reorder: MultisetUnchanged{Pre,Here}(a, i+1);
