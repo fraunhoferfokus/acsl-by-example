@@ -11,6 +11,7 @@ remove_copy3(const value_type* a, size_type n, value_type* b, value_type v)
     loop invariant size:       k == CountNotEqual{Pre}(a,i,v);
     loop invariant bound:      0 <= k <= i <= n;
     loop invariant remove:     Remove{Pre,Here}(a, n, i, b, v);
+    loop invariant discard:    NoneEqual(b, k, v);
     loop invariant interval:   RemovePartition{Pre}(a, n, v, k-1) <= i;
     loop invariant interval:   i <= RemovePartition{Pre}(a, n, v, k);
     loop invariant unchanged:  Unchanged{Pre,Here}(a, n);

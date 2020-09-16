@@ -1,6 +1,6 @@
 
-#ifndef INCREASING_SPEC_INCLUDED
-#define INCREASING_SPEC_INCLUDED
+#ifndef INCREASING_ACSL_INCLUDED
+#define INCREASING_ACSL_INCLUDED
 
 #include "WeaklyIncreasing.acsl"
 
@@ -17,5 +17,5 @@
 */
 
 
-#endif /* INCREASING_SPEC_INCLUDED */
+#endif /* INCREASING_ACSL_INCLUDED */
 

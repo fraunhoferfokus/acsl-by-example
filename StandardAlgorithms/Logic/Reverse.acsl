@@ -1,6 +1,6 @@
 
-#ifndef REVERSE_SPEC_INCLUDED
-#define REVERSE_SPEC_INCLUDED
+#ifndef REVERSE_ACSL_INCLUDED
+#define REVERSE_ACSL_INCLUDED
 
 #include "typedefs.h"
 
@@ -32,5 +32,5 @@
   }
 */
 
-#endif /* REVERSE_SPEC_INCLUDED */
+#endif /* REVERSE_ACSL_INCLUDED */
 

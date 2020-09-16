@@ -40,8 +40,8 @@ install:
 
 script:
    - make -C StandardAlgorithms clean
-   - make -C StandardAlgorithms report-clean
    - make -C StandardAlgorithms test
+   - make -C StandardAlgorithms report-clean
    - sed -i -e '/WP_TIMEOUT/d' $(find StandardAlgorithms -type f -name Makefile)
    - eval $(opam config env); make -C StandardAlgorithms report
    - git diff StandardAlgorithms/Results

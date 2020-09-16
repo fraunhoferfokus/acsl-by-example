@@ -1,6 +1,8 @@
 
 include ../../Config/example.mk
 
+WP_TIMEOUT=5
+
 #WP_FLAGS += -wp-fct adjacent_difference
 #WP_FLAGS += -wp-prop rte
 #WP_FLAGS += -wp-prop after

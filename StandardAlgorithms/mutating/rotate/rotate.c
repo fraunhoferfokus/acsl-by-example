@@ -19,8 +19,8 @@ rotate(value_type* a, size_type m, size_type n)
       ensures right:   Reverse{Old,Here}(a, m, n, 0);
     */
     reverse(a, n);
-    //@ assert left:   EqualRanges{Pre,Here}(a, 0, m, n-m);
-    //@ assert right:  EqualRanges{Pre,Here}(a, m, n, 0);
+    //@ assert left:   Equal{Pre,Here}(a, 0, m, n-m);
+    //@ assert right:  Equal{Pre,Here}(a, m, n, 0);
   }
 
   return n - m;

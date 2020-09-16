@@ -1,0 +1,36 @@
+
+#ifndef ARRAYUPDATE_ACSL_INCLUDED
+#define ARRAYUPDATE_ACSL_INCLUDED
+
+#include "At.acsl"
+#include "Unchanged.acsl"
+#include "ArrayBounds.acsl"
+
+/*@
+  axiomatic ArrayUpdate
+  {
+    predicate
+      ArrayUpdate{K,L}(value_type* a, integer n, integer i, value_type v) =
+        0 <= i < n                 &&
+        Unchanged{K,L}(a, 0, i)    &&
+        Unchanged{K,L}(a, i+1, n)  &&
+        At{K}(a, i) != v           &&
+        At{L}(a, i) == v;
+
+    lemma ArrayUpdate_Shrink{K,L}:
+      \forall value_type *a, v, integer n, i;
+        0 <= i < n-1                  ==>
+        ArrayUpdate{K,L}(a, n, i, v)  ==>
+        ArrayUpdate{K,L}(a, n-1, i, v);
+
+    lemma ArrayUpdate_UpperBound{K,L}:
+      \forall value_type *a, v, w, integer n, i;
+        ArrayUpdate{K,L}(a, n, i, v)  ==>
+        v <= w                        ==> 
+        UpperBound{K}(a, n, w)        ==>
+        UpperBound{L}(a, n, w);
+  }
+*/
+
+#endif /* ARRAYUPDATE_ACSL_INCLUDED */
+

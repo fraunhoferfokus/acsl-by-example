@@ -1,6 +1,6 @@
 
-#ifndef COUNTFIND_SPEC_INCLUDED
-#define COUNTFIND_SPEC_INCLUDED
+#ifndef COUNTFIND_ACSL_INCLUDED
+#define COUNTFIND_ACSL_INCLUDED
 
 #include "Count.acsl"
 #include "Find.acsl"

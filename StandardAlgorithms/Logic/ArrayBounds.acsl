@@ -1,6 +1,6 @@
 
-#ifndef ARRAYBOUNDS_SPEC_INCLUDED
-#define ARRAYBOUNDS_SPEC_INCLUDED
+#ifndef ARRAYBOUNDS_ACSL_INCLUDED
+#define ARRAYBOUNDS_ACSL_INCLUDED
 
 #include "typedefs.h"
 
@@ -41,5 +41,5 @@
   }
 */
 
-#endif /* ARRAYBOUNDS_SPEC_INCLUDED */
+#endif /* ARRAYBOUNDS_ACSL_INCLUDED */
 

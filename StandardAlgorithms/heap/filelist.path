@@ -1,5 +1,5 @@
 heap_parent
-heap_child_max
+heap_child
 is_heap_until
 is_heap
 push_heap

@@ -1,6 +1,6 @@
 
-#ifndef ALLSOMENOT_SPEC_INCLUDED
-#define ALLSOMENOT_SPEC_INCLUDED
+#ifndef ALLSOMENOT_ACSL_INCLUDED
+#define ALLSOMENOT_ACSL_INCLUDED
 
 #include "typedefs.h"
 
@@ -37,5 +37,5 @@
   }
 */
 
-#endif /* ALLSOMENOT_SPEC_INCLUDED */
+#endif /* ALLSOMENOT_ACSL_INCLUDED */
 

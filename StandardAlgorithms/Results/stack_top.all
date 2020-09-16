@@ -15,20 +15,6 @@ alt-ergo : typed_external_stack_top_assert_rte_mem_access_5
 alt-ergo : typed_external_stack_top_assert_rte_unsigned_overflow
 alt-ergo : typed_external_stack_top_ensures_top
 coq : typed_external_stack_top_ensures_top
-cvc4 : typed_external_stack_top_assert_rte_mem_access
-cvc4 : typed_external_stack_top_assert_rte_mem_access_3
-cvc4 : typed_external_stack_top_assert_rte_mem_access_4
-cvc4 : typed_external_stack_top_assert_rte_unsigned_overflow
-cvc3 : typed_external_lemma_StackEqual_Reflexive
-cvc3 : typed_external_lemma_StackEqual_Symmetric
-cvc3 : typed_external_lemma_StackEqual_Transitive
-cvc3 : typed_external_stack_top_assert_rte_mem_access
-cvc3 : typed_external_stack_top_assert_rte_mem_access_2
-cvc3 : typed_external_stack_top_assert_rte_mem_access_3
-cvc3 : typed_external_stack_top_assert_rte_mem_access_4
-cvc3 : typed_external_stack_top_assert_rte_mem_access_5
-cvc3 : typed_external_stack_top_assert_rte_unsigned_overflow
-cvc3 : typed_external_stack_top_ensures_top
 z3 : typed_external_lemma_StackEqual_Reflexive
 z3 : typed_external_stack_top_assert_rte_mem_access
 z3 : typed_external_stack_top_assert_rte_mem_access_2
@@ -37,3 +23,5 @@ z3 : typed_external_stack_top_assert_rte_mem_access_4
 z3 : typed_external_stack_top_assert_rte_mem_access_5
 z3 : typed_external_stack_top_assert_rte_unsigned_overflow
 z3 : typed_external_stack_top_ensures_top
+cvc4 : typed_external_stack_top_assert_rte_mem_access
+cvc4 : typed_external_stack_top_assert_rte_unsigned_overflow

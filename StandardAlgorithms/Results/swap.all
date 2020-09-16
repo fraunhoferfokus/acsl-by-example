@@ -6,12 +6,9 @@ qed : typed_external_swap_ensures_exchange_2
 alt-ergo : typed_external_swap_assert_rte_mem_access
 alt-ergo : typed_external_swap_assert_rte_mem_access_3
 alt-ergo : typed_external_swap_ensures_exchange
-cvc4 : typed_external_swap_assert_rte_mem_access
-cvc4 : typed_external_swap_assert_rte_mem_access_3
-cvc4 : typed_external_swap_ensures_exchange
-cvc3 : typed_external_swap_assert_rte_mem_access
-cvc3 : typed_external_swap_assert_rte_mem_access_3
-cvc3 : typed_external_swap_ensures_exchange
 z3 : typed_external_swap_assert_rte_mem_access
 z3 : typed_external_swap_assert_rte_mem_access_3
 z3 : typed_external_swap_ensures_exchange
+cvc4 : typed_external_swap_assert_rte_mem_access
+cvc4 : typed_external_swap_assert_rte_mem_access_3
+cvc4 : typed_external_swap_ensures_exchange

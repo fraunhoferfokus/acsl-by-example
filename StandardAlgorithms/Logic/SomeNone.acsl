@@ -1,6 +1,6 @@
 
-#ifndef SOMENONE_SPEC_INCLUDED
-#define SOMENONE_SPEC_INCLUDED
+#ifndef SOMENONE_ACSL_INCLUDED
+#define SOMENONE_ACSL_INCLUDED
 
 #include "typedefs.h"
 
@@ -33,5 +33,5 @@
   }
 */
 
-#endif /* SOMENONE_SPEC_INCLUDED */
+#endif /* SOMENONE_ACSL_INCLUDED */
 

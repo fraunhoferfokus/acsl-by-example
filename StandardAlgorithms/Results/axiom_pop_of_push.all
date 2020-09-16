@@ -8,9 +8,5 @@ alt-ergo : typed_external_axiom_pop_of_push_ensures_equal
 alt-ergo : typed_external_lemma_StackEqual_Reflexive
 alt-ergo : typed_external_lemma_StackEqual_Symmetric
 alt-ergo : typed_external_lemma_StackEqual_Transitive
-cvc3 : typed_external_axiom_pop_of_push_ensures_equal
-cvc3 : typed_external_lemma_StackEqual_Reflexive
-cvc3 : typed_external_lemma_StackEqual_Symmetric
-cvc3 : typed_external_lemma_StackEqual_Transitive
 z3 : typed_external_axiom_pop_of_push_ensures_equal
 z3 : typed_external_lemma_StackEqual_Reflexive

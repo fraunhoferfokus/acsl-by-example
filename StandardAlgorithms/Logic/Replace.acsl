@@ -1,6 +1,6 @@
 
-#ifndef REPLACE_SPEC_INCLUDED
-#define REPLACE_SPEC_INCLUDED
+#ifndef REPLACE_ACSL_INCLUDED
+#define REPLACE_ACSL_INCLUDED
 
 #include "typedefs.h"
 
@@ -21,5 +21,5 @@
   }
 */
 
-#endif /* REPLACE_SPEC_INCLUDED */
+#endif /* REPLACE_ACSL_INCLUDED */
 

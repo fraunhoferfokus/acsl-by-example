@@ -20,13 +20,7 @@ alt-ergo : typed_external_equal_range_ensures_middle
 alt-ergo : typed_external_equal_range_ensures_result
 alt-ergo : typed_external_lemma_NotAllEqual_SomeNotEqual
 alt-ergo : typed_external_lemma_SomeNotEqual_NotAllEqual
-cvc4 : typed_external_lemma_NotAllEqual_SomeNotEqual
-cvc4 : typed_external_lemma_SomeNotEqual_NotAllEqual
-cvc3 : typed_external_equal_range_assert_aux
-cvc3 : typed_external_equal_range_ensures_middle
-cvc3 : typed_external_equal_range_ensures_result
-cvc3 : typed_external_lemma_NotAllEqual_SomeNotEqual
-cvc3 : typed_external_lemma_SomeNotEqual_NotAllEqual
 z3 : typed_external_equal_range_assert_aux
 z3 : typed_external_equal_range_ensures_result
-z3 : typed_external_lemma_NotAllEqual_SomeNotEqual
+cvc4 : typed_external_lemma_NotAllEqual_SomeNotEqual
+cvc4 : typed_external_lemma_SomeNotEqual_NotAllEqual

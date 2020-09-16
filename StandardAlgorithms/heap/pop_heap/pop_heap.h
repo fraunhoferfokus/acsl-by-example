@@ -3,7 +3,7 @@
 #define POP_HEAP_H_INCLUDED
 
 #include "Heap.acsl"
-#include "MultisetUnchanged.acsl"
+#include "MultisetReorder.acsl"
 
 /*@
    requires bounds:     0 < n;
@@ -13,7 +13,7 @@
    ensures heap:        Heap(a, n-1);
    ensures result:      a[n-1] == \old(a[0]);
    ensures max:         MaxElement(a, n, n-1);
-   ensures reorder:     MultisetUnchanged{Old,Here}(a, n);
+   ensures reorder:     MultisetReorder{Old,Here}(a, n);
 */
 void
 pop_heap(value_type* a, size_type n);

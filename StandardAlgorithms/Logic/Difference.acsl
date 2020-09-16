@@ -1,6 +1,6 @@
 
-#ifndef DIFFERENCE_SPEC_INCLUDED
-#define DIFFERENCE_SPEC_INCLUDED
+#ifndef DIFFERENCE_ACSL_INCLUDED
+#define DIFFERENCE_ACSL_INCLUDED
 
 #include "Unchanged.acsl"
 
@@ -18,12 +18,12 @@
       \forall value_type *a, integer n;
         0 < n  ==>  Difference(a, n) == a[n] - a[n-1];
 
-    lemma Difference_Read{K,L}:
+    lemma Difference_Unchanged{K,L}:
       \forall value_type *a, integer n;
         0 <= n  ==>  Unchanged{K,L}(a, n+1)  ==>
         Difference{K}(a, n) == Difference{L}(a, n);
   }
 */
 
-#endif /* DIFFERENCE_SPEC_INCLUDED */
+#endif /* DIFFERENCE_ACSL_INCLUDED */
 

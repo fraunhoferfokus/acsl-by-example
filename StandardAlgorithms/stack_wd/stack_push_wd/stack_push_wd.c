@@ -20,6 +20,6 @@ stack_push_wd(Stack* s, Stack* t, value_type v)
   stack_push(t, v);
   //@ assert top:   StackTop(s) == v;
   //@ assert top:   StackTop(t) == v;
-  //@ assert equal: EqualRanges{Here,Here}(StackStorage(s), StackSize{Pre}(s), StackStorage(t));
+  //@ assert equal: Equal{Here,Here}(StackStorage(s), StackSize{Pre}(s), StackStorage(t));
 }
 

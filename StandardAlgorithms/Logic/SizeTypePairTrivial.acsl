@@ -1,10 +1,10 @@
 
-#ifndef SIZETYPEPAIR_SPEC_INCLUDED
-#define SIZETYPEPAIR_SPEC_INCLUDED
+#ifndef SIZETYPEPAIR_ACSL_INCLUDED
+#define SIZETYPEPAIR_ACSL_INCLUDED
 
 // dummy specification file that includes size_type_pair.h
 
 #include "size_type_pair.h"
 
-#endif  /* SIZETYPEPAIR_SPEC_INCLUDED */
+#endif  /* SIZETYPEPAIR_ACSL_INCLUDED */
 

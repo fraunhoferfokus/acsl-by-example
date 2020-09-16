@@ -1,0 +1,29 @@
+
+#ifndef EQUAL_ACSL_INCLUDED
+#define EQUAL_ACSL_INCLUDED
+
+#include "typedefs.h"
+
+/*@
+  axiomatic Equal
+  {
+    predicate
+    Equal{K,L}(value_type* a, integer m, integer n, value_type* b) =
+      \forall integer i; m <= i < n  ==>  \at(a[i],K) == \at(b[i],L);
+
+    predicate
+    Equal{K,L}(value_type* a, integer n, value_type* b) =
+      Equal{K,L}(a, 0, n, b);
+
+    predicate
+    Equal{K,L}(value_type* a, integer m, integer n,
+               value_type* b, integer p) = Equal{K,L}(a+m, n-m, b+p);
+
+    predicate
+    Equal{K,L}(value_type* a, integer m, integer n, integer p) =
+      Equal{K,L}(a, m, n, a, p);
+  }
+*/
+
+#endif /* EQUAL_ACSL_INCLUDED */
+

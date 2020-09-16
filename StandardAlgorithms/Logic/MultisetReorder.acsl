@@ -1,0 +1,43 @@
+
+#ifndef MULTISETUNCHANGED_ACSL_INCLUDED
+#define MULTISETUNCHANGED_ACSL_INCLUDED
+
+#include "Count.acsl"
+
+/*@
+  axiomatic MultisetReorder
+  {
+    predicate
+    MultisetReorder{K,L}(value_type* a, integer m, integer n) =
+      \forall value_type v;
+        Count{K}(a, m, n, v) == Count{L}(a, m, n, v);
+
+    predicate
+    MultisetReorder{K,L}(value_type* a, integer n) =
+      MultisetReorder{K,L}(a, 0, n);
+
+    lemma Unchanged_MultisetReorder{K,L}:
+      \forall value_type *a, integer k, n;
+        Unchanged{K,L}(a, k, n)  ==>  MultisetReorder{K,L}(a, k, n);
+
+    lemma MultisetReorder_DisjointUnion{K,L}:
+      \forall value_type *a, integer i, k, n;
+        0 <= i <= k <= n               ==>
+        MultisetReorder{K,L}(a, i, k)  ==>
+        MultisetReorder{K,L}(a, k, n)  ==>
+        MultisetReorder{K,L}(a, i, n);
+
+    lemma MultisetReorder_Symmetric{K,L}:
+      \forall value_type *a, integer m, n;
+        MultisetReorder{K,L}(a, m, n)  ==>  MultisetReorder{L,K}(a, m, n);
+
+    lemma MultisetReorder_Transitive{K,L,M}:
+      \forall value_type *a, integer m, n;
+        MultisetReorder{K,L}(a, m, n)  ==>
+        MultisetReorder{L,M}(a, m, n)  ==>
+        MultisetReorder{K,M}(a, m, n);
+  }
+*/
+
+#endif /* MULTISETUNCHANGED_ACSL_INCLUDED */
+

@@ -1,6 +1,6 @@
 
-#ifndef INNERPRODUCT_SPEC_INCLUDED
-#define INNERPRODUCT_SPEC_INCLUDED
+#ifndef INNERPRODUCT_ACSL_INCLUDED
+#define INNERPRODUCT_ACSL_INCLUDED
 
 #include "UnchangedLemmas.acsl"
 
@@ -23,7 +23,7 @@
       \forall integer i; 0 <= i <= n  ==>
         VALUE_TYPE_MIN <= InnerProduct(a, b, i, init) <= VALUE_TYPE_MAX;
 
-    lemma InnerProduct_Read{K,L}:
+    lemma InnerProduct_Unchanged{K,L}:
       \forall value_type *a, *b, init, integer n;
         Unchanged{K,L}(a, n)  ==>
         Unchanged{K,L}(b, n)  ==>
@@ -31,5 +31,5 @@
   }
 */
 
-#endif /* INNERPRODUCT_SPEC_INCLUDED */
+#endif /* INNERPRODUCT_ACSL_INCLUDED */
 

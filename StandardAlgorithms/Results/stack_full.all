@@ -9,16 +9,8 @@ alt-ergo : typed_external_lemma_StackEqual_Transitive
 alt-ergo : typed_external_stack_full_assert_rte_mem_access
 alt-ergo : typed_external_stack_full_ensures_full
 alt-ergo : typed_external_stack_full_ensures_not_full
-cvc4 : typed_external_stack_full_assert_rte_mem_access
-cvc4 : typed_external_stack_full_ensures_full
-cvc4 : typed_external_stack_full_ensures_not_full
-cvc3 : typed_external_lemma_StackEqual_Reflexive
-cvc3 : typed_external_lemma_StackEqual_Symmetric
-cvc3 : typed_external_lemma_StackEqual_Transitive
-cvc3 : typed_external_stack_full_assert_rte_mem_access
-cvc3 : typed_external_stack_full_ensures_full
-cvc3 : typed_external_stack_full_ensures_not_full
 z3 : typed_external_lemma_StackEqual_Reflexive
 z3 : typed_external_stack_full_assert_rte_mem_access
 z3 : typed_external_stack_full_ensures_full
 z3 : typed_external_stack_full_ensures_not_full
+cvc4 : typed_external_stack_full_ensures_full

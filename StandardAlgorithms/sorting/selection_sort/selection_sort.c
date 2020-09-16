@@ -3,8 +3,7 @@
 #include "min_element.h"
 #include "swap.h"
 #include "ShiftLemmas.acsl"
-#include "MultisetUnchanged.acsl"
-#include "SwappedInside.acsl"
+#include "MultisetSwap.acsl"
 #include "IncreasingLemmas.acsl"
 
 void
@@ -12,7 +11,7 @@ selection_sort(value_type* a, size_type n)
 {
   /*@
     loop invariant bound:       0 <= i <= n;
-    loop invariant reorder:     MultisetUnchanged{Pre,Here}(a, n);
+    loop invariant reorder:     MultisetReorder{Pre,Here}(a, n);
     loop invariant increasing:  WeaklyIncreasing(a, i);
     loop invariant increasing:  0 < i  ==> LowerBound(a, i, n, a[i-1]);
     loop assigns   i, a[0..n-1];
@@ -24,13 +23,13 @@ selection_sort(value_type* a, size_type n)
     if (i < sel) {
       /*@
          assigns          a[sel], a[i];
-         ensures swapped: SwappedInside{Old,Here}(a, i, sel, n);
+         ensures swapped: ArraySwap{Old,Here}(a, i, sel, n);
       */
       swap(a + sel, a + i);
     }
 
-    //@ assert reorder: MultisetUnchanged{LoopCurrent,Here}(a, n);
-    //@ assert reorder: MultisetUnchanged{Pre,Here}(a, n);
+    //@ assert reorder: MultisetReorder{LoopCurrent,Here}(a, n);
+    //@ assert reorder: MultisetReorder{Pre,Here}(a, n);
   }
 
   //@ assert increasing: Increasing(a, n);

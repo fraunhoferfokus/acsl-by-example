@@ -1,0 +1,50 @@
+
+#ifndef MULTISETPARITY_ACSL_INCLUDED
+#define MULTISETPARITY_ACSL_INCLUDED
+
+#include "MultisetRetainRest.acsl"
+
+/*@
+  axiomatic MultisetParity
+  {
+    predicate
+      MultisetParity{K,L}(value_type* a, integer n, value_type u, value_type v) =
+        MultisetAdd{K,L}(a, n, u)    &&
+        MultisetMinus{K,L}(a, n, v)  &&
+        MultisetRetainRest{K,L}(a, n, u, v);
+
+
+    lemma MultisetParity_UnchangedFirst{K,L,M}:
+      \forall value_type *a, u, v, integer n;
+        u != v                           ==>
+        Unchanged{K,L}(a, n)             ==>
+        MultisetParity{L,M}(a, n, u, v)  ==>
+        MultisetParity{K,M}(a, n, u, v);
+
+    lemma MultisetParity_UnchangedSecond{K,L,M}:
+      \forall value_type *a, u, v, integer n;
+        u != v                           ==>
+        MultisetParity{K,L}(a, n, u, v)  ==>
+        Unchanged{L,M}(a, n)             ==>
+        MultisetParity{K,M}(a, n, u, v);
+
+    lemma MultisetParity_MultisetReorder{K,L,M}:
+      \forall value_type *a, u, v, integer n;
+        u != v                           ==>
+        MultisetParity{K,L}(a, n, u, v)  ==>
+        MultisetParity{L,M}(a, n, v, u)  ==>
+        MultisetReorder{K,M}(a, n);
+
+    lemma MultisetParity_Combined{K,L,M}:
+      \forall value_type *a, u, v, w, integer n;
+        u != v                           ==>
+        u != w                           ==>
+        v != w                           ==>
+        MultisetParity{K,L}(a, n, u, v)  ==>
+        MultisetParity{L,M}(a, n, w, u)  ==>
+        MultisetParity{K,M}(a, n, w, v);
+  }
+*/
+
+#endif /* MULTISETPARITY_ACSL_INCLUDED */
+

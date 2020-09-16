@@ -1,20 +1,18 @@
 
-#ifndef HEAP_AUX_H_INCLUDED
-#define HEAP_AUX_H_INCLUDED
+#ifndef HEAP_PARENT_H_INCLUDED
+#define HEAP_PARENT_H_INCLUDED
 
-#include "HeapBasics.acsl"
+#include "HeapNodes.acsl"
 
 /*@
-   requires bound:  0 < child;
-   assigns          \nothing;
-   ensures  parent: \result == HeapParent(child);
+   assigns           \nothing;
+   ensures  parent:  \result == HeapParent(child);
  */
 static inline size_type
 heap_parent(size_type child)
 {
-  return (child - 1u) / 2u;
+  return (0u < child) ?  (child - 1u) / 2u : 0u;
 }
 
-
-#endif /* HEAP_AUX_H_INCLUDE */
+#endif /* HEAP_PARENT_H_INCLUDED */
 

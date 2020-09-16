@@ -15,17 +15,18 @@ def count_pattern(string, pattern):
 
 def get_valid_pattern(prover):
     if prover == 'coq':
-        pattern = re.compile(r'(?i)^.*' + prover + '.*native.* (Goal .*\: Valid)',
-                          flags=re.MULTILINE)
+        pattern = re.compile(r'(?i)^.*' + prover +
+                             '.*native.* (Goal .*\: Valid)',
+                             flags=re.MULTILINE)
     else:
         pattern = re.compile(r'(?i)^.*' + prover + '.* (Goal .*\: Valid)',
-                         flags=re.MULTILINE)
+                             flags=re.MULTILINE)
     return pattern
 
 
 #Create Reportfile
 def create_report(example, report_type, valid_list, report_list, goal_count,
-                  valid, cmd, sec):
+                  valid):
     invalid = goal_count - valid
     percent = 100 * (valid / goal_count)
 
@@ -46,5 +47,3 @@ def create_report(example, report_type, valid_list, report_list, goal_count,
                     "invalid='" + str(invalid) + "'")
     report_add_line(example + '.' + report_type,
                     "percent='" + str(int(percent)) + "'")
-    report_add_line(example + '.' + report_type, "cmd='" + cmd + "'")
-    report_add_line(example + '.' + report_type, "sec='" + sec + "'")

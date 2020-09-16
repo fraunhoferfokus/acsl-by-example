@@ -1,6 +1,6 @@
 
-#ifndef PARTIALSUM_SPEC_INCLUDED
-#define PARTIALSUM_SPEC_INCLUDED
+#ifndef PARTIALSUM_ACSL_INCLUDED
+#define PARTIALSUM_ACSL_INCLUDED
 
 #include "AccumulateDefault.acsl"
 
@@ -38,5 +38,5 @@
   }
 */
 
-#endif /* PARTIALSUM_SPEC_INCLUDED */
+#endif /* PARTIALSUM_ACSL_INCLUDED */
 

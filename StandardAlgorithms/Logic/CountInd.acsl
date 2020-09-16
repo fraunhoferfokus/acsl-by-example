@@ -1,6 +1,6 @@
 
-#ifndef COUNTIND_SPEC_INCLUDED
-#define COUNTIND_SPEC_INCLUDED
+#ifndef COUNTIND_ACSL_INCLUDED
+#define COUNTIND_ACSL_INCLUDED
 
 #include "typedefs.h"
 
@@ -23,5 +23,5 @@
   }
 */
 
-#endif /* COUNTIND_SPEC_INCLUDED */
+#endif /* COUNTIND_ACSL_INCLUDED */
 

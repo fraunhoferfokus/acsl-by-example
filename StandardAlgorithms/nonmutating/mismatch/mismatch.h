@@ -2,7 +2,7 @@
 #ifndef MISMTACH_H_INCLUDED
 #define MISMTACH_H_INCLUDED
 
-#include "EqualRanges.acsl"
+#include "Equal.acsl"
 
 /*@
   requires valid:   \valid_read(a + (0..n-1));
@@ -11,16 +11,16 @@
   ensures  result:  0 <= \result <= n;
 
   behavior all_equal:
-    assumes         EqualRanges{Here,Here}(a, n, b);
+    assumes         Equal{Here,Here}(a, n, b);
     assigns         \nothing;
     ensures result: \result == n;
 
   behavior some_not_equal:
-    assumes         !EqualRanges{Here,Here}(a, n, b);
+    assumes         !Equal{Here,Here}(a, n, b);
     assigns         \nothing;
     ensures bound:  0 <= \result < n;
     ensures result: a[\result] != b[\result];
-    ensures first:  EqualRanges{Here,Here}(a, \result, b);
+    ensures first:  Equal{Here,Here}(a, \result, b);
 
   complete behaviors;
   disjoint behaviors;

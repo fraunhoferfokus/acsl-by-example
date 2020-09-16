@@ -7,14 +7,12 @@ import subprocess
 import re
 ##########################################################################
 
-if len(argv) < 5:
+if len(argv) < 3:
     exit("Atleast one prover is needed as argument")
 
 example = argv[1]
-cmd = argv[2]
-sec = argv[3]
 
-prover_list = argv[4:]
+prover_list = argv[2:]
 # replace native:coq with coq in the prover_list
 prover_list = [
     'coq' if prover == 'native:coq' else prover for prover in prover_list
@@ -107,4 +105,4 @@ if __name__ == '__main__':
 
 ##################### Report Part ##########################
     create_report(example, 'preport', valid_list, report_list, goal_count,
-                  valid, cmd, sec)
+                  valid)

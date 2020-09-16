@@ -1,9 +1,9 @@
 
-#ifndef STACKEQUALITY_SPEC_INCLUDED
-#define STACKEQUALITY_SPEC_INCLUDED
+#ifndef STACKEQUALITY_ACSL_INCLUDED
+#define STACKEQUALITY_ACSL_INCLUDED
 
 #include "StackUtility.acsl"
-#include "EqualRanges.acsl"
+#include "Equal.acsl"
 
 /*@
   axiomatic StackEquality
@@ -11,7 +11,7 @@
     predicate
     StackEqual{S,T}(Stack* s, Stack* t) =
       StackSize{S}(s) == StackSize{T}(t) &&
-      EqualRanges{S,T}(StackStorage{S}(s), StackSize{S}(s), StackStorage{T}(t));
+      Equal{S,T}(StackStorage{S}(s), StackSize{S}(s), StackStorage{T}(t));
 
     lemma StackEqual_Reflexive{S} :
       \forall Stack* s; StackEqual{S,S}(s, s);
@@ -28,5 +28,5 @@
   }
 */
 
-#endif /* STACKEQUALITY_SPEC_INCLUDED */
+#endif /* STACKEQUALITY_ACSL_INCLUDED */
 

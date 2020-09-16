@@ -1,8 +1,9 @@
 
-#ifndef MULTISETOPERATIONS_SPEC_INCLUDED
-#define MULTISETOPERATIONS_SPEC_INCLUDED
+#ifndef MULTISETOPERATIONS_ACSL_INCLUDED
+#define MULTISETOPERATIONS_ACSL_INCLUDED
 
-#include "MultisetUnchanged.acsl"
+#include "At.acsl"
+#include "MultisetReorder.acsl"
 
 /*@
   axiomatic MultisetOperations
@@ -15,25 +16,38 @@
     MultisetMinus{K,L}(value_type* a, integer n, value_type v) =
       MultisetAdd{L,K}(a, n, v);
 
+    predicate
+    MultisetRetain{K,L}(value_type* a, integer n, value_type v) =
+      Count{K}(a, 0, n, v) == Count{L}(a, 0, n, v);
+
     lemma MultisetAdd_Distinct{K,L}:
-      \forall value_type *a, v, integer i, n;
-        0 <= i < n                         ==>
-        \at(a[i],K) != v                   ==>
-        \at(a[i],L) == v                   ==>
-        MultisetUnchanged{K,L}(a, 0, i)    ==>
-        MultisetUnchanged{K,L}(a, i+1, n)  ==>
+      \forall value_type *a, v, integer m, n;
+        0 <= m < n                       ==>
+        At{K}(a, m) != v                 ==>
+        At{L}(a, m) == v                 ==>
+        MultisetReorder{K,L}(a, 0, m)    ==>
+        MultisetReorder{K,L}(a, m+1, n)  ==>
         MultisetAdd{K,L}(a, n, v);
 
     lemma MultisetMinus_Distinct{K,L}:
-      \forall value_type *a, v, integer i, n;
-        0 <= i < n                         ==>
-        \at(a[i],K) == v                   ==>
-        \at(a[i],L) != v                   ==>
-        MultisetUnchanged{K,L}(a, 0, i)    ==>
-        MultisetUnchanged{K,L}(a, i+1, n)  ==>
+      \forall value_type *a, v, integer m, n;
+        0 <= m < n                       ==>
+        At{K}(a, m) == v                 ==>
+        At{L}(a, m) != v                 ==>
+        MultisetReorder{K,L}(a, 0, m)    ==>
+        MultisetReorder{K,L}(a, m+1, n)  ==>
         MultisetMinus{K,L}(a, n, v);
+
+    lemma MultisetRetain_Distinct{K,L}:
+      \forall value_type *a, v, integer m, n;
+        0 <= m < n                       ==>
+        At{K}(a, m) != v                 ==>
+        At{L}(a, m) != v                 ==>
+        MultisetReorder{K,L}(a, 0, m)    ==>
+        MultisetReorder{K,L}(a, m+1, n)  ==>
+        MultisetRetain{K,L}(a, n, v);
   }
 */
 
-#endif /* MULTISETOPERATIONS_SPEC_INCLUDED */
+#endif /* MULTISETOPERATIONS_ACSL_INCLUDED */
 

@@ -1,6 +1,6 @@
 
-#ifndef REMOVE_SPEC_INCLUDED
-#define REMOVE_SPEC_INCLUDED
+#ifndef REMOVE_ACSL_INCLUDED
+#define REMOVE_ACSL_INCLUDED
 
 #include "RemovePartition.acsl"
 
@@ -29,5 +29,5 @@
   }
 */
 
-#endif /* REMOVE_SPEC_INCLUDED */
+#endif /* REMOVE_ACSL_INCLUDED */
 

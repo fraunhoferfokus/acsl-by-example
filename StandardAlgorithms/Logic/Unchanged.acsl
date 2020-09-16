@@ -1,6 +1,6 @@
 
-#ifndef UNCHANGED_SPEC_INCLUDED
-#define UNCHANGED_SPEC_INCLUDED
+#ifndef UNCHANGED_ACSL_INCLUDED
+#define UNCHANGED_ACSL_INCLUDED
 
 #include "typedefs.h"
 
@@ -16,5 +16,5 @@
   }
 */
 
-#endif /* UNCHANGED_SPEC_INCLUDED */
+#endif /* UNCHANGED_ACSL_INCLUDED */
 

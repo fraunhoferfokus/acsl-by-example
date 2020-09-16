@@ -1,6 +1,6 @@
 
-#ifndef HASVALUEOF_SPEC_INCLUDED
-#define HASVALUEOF_SPEC_INCLUDED
+#ifndef HASVALUEOF_ACSL_INCLUDED
+#define HASVALUEOF_ACSL_INCLUDED
 
 #include "SomeNone.acsl"
 
@@ -13,5 +13,5 @@
   }
 */
 
-#endif /* HASVALUEOF_SPEC_INCLUDED */
+#endif /* HASVALUEOF_ACSL_INCLUDED */
 

@@ -1,4 +1,4 @@
 
-DEPENDENCIES += heap/heap_child_max
+DEPENDENCIES += heap/heap_child
 DEPENDENCIES += heap/is_heap
 

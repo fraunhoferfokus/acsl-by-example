@@ -1,6 +1,6 @@
 
-#ifndef COUNTINDIMPLICIT_SPEC_INCLUDED
-#define COUNTINDIMPLICIT_SPEC_INCLUDED
+#ifndef COUNTINDIMPLICIT_ACSL_INCLUDED
+#define COUNTINDIMPLICIT_ACSL_INCLUDED
 
 #include "CountInd.acsl"
 #include "UnchangedLemmas.acsl"
@@ -26,11 +26,11 @@
         CountInd(a, n-1, v, sum)  ==>
         CountInd(a,   n, v, sum);
 
-    lemma CountInd_Read{K,L}:
+    lemma CountInd_Unchanged{K,L}:
       \forall value_type *a, v, integer n, sum;
         Unchanged{K,L}(a, n)  ==>
         (CountInd{K}(a, n, v, sum)  <==>  CountInd{L}(a, n, v, sum));
   }
 */
 
-#endif /* COUNTINDIMPLICIT_SPEC_INCLUDED */
+#endif /* COUNTINDIMPLICIT_ACSL_INCLUDED */

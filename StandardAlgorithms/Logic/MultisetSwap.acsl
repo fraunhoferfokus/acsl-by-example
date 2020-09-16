@@ -1,0 +1,22 @@
+
+#ifndef MULTISETSWAP_ACSL_INCLUDED
+#define MULTISETSWAP_ACSL_INCLUDED
+
+#include "ArraySwap.acsl"
+#include "MultisetReorder.acsl"
+
+/*@
+  axiomatic MultisetSwap
+  {
+    lemma MultisetSwap_Middle{K,L}:
+      \forall value_type* a, integer i, k, n;
+        ArraySwap{K,L}(a, i, k, n)  ==>  MultisetReorder{K,L}(a, i, k+1);
+
+    lemma MultisetSwap_FrontMiddle{K,L}:
+      \forall value_type* a, integer i, k, n;
+        ArraySwap{K,L}(a, i, k, n)  ==>  MultisetReorder{K,L}(a, 0, k+1);
+  }
+*/
+
+#endif /* MULTISETSWAP_ACSL_INCLUDED */
+

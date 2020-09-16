@@ -12,21 +12,6 @@ alt-ergo : typed_external_stack_init_ensures_capacity
 alt-ergo : typed_external_stack_init_ensures_empty
 alt-ergo : typed_external_stack_init_ensures_invariant
 alt-ergo : typed_external_stack_init_ensures_storage
-cvc4 : typed_external_stack_init_assert_rte_mem_access_2
-cvc4 : typed_external_stack_init_assert_rte_mem_access_3
-cvc4 : typed_external_stack_init_ensures_capacity
-cvc4 : typed_external_stack_init_ensures_empty
-cvc4 : typed_external_stack_init_ensures_storage
-cvc3 : typed_external_lemma_StackEqual_Reflexive
-cvc3 : typed_external_lemma_StackEqual_Symmetric
-cvc3 : typed_external_lemma_StackEqual_Transitive
-cvc3 : typed_external_stack_init_assert_rte_mem_access
-cvc3 : typed_external_stack_init_assert_rte_mem_access_2
-cvc3 : typed_external_stack_init_assert_rte_mem_access_3
-cvc3 : typed_external_stack_init_ensures_capacity
-cvc3 : typed_external_stack_init_ensures_empty
-cvc3 : typed_external_stack_init_ensures_invariant
-cvc3 : typed_external_stack_init_ensures_storage
 z3 : typed_external_lemma_StackEqual_Reflexive
 z3 : typed_external_stack_init_assert_rte_mem_access
 z3 : typed_external_stack_init_assert_rte_mem_access_2
@@ -35,3 +20,4 @@ z3 : typed_external_stack_init_ensures_capacity
 z3 : typed_external_stack_init_ensures_empty
 z3 : typed_external_stack_init_ensures_invariant
 z3 : typed_external_stack_init_ensures_storage
+cvc4 : typed_external_stack_init_ensures_storage

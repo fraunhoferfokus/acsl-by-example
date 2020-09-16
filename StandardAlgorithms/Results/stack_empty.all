@@ -8,13 +8,8 @@ alt-ergo : typed_external_lemma_StackEqual_Symmetric
 alt-ergo : typed_external_lemma_StackEqual_Transitive
 alt-ergo : typed_external_stack_empty_ensures_empty
 alt-ergo : typed_external_stack_empty_ensures_not_empty
-cvc4 : typed_external_stack_empty_ensures_empty
-cvc4 : typed_external_stack_empty_ensures_not_empty
-cvc3 : typed_external_lemma_StackEqual_Reflexive
-cvc3 : typed_external_lemma_StackEqual_Symmetric
-cvc3 : typed_external_lemma_StackEqual_Transitive
-cvc3 : typed_external_stack_empty_ensures_empty
-cvc3 : typed_external_stack_empty_ensures_not_empty
 z3 : typed_external_lemma_StackEqual_Reflexive
 z3 : typed_external_stack_empty_ensures_empty
 z3 : typed_external_stack_empty_ensures_not_empty
+cvc4 : typed_external_stack_empty_ensures_empty
+cvc4 : typed_external_stack_empty_ensures_not_empty

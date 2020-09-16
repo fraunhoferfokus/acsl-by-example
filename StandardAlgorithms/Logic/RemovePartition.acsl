@@ -1,6 +1,6 @@
 
-#ifndef REMOVEPARTITION_SPEC_INCLUDED
-#define REMOVEPARTITION_SPEC_INCLUDED
+#ifndef REMOVEPARTITION_ACSL_INCLUDED
+#define REMOVEPARTITION_ACSL_INCLUDED
 
 #include "CountFindNotEqual.acsl"
 
@@ -91,7 +91,7 @@
         0 <= p < CountNotEqual(a, n, v)  ==>
         RemovePartition(a, n, v, p) == RemovePartition(a, n+1, v, p);
 
-    lemma RemovePartition_Read{K,L}:
+    lemma RemovePartition_Unchanged{K,L}:
       \forall value_type *a, v, integer n, p;
         Unchanged{K,L}(a, n)  ==>
         RemovePartition{K}(a, n, v, p) == RemovePartition{L}(a, n, v, p);

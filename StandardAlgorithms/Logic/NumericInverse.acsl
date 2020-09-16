@@ -1,7 +1,7 @@
 
 
-#ifndef NUMERICINVERSE_SPEC_INCLUDED
-#define NUMERICINVERSE_SPEC_INCLUDED
+#ifndef NUMERICINVERSE_ACSL_INCLUDED
+#define NUMERICINVERSE_ACSL_INCLUDED
 
 #include "AdjacentDifference.acsl"
 #include "PartialSum.acsl"
@@ -20,8 +20,15 @@
         0 <= n                       ==>
         AdjacentDifference(a, n, b)  ==>
         PartialSum(b, n, a);
+
+    lemma AdjacentDifference_InverseBounds:
+      \forall value_type *a, *b, integer n;
+        0 <= n                       ==>
+        DefaultBounds(a, n)          ==>
+        AdjacentDifference(a, n, b)  ==>
+        AccumulateDefaultBounds(b, n);
   }
 */
 
-#endif /* NUMERICINVERSE_SPEC_INCLUDED */
+#endif /* NUMERICINVERSE_ACSL_INCLUDED */
 

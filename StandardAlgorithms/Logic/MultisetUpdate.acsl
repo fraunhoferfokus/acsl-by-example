@@ -1,0 +1,27 @@
+
+#ifndef MULTISETUPDATE_ACSL_INCLUDED
+#define MULTISETUPDATE_ACSL_INCLUDED
+
+#include "ArrayUpdate.acsl"
+#include "MultisetParity.acsl"
+
+/*@
+  axiomatic MultisetUpdate
+  {
+    predicate
+    MultisetUpdate{K,L}(value_type* a, integer n, integer i, value_type v) =
+      \let u = At{K}(a, i);
+      u != v                           &&
+      0 <= i < n                       &&
+      MultisetReorder{K,L}(a, 0, i)    &&
+      MultisetReorder{K,L}(a, i+1, n)  &&
+      MultisetParity{K,L}(a, n, v, u);
+
+    lemma ArrayUpdate_MultisetUpdate{K,L}:
+      \forall value_type *a, v, integer n, i;
+        ArrayUpdate{K,L}(a, n, i, v)  ==>  MultisetUpdate{K,L}(a, n, i, v);
+  }
+*/
+
+#endif /* MULTISETUPDATE_ACSL_INCLUDED */
+

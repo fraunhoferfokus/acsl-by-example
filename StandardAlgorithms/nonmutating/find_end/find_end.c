@@ -12,7 +12,7 @@ find_end(const value_type* a, size_type n,
     /*@
       loop invariant bound   :  r <= n - p || r == n;
       loop invariant not_found: r == n ==> !HasSubRange(a, p+i-1, b, p);
-      loop invariant found:     r < n  ==> EqualRanges{Here,Here}(a+r, p, b);
+      loop invariant found:     r < n  ==> Equal{Here,Here}(a+r, p, b);
       loop invariant last:      r < n  ==> !HasSubRange(a, r+1, i+p-1, b, p);
       loop assigns i, r;
       loop variant n - i;

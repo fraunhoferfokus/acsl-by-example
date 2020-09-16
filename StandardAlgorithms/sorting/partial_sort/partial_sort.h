@@ -4,13 +4,13 @@
 
 #include "Increasing.acsl"
 #include "Partition.acsl"
-#include "MultisetUnchanged.acsl"
+#include "MultisetReorder.acsl"
 
 /*@
   requires valid:        \valid(a + (0..n-1));
   requires split:        0 <= m <= n;
   assigns                a[0..n-1];
-  ensures reorder:       MultisetUnchanged{Old,Here}(a, n);
+  ensures reorder:       MultisetReorder{Old,Here}(a, n);
   ensures partition:     Partition(a, m, n);
   ensures increasing:    Increasing(a, m);
 */

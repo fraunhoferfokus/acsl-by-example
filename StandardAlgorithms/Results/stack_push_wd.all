@@ -13,17 +13,6 @@ alt-ergo : typed_external_stack_push_wd_assigns_normal_part2
 alt-ergo : typed_external_stack_push_wd_call_stack_push_2_requires_valid
 alt-ergo : typed_external_stack_push_wd_ensures_equal
 alt-ergo : typed_external_stack_push_wd_ensures_valid
-cvc3 : typed_external_lemma_StackEqual_Reflexive
-cvc3 : typed_external_lemma_StackEqual_Symmetric
-cvc3 : typed_external_lemma_StackEqual_Transitive
-cvc3 : typed_external_lemma_StackPush_Equal
-cvc3 : typed_external_stack_push_wd_assert_top
-cvc3 : typed_external_stack_push_wd_assert_top_2
-cvc3 : typed_external_stack_push_wd_assigns_exit_part2
-cvc3 : typed_external_stack_push_wd_assigns_normal_part2
-cvc3 : typed_external_stack_push_wd_call_stack_push_2_requires_valid
-cvc3 : typed_external_stack_push_wd_ensures_equal
-cvc3 : typed_external_stack_push_wd_ensures_valid
 z3 : typed_external_lemma_StackEqual_Reflexive
 z3 : typed_external_stack_push_wd_assert_top_2
 z3 : typed_external_stack_push_wd_assigns_exit_part2

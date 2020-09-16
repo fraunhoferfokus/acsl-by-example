@@ -1,6 +1,6 @@
 
-#ifndef ACCUMULATE_SPEC_INCLUDED
-#define ACCUMULATE_SPEC_INCLUDED
+#ifndef ACCUMULATE_ACSL_INCLUDED
+#define ACCUMULATE_ACSL_INCLUDED
 
 #include "UnchangedLemmas.acsl"
 #include "limits.h"
@@ -21,18 +21,18 @@
       \forall value_type *a, init, integer n;
          n <= 0  ==>  Accumulate(a, n, init) == init;
 
-    lemma Accumulate_Read{K,L}:
+    lemma Accumulate_Unchanged{K,L}:
       \forall value_type *a, init, integer n;
         Unchanged{K,L}(a, n)  ==>
         Accumulate{K}(a, n, init) == Accumulate{L}(a, n, init);
 
-    lemma Accumulate_Read_Shrink{K, L}:
+    lemma Accumulate_Unchanged_Shrink{K,L}:
       \forall value_type *a, init, integer m, n;
-        0 <= m <= n              ==>
+        0 <= m <= n            ==>
         Unchanged{K, L}(a, n)  ==>
         Accumulate{K}(a, m, init) == Accumulate{L}(a, m, init);
 
-    lemma AccumulateBounds_Read{K,L}:
+    lemma AccumulateBounds_Unchanged{K,L}:
       \forall value_type *a, init, integer n;
         Unchanged{K, L}(a, n)           ==>
         AccumulateBounds{K}(a, n, init) ==>
@@ -40,5 +40,5 @@
   }
 */
 
-#endif /* ACCUMULATE_SPEC_INCLUDED */
+#endif /* ACCUMULATE_ACSL_INCLUDED */
 

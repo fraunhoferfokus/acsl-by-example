@@ -1,13 +1,14 @@
 
 export FRAMAC_SHARE:=$(shell frama-c -print-share-path)
 
-export TIMEOUT   ?= 2
+export TIMEOUT   ?= 1
 export PROCESSES ?= 1
 
 #setup wp
 export WP_TIMEOUT        ?= $(TIMEOUT)
-export WP_COQ_TIMEOUT    ?= 10
+export WP_COQ_TIMEOUT    ?= 5
 export WP_PROCESSES      ?= $(PROCESSES)
+export WP_SMOKE_TESTS    ?= 0
 
 #setup av
 export AV_TIMEOUT   ?= $(TIMEOUT)
@@ -49,31 +50,18 @@ WP_FLAGS += -wp-driver $(DRIVER_DIR)/external.driver
 WP_FLAGS += -wp-coq-script $(SCRIPT)
 WP_FLAGS += -wp-model Typed
 
+ifeq ($(WP_SMOKE_TESTS),1)
+WP_FLAGS += -wp-smoke-tests
+endif
+
 AV_FLAGS     := $(AV_BASE_FLAGS) -av-extract all_annot
 AV_WHY3_CONF := $(shell realpath $(TOP_DIR))/astraver.why3.conf
 
 # WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 # provers
-PROVERS ?=""
-ifeq ($(PROVERS), alt-ergo)
-	WP_PROVER_FLAGS += -wp-prover alt-ergo
-else ifeq ($(PROVERS), coq)
-	WP_PROVER_FLAGS += -wp-prover native:coq
-else ifeq ($(PROVERS), cvc4)
-	WP_PROVER_FLAGS += -wp-prover cvc4
-else ifeq ($(PROVERS), cvc3)
-	WP_PROVER_FLAGS += -wp-prover cvc3
-else ifeq ($(PROVERS), z3)
-	WP_PROVER_FLAGS += -wp-prover z3
-else ifeq ($(PROVERS), eprover)
-	WP_PROVER_FLAGS += -wp-prover eprover
-else ifneq ($(PROVERS),)
-@echo "Prover unknown. Continue using default provers:"
-PROVERS = alt-ergo native:coq cvc4 cvc3 z3 
+PROVERS = alt-ergo native:coq z3 cvc4 
 WP_PROVER_FLAGS += $(addprefix -wp-prover , $(PROVERS))
-#WP_PROVER_FLAGS += -wp-prover native:coq
-endif
 
 export FR    := frama-c
 export FRGUI := frama-c-gui

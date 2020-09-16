@@ -1,6 +1,6 @@
 
-#ifndef STACKUTILTY_SPEC_INCLUDED
-#define STACKUTILTY_SPEC_INCLUDED
+#ifndef STACKUTILTY_ACSL_INCLUDED
+#define STACKUTILTY_ACSL_INCLUDED
 
 #include "StackInvariant.acsl"
 #include "Unchanged.acsl"
@@ -22,5 +22,5 @@
   }
 */
 
-#endif /* STACKUTILTY_SPEC_INCLUDED */
+#endif /* STACKUTILTY_ACSL_INCLUDED */
 

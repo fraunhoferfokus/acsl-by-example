@@ -6,10 +6,7 @@ qed : typed_external_max_seq_call_max_element2_requires_valid
 alt-ergo : typed_external_max_seq_assert_rte_mem_access
 alt-ergo : typed_external_max_seq_ensures
 alt-ergo : typed_external_max_seq_ensures_2
-cvc4 : typed_external_max_seq_ensures_2
-cvc3 : typed_external_max_seq_assert_rte_mem_access
-cvc3 : typed_external_max_seq_ensures
-cvc3 : typed_external_max_seq_ensures_2
 z3 : typed_external_max_seq_assert_rte_mem_access
 z3 : typed_external_max_seq_ensures
 z3 : typed_external_max_seq_ensures_2
+cvc4 : typed_external_max_seq_ensures_2

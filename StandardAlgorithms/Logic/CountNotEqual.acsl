@@ -1,6 +1,6 @@
 
-#ifndef COUNTNOTEQUAL_SPEC_INCLUDED
-#define COUNTNOTEQUAL_SPEC_INCLUDED
+#ifndef COUNTNOTEQUAL_ACSL_INCLUDED
+#define COUNTNOTEQUAL_ACSL_INCLUDED
 
 
 #include "FindNotEqual.acsl"
@@ -49,7 +49,7 @@
       \forall value_type *a, v, integer k, m, n;
         m <= k <= n  ==>  CountNotEqual(a, m, k, v) <= CountNotEqual(a, m, n, v);
 
-    lemma CountNotEqual_Read{K,L}:
+    lemma CountNotEqual_Unchanged{K,L}:
       \forall value_type *a, v, integer m, n;
         Unchanged{K,L}(a, m, n)  ==>
         CountNotEqual{K}(a, m, n, v) == CountNotEqual{L}(a, m, n, v);
@@ -66,5 +66,5 @@
   }
 */
 
-#endif /* COUNTNOTEQUAL_SPEC_INCLUDED */
+#endif /* COUNTNOTEQUAL_ACSL_INCLUDED */
 

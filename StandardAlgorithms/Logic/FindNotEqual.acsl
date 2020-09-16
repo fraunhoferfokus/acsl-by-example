@@ -1,6 +1,6 @@
 
-#ifndef FINDNOTEQUAL_SPEC_INCLUDED
-#define FINDNOTEQUAL_SPEC_INCLUDED
+#ifndef FINDNOTEQUAL_ACSL_INCLUDED
+#define FINDNOTEQUAL_ACSL_INCLUDED
 
 #include "AllSomeNot.acsl"
 #include "UnchangedLemmas.acsl"
@@ -50,7 +50,7 @@
       \forall value_type *a, v, integer m, n;
         m <= n  ==>  FindNotEqual(a, m, n, v) <= n-m;
 
-    lemma FindNotEqual_Read{K,L}:
+    lemma FindNotEqual_Unchanged{K,L}:
       \forall value_type *a, v, integer m, n;
         Unchanged{K,L}(a, m, n)  ==>
         FindNotEqual{K}(a, m, n, v) == FindNotEqual{L}(a, m, n, v);
@@ -100,5 +100,5 @@
   }
 */
 
-#endif /* FINDNOTEQUAL_SPEC_INCLUDED */
+#endif /* FINDNOTEQUAL_ACSL_INCLUDED */
 

@@ -1,15 +1,15 @@
 
-#ifndef  HASSUBRANGE_SPEC_INCLUDED
-#define  HASSUBRANGE_SPEC_INCLUDED
+#ifndef  HASSUBRANGE_ACSL_INCLUDED
+#define  HASSUBRANGE_ACSL_INCLUDED
 
-#include "EqualRanges.acsl"
+#include "Equal.acsl"
 
 /*@
   axiomatic HasSubRange
   {
     predicate
     HasSubRange{L}(value_type* a, integer m, integer n, value_type* b, integer p) =
-      \exists integer k; (m <= k <= n-p) && EqualRanges{L,L}(a+k, p, b);
+      \exists integer k; (m <= k <= n-p) && Equal{L,L}(a+k, p, b);
 
     predicate
     HasSubRange{L}(value_type* a, integer n, value_type* b, integer p) =
@@ -21,5 +21,5 @@
   }
 */
 
-#endif /*  HASSUBRANGE_SPEC_INCLUDED */
+#endif /*  HASSUBRANGE_ACSL_INCLUDED */
 

@@ -11,10 +11,8 @@ if len(argv) < 5:
     exit('Atleast one prover is needed as argument')
 
 example = argv[1]
-cmd = argv[2]
-sec = argv[3]
 
-prover_list = argv[4:]
+prover_list = argv[2:]
 prover_list = [
     'coq' if prover == 'native:coq' else prover for prover in prover_list
 ]
@@ -149,8 +147,7 @@ if __name__ == '__main__':
 
         old_obligations = new_obligations
 
-
-######### Logging ##########################
+        ######### Logging ##########################
         split_data = sorted(raw_data.split("\n"))
         with open(example + ".wp/" + example + ".qlog", "a+") as log_file:
             log_file.write("######### Start " + prover + " #########\n")
@@ -169,4 +166,4 @@ if __name__ == '__main__':
             break
 ################# Report Part ##########################
     create_report(example, 'qreport', valid_list, report_list, goal_count,
-                  valid, cmd, sec)
+                  valid)

@@ -51,15 +51,13 @@ countValid()
 extract_data_Wp()
 {
     #printf "enter extract_data_Wp\n" >&2
-    if [ $# -ne 3 ]
+    if [ $# -ne 1 ]
     then
-        echo "please provide exactly three arguments" >&2
+        echo "please provide exactly one argument" >&2
         exit 1
     fi
 
     example=$1
-    cmd=$2
-    sec=$3
 
     results=`mktemp ${TMPDIR-/tmp}/tempResults.XXXXXX`
 
@@ -93,15 +91,13 @@ extract_data_Wp()
 # $3: tutorial section
 extract_data_Av()
 {
-    if [ $# -ne 3 ]
+    if [ $# -ne 1 ]
     then
-        echo "please provide exactly three arguments" >&2
+        echo "please provide exactly one argument" >&2
         exit 1
     fi
 
     example=$1
-    cmd=$2
-    sec=$3
 
     results=`mktemp ${TMPDIR-/tmp}/tempResults.XXXXXX`
 
@@ -168,7 +164,7 @@ extract_raw_data_Wp()
     valid_alt_ergo=`countValid $raw_output Alt-Ergo`
     valid_cvc4=`countValid $raw_output CVC4`
     valid_cvc3=`countValid $raw_output CVC3`
-    valid_z3=`countValid $raw_output z3`
+    valid_z3=`countValid $raw_output Z3`
     valid_eprover=`countValid $raw_output eprover`
     valid_coq=`countValid $raw_output Coq`
 
@@ -230,7 +226,7 @@ print_statistics()
 # report fields
 fields='example goal_count valid
     valid_qed valid_alt_ergo valid_cvc4 valid_cvc3 valid_z3 valid_eprover valid_coq
-    invalid percent cmd sec'
+    invalid percent'
 
 # parse report fileand set variables accordingly
 parse_report()

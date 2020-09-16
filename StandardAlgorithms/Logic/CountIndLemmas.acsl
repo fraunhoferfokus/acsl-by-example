@@ -1,6 +1,6 @@
 
-#ifndef COUNTINDINVERSE_SPEC_INCLUDED
-#define COUNTINDINVERSE_SPEC_INCLUDED
+#ifndef COUNTINDINVERSE_ACSL_INCLUDED
+#define COUNTINDINVERSE_ACSL_INCLUDED
 
 #include "CountIndImplicit.acsl"
 #include "Count.acsl"
@@ -25,5 +25,5 @@
   }
 */
 
-#endif /* COUNTINDINVERSE_SPEC_INCLUDED */
+#endif /* COUNTINDINVERSE_ACSL_INCLUDED */
 

@@ -1,6 +1,6 @@
 
-#ifndef AT_SPEC_INCLUDED
-#define AT_SPEC_INCLUDED
+#ifndef AT_ACSL_INCLUDED
+#define AT_ACSL_INCLUDED
 
 /*@
   axiomatic At
@@ -9,5 +9,5 @@
   }
 */
 
-#endif /* AT_SPEC_INCLUDED */
+#endif /* AT_ACSL_INCLUDED */
 

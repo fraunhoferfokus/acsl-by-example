@@ -1,13 +1,20 @@
 
-#ifndef WEAKLYINCREASINGLEMMAS_SPEC_INCLUDED
-#define WEAKLYINCREASINGLEMMAS_SPEC_INCLUDED
+#ifndef WEAKLYINCREASINGLEMMAS_ACSL_INCLUDED
+#define WEAKLYINCREASINGLEMMAS_ACSL_INCLUDED
 
 #include "WeaklyIncreasing.acsl"
-#include "EqualRanges.acsl"
+#include "Equal.acsl"
+#include "UnchangedLemmas.acsl"
 
 /*@
   axiomatic WeaklyIncreasingLemmas
   {
+    lemma WeaklyIncreasing_Shrink{L}:
+      \forall value_type *a, integer m, n, p, q;
+        m <= p <= q <= n           ==>
+        WeaklyIncreasing(a, m, n)  ==>
+        WeaklyIncreasing(a, p, q);
+
     lemma WeaklyIncreasing_AddElement{L}:
       \forall value_type *a, integer n;
         1 < n                     ==>
@@ -20,11 +27,17 @@
         WeaklyIncreasing(a + m, 0, n)  <==>
         WeaklyIncreasing(a, m, n + m);
 
-    lemma WeaklyIncreasing_EqualRanges{L}:
+    lemma WeaklyIncreasing_Equal{K,L}:
       \forall value_type *a, *b, integer m, n;
-        WeaklyIncreasing(a, m, n)     ==>
-        EqualRanges{L,L}(a, m, n, b)  ==>
-        WeaklyIncreasing(b, m, n);
+        Equal{K,L}(a, m, n, b)        ==>
+        WeaklyIncreasing{K}(a, m, n)  ==>
+        WeaklyIncreasing{L}(b, m, n);
+
+    lemma WeaklyIncreasing_Unchanged{K,L}:
+      \forall value_type *a, integer m, n;
+        WeaklyIncreasing{K}(a, m, n)  ==>
+        Unchanged{K,L}(a, m, n)       ==>
+        WeaklyIncreasing{L}(a, m, n);
 
     lemma WeaklyIncreasing_Join{L}:
       \forall value_type *a, integer m, n;
@@ -36,5 +49,5 @@
   }
 */
 
-#endif /* WEAKLYINCREASINGLEMMAS_SPEC_INCLUDED */
+#endif /* WEAKLYINCREASINGLEMMAS_ACSL_INCLUDED */
 

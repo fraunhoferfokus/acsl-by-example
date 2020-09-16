@@ -1,6 +1,6 @@
 
-#ifndef FIND_SPEC_INCLUDED
-#define FIND_SPEC_INCLUDED
+#ifndef FIND_ACSL_INCLUDED
+#define FIND_ACSL_INCLUDED
 
 #include "SomeNone.acsl"
 
@@ -94,5 +94,5 @@
   }
 */
 
-#endif /* FIND_SPEC_INCLUDED */
+#endif /* FIND_ACSL_INCLUDED */
 

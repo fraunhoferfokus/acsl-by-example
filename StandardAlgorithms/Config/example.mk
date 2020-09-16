@@ -12,10 +12,6 @@ export VS_DIR     := $(TOP_DIR)/../Misc/VerificationService
 EXAMPLE       := $(shell basename $$(pwd))
 EXAMPLE_GROUP := $(shell basename $$(cd ..; pwd))
 
-# Latex stuff
-ADJUSTNAME  != $(SCRIPT_DIR)/adjust_name.py $(EXAMPLE)
-SEC          = $(addprefix sec:, $(ADJUSTNAME))
-CMD          = $(addprefix \\,   $(ADJUSTNAME))
 
 DEPENDENCIES  :=
 
@@ -93,7 +89,7 @@ wpgui: $(EXAMPLE).wpgui
 generate: $(EXAMPLE).why3
 
 $(TOP_DIR)/Results/$(EXAMPLE).report: $(EXAMPLE).c
-	. $(SCRIPT_DIR)/script_functions.sh; extract_data_Wp $(EXAMPLE) $(CMD) $(SEC) > $@
+	. $(SCRIPT_DIR)/script_functions.sh; extract_data_Wp $(EXAMPLE) > $@
 
 
 report: $(TOP_DIR)/Results/$(EXAMPLE).report
@@ -110,7 +106,7 @@ qreport-clean: clean
 	@$(RM) $(TOP_DIR)/Results/$(EXAMPLE).qreport
 
 $(TOP_DIR)/Results/$(EXAMPLE).qreport: $(EXAMPLE).c
-	@ $(SCRIPT_DIR)/qreport.py $(EXAMPLE) $(CMD) $(SEC) $(PROVERS)
+	@ $(SCRIPT_DIR)/qreport.py $(EXAMPLE) $(PROVERS)
 
 # watch out for qed!
 WP_SESSION_FLAGS = -wp-session=$(EXAMPLE_OUT) -wp-cache=update
@@ -120,7 +116,7 @@ CONSOLE          = $(EXAMPLE).wp/console.log
 # I would rather like to use make's "foreach" function here
 
 $(TOP_DIR)/Results/$(EXAMPLE).preport: $(EXAMPLE).c
-	@ $(SCRIPT_DIR)/preport.py $(EXAMPLE) $(CMD) $(SEC) $(PROVERS)
+	@ $(SCRIPT_DIR)/preport.py $(EXAMPLE) $(PROVERS)
 
 preport: $(TOP_DIR)/Results/$(EXAMPLE).preport
 	@. $(SCRIPT_DIR)/script_functions.sh; prettyPrintReport $<

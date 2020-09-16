@@ -1,17 +1,19 @@
 
-#ifndef HEAPBASICS_SPEC_INCLUDED
-#define HEAPBASICS_SPEC_INCLUDED
+#ifndef HEAPNODES_ACSL_INCLUDED
+#define HEAPNODES_ACSL_INCLUDED
 
 #include "typedefs.h"
 
 /*@
-  axiomatic HeapBasics
+  axiomatic HeapNodes
   {
     logic integer HeapLeft(integer i) = 2*i + 1;
 
     logic integer HeapRight(integer i) = 2*i + 2;
 
     logic integer HeapParent(integer i) = (i-1) / 2;
+
+    lemma HeapParent_Zero{L}: HeapParent(0) == 0;
 
     lemma Heap_ParentLeft:
       \forall integer p; 0 <= p  ==>  HeapParent(HeapLeft(p)) == p;
@@ -21,14 +23,12 @@
 
     lemma Heap_ParentChild:
       \forall integer c, p;
-        0 < c               ==>
-        HeapParent(c) == p  ==>
+        0 < c  ==>  HeapParent(c) == p  ==>
         (c == HeapLeft(p) || c == HeapRight(p));
 
     lemma Heap_Childs:
       \forall integer a, b;
-        0 < a                           ==>
-        0 < b                           ==>
+        0 < a  ==>  0 < b               ==>
         HeapParent(a) == HeapParent(b)  ==>
         (a == b || a+1 == b || a == b+1);
 
@@ -36,10 +36,9 @@
       \forall integer c; 0 < c  ==>  0 <= HeapParent(c) < c;
 
     lemma Heap_ChildBounds:
-      \forall integer p;
-        0 <= p  ==>  p < HeapLeft(p) < HeapRight(p);
+      \forall integer p; 0 <= p  ==>  p < HeapLeft(p) < HeapRight(p);
   }
 */
 
-#endif /* HEAPBASICS_SPEC_INCLUDED */
+#endif /* HEAPNODES_ACSL_INCLUDED */
 

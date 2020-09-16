@@ -1,6 +1,6 @@
 
-#ifndef ACCUMULATEDEFAULT_SPEC_INCLUDED
-#define ACCUMULATEDEFAULT_SPEC_INCLUDED
+#ifndef ACCUMULATEDEFAULT_ACSL_INCLUDED
+#define ACCUMULATEDEFAULT_ACSL_INCLUDED
 
 #include "Accumulate.acsl"
 
@@ -15,7 +15,7 @@
     AccumulateDefaultBounds{L}(value_type* a, integer n) =
       AccumulateBounds(a, n, (value_type)(0));
 
-    lemma AccumulateDefault_Read{K,L}:
+    lemma AccumulateDefault_Unchanged{K,L}:
       \forall value_type *a, integer n;
         0 <= n                ==>
         Unchanged{K,L}(a, n)  ==>
@@ -39,5 +39,5 @@
   }
 */
 
-#endif /* ACCUMULATEDEFAULT_SPEC_INCLUDED */
+#endif /* ACCUMULATEDEFAULT_ACSL_INCLUDED */
 

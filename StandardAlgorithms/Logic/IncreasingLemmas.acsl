@@ -1,9 +1,10 @@
 
-#ifndef INCREASINGLEMMAS_SPEC_INCLUDED
-#define INCREASINGLEMMAS_SPEC_INCLUDED
+#ifndef INCREASINGLEMMAS_ACSL_INCLUDED
+#define INCREASINGLEMMAS_ACSL_INCLUDED
 
 #include "Increasing.acsl"
 #include "ArrayBounds.acsl"
+#include "Equal.acsl"
 
 /*@
   axiomatic IncreasingLemmas
@@ -25,8 +26,14 @@
         0 <= l <= r             ==>
         Increasing{L}(a, l, r)  ==>
         Increasing{L}(a+l, r-l);
+
+    lemma Increasing_Equal{K,L}:
+      \forall value_type* a, integer m, n, p;
+        Increasing{K}(a, m, n)    ==>
+        Equal{K,L}(a, m, n, m+p)  ==>
+        Increasing{L}(a, m+p, n+p);
   }
 */
 
-#endif /* INCREASINGLEMMAS_SPEC_INCLUDED */
+#endif /* INCREASINGLEMMAS_ACSL_INCLUDED */
 

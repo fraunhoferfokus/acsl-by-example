@@ -1,11 +1,9 @@
 
-#ifndef CIRCULARSHIFTLEMMAS_SPEC_INCLUDED
-#define CIRCULARSHIFTLEMMAS_SPEC_INCLUDED
+#ifndef CIRCULARSHIFTLEMMAS_ACSL_INCLUDED
+#define CIRCULARSHIFTLEMMAS_ACSL_INCLUDED
 
-#include "ArrayBounds.acsl"
-#include "EqualRanges.acsl"
-#include "MultisetUnchanged.acsl"
-#include "EqualRangesLemmas.acsl"
+#include "IncreasingLemmas.acsl"
+#include "MultisetReorder.acsl"
 
 /*@
    axiomatic CircularShiftLemmas
@@ -13,18 +11,18 @@
      lemma CircularShift_StrictLowerBound{K,L}:
        \forall value_type* a, integer m, n;
          StrictLowerBound{K}(a, m, n, \at(a[n],K))  ==>
-         EqualRanges{K,L}(a, m, n, m+1)             ==>
-         EqualRanges{K,L}(a, n, n+1, m)             ==>
+         Equal{K,L}(a, m, n, m+1)                   ==>
+         Equal{K,L}(a, n, n+1, m)                   ==>
          StrictLowerBound{L}(a, m+1, n+1, \at(a[m],L));
 
-     lemma CircularShift_MultisetUnchanged{K,L}:
+     lemma CircularShift_MultisetReorder{K,L}:
        \forall value_type* a, integer m, n;
-         0 <= m <= n                     ==>
-         EqualRanges{K,L}(a, m, n, m+1)  ==>
-         EqualRanges{K,L}(a, n, n+1, m)  ==>
-         MultisetUnchanged{K,L}(a, m, n+1);
+         0 <= m <= n               ==>
+         Equal{K,L}(a, m, n, m+1)  ==>
+         Equal{K,L}(a, n, n+1, m)  ==>
+         MultisetReorder{K,L}(a, m, n+1);
    }
 */
 
-#endif /* CIRCULARSHIFTLEMMAS_SPEC_INCLUDED */
+#endif /* CIRCULARSHIFTLEMMAS_ACSL_INCLUDED */
 

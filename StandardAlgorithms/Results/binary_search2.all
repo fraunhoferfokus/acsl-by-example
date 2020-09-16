@@ -10,11 +10,6 @@ alt-ergo : typed_external_binary_search2_assert_rte_mem_access
 alt-ergo : typed_external_binary_search2_ensures_result
 alt-ergo : typed_external_lemma_NoneEqual_NotSomeEqual
 alt-ergo : typed_external_lemma_NotSomeEqual_NoneEqual
+z3 : typed_external_binary_search2_assert_rte_mem_access
 cvc4 : typed_external_lemma_NoneEqual_NotSomeEqual
 cvc4 : typed_external_lemma_NotSomeEqual_NoneEqual
-cvc3 : typed_external_binary_search2_assert_rte_mem_access
-cvc3 : typed_external_binary_search2_ensures_result
-cvc3 : typed_external_lemma_NoneEqual_NotSomeEqual
-cvc3 : typed_external_lemma_NotSomeEqual_NoneEqual
-z3 : typed_external_binary_search2_assert_rte_mem_access
-z3 : typed_external_lemma_NotSomeEqual_NoneEqual

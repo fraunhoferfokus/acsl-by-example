@@ -14,7 +14,7 @@
     assumes         HasSubRange(a, n, b, p);
     assigns         \nothing;
     ensures bound:  0 <= \result <= n-p;
-    ensures result: EqualRanges{Here,Here}(a + \result, p, b);
+    ensures result: Equal{Here,Here}(a + \result, p, b);
     ensures last:   !HasSubRange(a, \result + 1, n, b, p);
 
   behavior no_match:

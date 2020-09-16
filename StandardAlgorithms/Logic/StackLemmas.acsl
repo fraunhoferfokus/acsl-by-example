@@ -1,6 +1,6 @@
 
-#ifndef STACKLEMMAS_SPEC_INCLUDED
-#define STACKLEMMAS_SPEC_INCLUDED
+#ifndef STACKLEMMAS_ACSL_INCLUDED
+#define STACKLEMMAS_ACSL_INCLUDED
 
 #include "Stack.acsl"
 
@@ -13,12 +13,12 @@
         StackSize{L}(s) == StackSize{K}(s) + 1   ==>
         StackSize{L}(s) == StackSize{L}(t)       ==>
         StackTop{L}(s)  == StackTop{L}(t)        ==>
-        EqualRanges{L,L}(StackStorage{L}(s),
-                         StackSize{K}(s),
-                         StackStorage{L}(t))     ==>
+        Equal{L,L}(StackStorage{L}(s),
+                   StackSize{K}(s),
+                   StackStorage{L}(t))           ==>
         StackEqual{L,L}(s,t);
   }
 */
 
-#endif /* STACKLEMMAS_SPEC_INCLUDED */
+#endif /* STACKLEMMAS_ACSL_INCLUDED */
 

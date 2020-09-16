@@ -4,7 +4,6 @@
 #include "DefaultBounds.acsl"
 #include "NumericInverse.acsl"
 
-
 /*@
   requires size:      0 <= n;
   requires valid:     \valid(a + (0..n-1));
@@ -19,8 +18,6 @@ void
 adjacent_difference_inv(value_type* a, size_type n, value_type* b)
 {
   adjacent_difference(a, n, b);
-  //@ assert difference:  AdjacentDifference(a, n, b);
-  //@ assert bounds:      AccumulateDefaultBounds(b, n);
   partial_sum(b, n, a);
 }
 
