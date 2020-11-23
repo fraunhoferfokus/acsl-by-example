@@ -1,0 +1,72 @@
+
+\chapter{Numeric algorithms}
+\Label{cha:numeric}
+
+The algorithms that we considered so far only \emph{compared}, \emph{read} or
+\emph{copied} values in sequences.
+In this chapter, we consider so-called \emph{numeric} algorithms of the 
+\cxx Standard Library \cite[\S 29.8]{cxx-17-draft} that use arithmetic
+operations on \valuetype to
+combine the elements of sequences.
+
+\begin{listing}[hbt]
+\begin{center}
+\begin{minipage}{0.5\textwidth}
+\begin{lstlisting}[style=acsl-block]
+    #define VALUE_TYPE_MAX  INT_MAX 
+    #define VALUE_TYPE_MIN  INT_MIN
+\end{lstlisting}
+\end{minipage}
+\end{center}
+\vspace*{-0.5cm}
+\caption{\Label{lst:value-type-limits}Limits of \valuetype}
+\end{listing}
+
+In order to refer to potential arithmetic overflows we introduce the
+two constants shown in Listing~\ref{lst:value-type-limits}
+which refer to the numeric limits of \valuetype 
+(see also \S\ref{sec:types}).
+
+We consider the following algorithms.
+
+\begin{itemize}
+
+\item \iotai 
+writes sequentially increasing values into a range
+(\S\ref{sec:iotai})
+ 
+\item \accumulate 
+computes the sum of the elements in a range
+(\S\ref{sec:accumulate})
+
+\item \innerproduct 
+computes the inner product of two ranges
+(\S\ref{sec:innerproduct})
+
+\item \partialsum 
+computes the sequence of partial sums of a range
+(\S\ref{sec:partialsum})
+
+\item \adjacentdifference 
+computes the differences of adjacent elements in a range 
+(\S\ref{sec:adjacentdifference})
+
+\item
+Finally, in \S\ref{sec:partialsuminv} we show that under
+appropriate preconditions the algorithms \partialsum and
+\adjacentdifference are inverse to each other.
+
+\end{itemize}
+
+The formal specifications of these algorithms raise new questions.
+In particular, we now have to deal with arithmetic overflows in \valuetype.
+
+\clearpage
+
+\input{numeric/iota}
+\input{numeric/accumulate}
+\input{numeric/inner_product}
+\input{numeric/partial_sum}
+\input{numeric/adjacent_difference}
+\input{numeric/numeric_inverse}
+

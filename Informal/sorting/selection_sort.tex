@@ -1,0 +1,73 @@
+
+\section{The \selectionsort algorithm}
+\Label{sec:selectionsort}
+
+Our version of the \selectionsort algorithm has the signature
+
+\begin{lstlisting}[style = acsl-block]
+
+  void selection_sort(value_type* a, size_type n);
+\end{lstlisting}
+
+The \selectionsort algorithm sorts an array in increasing order, left to
+right, by selecting in each step the minimum element of the remaining segment
+and \emph{swaps} it with its first element.
+%
+This implies that each member of the increasingly ordered initial segment is less or equal than
+each member of the remaining segment.
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics[width=0.65\textwidth]{Figures/selection_sort.pdf}
+\caption{An iteration of \selectionsort}
+\Label{fig:selectionsort-example}
+\end{center}
+\end{figure}
+
+\FloatBarrier
+
+Figure~\ref{fig:selectionsort-example} shows a typical situation in an
+example run.
+The algorithm will swap the \inl{28} at position \inl{i} with the
+\inl{9} at position \inl{min} to extend the increasingly ordered initial segment
+one field to the right.
+
+\subsection{Formal specification of \selectionsort}
+
+The following listing shows the specification of \selectionsort.
+
+\input{Listings/selection_sort.h.tex}
+
+\clearpage
+
+
+\subsection{Implementation of \selectionsort}
+
+The implementation of \selectionsort is shown in the next listing.
+%
+We use \specref{minelement} to find the minimum element of the remaining array segment.
+
+\input{Listings/selection_sort.c.tex}
+
+The loop invariants \inl{increasing} and \inl{lower} establish that the
+initial segment \inl{a[0..i-1]} is in increasing order and, respectively,
+state that \inl{a[i-1]} is a lower bound of the remaining segment \inl{a[i..n-1]}.
+Since the \minelement call uses an address offset, we had
+to employ again the \emph{shift lemmas} from the collection \logicref{ArrayBoundsShift}.
+
+The loop invariant \inl{reorder}, on the other hand, states that the multiset of values in the
+array \inl{a} are only \emph{rearranged} during the algorithm.
+%
+While this is intuitively most obvious (as the call to the \specref{swap}
+routine, is the only code that modifies~\inl{a}),
+it took considerable effort to prove it formally; including a statement contract
+that captures the effects of calling \swap.
+
+The main reason for introducing the statement contract is that it
+\emph{transforms} the postcondition of the call to \specref{swap}
+into the hypotheses for the lemma \logicref{MultisetSwapMiddle}.
+This lemma, which relies on the lemmas about \logicref{MultisetReorder},
+captures the fact that \emph{swapping two elements of an array} is a \emph{reordering}.
+
+\clearpage
+

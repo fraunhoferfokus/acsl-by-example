@@ -1,0 +1,16 @@
+
+\subsection{The function \stackinit}
+\Label{sec:stackinit}
+
+The following listing shows the specification of \stackinit.
+Note that our specification of the post-conditions contains a redundancy
+because a stack is empty if and only if its size is zero.
+
+\input{Listings/stack_init.h.tex}
+
+The next listing shows the implementation of \stackinit.
+It simply initializes \inl{obj} and \inl{capacity} with the respective
+value of the array and sets the field \inl{size} to zero.
+
+\input{Listings/stack_init.c.tex}
+

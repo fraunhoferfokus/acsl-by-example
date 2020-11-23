@@ -1,0 +1,31 @@
+
+\subsection{The function \stacktop}
+\Label{sec:stacktop}
+\Label{sec:stacktopwd}
+
+The function \stacktop is the runtime version of the logic function \logicref{StackTop}.
+The specification of \stacktop in the following listing
+simply states that for non-empty stacks
+\stacktop produces the same result as \StackTop
+which in turn just returns the element \inl{obj[size-1]} of \stacktype.
+
+\input{Listings/stack_top.h.tex}
+
+For a non-empty stack the implementation of \stacktop in
+the next listing simply returns the element \inl{obj[size-1]}.
+Note that our implementation of \stacktop does not crash when it is applied
+to an empty stack.
+In this case we return the first element of the internal,
+non-empty array \inl{obj}.
+This is consistent with our specification of \stacktop
+which only refers to non-empty stacks.
+
+\input{Listings/stack_top.c.tex}
+
+The next listing shows our check whether \stacktop is well-defined.
+Since our axioms in \S\ref{sec:stack-axioms} did not impose any
+behavior on the behavior of \stacktop for empty stacks,
+we prove the well-definition of \stacktop only for nonempty stacks.
+
+\input{Listings/stack_top_wd.c.tex}
+

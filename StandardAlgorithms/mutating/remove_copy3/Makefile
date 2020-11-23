@@ -1,7 +1,7 @@
 
 include ../../Config/example.mk
 
-WP_TIMEOUT=2
+WP_TIMEOUT=5
 
 #WP_FLAGS += -wp-prop  remove
 #WP_FLAGS += -wp-prop unchanged

@@ -1,0 +1,37 @@
+
+\section{The \replace algorithm}
+\Label{sec:replace}
+
+The \replace algorithm of the \cxx Standard Library \cite[\S 28.6.5]{cxx-17-draft} substitutes
+specific values in a general sequence.
+%
+Here, the general implementation
+has been altered to process \valuetype ranges.
+The new signature reads
+
+\begin{lstlisting}[style=acsl-block]
+
+void replace(value_type* a, size_type n, value_type v, value_type w);
+\end{lstlisting}
+
+The \replace algorithm substitutes all elements from the range \inl{a[0..n-1]}
+that equal~\inl{v} by~\inl{w}.
+
+\subsection{Formal specification of \replace}
+
+Using the second predicate \logicref{Replace} the specification of
+\specref{replace} can be expressed as in the following listing.
+
+\input{Listings/replace.h.tex}
+
+\subsection{Implementation of \replace}
+
+The implementation of \implref{replace} is shown in the following listing.
+The loop invariant \inl{unchanged} expresses
+that when entering iteration \inl{i} the elements \inl{a[i..n-1]}
+have not yet changed.
+
+\input{Listings/replace.c.tex}
+
+\clearpage
+

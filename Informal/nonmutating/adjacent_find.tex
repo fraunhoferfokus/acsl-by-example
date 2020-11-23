@@ -1,0 +1,70 @@
+
+\section{The \adjacentfind algorithm}
+\Label{sec:adjacentfind}
+
+The \adjacentfind
+algorithm of the \cxx Standard Library \cite[\S 28.5.8]{cxx-17-draft}
+
+\begin{lstlisting}[style=acsl-block]
+
+  size_type adjacent_find(const value_type* a, size_type n);
+\end{lstlisting}
+
+returns the smallest valid index i, such that i+1 is also a valid index 
+and such that 
+\begin{lstlisting}[style=acsl-block]
+
+    a[i] == a[i+1]
+
+\end{lstlisting}
+holds. 
+The \adjacentfind algorithm returns \inl{n} if no such index exists.
+
+
+The arrow in Figure~\ref{fig:adjacentfind} indicates the smallest index
+where two adjacent elements are equal.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/adjacent_find.pdf}
+\caption{\Label{fig:adjacentfind}A simple example for \adjacentfind}
+\end{figure}
+
+\FloatBarrier
+
+
+\subsection{The predicate \HasEqualNeighbors}
+
+As in the case of other search algorithms, we first define 
+a predicate 
+\logicref{HasEqualNeighbors}
+that captures 
+the essence of finding two adjacent indices at which the array holds equal values.
+
+\begin{logic}[hbt]
+\begin{minipage}{0.99\textwidth}
+\lstinputlisting[style=acsl-block, frame=single]{Source/HasEqualNeighbors.acsl}
+\end{minipage}
+\caption{\Label{logic:HasEqualNeighbors}The predicate \HasEqualNeighbors}
+\end{logic}
+
+\subsection{Formal specification of \adjacentfind}
+
+We use the predicate 
+\logicref{HasEqualNeighbors}
+to define the formal specification
+of \specref{adjacentfind}.
+
+\input{Listings/adjacent_find.h.tex}
+
+\subsection{Implementation of \adjacentfind}
+
+In the implementation of \implref{adjacentfind} we check whether the array
+contains at least two elements.
+Otherwise, there is no point in looking for adjacent neighbors.
+Note the use of the predicate \logicref{HasEqualNeighbors}
+ in the loop invariant to
+match the similar postcondition of behavior \inl{some}.
+
+\input{Listings/adjacent_find.c.tex}
+

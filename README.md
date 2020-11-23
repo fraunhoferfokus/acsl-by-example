@@ -3,7 +3,7 @@
 # ACSL by Example
 [![Replay Status](https://travis-ci.org/fraunhoferfokus/acsl-by-example.svg?branch=master)](https://travis-ci.org/fraunhoferfokus/acsl-by-example)
 
-This repository contains
+This repository contains version 22.1.0 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
 --- a collection of C functions and data types whose
 behavior has been formally specified
@@ -14,7 +14,7 @@ The directory
 contains the complete C source code including ACSL annotations of the examples.
 
 This version of *ACSL by Example* is intended for
-Frama-C 21.1 and relies among others on the following sofware packages.
+Frama-C 22.1 and relies among others on the following sofware packages.
 
 *Package* | *Version*
 --------- | ---------
@@ -22,9 +22,17 @@ Frama-C 21.1 and relies among others on the following sofware packages.
  Alt-Ergo | 2.3.3
  CVC4     | 1.7
  Z3       | 4.8.6
- Coq      | 8.9.1
+ Coq      | 8.12.1
 
 For more details on verifying the examples see the file [README.txt](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/README.txt).
+
+## Accompanying LaTeX files
+
+We also inlude for each example corresponding LaTeX file (see directory [Informal](https://github.com/fraunhoferfokus/acsl-by-example/tree/master/Informal)).
+This might be interesting for someone who wants to apply machine learning algorithms
+on this (small) collection of informal and formal specifications.
+Note that these LaTeX files are not sufficient to generate
+[ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf).
 
 ## Travis CI
 

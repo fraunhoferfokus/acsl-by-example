@@ -1,0 +1,44 @@
+
+\subsection{The function \stackpush}
+\Label{sec:stackpush}
+\Label{sec:stackpushwd}
+
+The following listing shows the specification of the function \stackpush.
+In accordance with Axiom~\eqref{eq:stack-size-push}, \stackpush is supposed
+to increase the number of elements of a non-full stack by one.
+The specification also demands that the value that is pushed on a
+non-full stack becomes the top element of the resulting stack (see 
+Axiom~\eqref{eq:stack-top-push}).
+
+\input{Listings/stack_push.h.tex}
+
+The implementation of \stackpush is shown in the next listing.
+It checks whether its argument is a non-full stack in which case it
+increases the field \inl{size} by one but only after it has assigned
+the function argument to the element \inl{obj[size]}.
+
+\input{Listings/stack_push.c.tex}
+
+\vfill
+
+The following listing shows our formalization of the well-definition for \stackpush.
+%
+The function \stackpush does not return a value but rather modifies its argument.
+For the well-definition of \stackpush we therefore check whether it
+turns equal stacks into equal stacks.
+
+\input{Listings/stack_push_wd.c.tex}
+
+However, equality of the stack arguments is not sufficient for a proof
+that \stackpush is well-defined.
+We must also ensure that there is no \emph{aliasing} between the two stacks.
+Otherwise modifying one stack could modify the other stack in unexpected ways.
+In order to express that there is no aliasing between two stacks, 
+we use the predicate \logicref{StackSeparated}.
+
+In order to achieve an automatic verification of \implref{stackpushwd} we
+have added the assertions \inl{top} and \equal and introduced the lemma
+\logicref{StackPushEqual} in the following listing.
+
+\input{Listings/StackLemmas.acsl.tex}
+

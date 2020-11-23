@@ -1,0 +1,57 @@
+
+\section{The \maxelement algorithm}
+\Label{sec:maxelement}
+
+The \maxelement algorithm in the \cxx Standard Library \cite[\S 28.7.8]{cxx-17-draft}
+searches the maximum of a general sequence. 
+The signature of our version of \maxelement reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+  size_type max_element(const value_type* a, size_type n);
+\end{lstlisting}
+
+The function finds the largest element in the range
+\inl{a[0..n-1]}.
+More precisely, it returns the unique valid index \inl{i} such that:
+\begin{enumerate}
+\item for each index \inl{k} with \inl{0 <= k < n} the condition
+\inl{a[k] <= a[i]} holds and
+\item for each index \inl{k} with \inl{0 <= k < i} the condition
+\inl{a[k] < a[i]} holds.
+\end{enumerate}
+The return value of \maxelement is \inl{n} if and only if there is no
+maximum, which can only occur if \inl{n == 0}.
+
+\subsection{Formal specification of \maxelement}
+
+The following listings shows the formal specification of \specref{maxelement}.
+Note that we have subdivided the specification of \maxelement into the two
+behaviors~\inl{empty} and \inl{not_empty}.
+The behavior \inl{empty} contains the specification for the case that the
+range contains no elements.
+The behavior \inl{not_empty} applies if the range has a positive length.
+
+The ensures clause \inl{max} of behavior \inl{not_empty} indicates that
+the returned valid index \inl{k} refers to a maximum value of the array.
+The postcondition \inl{first} expresses that \inl{k} is indeed the
+\emph{first} occurrence of a maximum value in the array.
+
+\input{Listings/max_element.h.tex}
+
+\subsection{Implementation of \maxelement}
+
+In our description, we concentrate on the \emph{loop annotations}
+of the implementation of \implref{maxelement}.
+
+\input{Listings/max_element.c.tex}
+
+The loop invariant \inl{max} is needed to prove the  postcondition
+\inl{result} of the behavior \inl{not_empty} of \specref{maxelement}.
+Using loop invariant \inl{upper} we prove the postcondition \inl{upper}
+of the behavior \inl{not_empty} of \specref{maxelement}.
+Finally, the postcondition \inl{first} of this behavior can be
+verified with the loop invariant \inl{first}.
+
+\clearpage
+

@@ -1,0 +1,52 @@
+
+\section{Verifying a random number generator}
+\Label{sec:randomnumber}
+
+We describe in this section \specref{randomnumber} which implements
+a simple random-number generator.
+As in the case of \specref{shuffle} itself, we do not formulate precise
+properties of randomness and only require its result to
+be in the specified range \inl{[0..n-1]}.
+Again, the \inl{assigns} clause to the array \inl{state} models the
+dependency on an additional state.
+
+Note that in the following listing, we also provide the rather simple
+specification of the function \randominit that is called to initialize the 
+state of the random generator.
+
+\input{Listings/random_number.h.tex}
+
+The implementations of \randomnumber and \randominit are shown in the following listing.
+Internally, we rely on a custom implementation of the POSIX.1
+random number generator \inl{lrand48()}\footnote{
+  See \url{http://pubs.opengroup.org/onlinepubs/9699919799/functions/lrand48.html}
+}
+This random number generator is a linear congruence
+generator with a 48~bit state and the iteration procedure
+\begin{equation}
+\label{eq:random}
+x_{n+1}=ax_n+c\bmod 2^{48}
+\end{equation}
+%
+where $a=25214903917$ and $c=11$ are relatively prime integers.
+
+As a part of the iteration procedure in Equation~\eqref{eq:random}
+an unsigned overflow may occur.
+This does not affect the result as we are only interested in its lowest 48 bits.
+However, as one of the options we use, \inl{-warn-unsigned-overflow},
+causes \wpframac  assert the absence of unsigned overflow this algorithm does not verify under
+the same options used for the other algorithms.
+%
+As an exception, we have therefore decided to disable \inl{-warn-unsigned-overflow}
+for this function as the unsigned overflow is both benign and
+well-defined (cf.\ \cite[\S 6.2.5, 9]{isoc}).
+
+\input{Listings/random_number.c.tex}
+
+Note that we use the custom acsl lemma \logicref{RandomNumberModulo}
+from the following listing to support the verification of some assertions.
+
+\input{Listings/C_Bit.acsl.tex}
+
+\clearpage
+

@@ -1,0 +1,35 @@
+
+\section{The auxiliary functions \heapparent and \heapchild}
+\label{sec:auxiliary-heap-functions}
+\label{sec:heapparent}
+\label{sec:heapchild}
+
+This section features the two auxiliary heap functions
+We start with the function \specref{heapparent}
+which is in principle the \isoc~counterpart of the \acsl function \logicref{HeapParent}.
+We say \emph{in principle} because our definition avoids
+the border case of the parent node of~0.
+
+\input{Listings/heap_parent.h.tex}
+
+Neither do we provide exact \isoc-counterparts for
+the logic functions \logicref{HeapLeft} and \logicref{HeapRight}.
+In fact, we have encountered only one situation (in the implementation of \implref{popheap}),
+where such functions would have been useful.
+However, what we really need in \popheap is to determine
+for a given index~\inl{p} a child index~\inl{c} where the maximum
+of the respective values \inl{a[HeapLeft(p)]} and\\
+\inl{a[HeapRight(p)]} resides.
+This computation is performed by the function \specref{heapchild}.
+
+\input{Listings/heap_child.h.tex}
+
+\clearpage
+
+Note that in the implementation of \implref{heapchild}
+we explicitly handle the case that the computation of child indices
+could overflow. If this occurs, the function \heapchild returns~\inl{n}.
+
+\input{Listings/heap_child.c.tex}
+
+

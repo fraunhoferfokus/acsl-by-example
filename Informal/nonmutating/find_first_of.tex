@@ -1,0 +1,69 @@
+
+\section{The \findfirstof algorithm}
+\Label{sec:findfirstof}
+
+The \findfirstof algorithm \cite[\S 28.5.7]{cxx-17-draft}
+is closely related to \find (see \S\ref{sec:find} and~\S\ref{sec:findii}).
+
+
+\begin{lstlisting}[style=acsl-block]
+
+  size_type
+  find_first_of(const value_type* a, size_type m,
+                const value_type* b, size_type n);
+\end{lstlisting}
+
+Like \find, it performs a sequential search.
+However, while \find searches for a particular value, 
+the function
+\findfirstof returns the least index \inl{i} such that \inl{a[i]} 
+is equal to one of the values \inl{b[0..n-1]}.
+
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/find_first_of.pdf}
+\caption{\Label{fig:findfirstof}A simple example for \findfirstof}
+\end{figure}
+
+\FloatBarrier
+
+
+As an example, we consider in Figure~\ref{fig:findfirstof} two arrays.
+The arrow indicates the smallest index where one of the elements of the three-element array
+occurs.
+
+\subsection{The predicate \HasValueOf}
+
+Similar to our approach in \S\ref{sec:findii}, we define a predicate
+\logicref{HasValueOf}
+that formalizes the fact that there are valid indices~\inl{i}
+and~\inl{j} of the respective arrays~\inl{a} and~\inl{b} such that \inl{a[i] == b[j]} holds.
+We have chosen to reuse the predicate
+\logicref{SomeEqual} to define \HasValueOf.
+
+\input{Listings/HasValueOf.acsl.tex}
+
+\clearpage
+
+\subsection{Formal specification of \findfirstof}
+
+The following listing shows the formal specification of \findfirstof.
+The function contract uses the predicates \logicref{HasValueOf} and
+\logicref{SomeEqual} thereby making it
+very similar the specification of \specref{findii}.
+
+\input{Listings/find_first_of.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \findfirstof}
+
+Our implementation of \implref{findfirstof} calls \specref{findii},
+thereby emphasizing reuse.
+Besides, leading to a more concise implementation, we also have to write fewer loop annotations.
+
+\input{Listings/find_first_of.c.tex}
+
+\clearpage
+

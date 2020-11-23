@@ -1,0 +1,81 @@
+
+\chapter{Non-mutating algorithms}
+\Label{cha:non-mutating}
+
+\Label{assigns-clause}
+In this chapter, we consider \emph{non-mutating} algorithms
+of the \cxx Standard Library \cite[\S 28.5]{cxx-17-draft}.
+These algorithms neither change their arguments nor any objects outside their scope.
+This requirement can be formally expressed with the following 
+\emph{assigns clause}:
+\begin{lstlisting}[style=acsl-block]
+
+  assigns \nothing;
+\end{lstlisting}
+
+Each algorithm in this chapter therefore uses this assigns clause
+in its specification.
+
+The specifications of these algorithms are not very complex.
+Nevertheless, we have tried to arrange them so that the earlier
+examples are simpler than the later ones. 
+Each algorithm works on one-dimensional arrays.
+
+\begin{itemize}
+\item \find in \S\ref{sec:find}
+  provides \emph{sequential} or \emph{linear search}
+  and returns the smallest index at which a given value occurs in a given range.
+  In \S\ref{sec:findii}, a user-defined \acsl predicate is introduced in order to 
+  simplify the reuse of various specification elements.
+  We refer to the simplified version as \findii.
+  We provide in \S\ref{sec:findiii} a third specification of \find (called \findiii)
+  that relies on a user-defined \acsl function that expresses the ideas of 
+  linear search on the logic level.
+
+\item \findifnot in \S\ref{sec:findifnot} is a small variation of \find
+that searches the first occurrence where a given value does \emph{not} occur.
+
+\item \findfirstof in \S\ref{sec:findfirstof} 
+  provides similar to \find a \emph{sequential search}.
+  However, unlike \find 
+  it does not search for a particular value, 
+        but for an arbitrary member of a set.
+
+\item \adjacentfind in \S\ref{sec:adjacentfind}
+can be used to find equal neighbors in an array.
+
+\item \equal and \mismatch in \S\ref{sec:equal} are useful for
+comparing two ranges element-by-element and identifying where they differ. 
+
+\item \search and \searchn in \S\ref{sec:search} and~\S\ref{sec:searchn}
+find a subsequence that is identical to a given sequence
+when compared element-by-element and returns the position of the first occurrence.
+
+\item \counti in \S\ref{sec:counti} returns
+the number of occurrences of a given value in a range.
+Here we will explicitly define a logic function for elements
+counting and show that the implementation comply with it.
+
+\item \countii in \S\ref{sec:countii} contains
+different specification for the \counti function. In this case an
+inductive predicate defined for elements counting. The section allows
+one to compare different approaches of writing specifications and
+demonstrates the \acsl inductive predicates.
+
+\end{itemize}
+
+\clearpage
+
+\input{nonmutating/find}
+\input{nonmutating/find2}
+\input{nonmutating/find3}
+\input{nonmutating/find_if_not}
+\input{nonmutating/find_first_of}
+\input{nonmutating/adjacent_find}
+\input{nonmutating/equal}
+\input{nonmutating/search}
+\input{nonmutating/search_n}
+\input{nonmutating/find_end}
+\input{nonmutating/count}
+\input{nonmutating/count2}
+

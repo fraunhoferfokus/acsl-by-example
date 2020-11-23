@@ -1,0 +1,35 @@
+
+\section{The \maxelement algorithm with predicates}
+\Label{sec:maxelementii}
+
+In this section we present another specification of the \maxelement algorithm.
+The main difference is that we employ the predicate \logicref{UpperBound}
+which basically expresses that a given value is greater or equal than all
+elements of a given array.
+Closely related to the predicate \UpperBound is the predicate \logicref{StrictUpperBound}.
+
+We also employ the predicate \logicref{MaxElement}.
+This predicate states that the element at a given index \inl{max} is an 
+\emph{upper bound} of the sequence \inl{a[0..n-1]}, and, by
+construction, a member of that sequence.
+
+\subsection{Formal specification of \maxelementii}
+
+The formal specification of \specref{maxelementii} is shown in the following listing.
+Note that we also use the predicate  \logicref{StrictUpperBound}
+in order to express that \maxelementii returns the \emph{first} maximum position in \inl{a[0..n-1]}.
+
+\input{Listings/max_element2.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \maxelementii}
+
+The implementation of \implref{maxelementii} is of course
+very similar to that of \implref{maxelement}---except that the
+loop invariants now also use the above mentioned predicates.
+
+\input{Listings/max_element2.c.tex}
+
+\clearpage
+

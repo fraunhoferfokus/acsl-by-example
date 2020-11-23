@@ -10,4 +10,7 @@ qed : typed_external_axiom_size_of_push_ensures_valid
 alt-ergo : typed_external_lemma_StackEqual_Reflexive
 alt-ergo : typed_external_lemma_StackEqual_Symmetric
 alt-ergo : typed_external_lemma_StackEqual_Transitive
+cvc4 : typed_external_lemma_StackEqual_Reflexive
+cvc4 : typed_external_lemma_StackEqual_Symmetric
+cvc4 : typed_external_lemma_StackEqual_Transitive
 z3 : typed_external_lemma_StackEqual_Reflexive

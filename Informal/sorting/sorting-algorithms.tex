@@ -1,0 +1,101 @@
+
+\chapter{Sorting Algorithms}
+\Label{cha:sorting}
+
+
+
+Many issues in computer science can be exemplified in the field of
+sorting algorithms; see e.g.\ \cite{Knuth.1973} for a famous textbook.
+Therefore we arrange some of the most common classic
+sorting algorithms.
+In this chapter, we present algorithms of the \cxx Standard
+Library \cite[\S 28.7.1]{cxx-17-draft} that are related to the task
+of sorting a linear array.
+
+Following \cite{Sellibitze.2014}, we have also used (\isoc rephrasings of) 
+functions from the \cxx Standard Library as far as possible to implement the different
+algorithmic approaches.
+
+\begin{itemize}
+\item \issorted in \S\ref{sec:issorted} is an algorithm that checks if a given
+array is already in increasing order.
+
+\item \partialsort in \S\ref{sec:partialsort} rearranges a given
+array into two parts. All elements in the first part are less or equal than
+those of the second part. Moreover, while the first part is sorted,
+the order of elements in the second part is unspecified.
+
+\item \bubblesort in \S\ref{sec:bubblesort} describes a simple, well-known and 
+      sorting algorithm.\footnote{
+   See \url{https://en.wikipedia.org/wiki/Bubble_sort}
+}
+
+\item
+\selectionsort in \S\ref{sec:selectionsort} presents the classic
+\emph{selection sort} algorithm.\footnote{
+   See \url{https://en.wikipedia.org/wiki/Selection_sort}
+}
+
+\item \insertionsort in \S\ref{sec:insertionsort} the also well-known
+\emph{insertion sort} algorithm.\footnote{
+   See \url{https://en.wikipedia.org/wiki/Insertion_sort}
+}
+
+\item \heapsort in \S\ref{sec:heapsort} describes the quite efficient \emph{heap sort},
+which relies on the algorithms presented in Chapter~\ref{cha:heap}.\footnote{
+   See \url{https://en.wikipedia.org/wiki/Heapsort}
+}
+
+\item \merge in \S\ref{sec:merge} the \emph{merge} algorithm from \emph{merge sort}.\footnote{
+  See \url{https://en.wikipedia.org/wiki/Merge_sort}
+}
+\end{itemize}
+
+While \heapsort achieves a run-time complexity upper bound of 
+${\mathcal O}(n \cdot \log(n))$ due to the efficiency of the heap
+data structure,
+both \selectionsort and \insertionsort
+need ${\mathcal O}(n^2)$ in the average case,
+and also in the worst case.
+
+Note that the \inl{sort} algorithm from the \cxx Standard Library
+is not handled here because it typically relies on \emph{introspection sort}
+which is sophisticated mix of various classic algorithms.\footnote{
+  See \url{https://en.wikipedia.org/wiki/Introsort}
+}
+In future releases we plan to handle the more algorithms related sorting.
+
+\clearpage
+
+The sorting algorithms in this chapter essentially share the following contract;
+it is their implementations that differ fundamentally.
+
+\begin{lstlisting}[style = acsl-block]
+        /*@
+           requires valid: \valid(a + (0..n-1));
+
+           assigns  a[0..n-1];
+
+           ensures increasing:  Increasing(a, n);
+           ensures reorder:     MultisetReorder{Old, Here}(a, n);
+        */
+        void xxx_sort(value_type* a, size_type n);
+\end{lstlisting}
+
+As mentioned in the introduction of Chapter~\ref{cha:binary-search},
+we use the predicate \logicref{Increasing} in the contracts of our
+sorting algorithms but often resort to the simpler predicate
+\logicref{WeaklyIncreasing} in the loop invariants and assertions.
+In order to conclude that the desired postcondition \inl{Increasing(a, n)} holds,
+we rely on lemma \logicref{WeaklyIncreasingIncreasing}.
+
+
+%\clearpage
+
+\input{sorting/is_sorted}
+\input{sorting/partial_sort}
+\input{sorting/bubble_sort}
+\input{sorting/selection_sort}
+\input{sorting/insertion_sort}
+\input{sorting/heap_sort}
+\input{sorting/merge}

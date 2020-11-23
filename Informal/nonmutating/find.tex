@@ -1,0 +1,97 @@
+
+\section{The \find algorithm}
+\Label{sec:find}
+
+The \find algorithm in the \cxx Standard Library \cite[\S 28.5.5]{cxx-17-draft}
+implements \emph{sequential search} for general sequences.
+We have modified the generic implementation,
+which relies heavily on \cxx templates, to that of a range of
+type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+       size_type find(const value_type* a, size_type n, value_type v);
+\end{lstlisting}
+
+The function \find returns the least \emph{valid} index \inl{i} of \inl{a}
+where the condition \inl{a[i] == v} holds. 
+If no such index exists then \find returns the length \inl{n} of the array.
+
+
+As an example, we consider in Figure~\ref{fig:find} an array.
+The arrows indicate which indices will be returned by \find for a given value.
+Note that the index~9 points \emph{one past end} of the array.
+Values that are not contained in the array are colored in gray.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/find.pdf}
+\caption{\Label{fig:find}Some simple examples for \find}
+\end{figure}
+
+\FloatBarrier
+
+
+\subsection{Formal specification of \find}
+
+The following listing shows our first attempt specify \specref{find}.
+
+\input{Listings/find.h.tex}
+
+The \inl{requires}-clause indicates that \inl{n} is non-negative and
+that the pointer \inl{a} points to $n$~contiguously allocated objects of type
+\valuetype (see~\S\ref{sec:frequentPattern}).
+%
+The \inl{assigns}-clause indicates that \find (as a non-mutating algorithm),
+does not modify any memory location outside its scope (see~Page~\pageref{assigns-clause}).
+
+Generally, we only know that \find returns a non-negative index that is less or
+equal the length of the array.
+However, once we assume more specific situations,
+we can also make more precise statements about the returned valued.
+This is the reason why we have subdivided the specification of
+\find into two behaviors (named \inl{some} and \inl{none}).
+
+\begin{itemize}
+\item
+The behavior \inl{some} applies if the sought-after value is contained in the array.
+We express this condition by using the \inl{assumes}-clause.
+The next line expresses that if the assumptions of the behavior are satisfied then
+\find will return a valid index.
+The algorithm also ensures that  the returned (valid) index \inl{i},
+\inl{a[i] == v} holds.
+Therefore we define this property in the second postcondition of behavior \inl{some}.
+Finally, it is important to express that \find returns the smallest index~\inl{i}
+for which \inl{a[i] == v} holds (see last postcondition of behavior \inl{some}).
+
+\item
+The behavior \inl{none} covers the case that the sought-after value 
+is \emph{not} contained in the array (see \inl{assumes}-clause of behavior \inl{none} in
+in the contract of\specref{find}.
+In this case, \find must return the length \inl{n} of the range \inl{a}.
+\end{itemize}
+
+Note that the formula in the \inl{assumes}-clause of the behavior \inl{some}
+is the negation of the \inl{assumes}-clause of the behavior \inl{none}.
+Therefore, we can express  that these two behaviors are
+\emph{complete} and \emph{disjoint}.
+
+\subsection{Implementation of \find}
+
+The noteworthy elements of our implementation of \implref{find} are the 
+\emph{loop annotations}.
+%
+The first loop \emph{invariant} is needed to prove that accesses
+to~\inl{a} only occur with valid indices. The second  loop \emph{invariant} is needed
+for the proof of the postconditions of the
+behavior~\inl{some} in the contract of \specref{find}.
+It expresses that for each iteration the sought-after value is not
+yet found up to that iteration step.
+Finally, the  loop \emph{variant} \inl{n-i} is needed to generate correct verification
+conditions for the termination of the loop.
+
+\input{Listings/find.c.tex}
+
+\clearpage
+

@@ -1,0 +1,80 @@
+
+\section{Verification of stack axioms}
+\Label{sec:stack-verification}
+
+In this section we show that the stack functions defined in
+\S\ref{sec:stack-functions}
+satisfy the stack Axioms of \S\ref{sec:stack-axioms}.
+
+The annotated code has been obtained from the axioms in a fully systematical way.
+In order to transform a condition equation $p \rightarrow s = t$:
+\begin{itemize}
+\item Generate a clause \inl{requires p}.
+\item Generate a clause \inl{requires x1 == ... == xn} 
+for each variable \inl{x} with $n$ occurrences 
+in $s$ and $t$.
+\item Change the $i$-th occurrence of \inl{x} to \inl{xi} 
+in $s$ and $t$.
+\item Translate both terms $s$ and $t$ to reversed polish notation.
+\item Generate a clause \inl{ensures y1 == y2}, where \inl{y1} and
+\inl{y2} denote the value corresponding to 
+the translated $s$ and $t$, respectively.
+\end{itemize}
+
+This makes it easy to implement a tool that does the translation automatically,
+but yields a slightly longer contract in our example.
+
+
+\subsection{Resetting a stack}
+\Label{sec:axiomsizeofinit}
+
+
+Our formulation in \acsl\slash\isoc  of the axiom in
+Equation~\eqref{eq:stack-init-size} is shown in  the following
+listing.
+
+\input{Listings/axiom_size_of_init.c.tex}
+
+\clearpage
+
+\subsection{Adding an element to a stack}
+\Label{sec:axiomsizeofpush}
+\Label{sec:axiomtopofpush}
+
+Axioms~\eqref{eq:stack-size-push} and~\eqref{eq:stack-top-push}
+describe the behavior of a stack when an element is added.
+
+\input{Listings/axiom_size_of_push.c.tex}
+
+Except for the \inl{assigns} clauses, the \acsl specification refers
+only to encapsulating logic functions and predicates defined in
+\S\ref{sec:stack-invariants}.
+If \acsl would provide a means to define encapsulating logic
+functions returning also sets of memory locations,
+the expressions in \inl{assigns} clauses would not need to refer to
+the details of our
+\stacktype implementation.\footnote{
+In \cite[\S 2.3.4]{ACSLSpec}, a powerful sublanguage to
+build memory location set expressions is defined. 
+We will explore its capabilities in a later version.
+}
+As an alternative, \inl{assigns} clauses could be omitted, as long as
+the proofs are only used to convince a human reader.
+
+\input{Listings/axiom_top_of_push.c.tex}
+
+\clearpage
+
+\subsection{Removing an element from a stack}
+\Label{sec:axiompopofpush}
+\Label{sec:axiomsizeofpop}
+\Label{sec:axiompushofpoptop}
+
+This section shows the Listings for Axioms~\ref{eq:stack-size-pop}, \ref{eq:stack-pop-push}
+and~\ref{eq:stack-push-pop-top} which
+describe the behavior of a stack when an element is removed.
+
+\input{Listings/axiom_size_of_pop.c.tex}
+\input{Listings/axiom_pop_of_push.c.tex}
+\input{Listings/axiom_push_of_pop_top.c.tex}
+

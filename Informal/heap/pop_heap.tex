@@ -1,0 +1,250 @@
+\section{The \popheap algorithm}
+\Label{sec:popheap}
+
+The algorithm \popheap moves the first element of the heap, which holds
+the heap's largest value, and places it at the the end of the underlying sequence.
+Whereas in the \cxx Standard Library \cite[\S 28.7.7.2]{cxx-17-draft}
+\popheap works on a range of random access iterators,
+our version operates on an array of \valuetype.
+We therefore use the following signature for \popheap
+
+\begin{lstlisting}[style = acsl-block]
+
+    void pop_heap(value_type* a, size_type n);
+\end{lstlisting}
+
+The \popheap algorithm expects that \inl{n} is greater or equal than~1
+and that the array \inl{a[0..n-1]} forms a heap.
+The algorithms then \emph{rearranges} the array \inl{a[0..n-1]} such that the
+resulting array satisfies the following properties.
+
+\begin{itemize}
+\item \inl{a[n-1] = \\old(a[0])}, that is, the largest element
+of the original heap is transferred to the end of the array.
+
+\item the subarray \inl{a[0..n-2]} is a heap
+\end{itemize}
+
+In this sense the algorithm \emph{pops} the largest element from a heap.
+
+\subsection{Formal specification of \popheap}
+
+Based on the above semi-formal description we propose the
+following function contract for \specref{popheap}.
+
+\input{Listings/pop_heap.h.tex}
+
+\subsection{Implementation of \popheap}
+\Label{sec:pop-heap:impl}
+
+In an abstract sense \popheap is quite similar to \pushheap.
+In  \pushheap we started at the last array element and 
+climbed from there up the tree until we would find a node where to
+insert the new value into the heap.
+Every time we had reached the next parent node we
+moved its value down to where we had just come from.
+
+With \popheap its the other way round.
+We start at the root of the tree and descend from there
+by selecting an appropriate child.
+Every time we lift the value of the selected child to the node where
+just are.
+We repeat this process until we find a node where we can insert
+the last array element into the heap.
+Once this is done, we can safely place the maximum element (that is the
+the original root node) at the last element of the array.
+
+\clearpage
+
+The following two figures illustrate how \popheap affects an array,
+which is shown again as a tree with blue and grey nodes, representing
+heap and non-heap nodes, respectively.
+Figure~\ref{fig:popheap-pre} is in fact the same figure as
+Figure~\ref{fig:heap-tree}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.70\linewidth]{Figures/pop_heap_pre.pdf}
+\caption{\Label{fig:popheap-pre}Heap before the call of \popheap}
+\end{figure}
+
+\FloatBarrier
+
+Figure~\ref{fig:popheap-post}, on the other hand, shows the heap after the call of \popheap
+together with arrows that indicate how our implementation moves around elements
+in the underlying array.
+We can see that the first element of the original array,
+where the maximum of the heap resides, is now the last element of the array.
+Furthermore, the last array element is not part of the heap anymore.
+The dashed nodes highlight which heap nodes have changed during the call to \popheap.
+The arrows indicate the \emph{cyclic reordering} of array elements to achieve the
+desired result.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.70\linewidth]{Figures/pop_heap_post.pdf}
+\caption{\Label{fig:popheap-post}Heap after the call of \popheap}
+\end{figure}
+
+\FloatBarrier
+
+
+As in the case of \implref{pushheap} we will subdivide the discussion of the 
+implementation of \implref{popheap} into a prologue, main act, and epilogue.
+
+\input{Listings/pop_heap.c.tex}
+
+
+\subsection{Prologue}
+
+In the prologue we check whether the initial heap contains at least two elements,
+initialize some variables, and also check whether
+the last array element is by chance equal to the maximum element of the heap,
+which resides at the index \inl{p == 0} of the array.
+If this is not the case, then we set aside for future
+reference the last array element in the variable \inl{v}.
+Finally we copy the value \inl{a[p]} to its final destination at the end
+of the array.
+Note that this assignment only occurs if the respective values differ.
+This allows us, as in the case of \implref{pushheap}, to formally describe the
+effect of the assignment using the predicate \logicref{ArrayUpdate}.
+
+Figure~\ref{fig:popheap-prologue} highlights the main effects of the prologue
+at the hand of our exemplary heap.
+Note that we have highlighted the root of the heap as the currently active node.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/pop_heap_prologue.pdf}
+\caption{\Label{fig:popheap-prologue}Heap after the prologue of \popheap}
+\end{figure}
+
+\FloatBarrier
+
+
+\subsection{Main act}
+
+In the main act, we start at a child node \inl{c} of the prologue's index \inl{p}.
+This means that compared to the pre-state of \popheap
+at the beginning of the main act the array \inl{a[0..n-1]}
+\begin{itemize}
+\item contains the value \inl{v} one time less
+\item contains the value \inl{a[p]} one time more
+\item whereas all other values have not change their number of occurences.
+\end{itemize}
+
+Moreover, the maximum element of the original heap is now at the end of the array
+and we can only guarantee that the first $n-1$ array elements got a heap.
+These observations are necessary reason for our loop invariants.
+
+To be more precise, when we talk in the context of \popheap
+of a \emph{child node} we usually mean one of the possibly two children
+where the maximum of the values resides.
+We do this because copying that larger value to its parent node guarantees
+that the resulting tree is still a heap.
+We compute the maximum child of a node using the function \specref{heapchild}.
+
+Now, as long as the index~\inl{c} is not yet the index of the last array element
+of the heap and its value \inl{a[c]} is less than \inl{v},
+we haven't found yet an index where we could insert \inl{v} without
+violating the heap property.
+
+\clearpage
+
+In the loop body we proceed as follows.
+
+\begin{itemize}
+\item
+If \inl{a[c]} is less than \inl{a[p]} we copy the former value on 
+the latter.
+As mentioned above, using the index~\inl{c} of the maximum child
+maintains  heap property of the array.
+We use here the predicate \logicref{HeapCompatible} to express
+that the insertion of the new value \inl{a[p]} maintains the heap
+property of the array.
+
+The value \inl{a[c]} now occurs one time more than in the pre-state whereas
+the now overwritten value \inl{a[p]} occurs as often as in the pre-state of \popheap.
+The value \inl{v} continues to occur one time less than in the pre-state.
+%
+We then proceed to the next iteration by setting \inl{p} to \inl{c}
+and computing the next maximum child node.
+
+As in the case of \implref{pushheap} the verification of 
+the correct number of occurences of the involved values
+relies on the predicates \logicref{ArrayUpdate} and \logicref{MultisetUpdate}
+and on lemma \logicref{MultisetParityCombined}.
+
+\item
+Otherwise, the array being a heap, we can conclude that
+\inl{a[c]} equals \inl{a[p]} and we continue with the next iteration
+after setting \inl{p} to \inl{c} and computing the corresponding
+new maximum child node.
+\end{itemize}
+
+The following three figures depict how the main act of \popheap 
+modifies step by step our example heap.
+In each step we highlight the currently active node \inl{c}.
+
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/pop_heap_main_act1.pdf}
+\caption{\Label{fig:popheap-main_act1}Heap after the first iteration of of \popheap}
+\end{figure}
+
+\FloatBarrier
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/pop_heap_main_act2.pdf}
+\caption{\Label{fig:popheap-main_act2}Heap after the second iteration of \popheap}
+\end{figure}
+
+\FloatBarrier
+\clearpage
+
+Note that in the final step no value is actually copied as the involved nodes
+hold the same value.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/pop_heap_main_act3.pdf}
+\caption{\Label{fig:popheap-main_act3}Heap after the third iteration of \popheap}
+\end{figure}
+
+\FloatBarrier
+
+We finally remark that in the main act the the last array element is never modified.
+Thus, the root element of the original element is still safely stored there.
+
+\subsection{Epilogue}
+
+After leaving the loop, we know that value \inl{v} can be the inserted
+in the array at the index \inl{p} without violating the heap property of
+the first $n-1$ elements.
+%
+Moreover, compared to the pre-state of \popheap the array \inl{a[0..n-1]} still
+\begin{itemize}
+\item contains the value \inl{v} one time less
+\item contains the value \inl{a[p]} one time more
+\item whereas all other values have not change their number of occurences.
+\end{itemize}
+
+In other words, assigning the value \inl{v} to \inl{a[p]}
+cancels this imbalance and establishes that \popheap
+only reorders the array elements.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/pop_heap_epilogue.pdf}
+\caption{\Label{fig:popheap-epilogue}Heap after the epilogue of \popheap}
+\end{figure}
+
+\FloatBarrier
+
+In Figure~\ref{fig:popheap-epilogue} we have marked the value \inl{v}
+as the currently active node despite not being an array element.
+
+\clearpage
+

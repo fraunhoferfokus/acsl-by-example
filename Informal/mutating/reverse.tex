@@ -1,0 +1,30 @@
+
+\section{The \reverse algorithm}
+\Label{sec:reverse}
+
+The \reverse algorithm of the \cxx Standard Library
+\cite[\S 28.6.10]{cxx-17-draft} inverts the order of elements \emph{within} a sequence.
+The signature of our version of \reverse reads.
+
+\begin{lstlisting}[style=acsl-block]
+
+  void reverse(value_type* a, size_type n);
+\end{lstlisting}
+
+
+\subsection{Formal specification of \reverse}
+
+The specification for the \specref{reverse} function is shown in the following listing.
+
+\input{Listings/reverse.h.tex}
+
+\subsection{Implementation of \reverse}
+
+Since the implementation of \implref{reverse} operates \emph{in place}
+we use \specref{swap} in order to exchange the elements of the first half
+of the array with the corresponding elements of the second half.
+We reuse the predicates \logicref{Reverse} and \logicref{Unchanged}
+in order to write concise loop invariants.
+
+\input{Listings/reverse.c.tex}
+

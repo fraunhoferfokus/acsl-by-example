@@ -24,6 +24,15 @@ alt-ergo : typed_external_find_some_ensures
 alt-ergo : typed_external_find_some_ensures_2
 alt-ergo : typed_external_find_some_ensures_3
 coq : typed_external_find_loop_invariant_preserved
+cvc4 : typed_external_find_assert_rte_mem_access
+cvc4 : typed_external_find_assert_rte_unsigned_overflow
+cvc4 : typed_external_find_loop_invariant_2_preserved
+cvc4 : typed_external_find_loop_invariant_established
+cvc4 : typed_external_find_loop_invariant_preserved
+cvc4 : typed_external_find_none_ensures
+cvc4 : typed_external_find_some_ensures
+cvc4 : typed_external_find_some_ensures_2
+cvc4 : typed_external_find_some_ensures_3
 z3 : typed_external_find_assert_rte_mem_access
 z3 : typed_external_find_assert_rte_unsigned_overflow
 z3 : typed_external_find_loop_invariant_2_preserved
@@ -33,8 +42,3 @@ z3 : typed_external_find_none_ensures
 z3 : typed_external_find_some_ensures
 z3 : typed_external_find_some_ensures_2
 z3 : typed_external_find_some_ensures_3
-cvc4 : typed_external_find_loop_invariant_established
-cvc4 : typed_external_find_loop_invariant_preserved
-cvc4 : typed_external_find_none_ensures
-cvc4 : typed_external_find_some_ensures
-cvc4 : typed_external_find_some_ensures_3

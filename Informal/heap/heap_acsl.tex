@@ -1,0 +1,44 @@
+
+\section{Representation of heap concepts in \acsl}
+\Label{sec:heap-acsl}
+
+The following listing shows three logic functions
+\HeapLeft, \HeapRight and \HeapParent
+that correspond to the definitions~\eqref{eq:heap-left},
+\eqref{eq:heap-right} and~\eqref{eq:heap-parent}, respectively.
+This listing also contains a number of \acsl lemma that state among other things that
+
+\begin{itemize}
+\item
+the \HeapParent function satisfies the equations~\eqref{eq:heap-parent-left}
+and~\eqref{eq:heap-parent-right} and
+\item
+the function \HeapParent 
+is the \emph{left inverse} to the \HeapLeft and \HeapRight functions.\footnote{
+ See Section \emph{Left and right inverses} at
+ \url{http://en.wikipedia.org/wiki/Inverse_function}
+}
+\end{itemize}
+
+\input{Listings/HeapNodes.acsl.tex}
+
+\clearpage
+
+On top of these basic definitions we introduce the predicate \logicref{Heap}.
+The fact that element at index~0 of a (maximum) heap, is always the largest element of the heap
+is express by Lemma \logicref{HeapMaximum} using the predicate \logicref{MaxElement}.
+
+\input{Listings/Heap.acsl.tex}
+
+The lemmas \HeapShrink and \HeapUnchanged formulate simple rules to
+``transfer'' the heap property from an array to a related (sub-)array.
+
+The predicate \HeapCompatible expresses under which
+conditions the changing of an individual heap element does maintain the heap
+property.
+This predicate together with lemma \HeapCompatibleUpdate 
+will be useful in the verification of the 
+algorithms \implref{pushheap} and \implref{popheap}.
+
+\clearpage
+

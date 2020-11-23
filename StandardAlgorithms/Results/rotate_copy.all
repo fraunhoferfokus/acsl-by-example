@@ -15,6 +15,18 @@ alt-ergo : typed_external_rotate_copy_call_copy_requires_valid_2
 alt-ergo : typed_external_rotate_copy_ensures_left
 alt-ergo : typed_external_rotate_copy_ensures_right
 alt-ergo : typed_external_rotate_copy_ensures_unchanged
+cvc4 : typed_external_rotate_copy_assert_rte_unsigned_overflow_2
+cvc4 : typed_external_rotate_copy_assigns_exit_part1
+cvc4 : typed_external_rotate_copy_assigns_normal_part1
+cvc4 : typed_external_rotate_copy_call_copy_2_requires_sep
+cvc4 : typed_external_rotate_copy_call_copy_2_requires_valid
+cvc4 : typed_external_rotate_copy_call_copy_2_requires_valid_2
+cvc4 : typed_external_rotate_copy_call_copy_requires_sep
+cvc4 : typed_external_rotate_copy_call_copy_requires_valid
+cvc4 : typed_external_rotate_copy_call_copy_requires_valid_2
+cvc4 : typed_external_rotate_copy_ensures_left
+cvc4 : typed_external_rotate_copy_ensures_right
+cvc4 : typed_external_rotate_copy_ensures_unchanged
 z3 : typed_external_rotate_copy_assert_rte_unsigned_overflow_2
 z3 : typed_external_rotate_copy_assigns_exit_part1
 z3 : typed_external_rotate_copy_assigns_normal_part1
@@ -25,6 +37,3 @@ z3 : typed_external_rotate_copy_call_copy_requires_sep
 z3 : typed_external_rotate_copy_call_copy_requires_valid
 z3 : typed_external_rotate_copy_call_copy_requires_valid_2
 z3 : typed_external_rotate_copy_ensures_unchanged
-cvc4 : typed_external_rotate_copy_assert_rte_unsigned_overflow_2
-cvc4 : typed_external_rotate_copy_call_copy_2_requires_valid_2
-cvc4 : typed_external_rotate_copy_call_copy_requires_valid

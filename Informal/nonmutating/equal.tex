@@ -1,0 +1,113 @@
+
+\section{The \equal and \mismatch algorithms}
+\Label{sec:equal}
+\Label{sec:mismatch}
+
+The algorithms \equal \cite[\S 28.5.11]{cxx-17-draft}
+and \mismatch \cite[\S 28.5.10]{cxx-17-draft}
+of the \cxx Standard Library compare two generic sequences.
+For our purposes we have modified the generic implementation
+to that of an array of type \valuetype.
+The signatures read
+
+\begin{lstlisting}[style = acsl-block]
+
+  bool       equal(const value_type* a, size_type n, const value_type* b);
+
+  size_type  mismatch(const value_type* a, size_type n, const value_type* b);
+\end{lstlisting}
+
+The function \equal returns~\inl{true} if and only if
+\inl{a[i] == b[i]} holds for each \inl{0 <= i < n}.
+Otherwise,~\equal returns~\inl{false}.
+
+The \mismatch algorithm is slightly more general than the negation of \equal: 
+it returns the smallest index where the two ranges~\inl{a} and~\inl{b} differ.
+If no such index exists, that is, if both ranges are equal, then \mismatch
+returns the (common) length~\inl{n} of the two ranges.
+
+\subsection{The \Equal predicate}
+
+The fact that two arrays \inl{a[0]..a[n-1]}
+and \inl{b[0]..b[n-1]} are equal when compared element by element,
+is a property we might need again in other specifications, as it
+describes a very basic property.
+
+The motto \emph{don't repeat yourself} is not just good programming
+practice.\footnote{
+    Compare \url{http://en.wikipedia.org/wiki/Don't_repeat_yourself}
+}
+It is also true for concise and easy to understand specifications.
+We will therefore introduce specification elements that we can apply to
+the \equal algorithm as well as to other specifications and
+implementations with the described property.
+
+We start with introducing several \emph{overloaded} versions
+of the predicate~\logicref{Equal}.
+
+\input{Listings/Equal.acsl.tex}
+
+The letters \inl{K} and \inl{L} in the definition of \Equal
+are so-called  \emph{labels}\footnote{
+    Labels are used in \isoc to name the target of the \emph{goto}
+    jump statement.
+}
+that refer to program states in which the ranges~\inl{a[..]} and~\inl{b[..]} are evaluated.
+\framac defines several standard labels, e.g.\xspace \inl{Old}
+and \inl{Post},
+a programmer can use to refer to the pre-state or post-state,
+respectively, of a function.
+For more details on labels we refer to the \acsl
+specification \cite[\S 2.6.9]{ACSLSpec}.
+
+
+\subsection{Formal specification of \equal and \mismatch}
+
+Using predicate \logicref{Equal} we can formulate the specification of \specref{equal}
+using the predefined label~\inl{Here}. 
+When used in an \inl{ensures} clause, the label~\inl{Here} refers to the post-state of a function.
+Note that the equivalence is needed in the ensures clause.
+Putting an equality instead is not legal in ACSL,
+because \Equal is a predicate, not a function.
+
+\input{Listings/equal.h.tex}
+
+
+The formal specification of \specref{mismatch}
+is more complex than that of \specref{equal} because the return value of mismatch
+provides more information than just reporting whether the two arrays are equal.
+
+\input{Listings/mismatch.h.tex}
+
+On the other hand, the specification is conceptually quite similar to that of \specref{findii}.
+%
+While \findii returns the smallest index~\inl{i} where \inl{a[i] == v} holds,
+\mismatch finds the smallest index \inl{a[i] != b[i]}.
+Note in particular the use of \Equal in the specification of \mismatch.
+As in the specification of \findii
+the completeness and disjointness of \mismatch's behaviors is quite obvious,
+because the \inl{assumes} clauses of
+\inl{all_equal} and \inl{some_not_equal} are negations of each other.
+
+%\clearpage
+
+\subsection{Implementation of \equal and \mismatch}
+
+The implementation of \implref{equal} consists of a simple call of \mismatch.
+
+\input{Listings/equal.c.tex}
+
+The implementation of \implref{mismatch}
+has been enriched with some loop annotations to support the deductive verification.
+
+\input{Listings/mismatch.c.tex}
+
+We use again the predicate \logicref{Equal}
+in order to express that all indices~\inl{k} that are less than the
+current index~\inl{i}
+satisfy the condition \inl{a[k] == b[k]}.
+This is necessary to prove that \mismatch indeed returns the smallest index
+where the two ranges differ.
+
+\clearpage
+

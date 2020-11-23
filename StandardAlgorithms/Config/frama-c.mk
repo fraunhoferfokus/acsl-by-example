@@ -6,7 +6,7 @@ export PROCESSES ?= 1
 
 #setup wp
 export WP_TIMEOUT        ?= $(TIMEOUT)
-export WP_COQ_TIMEOUT    ?= 5
+export WP_COQ_TIMEOUT    ?= 10
 export WP_PROCESSES      ?= $(PROCESSES)
 export WP_SMOKE_TESTS    ?= 0
 
@@ -60,7 +60,7 @@ AV_WHY3_CONF := $(shell realpath $(TOP_DIR))/astraver.why3.conf
 # WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 # provers
-PROVERS = alt-ergo native:coq z3 cvc4 
+PROVERS = alt-ergo 
 WP_PROVER_FLAGS += $(addprefix -wp-prover , $(PROVERS))
 
 export FR    := frama-c

@@ -1,0 +1,111 @@
+
+\section{The \searchn algorithm}
+\Label{sec:searchn}
+
+The \searchn algorithm in the \cxx Standard Library \cite[\S
+28.5.13]{cxx-17-draft} finds
+the first place where a given value starts to occur a given number of
+times in a given sequence.
+For our purposes we have modified
+the generic implementation
+to that of an array of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+   size_type
+   search_n(const value_type* a, size_type n, size_type p, value_type v);
+\end{lstlisting}
+
+Note the similarity to the signature of \search (\S\ref{sec:search}).
+The only difference is that \inl{v} now is a single value rather than
+an array.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.59\textwidth]{Figures/search_n.pdf}
+\caption{\Label{fig:searchn} Searching the first occurrence a given constant sequence in \inl{a[0..n-1]}}
+\end{figure}
+
+\FloatBarrier
+
+The function \searchn returns the first
+index \inl{s} of the array \inl{a} where the condition \inl{a[s+k] == v}
+holds for each index~\inl{k} with \inl{0 <= k < p} (see Figure~\ref{fig:searchn}).
+If no such index exists, then \searchn returns the length
+\inl{n} of the array \inl{a}.
+
+
+\subsection{The predicate \HasConstantSubRange}
+
+Our specification of \searchn starts with introducing the
+predicate 
+\logicref{HasConstantSubRange}.
+
+\input{Listings/HasConstantSubRange.acsl.tex}
+
+This predicate formalizes that the sequence~\inl{a} of length \inl{n}
+contains a subsequence of \inl{p} times the value~\inl{v}.
+It thereby reuses the predicate
+\logicref{AllEqual}.
+
+Similar to predicate 
+\logicref{HasSubRange},
+in order to contain \inl{p} repetitions, the size of the
+array \inl{a[0..n-1]} must be at least that large;
+this is what lemma 
+\logicref{HasConstantSubRangeSizes} says.
+
+\subsection{Formal specification of \searchn}
+
+Like for \specref{search}, our specification of \specref{searchn}
+is very similar to that of \specref{findii}.
+
+\input{Listings/search_n.h.tex}
+
+We again use two behaviors to capture the essential aspects of \searchn.
+
+\begin{itemize}
+\item
+The behavior \inl{has_match} applies if the sequence \inl{a} 
+contains an \inl{n}-fold repetition of \inl{b}. 
+We express this condition with  \inl{assumes} by using the predicate
+\logicref{HasConstantSubRange}.
+The \inl{result} ensures clause of behavior \inl{has_match} indicates
+that the return value must be in the range~\inl{[0..n-p]}.
+The \inl{match} ensures clause
+expresses that the return value of \searchn actually points to an index 
+where \inl{b}
+can be found \inl{p} or more times in \inl{a}. 
+The \inl{first} ensures clause expresses that the minimal index with
+this property is returned.
+
+\item
+The behavior \inl{no_match} covers the case that there is no matching
+subsequence in sequence \inl{a}.
+In this case, \searchn must return the length \inl{n} of the
+range \inl{a}.
+\end{itemize}
+
+\input{Listings/search_n.c.tex}
+
+\subsection{Implementation of \searchn}
+
+Although the specification of \specref{searchn} strongly resembles that of
+\specref{search}, their implementations differ significantly.
+The implementation of \implref{searchn} has a time complexity of
+$\mathcal{O}(n)$, whereas the implementation of
+\implref{search} employs an easy, but
+a non-optimal algorithm needing $\mathcal{O}(n \cdot p)$ time.
+
+Our implementation maintains in the variable \inl{start} the beginning
+of the most recent consecutive range of values~\inl{v}.
+The loop invariant \inl{not_found} states that we didn't find an
+\inl{p}-fold repetition of \inl{b} up to now; if we find one, we
+terminate the loop, returning \inl{start}.
+%
+We handle the boundary cases \inl{n < p} and \inl{p == 0} in explicit else branches.
+We found this easier when trying to ensure a verification by automatic provers.
+
+\clearpage
+

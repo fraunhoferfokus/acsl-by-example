@@ -1,0 +1,114 @@
+
+\chapter{The \stacktype data type}
+\Label{cha:stack}
+
+So far we have used the \acsl specification language for the task of specifying and verifying
+one single \isoc function at a time.
+%
+However, in practice we are also faced with the task to implement a
+family of functions, usually around some sophisticated data structure,
+which have to obey certain rules of interdependence.
+%
+In this kind of task, we are not only interested in the properties of a
+single function but also in properties describing how several function play
+together.
+
+The \cxx Standard Library provides  a generic container adaptor
+\inl{stack} \cite[\S 26.6.6]{cxx-17-draft} whose signature and
+behavior we try to follow as far as our \isoc implementation it allows.
+For a more detailed discussion of our approach to the formal verification
+of \stacktype we refer to Kim Völlinger's thesis \cite{Voellinger_2013_da}.
+%
+
+A \emph{stack} is a data type that can hold objects and has the
+property that, if an object $a$ is \emph{pushed} on a stack
+\emph{before} object~$b$, then~$a$ can only be removed (\emph{popped})
+after~$b$.
+%
+A stack is, in other words, a \emph{first-in, last-out}
+data type (see~Figure~\ref{fig:stack}).
+%
+The \emph{top} function of a stack returns the last element
+that has been pushed on a stack.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.55\linewidth]{Figures/stack.pdf}
+\caption{\Label{fig:stack} Push and pop on a stack}
+\end{figure}
+
+We consider only stacks that have a finite \emph{capacity}, that is,
+that can only hold a maximum number~$c$ 
+of elements that is constant throughout their lifetime.
+%
+This restriction allows us to define a stack without relying
+on dynamic memory
+allocation.
+%
+When a stack is \emph{created} or \emph{initialized}, it contains
+no elements, i.e.,
+its \emph{size} is~0.
+%
+The function \emph{push} and \emph{pop} increases and decreases
+the size of a stack by at most one, respectively.
+
+\clearpage
+
+\section{Methodology overview}
+\Label{sec:Methodology Overview}
+
+Figure~\ref{fig:Methodology Overview}
+gives an overview of our methodology to specify and verify abstract
+data types (verification of one axiom shown only).
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.99\linewidth]{Figures/push_pop_axiom.pdf}
+\caption{Methodology Overview}
+\Label{fig:Methodology Overview}
+\end{figure}
+
+What we will basically do is:
+\begin{enumerate}
+\item  specify axioms about how the stack functions should
+  interact with each other
+  (\S\ref{sec:stack-axioms}),
+\item  define a basic implementation of \isoc data structures
+  (only one in our example, viz.\\
+  \inl{struct Stack};
+  see \S\ref{sec:stack-definition})
+  and some invariants the instances of them have to obey
+  (\S\ref{sec:stack-invariants}),
+\item  provide for each stack function an \acsl contract and a 
+  \isoc implementation 
+  (\S\ref{sec:stack-functions}),
+\item  verify each function against its contract
+  (\S\ref{sec:stack-functions}),
+\item  transform the axioms into \acsl-annotated \isoc code
+  (\S\ref{sec:stack-verification}), and
+\item  verify that code, using access function contracts and
+  data-type invariants as necessary
+  (\S\ref{sec:stack-verification}).
+\end{enumerate}
+
+\S\ref{sec:stack-equality}
+provides an \acsl-predicate deciding whether two instances of a
+\inl{struct Stack} are considered to be equal (indication by ``$\approx$''
+in Figure~\ref{fig:Methodology Overview}), while
+\S\ref{sec:stackequal} gives a
+corresponding \isoc implementation.
+The issue of an appropriate definition of equality of data instances
+is familiar to any \isoc programmer who had to replace a faulty
+comparison \inl{if(s1 == s2)} by the correct 
+\inl{if(strcmp(s1,s2) == 0)} to compare two strings 
+\inl{char *s1,*s2} for equality.
+
+\clearpage
+
+\input{stack/stack-axioms}\clearpage
+\input{stack/stack-definition}\clearpage
+\input{stack/stack-invariants}\clearpage
+\input{stack/stack-equality}\clearpage
+\input{stack/stack-functions}\clearpage
+\input{stack/stack-verification}
+

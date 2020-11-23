@@ -1,0 +1,101 @@
+
+\section{Inverting \partialsum and \adjacentdifference}
+\Label{sec:partialsuminv}
+\Label{sec:adjacentdifferenceinv}
+
+
+In this section we show that under appropriate preconditions
+the algorithms \partialsum and\\
+\adjacentdifference are inverse to each other.
+
+\subsection{Inverting \partialsum}
+
+Let \inl{a[0..n-1]} and \inl{b[0..n-1]} be the respective input and output 
+of \partialsum.
+We have in other words
+\begin{align*}
+   \mathtt{b}[0] &= \mathtt{a}[0] \\
+   \mathtt{b}[1] &= \mathtt{a}[0] + \mathtt{a}[1] \\
+                 &\vdotswithin{=} \\
+   \mathtt{b}[n-1]  &= \mathtt{a}[0] + \mathtt{a}[1] + \ldots + \mathtt{a}[n-1] \\
+\end{align*}
+
+If we apply now the algorithm \adjacentdifference to \inl{b[0..n-1]}, then
+we find for its output \inl{a'[0..n-1]}
+\begin{alignat*}{3}
+   \mathtt{a'}[0] &= \mathtt{b}[0]                        &\quad &=\quad \mathtt{a}[0] \\
+   \mathtt{a'}[1] &= \mathtt{b}[1] - \mathtt{b}[0]        &\quad &=\quad \mathtt{a}[1] \\
+                 &\vdotswithin{=}  \\
+   \mathtt{a'}[n-1] &= \mathtt{b}[n-1] - \mathtt{b}[n-2]  &\quad &=\quad \mathtt{a}[n-1]
+\end{alignat*}
+
+
+Before we start show the \acsl lemmas of our claim, we present
+the predicate \logicref{DefaultBounds} in order to express that the values
+in the input (and output!) array~\inl{a[0..n-1]} do not overflow.
+
+\input{Listings/DefaultBounds.acsl.tex}
+
+Lemma \PartialSumInverse from the following listing
+expresses as \acsl lemmas
+that the algorithms \partialsum and \adjacentdifference are inverse to each other.
+
+\input{Listings/NumericInverse.acsl.tex}
+
+%\clearpage
+
+The following listing now shows \isoc function \partialsuminv
+(both the contract and the implementation).
+This function calls first \partialsum and then \adjacentdifference.
+
+\input{Listings/partial_sum_inv.c.tex}
+
+The contract of \partialsuminv formulates preconditions that shall guarantee
+that during the computation neither arithmetic overflows (property~\inl{bounds})
+nor unintended aliasing of arrays (property~\inl{sep}) occur.
+Under these precondition, \framac shall verify
+that the final call to \specref{adjacentdifference} just restores the original contents
+of~\inl{a[0..n-1]} that we supplied for the initial call to \specref{partialsum}.
+
+\clearpage
+
+\subsection{Inverting \adjacentdifference}
+
+After executing the function \specref{adjacentdifference} on
+the input array \inl{a[0..n-1]} the output array \inl{b[0..n-1]}
+holds the following values
+\begin{align*}
+   \mathtt{b}[0] &= \mathtt{a}[0] \\
+   \mathtt{b}[1] &= \mathtt{a}[1] - \mathtt{a}[0] \\
+                 &\vdotswithin{=} \\
+   \mathtt{b}[n-1] &= \mathtt{a}[n-1] - \mathtt{a}[n-2] \\
+\end{align*}
+
+If we call now \partialsum with the array \inl{b[0..n-1]}
+as input, then we obtain for its output \inl{a'[0..n-1]}
+\begin{alignat*}{3}
+   \mathtt{a'}[0] &= \mathtt{b}[0]
+                  &\quad &=\quad \mathtt{a}[0] \\
+   \mathtt{a'}[1] &= \mathtt{b}[0] + \mathtt{b}[1]
+                  &\quad &=\quad \mathtt{a}[1] \\
+                  &\vdotswithin{=} \\
+   \mathtt{a'}[n-1]  &=\ \mathtt{b}[0] + \mathtt{b}[1] + \ldots + \mathtt{b}[n-1]
+                     &\quad &=\quad \mathtt{a}[n-1] 
+\end{alignat*}
+%
+which means that applying \specref{partialsum} on the output of
+\adjacentdifference produces the original input.
+Lemma \logicref{AdjacentDifferenceInverse} expresses this property as a lemma.
+
+The function \implref{adjacentdifferenceinv} first calls \adjacentdifference and then\\
+\partialsum.
+The contract of this function formulates preconditions that shall guarantee
+that during the computation neither arithmetic overflows (property~\inl{bound})
+nor unintended aliasing of arrays (property~\inl{sep}) occur.
+In order to improve the automatic verification of 
+\adjacentdifferenceinv we also use lemma \logicref{UnchangedTransitive}.
+Lemma \logicref{AdjacentDifferenceInverseBounds} simplifies
+the verification of the precondition \inl{bounds} of \partialsum.
+
+\input{Listings/adjacent_difference_inv.c.tex}
+

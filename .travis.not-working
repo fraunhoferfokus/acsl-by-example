@@ -36,12 +36,11 @@ install:
   - opam update
   - opam install --yes depext
   - opam depext  --yes --install frama-c alt-ergo why3
-  - eval $(opam config env); why3 config --full-config
+  - rm -f .why3.conf
+  - eval $(opam config env); why3 config --detect
+  - cat .why3.conf 1>&2 
 
 script:
    - make -C StandardAlgorithms clean
    - make -C StandardAlgorithms test
    - make -C StandardAlgorithms report-clean
-   - sed -i -e '/WP_TIMEOUT/d' $(find StandardAlgorithms -type f -name Makefile)
-   - eval $(opam config env); make -C StandardAlgorithms report
-   - git diff StandardAlgorithms/Results

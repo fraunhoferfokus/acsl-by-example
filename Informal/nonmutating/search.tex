@@ -1,0 +1,114 @@
+
+\section{The \search algorithm}
+\Label{sec:search}
+
+The \search algorithm in the \cxx Standard Library \cite[\S
+28.5.13]{cxx-17-draft} finds a
+subsequence that is identical to a given sequence when 
+compared element-by-element.
+For our purposes we have modified
+the generic implementation
+to that of an array of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+    size_type search(const value_type* a, size_type n,
+                     const value_type* b, size_type p);
+\end{lstlisting}
+
+The function \search returns the first
+index \inl{s} of the array \inl{a} where the condition \inl{a[s+k] == b[k]} holds for each
+index~\inl{k} with \inl{0 <= k < p}
+(see Figure~\ref{fig:search}).
+If no such index exists, then \search returns the length
+\inl{n} of the array \inl{a}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.69\textwidth]{Figures/search.pdf}
+\caption{\Label{fig:search} Searching the first occurrence of \inl{b[0..p-1]} in \inl{a[0..n-1]}}
+\end{figure}
+
+
+\subsection{The predicate \HasSubRange}
+
+Our specification of \search starts with introducing the
+predicate~\logicref{HasSubRange}.
+This predicate formalizes, using the predicate \logicref{Equal},
+that the sequence~\inl{a} contains a subsequence which equal the sequence~\inl{b}.
+Of course, in order to contain a subsequence of length \inl{p},
+\inl{a} must be at least that large; this is expressed by lemma 
+\HasSubRangeSizes.
+
+\input{Listings/HasSubRange.acsl.tex}
+
+\subsection{Formal specification of \search}
+
+The following listing shows the specification of \specref{search}.
+
+\input{Listings/search.h.tex}
+
+Conceptually, the specification of \search is very similar to that of
+\specref{find}.
+We therefore use again two behaviors to capture the essential aspects of \search.
+
+\begin{itemize}
+\item
+The behavior \inl{has_match} applies if the sequence \inl{a} 
+contains a subsequence identical to \inl{b}. 
+We express this condition with \inl{assumes} using the predicate 
+\logicref{HasSubRange}.
+
+The ensures clause \inl{bound} of behavior \inl{has_match} 
+indicates that the returned index value must be in the range~\inl{[0..n-p]}.
+The clause \inl{result} expresses that
+\search returns an index where a copy of \inl{b} can be found in \inl{a}.
+Clause \inl{first}
+indicates that the least index with that property is returned,
+i.e.\ that \inl{b} can't be found in \inl{a[0..\\result+p-2]}.
+
+\item
+The behavior \inl{no_match} covers the case that there is no
+subsequence \inl{a} that equals
+\inl{b}. In this case, \search must return the length \inl{n} of the
+range \inl{a}.
+%
+If the ranges \inl{a} or \inl{b} are empty
+then the return value will be \inl{0}. 
+\end{itemize}
+
+The formula in the assumes clause of the behavior
+\inl{has_match} is the negation of the assumes clause of the 
+behavior \inl{no_match}.
+Therefore, we can express that these two behaviors are
+\emph{complete} and \emph{disjoint}.
+
+\clearpage
+
+\subsection{Implementation of \search}
+\Label{subsec:search implementation}
+
+The implementation of \implref{search} is relatively easy to understand, but
+needs an order of magnitude of \inl{n*p} operations.
+In contrast, the sophisticated algorithm from
+\cite{Knuth.Morris.Pratt.1977}
+needs only~\inl{n+p} operations.\footnote{
+  \Label{fn:search implementation efficiency}
+  The efficiency question has been also discussed by the \cxx standardization committee, 
+  see \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2014/n3905.html}
+}
+
+The loop invariant \inl{not_found} is needed for the proof of the
+postconditions of the behavior \inl{has_match} in the contract of \specref{search}.
+It expresses that the subsequence \inl{b} has not been found up to the current iteration step.
+%
+Neither \inl{p == 0} nor \inl{n == 0} need to be handled separately, not
+even for efficiency reasons:
+in the former case, \inl{equal(a+i, p, b)} will succeed in the first iteration,
+while in the latter, \inl{p > n} will apply.
+
+\input{Listings/search.c.tex}
+
+\clearpage
+

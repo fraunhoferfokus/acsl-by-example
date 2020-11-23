@@ -1,0 +1,48 @@
+
+\section{The \maxseq algorithm}
+\Label{sec:maxseq}
+
+In this section we consider the function \maxseq \cite[Ch.~3]{ACSLTutorial})
+which is very similar to the function \specref{maxelement}.
+The main difference between \maxseq and \maxelement is that
+\maxseq returns the maximum value (not just the index of it).
+Therefore, it requires a \emph{non-empty} range as an argument.
+
+Of course, \maxseq can easily be implemented using \implref{maxelementii}.
+Moreover, relying only on the formal specification of \specref{maxelementii},
+we are also able to deductively verify the correctness of this implementation.
+Thus, we have a simple example of \emph{modular verification} in the following sense:
+\begin{quote}
+Any implementation of \maxelementii that is separately
+ proven to implement the contract \specref{maxelementii}
+ makes \maxseq behave correctly.
+ Once the contracts have been defined, the function \maxelementii
+ could be implemented in parallel, or just after \maxseq,
+ without affecting the verification of \maxseq.
+\end{quote}
+
+
+\subsection{Formal specification of \maxseq}
+
+The following listing shows the formal specification of \specref{maxseq}.
+
+\input{Listings/max_seq.h.tex}
+
+Using the first \inl{requires}-clause we express that \maxseq needs a \emph{non-empty} range as input.
+Our postconditions
+formalize that \maxseq indeed returns the maximum value of the range.
+
+%\clearpage
+
+\subsection{Implementation of \maxseq}
+
+The implementation of \implref{maxseq} consists of a simple call to \implref{maxelementii}.
+Since \maxseq requires a non-empty range the call of \maxelementii
+returns an index to a maximum value in the range.
+The fact that \maxelementii returns the smallest index is of no importance
+in this context.
+
+\input{Listings/max_seq.c.tex}
+
+\clearpage
+

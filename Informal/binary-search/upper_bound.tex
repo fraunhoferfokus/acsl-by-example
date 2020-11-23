@@ -1,0 +1,85 @@
+
+\section{The \upperbound algorithm}
+\Label{sec:upperbound}
+
+The \upperbound algorithm of the \cxx Standard Library \cite[\S 28.7.3.2]{cxx-17-draft} is a
+variant of binary search and closely related to \specref{lowerbound}.
+The signature reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+  size_type 
+  upper_bound(const value_type* a, size_type n, value_type v)
+\end{lstlisting}
+
+As with the other binary search algorithms, \upperbound requires that
+its input array is in increasing order.
+The index~\inl{ub} returned by \upperbound satisfies the inequality
+
+\begin{align}
+\Label{eq:upper-bound-result}
+0 \leq \mathtt{ub} \leq n  
+\end{align}
+
+and is involved in the following implications for a valid index~\inl{k} of the array
+under consideration
+
+\begin{alignat}{3}
+\Label{eq:upper-bound-left}
+0 &\leq k < \mathtt{ub} &&\qquad\Longrightarrow\qquad && a[k] \leq \mathtt{v} \\
+\Label{eq:upper-bound-right}
+\mathtt{ub} &\leq k < n &&\qquad\Longrightarrow\qquad &&\mathtt{v} < a[k]
+\end{alignat}
+
+Conditions~\eqref{eq:upper-bound-left} and~\eqref{eq:upper-bound-right} imply that~\inl{v}
+can only occur in the array section \inl{a[0..ub-1]}.
+In this sense \upperbound returns a \emph{upper bound} for the
+potential indices where \inl{v} can occur.
+It also means that the searched-for value \inl{v} can
+\emph{never} be located at the index~\inl{ub}.
+
+Figure~\ref{fig:upperbound} is a variant of Figure~\ref{fig:lowerbound} for the case
+of \upperbound and the same example array.
+The arrows indicate which indices will be returned by \upperbound for a given value.
+Note how, compared to Figure~\ref{fig:lowerbound}, only the arrows from values
+that \emph{are present} in the array change their target index.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/upper_bound.pdf}
+\caption{\Label{fig:upperbound}Some examples for \upperbound}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Formal specification of \upperbound}
+
+The following listing shows the specification of \specref{upperbound} which
+is quite similar to the specification of \specref{lowerbound}.
+The precondition \inl{increasing} expresses
+that the array values need to be in increasing order.
+
+The postconditions reflect the conditions listed above and can be expressed
+using predicates \logicref{UpperBound} and \logicref{StrictLowerBound}, namely,
+
+
+\begin{itemize}
+\item Condition~\eqref{eq:upper-bound-result} becomes postcondition \inl{result}
+\item Condition~\eqref{eq:upper-bound-left} becomes postcondition \inl{left}
+\item Condition~\eqref{eq:upper-bound-right} becomes postcondition \inl{right}
+\end{itemize}
+
+\input{Listings/upper_bound.h.tex}
+
+\subsection{Implementation of \upperbound}
+
+Our implementation of \implref{upperbound} is shown in the following listing.
+The loop invariants express that for each iteration step all indices less than 
+the temporary left bound \inl{left} contain values not greater than \inl{v}
+and all indices not less than the temporary right bound \inl{right} contain
+values greater than \inl{v}.
+
+\input{Listings/upper_bound.c.tex}
+
+\clearpage
+

@@ -1,0 +1,74 @@
+\section{The \sortheap algorithm}
+\Label{sec:sortheap}
+
+Whereas in the \cxx Standard Library \cite[\S 28.7.7.4]{cxx-17-draft}
+\sortheap works on a range of random access iterators,
+our version operates on an array of \valuetype.
+We therefore use the following signature for \sortheap
+
+\begin{lstlisting}[style = acsl-block]
+
+    void sort_heap(value_type* a, size_type n);
+\end{lstlisting}
+
+The function \sortheap rearranges the elements of a given heap \inl{a[0..n-1]}
+in increasing order.
+Thus, applying \sortheap to the heap in Figure~\ref{fig:heap-array}
+produces the increasing array in Figure~\ref{fig:sortheap-array-post}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/sort_heap_array_post.pdf}
+\caption{\Label{fig:sortheap-array-post}Array after the call of \sortheap}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Formal specification of \sortheap}
+
+The following listing shows our specification of \sortheap.
+The formal specification of \sortheap must ensure that the
+resulting array is increasing.
+Furthermore the multiset contained by the array must be the same
+as in the pre-state of the function.
+The postconditions \inl{increasing} and \inl{reorder} express these properties, respectively.
+The specification effort is relatively simple because we can reuse
+
+\input{Listings/sort_heap.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \sortheap}
+
+The implementation of \sortheap is relatively simple because it relies on
+\specref{popheap} performing essential work.
+Our implementation of \sortheap repeatedly calls \popheap
+to extract the maximum of the shrinking heap and adding it
+to the part of the array that is already in increasing order.
+The loop invariants of \sortheap describe the content of the array
+in two parts.
+The first \inl{i} elements form a heap and are described by the \inl{heap}
+invariant.
+The last \inl{n-i} elements are already arranged in increasing order.
+
+As already mentioned in the introduction of Chapter~\ref{cha:binary-search},
+we use the predicate \logicref{WeaklyIncreasing} for the loop annotation \inl{increasing}.
+Thus, after leaving the loop we have in fact ``only'' shown that \inl{WeaklyIncreasing(a, n)}
+holds.
+In order to derive from this fact the final assertion \inl{increasing} that uses
+the predicate \logicref{Increasing} we rely on lemma \logicref{WeaklyIncreasingIncreasing}.
+
+\input{Listings/sort_heap.c.tex}
+
+To verify the property \inl{reorder} we rely on the lemmas \logicref{MultisetReorder}
+that express that the properties 
+
+\begin{itemize}
+\item \inl{MultisetReorder\{K,L\}(a, 0, i)} and
+\item \inl{Unchanged\{Old,Here\}(a, i, n)}
+\end{itemize}
+
+imply the desired loop invariant \inl{MultisetReorder\{K,L\}(a, 0, n)}.
+
+%\clearpage
+

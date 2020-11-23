@@ -10,6 +10,14 @@ alt-ergo : typed_external_lemma_Heap_ParentChild
 alt-ergo : typed_external_lemma_Heap_ParentLeft
 alt-ergo : typed_external_lemma_Heap_ParentRight
 coq : typed_external_lemma_HeapParent_Zero
+cvc4 : typed_external_heap_parent_ensures_parent
+cvc4 : typed_external_lemma_HeapParent_Zero
+cvc4 : typed_external_lemma_Heap_ChildBounds
+cvc4 : typed_external_lemma_Heap_Childs
+cvc4 : typed_external_lemma_Heap_ParentBounds
+cvc4 : typed_external_lemma_Heap_ParentChild
+cvc4 : typed_external_lemma_Heap_ParentLeft
+cvc4 : typed_external_lemma_Heap_ParentRight
 z3 : typed_external_heap_parent_ensures_parent
 z3 : typed_external_lemma_HeapParent_Zero
 z3 : typed_external_lemma_Heap_ChildBounds
@@ -18,6 +26,3 @@ z3 : typed_external_lemma_Heap_ParentBounds
 z3 : typed_external_lemma_Heap_ParentChild
 z3 : typed_external_lemma_Heap_ParentLeft
 z3 : typed_external_lemma_Heap_ParentRight
-cvc4 : typed_external_heap_parent_ensures_parent
-cvc4 : typed_external_lemma_HeapParent_Zero
-cvc4 : typed_external_lemma_Heap_ChildBounds

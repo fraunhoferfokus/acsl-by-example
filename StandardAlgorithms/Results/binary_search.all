@@ -8,4 +8,6 @@ qed : typed_external_binary_search_call_lower_bound_requires_increasing
 qed : typed_external_binary_search_call_lower_bound_requires_valid
 alt-ergo : typed_external_binary_search_assert_rte_mem_access
 alt-ergo : typed_external_binary_search_ensures_result
+cvc4 : typed_external_binary_search_assert_rte_mem_access
+cvc4 : typed_external_binary_search_ensures_result
 z3 : typed_external_binary_search_assert_rte_mem_access

@@ -1,0 +1,55 @@
+
+\section{The \bubblesort algorithm}
+\label{sec:bubblesort}
+
+The \bubblesort algorithm traverses the given array \inl{a[0..n-1]} from left
+to right, maintaining a right-adjusted, constantly growing range
+\inl{a[n-i..n-1]} that is already in increasing order.
+We achieve this range by iterating through the array and swapping two adjacent
+elements, if their respective value are in the wrong order.
+
+
+\subsection{Formal specification of \bubblesort}
+
+The following listing shows our (generic sorting) contract for \bubblesort.
+
+\input{Listings/bubble_sort.h.tex}
+
+
+\subsection{Implementation of \bubblesort}
+
+Our implementation of \bubblesort is shown in the next listing.
+As it is typical for \bubblesort, the implementation uses two nested loops.
+
+We first discuss the verification of the fact that
+\bubblesort produces an increasing array.
+For this we introduce for the \emph{outer loop} the invariant \inl{increasing}.
+This loop annotation states that the subrange \inl{a[n-i+1..n-1]} is in increasing order.
+An important ingredient on the verification of the \inl{increasing} property
+is the claim that the first element~\inl{a[n-i+1]} of the already sorted
+subrange is an upper bound of \emph{all} elements left of it.
+This claim is encoded in the loop invariant \inl{upper} of the outer bound.
+%
+In order to support this claim up we exploit the fact
+that the index~\inl{j} of the \inl{inner loop} points to the maximum element
+of the subrange \inl{a[0..j]}.
+We formalize this last property in the loop invariant~\inl{max}.
+
+Note that the loop invariants~\inl{increasing} and~\inl{upper} occur also
+in the inner loop. This shall ``assure'' the outer loop that
+the inner loop really preserves these properties.
+
+\input{Listings/bubble_sort.c.tex}
+
+We now discuss briefly the verification of the postcondition \inl{reorder}.
+In each iteration of the outer loop various elements of the 
+not yet sorted subrange \inl{a[0..n-1]} are swapped with their respective 
+neighbour.
+More specifically, we know for the iteration~\inl{j} of the \emph{inner loop}
+that while subrange \inl{a[0..j]} has been rearranged,
+the subrange \inl{a[j+1..n-1]} has not been modified yet.
+Together this ensures that the loop invariant~\inl{reorder}
+holds for the \emph{outer loop}.
+
+\clearpage
+

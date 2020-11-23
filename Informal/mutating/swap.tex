@@ -1,0 +1,35 @@
+
+\section{The \swap algorithm}
+\Label{sec:swap}
+
+The \swap algorithm \cite[\S 28.6.3]{cxx-17-draft}
+in the \cxx Standard Library exchanges the contents of
+two variables.
+Similarly, the \iterswap algorithm \cite[\S 28.6.3]{cxx-17-draft}
+exchanges the contents referenced by two pointers.  
+Since \isoc and hence \acsl, does not support an \inl{&} type constructor (``declarator''),
+we will present an algorithm that processes pointers
+and refer to it as \swap.
+
+
+\subsection{Formal specification of \swap}
+
+The contract of \specref{swap} is shown in the following listing.
+The preconditions state that both pointer arguments of \swap must be dereferenceable.
+
+\input{Listings/swap.h.tex}
+
+Upon termination of \swap the entries must be mutually exchanged.
+The expression \inl{\\old(*p)} refers to the value of \inl{*p}
+before \swap has be called.
+By default, a postcondition refers the values after the functions has been terminated.
+
+\subsection{Implementation of \swap}
+
+The following listing shows the straight-forward implementation of \implref{swap}.
+No interspersed \acsl annotations are needed achieve a verification by \wpframac.
+
+\input{Listings/swap.c.tex}
+
+\clearpage
+

@@ -1,0 +1,52 @@
+
+\section{The predicate \Unchanged}
+\Label{sec:unchanged}
+
+Many of the algorithms in this section iterate sequentially over one or several sequences.
+For the verification of such algorithms it is often important to express that a section
+of an array, or the complete array, have remained \emph{unchanged}.
+As this cannot always be expressed by an \inl{assigns} clause,
+we introduce in the following listing the overloaded predicate
+\logicref{Unchanged}.
+The expression \inl{Unchanged\{K,L\}(a,m,n)} is true if the range
+\inl{a[m..n-1]} in state~\inl{K} is element-wise equal to that range in state~\inl{L}.
+
+\input{Listings/Unchanged.acsl.tex}
+
+In some situations we use the predicate \ArrayUpdate,
+which relies on the predicate \Unchanged and the the logic function \logicref{At},
+to concisely describe which parts of an array have changed or remained unchanged
+when updating an individual array element.
+
+
+\input{Listings/ArrayUpdate.acsl.tex}
+
+\clearpage
+
+In the following listing we show a few lemmas for \logicref{Unchanged}
+that we need for the verification of various algorithms.
+
+\input{Listings/UnchangedLemmas.acsl.tex}
+
+\begin{itemize}
+\item
+Lemma~\logicref{UnchangedShrink} states that if the range~\inl{a[m..n-1]} does
+not change when going from state~\inl{K} to state~\inl{L}, then~\inl{a[p..q-1]}
+does not change either, provided the latter is a subrange of the
+former, i.e.\ provided $0 \leq m \leq p \leq q \leq n$ holds.
+
+\item
+Lemma~\logicref{UnchangedExtend} expresses the simple fact that ``unchangedness'' is an inductive property.
+
+\item
+Lemma~\logicref{UnchangedShift} states how \Unchanged behaves under pointer additions.
+
+\item
+Lemmas~\logicref{UnchangedSymmetric} and~\logicref{UnchangedTransitive} express respectively
+the symmetry and transitivity of \Unchanged with respect to program states.
+
+\end{itemize}
+
+
+\clearpage
+

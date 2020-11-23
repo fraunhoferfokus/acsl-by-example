@@ -1,0 +1,86 @@
+
+\section{The \countii algorithm}
+\Label{sec:countii}
+
+In this section, we specify the \counti algorithm in a different way, namely
+using the \emph{inductively} defined predicate
+\logicref{CountInd} from the
+following listing.
+%
+
+\input{Listings/CountInd.acsl.tex}
+
+The definition consists of three cases.
+\begin{itemize}
+\item
+The \inl{Nil} case states for arrays of negative pf zero length,
+the predicate only holds is \inl{sum} is zero.
+
+\item
+The \inl{Hit} and \inl{Miss} define \CountInd for arrays \inl{a[0..n-1]}
+of size \inl{n} referring to the array \inl{a[0..n-2]} and the value \inl{a[n-1]}.
+\end{itemize}
+
+We remark that the cases are very similar to the
+lemmas \logicref{CountEmpty},
+\logicref{CountHit}
+and \logicref{CountMiss},
+except we have use the additional argument \inl{sum} to refer to the number
+of counted elements since \CountInd is a predicate.
+
+We  have intentionally used the scheme $n-1 \Rightarrow n$ instead of $n \Rightarrow n+1$.
+In this particular case, it allows theorem provers to match loop indices
+with premises without additional hints to prove loop invariants.
+
+\subsection{Additional lemmas for the inductive predicate}
+
+The lemmas of 
+\logicref{CountIndImplicit}
+complement the lemmas of \logicref{Count}.
+They demonstrate how existing lemmas can be rewritten for an inductive predicate.
+%
+These lemmas are not required to prove the \counti function,
+but we provide them to complete the illustrative example of how
+inductive predicates could be utilized in the specifications.
+
+The inductive definition is the ``complete'' definition
+which means that the predicate does not hold for cases outside of its domain of definition.
+We state this property explicitly through lemma
+\logicref{CountIndInverse}
+in the following listing.
+Frama-C does not automatically generate this kind of property.
+The reason for not adding such a corresponding axiom apparently is that it ``could
+confuse first-order theorem provers''.\footnote{\url{https://stackoverflow.com/a/32457870}}
+
+\input{Listings/CountIndImplicit.acsl.tex}
+
+There is also the lemma \logicref{CountIndNonNegative}
+which states that the lower bound for the number of the counted elements is zero.
+%
+The relation between the inductive definition \CountInd and the explicit 
+definition of \logicref{Count} is expressed
+by lemma \logicref{CountIndCount}.
+
+\input{Listings/CountIndLemmas.acsl.tex}
+
+\clearpage
+
+\subsection{Specification of \countii}
+
+The following listing contains the contracts of \specref{countii}.
+It shows the use of the inductive predicate 
+\logicref{CountInd}.
+
+\input{Listings/count2.h.tex}
+
+\subsection{Implementation of \countii}
+
+The only difference between the implementation of \implref{countii} 
+and the implementation of \implref{counti}
+is that we have to supply the value \inl{counted} as an argument
+of the predicate \logicref{CountInd}.
+
+\input{Listings/count2.c.tex}
+
+\clearpage
+

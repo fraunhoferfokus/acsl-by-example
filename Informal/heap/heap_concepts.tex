@@ -1,0 +1,105 @@
+
+\section{Basic heap concepts}
+\Label{sec:heap-concepts}
+
+The description of heaps at the beginning of this chapter is of course fairly vague.
+It outlines only the most important properties
+of various operations but does not clearly state what specific and verifiable
+properties a range must satisfy such that it may be called a heap.
+
+A more detailed description can be found in the Apache \cxx Standard Library User's Guide:\footnote{
+  See \url{http://stdcxx.apache.org/doc/stdlibug/14-7.html}
+}
+
+\begin{quote}
+A heap is a binary tree in which every node is larger than the values
+associated with either child. A heap and a binary tree, for that matter,
+can be very efficiently stored in a vector, by placing the children of
+node $i$
+at positions $2i + 1$ and $2i + 2$.
+\end{quote}
+
+We have, in other words, the following basic relations between indices of a heap:
+
+\begin{align}
+\Label{eq:heap-left}
+   &\text{left child for index $i$}   && \mathrm{child_l}: i \mapsto 2i + 1  \\
+\Label{eq:heap-right}
+   &\text{right child for index $i$}  && \mathrm{child_r}: i \mapsto 2i + 2  \\
+\intertext{and}
+\Label{eq:heap-parent}
+   &\text{parent index for index $i$}  && \mathrm{parent}: i \mapsto \frac{i - 1}{2}
+\end{align}
+
+%\clearpage 
+
+These function are related through the following two equations
+that hold for all integers~$i$.
+Note that in \acsl integer division rounds towards zero (cf.\ \cite[\S 2.2.4]{ACSLSpec}).
+
+\begin{align}
+\Label{eq:heap-parent-left}
+   \mathrm{parent}(\mathrm{child_l}(i)) &= i \\
+\Label{eq:heap-parent-right}
+   \mathrm{parent}(\mathrm{child_r}(i)) &= i
+\end{align}
+
+
+In order to given an example for the usefulness of heaps
+we consider the following multiset of integers $X$.
+
+\begin{align}
+\Label{eq:heap-multiset}
+  X &= \{2,3,3,3,6,7,8,8,9,11,13,14\}
+\end{align}
+
+\clearpage
+
+Figure~\ref{fig:heap-tree} shows how the multiset from Equation~\eqref{eq:heap-multiset} 
+can, according to the parent-child relations of a heap, be represented as a tree.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.75\linewidth]{Figures/heap_tree_color.pdf}
+\caption{\Label{fig:heap-tree}Tree representation of the multiset~$X$}
+\end{figure}
+
+\FloatBarrier
+
+The numbers outside the nodes in Figure~\ref{fig:heap-tree} are the indices at which
+the respective node value is stored in the underlying array of a heap (cf.\ Figure~\ref{fig:heap-array}).
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/heap_array_color.pdf}
+\caption{\Label{fig:heap-array}Underlying array of a heap}
+\end{figure}
+
+\FloatBarrier
+\clearpage
+
+It is important to understand that there can be various representations of a multiset
+as a heap.
+Figure~\ref{fig:heap-alternative-tree}, for example, arranges the elements of
+the multiset~$X$ as a heap in a different tree.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.75\linewidth]{Figures/heap_tree_alternative_color.pdf}
+\caption{\Label{fig:heap-alternative-tree} An alternative representation of the multiset~$X$}
+\end{figure}
+
+\FloatBarrier
+
+Figure~\ref{fig:heap-array-alternative} then shows the underlying array that 
+corresponds to the tree in Figure~\ref{fig:heap-alternative-tree}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/heap_array_alternative_color.pdf}
+\caption{\Label{fig:heap-array-alternative}Underlying array of the alternative representation}
+\end{figure}
+
+\FloatBarrier
+\clearpage
+

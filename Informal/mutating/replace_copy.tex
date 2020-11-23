@@ -1,0 +1,72 @@
+
+\section{The \replacecopy algorithm}
+\Label{sec:replacecopy}
+
+The \replacecopy algorithm of the \cxx Standard Library \cite[\S 28.6.5]{cxx-17-draft} substitutes
+specific elements from general sequences.
+%
+Here, the general implementation
+has been altered to process \valuetype ranges.
+The new signature reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  size_type replace_copy(const value_type* a, size_type n, value_type* b,
+                         value_type v, value_type w);
+\end{lstlisting}
+
+The \replacecopy algorithm copies the elements from the range \inl{a[0..n]}
+to range {\inl{b[0..n]}}, substituting every occurrence of \inl{v} by \inl{w}.
+The return value is the length of the range.
+As the length of the range is already a parameter of
+the function this return value does not contain new
+information.
+
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.50\textwidth]{Figures/replace.pdf}
+\caption{\Label{fig:replace} Effects of \replace}
+\end{figure}
+
+Figure~\ref{fig:replace} shows the behavior of \replacecopy at hand of an example
+where all occurrences of the value~3 in~\inl{a[0..n-1]} are replaced with the
+value~2 in~\inl{b[0..n-1]}.
+
+
+\subsection{The predicate \Replace}
+
+We start with defining in the following listing the predicate \logicref{Replace}
+that describes the intended relationship between the input array \inl{a[0..n-1]}
+and the output array \inl{b[0..n-1]}.
+Note the introduction of \emph{local bindings} \inl{\\let ai = ...}
+and \inl{\\let bi = ...} in the definition of \Replace (see \cite[\S 2.2]{ACSLSpec}).
+
+\input{Listings/Replace.acsl.tex}
+
+This listing also contains a second, overloaded version of \Replace
+which we will use for the specification of the related in-place
+algorithm \specref{replace}.
+
+%\clearpage
+
+\subsection{Formal specification of \replacecopy}
+
+Using predicate \Replace the specification of \specref{replacecopy}
+is as simple as shown in the following listing.
+Note that we also require that the input range \inl{a[0..n-1]} and
+output range \inl{b[0..n-1]} do not overlap.
+
+\input{Listings/replace_copy.h.tex}
+
+\subsection{Implementation of \replacecopy}
+
+The implementation (including loop annotations) of \implref{replacecopy}
+is shown in the following listing.
+Note how the structure of the loop annotations resembles
+the specification of \specref{replacecopy}.
+
+\input{Listings/replace_copy.c.tex}
+
+\clearpage
+

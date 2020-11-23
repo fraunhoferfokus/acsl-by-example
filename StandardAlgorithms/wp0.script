@@ -1096,7 +1096,6 @@ Proof.
   assert(less_equal: (k < m+z \/ k = m+z)%Z) by lia.
   destruct less_equal as [less|equal].
   - rewrite Q_FindNotEqual_Hit; auto with zarith.
-    rewrite IHz; auto with zarith.
   - rewrite equal in *.
     rewrite Q_FindNotEqual_MissHit; auto with zarith.
 Qed.
@@ -1151,7 +1150,6 @@ Proof.
   assert(less_equal: (k < m+z \/ k = m+z)%Z) by lia.
   destruct less_equal as [less|equal].
   - rewrite Q_FindNotEqual_Hit; auto with zarith.
-    lia.
   - rewrite equal in *.
     clear IHz Upper equal.
     assert(U: (m+L_FindNotEqual_1_ L a m (m+z) v <= m+z)%Z).
@@ -1255,7 +1253,6 @@ Proof.
   assert(less_equal: (k < m+z \/ k = m+z)%Z) by lia.
   destruct less_equal as [less|equal].
   - rewrite Q_Find_Hit; auto with zarith.
-    rewrite IHz; auto with zarith.
   - rewrite equal in *.
     rewrite Q_Find_MissHit; auto with zarith.
 Qed.
@@ -1310,8 +1307,6 @@ Proof.
   assert(less_equal: (k < m+z \/ k = m+z)%Z) by lia.
   destruct less_equal as [less|equal].
   - rewrite Q_Find_Hit; auto with zarith.
-    enough(m + L_Find_1_ L a m (m + z) v <= k)%Z by lia.
-    lia.
   - rewrite equal in *.
     clear IHz Upper equal.
     assert(U: (m+L_Find_1_ L a m (m+z) v <= m+z)%Z).
@@ -2739,6 +2734,12 @@ Proof.
   auto with zarith.
 Qed.
 
+Goal typed_external_merge_loop_invariant_index_4_preserved.
+Hint index,merge,preserved.
+Proof.
+  auto with zarith.
+Qed.
+
 Goal typed_external_merge_loop_invariant_index_preserved.
 Hint index,merge,preserved.
 Proof.
@@ -2813,6 +2814,12 @@ Proof.
   auto with zarith.
 Qed.
 
+Goal typed_external_pop_heap_assert_child.
+Hint child,pop_heap,property.
+Proof.
+  auto with zarith.
+Qed.
+
 Goal typed_external_pop_heap_assert_heap_6.
 Hint heap,pop_heap,property.
 Proof.
@@ -2839,6 +2846,12 @@ Qed.
 
 Goal typed_external_pop_heap_assert_update_3.
 Hint pop_heap,property,update.
+Proof.
+  auto with zarith.
+Qed.
+
+Goal typed_external_pop_heap_call_heap_child_2_requires_bounds.
+Hint pop_heap,precond-heap_child.
 Proof.
   auto with zarith.
 Qed.
@@ -3225,6 +3238,12 @@ Qed.
 
 Goal typed_external_search_n_loop_invariant_bound_preserved_part4.
 Hint bound,part-3,preserved,search_n.
+Proof.
+  auto with zarith.
+Qed.
+
+Goal typed_external_search_n_loop_variant_positive_part1.
+Hint part-0,positive,search_n.
 Proof.
   auto with zarith.
 Qed.

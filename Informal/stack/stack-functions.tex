@@ -1,0 +1,60 @@
+
+\section{Verification of stack functions}
+\Label{sec:stack-functions}
+
+In this section we verify the functions
+\begin{itemize}
+\item \stackequal (\S\ref{sec:stackequal})
+\item \stackinit (\S\ref{sec:stackinit})
+\item \stacksize (\S\ref{sec:stacksize})
+\item \stackfull (\S\ref{sec:stackfull})
+\item \stackempty (\S\ref{sec:stackempty}) 
+\item \stacktop (\S\ref{sec:stacktop})
+\item \stackpush (\S\ref{sec:stackpush})
+\item \stackpop (\S\ref{sec:stackpop})
+\end{itemize}
+
+of the data type \stacktype.
+To be more precise, we provide for each of function \inl{stack_foo}:
+\begin{itemize}
+\item an \acsl specification of \inl{stack_foo} 
+\item a \isoc implementation of \inl{stack_foo}
+\item a \isoc function \inl{stack_foo_wd}\footnote{
+  The suffix \inl{_wd} stands for \emph{well definition}
+}
+accompanied by a an \acsl contract that expresses that
+the implementation of \inl{stack_foo} is well-defined.
+Figure~\ref{fig:methodology-wd}
+shows our methodology for the verification of
+well-definition in the \inl{pop} example,
+$(\approx)$ again indicating the user-defined \stacktype equality.
+\end{itemize}
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.95\linewidth]{Figures/stack_pop_wd.pdf}
+\caption{Methodology for the verification of well-definition}
+\Label{fig:methodology-wd}
+\end{figure}
+
+\FloatBarrier
+
+Note that the specifications of the various functions will explicitly
+refer to the \emph{internal state} of \stacktype.
+In \S\ref{sec:stack-verification} we will show that the
+\emph{interplay} of these functions satisfy the stack axioms from
+\S\ref{sec:stack-axioms}.
+
+
+\clearpage
+
+\input{stack/stack_equal}\clearpage
+\input{stack/stack_init}\clearpage
+\input{stack/stack_size}\clearpage
+\input{stack/stack_full}\clearpage
+\input{stack/stack_empty}\clearpage
+\input{stack/stack_top}
+\input{stack/stack_push}\clearpage
+\input{stack/stack_pop}\clearpage
+\clearpage
+

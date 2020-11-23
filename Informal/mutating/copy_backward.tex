@@ -1,0 +1,89 @@
+
+\section{The \copybackward algorithm}
+\Label{sec:copybackward}
+
+The \copybackward  algorithm in the \cxx Standard Library \cite[\S 28.6.1]{cxx-17-draft} implements
+another duplication algorithm for general sequences.
+For our purposes we have modified
+the generic implementation
+to that of a range of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  void copy_backward(const value_type* a, size_type n, value_type* b);
+\end{lstlisting}
+
+The main reason for the existence of \copybackward is to allow
+copying when the start of the destination range \inl{a[0..n-1]} is contained
+in the source range \inl{b[0..n-1]}.
+In this case, \copyi can't be employed since its precondition
+\inl{sep} is violated, as can be seen in the contract of \specref{copyi}.
+
+The informal specification of \copybackward states that copying
+starts at the end of the source range.
+For this to work, however, the pointer \inl{b+n} must not be contained
+in the source range.
+Note that the order of operation (or procedure) calls cannot be
+specified in \acsl.\footnote{
+       The \textsf{Aoraï} specification language and the
+       corresponding \framac plugin are provided to specify and verify
+       temporal properties of code; however, they are beyond the scope
+       of this tutorial.
+}
+A similar remark about order of operations tacitly applied
+to earlier functions
+as well, e.g.\ to \copyi, where the \cxx order was prescribed by confining
+the signature to a \inl{ForwardIterator}.
+
+
+Figure~\ref{fig:copybackward} gives an example where \copybackward, but \emph{not} \copyi,
+can be applied.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/copy_backward.pdf}
+\caption{\Label{fig:copybackward} Possible overlap of \copybackward ranges}
+\end{figure}
+
+Note that in the original signature the argument~\inl{b} refers to one 
+past the end of the destination range.
+Here, however, it refers to its start.
+The reason for this change is that in \cxx \copybackward is defined
+for \emph{bidirectional iterators} which do not provide
+random access operations such as adding or subtracting an index.
+Since our \isoc version works on pointers we do not consider it
+as necessary to use the one past the end pointer.
+
+%\clearpage
+
+\subsection{Formal specification of \copybackward}
+
+The specification of \copybackward is shown in the following listing.
+The \copybackward algorithm expects that the ranges \inl{a[0..n-1]} and \inl{b[0..n-1]}
+are valid for reading and writing, respectively.
+Precondition \inl{sep} formalizes the constraints on the overlap of
+the source and destination ranges as discussed at the beginning of this section.
+
+\input{Listings/copy_backward.h.tex}
+
+The function \copybackward assigns the elements from the source
+range \inl{a} to the destination range \inl{b}, modifying the memory of the
+elements pointed to by \inl{b}.
+Again, we can use the \logicref{Equal} predicate to express that the
+array~\inl{a} equals~\inl{b} after \copybackward has been called.
+
+
+\subsection{Implementation of \copybackward}
+
+The following listing shows an implementation of the
+\copybackward function.
+
+\input{Listings/copy_backward.c.tex}
+
+We have loop invariants similar to \copyi, stating the loop variable's range
+(\inl{bound})
+and the area that has already been copied in each cycle (\equal).
+
+\clearpage
+

@@ -1,0 +1,68 @@
+\section{The \binarysearch algorithm}
+\Label{sec:binarysearch}
+\Label{sec:binarysearchii}
+
+
+The \binarysearch algorithm is one of the four binary search
+algorithms of the \cxx Standard Library \cite[\S 28.7.3.4]{cxx-17-draft}.
+For our purposes we have modified
+the generic implementation
+to that of an array of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style = acsl-block]
+  bool binary_search(const value_type* a, size_type n, value_type  v);
+\end{lstlisting}
+
+Again, \binarysearch requires that its input array is in increasing order.
+It will return \inl{true} if there exists an index~\inl{i} 
+in~\inl{a} such that \inl{a[i] == v} holds.\footnote{%
+   To be more precise: The \cxx Standard Library requires that 
+   \inl{(a[i] <= v)  && (v <= a[i])} holds.
+   For our definition of \valuetype (see \S\ref{sec:frequentPattern}) this
+   means that \inl{v} equals \inl{a[i]}.
+}
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/binary_search.pdf}
+\caption{\Label{fig:binarysearch}Some examples for \binarysearch}
+\end{figure}
+
+\FloatBarrier
+
+In Figure~\ref{fig:binarysearch} we do not need to use arrows to visualize the
+effects of \binarysearch.
+The colors orange and grey of the sought-after values indicate whether the algorithm
+returns true or false, respectively.
+
+\subsection{Formal specification of \binarysearch and \binarysearchii}
+
+The \acsl specification of \specref{binarysearch} is shown in the following listing.
+
+\input{Listings/binary_search.h.tex}
+
+Note that instead of the somewhat lengthy existential quantification
+of \specref{binarysearch} we can use our previously introduced predicate
+\logicref{SomeEqual} in order to achieve the following more concise
+formal specification \specref{binarysearchii}.
+
+
+\input{Listings/binary_search2.h.tex}
+
+It is interesting to compare the specification of \specref{binarysearch}
+with that of \specref{findii}.
+Both algorithms allow to determine whether a value is contained in an array.
+The fact that the \cxx Standard Library requires that \find has
+\emph{linear} complexity whereas \binarysearch must have a
+\emph{logarithmic} complexity can currently not be expressed with \acsl.
+
+
+\subsection{Implementation of \binarysearch}
+
+Our implementation \implref{binarysearchii} first calls \specref{lowerbound}.
+Remember that if the latter returns an index \inl{0 <= i < n},
+then we can be sure that \inl{v <= a[i]} holds.
+
+\input{Listings/binary_search2.c.tex}
+

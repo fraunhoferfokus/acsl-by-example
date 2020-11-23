@@ -1,0 +1,26 @@
+
+\subsection{The function \stacksize}
+\Label{sec:stacksize}
+\Label{sec:stacksizewd}
+
+The function \stacksize is the runtime version of the logic function
+\logicref{StackSize}.
+The specification of \stacksize in the following listing
+simply states that \stacksize produces the same result as \StackSize.
+
+\input{Listings/stack_size.h.tex}
+
+As in the definition of the logic function \StackSize the implementation of
+\stacksize in the next listing simply returns the field \inl{size}.
+
+\input{Listings/stack_size.c.tex}
+
+The next listing shows our check whether \stacksize is well-defined.
+Since \stacksize neither modifies the state of its \stacktype argument 
+nor that of any global variable we only check whether it
+produces the same result for equal stacks.
+Note that we simply may use operator~\inl{==} to compare integers since we
+didn't introduce a nontrivial equivalence relation on that data type.
+
+\input{Listings/stack_size_wd.c.tex}
+

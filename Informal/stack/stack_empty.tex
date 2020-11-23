@@ -1,0 +1,19 @@
+
+\subsection{The function \stackempty}
+\Label{sec:stackempty}
+\Label{sec:stackemptywd}
+
+The function \stackempty is the runtime version of the predicate \logicref{StackEmpty}.
+
+\input{Listings/stack_empty.h.tex}
+
+As in the definition of the predicate \StackEmpty the implementation of
+\stackempty in the next listing simply checks whether the
+size of the stack is zero.
+
+\input{Listings/stack_empty.c.tex}
+
+The following listing shows our check whether \stackempty is well-defined.
+
+\input{Listings/stack_empty_wd.c.tex}
+

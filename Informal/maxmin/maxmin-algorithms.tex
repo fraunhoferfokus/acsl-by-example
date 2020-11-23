@@ -1,0 +1,127 @@
+
+\chapter{Maximum and minimum algorithms}
+\Label{cha:maxmin}
+
+In this chapter we discuss the formal specification of algorithms
+in the \cxx Standard Library \cite[\S 28.7.8]{cxx-17-draft}
+that compute the maximum or minimum values of their arguments.
+As the algorithms in Chapter~\ref{cha:non-mutating}, they also do not modify
+any memory locations outside their scope.
+The most important new feature of the algorithms in this chapter
+is that they compare values using binary operators such as \inl{<}.
+
+We consider in this chapter the following algorithms.
+
+\begin{itemize}
+
+\item
+We discuss some properties of relations operators in \S\ref{sec:relationaloperators}.
+
+\item
+We introduce in \S\ref{sec:arraybounds} various predicates
+that describe basic order properties for arrays whose elements are of~\valuetype.
+
+\item
+\clamp, which is discussed in \S\ref{sec:clamp},
+is a very simple algorithms that ``clamps'' (or ``clips'') a value between a
+pair of boundary values.
+  
+\item \maxelement  
+returns an index to
+a maximum element in a range. Similar to \find it also
+returns the smallest of all possible indices.
+This algorithm is discussed in \S\ref{sec:maxelement}.
+In \S\ref{sec:maxelementii}, we introduce an alternative
+specification \maxelementii which relies on user-defined predicates.
+
+\item \maxseq  in \S\ref{sec:maxseq}
+is very similar to \maxelement and will serve as an
+example of \emph{modular verification}.
+It returns the maximum value itself rather than an index to
+it.
+
+\item \minelement in \S\ref{sec:minelement}
+can be used to find the smallest element in an array.
+
+\item \minmaxelement in \S\ref{sec:minmaxelement}
+is used to find simultaneously the smallest and largest element in a given range.
+This algorithms relies on the auxiliary function
+\makepair (\S\ref{sec:makepair}).
+\end{itemize}
+
+First, however, we discuss in \S\ref{sec:relationaloperators}
+general properties that must be satisfied by the relational operators.
+
+%\clearpage
+
+\section{A note on relational operators}
+\Label{sec:relationaloperators}
+
+Note that in order to compare values, algorithms in the
+\cxx Standard Library \cite[\S 28.7.8]{cxx-17-draft} usually rely solely on 
+the \emph{less than} operator~\inl{<} or special function
+objects.
+To be precise, the operator~\inl{<} must be a \emph{partial
+order},\footnote{
+    See~\url{http://en.wikipedia.org/wiki/Partially_ordered_set}
+}
+which means that the following rules must hold.
+%
+\begin{alignat*}{5}
+&\text{irreflexivity} &&\qquad  \forall x     &&: \neg(x < x)         \\
+&\text{asymmetry}     &&\qquad  \forall x,y   &&: x < y             &&\implies \neg(y < x)\\
+&\text{transitivity}  &&\qquad  \forall x,y,z &&: x < y \wedge y < z &&\implies x < z
+\end{alignat*}
+
+
+If you wish to check that the operator~\inl{<} of our \valuetype\footnote{
+    See \S\ref{sec:frequentPattern}
+}  satisfies these properties
+one can formulate the lemmas of \logicref{Less} and verify them with \framac.
+
+\input{Listings/LessThanComparable.acsl.tex}
+
+It is of course possible to specify and implement the algorithms
+of this chapter by only using operator~\inl{<}.
+For example, \inl{a <= b} can be written as \texttt{a < b || a == b},
+or, for our particular ordering on \valuetype, as \inl{!(b < a)}.
+Listing~\logicref{Less} therefor also contains lemmas on representing
+the operator~\inl{>}, \inl{<=}, and~\inl{>=} through operator \inl{<}.
+
+
+
+\section{Predicates for bounds and extrema of arrays}
+\label{sec:arraybounds}
+
+We define in the following listing the predicates \logicref{MaxElement}
+and \logicref{MinElement} that we will use for the specification of various algorithms.
+We will discuss these predicates in more detail in \S\ref{sec:maxelementii}
+and \S\ref{sec:minelement}.
+
+\input{Listings/ArrayExtrema.acsl.tex}
+
+
+\clearpage
+
+The aforementioned predicates rely on the predicates
+\logicref{LowerBound} and \logicref{UpperBound} which
+are shown in the following listing together with 
+the related predicates \logicref{StrictUpperBound} and \logicref{StrictLowerBound}.
+
+\input{Listings/ArrayBounds.acsl.tex}
+
+These predicates concisely express the
+comparison of the elements in an array (segment) with a given value.
+We will heavily rely on these predicates both in this chapter and
+in Chapter~\ref{cha:binary-search}.
+
+\clearpage
+
+\input{maxmin/clamp}
+\input{maxmin/make_pair}
+\input{maxmin/max_element}
+\input{maxmin/max_element2}
+\input{maxmin/max_seq}
+\input{maxmin/min_element}
+\input{maxmin/minmax_element}
+

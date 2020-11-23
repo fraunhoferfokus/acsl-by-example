@@ -1,0 +1,47 @@
+
+\section{The \isheapuntil algorithm}
+\Label{sec:isheapuntil}
+
+The \isheapuntil algorithm of the \cxx Standard Library \cite[\S
+28.7.7.5]{cxx-17-draft} works on generic sequences. 
+For our purposes we have modified the generic implementation
+to that of an array of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+    size_type is_heap_until(const value_type* a, int n);
+\end{lstlisting}
+
+The algorithm \isheapuntil returns the largest range of an array, beginning at the first position, where it still satisfies the heap properties
+we have semi-formally described in the beginning of this chapter.
+In particular, \isheapuntil will return the size of the array,
+called with the array argument from Figure~\ref{fig:heap-array}.
+
+\clearpage
+
+\subsection{Formal specification of \isheapuntil}
+
+The specification of \isheapuntil is shown in the following listing.
+The index \inl{\\result} returned by \isheapuntil indicates
+that the array \inl{a[0..\\result-1]} is a heap.
+In addition the postcondition \inl{last} states, that for all indices
+greater than or equal to \inl{i} the predicate \logicref{Heap} is not satisfied.
+
+\input{Listings/is_heap_until.h.tex}
+
+\subsection{Implementation of \isheapuntil}
+
+The following listing shows one way to implement the function \isheapuntil.
+
+\input{Listings/is_heap_until.c.tex}
+
+The algorithms starts at the index~1, which is the smallest index,
+where a child node of the heap might reside.
+The algorithms checks for each (child) index whether
+the value at the corresponding parent index 
+is greater than or equal to the value at the child index.
+If the value at a parent index is smaller than the value at a (child) index,
+\isheapuntil returns the (child) index.
+Otherwise, if the algorithm iterates through the whole array,
+the size of the array is returned.

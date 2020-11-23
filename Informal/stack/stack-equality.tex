@@ -1,0 +1,117 @@
+
+\section{Equality of stacks}
+\Label{sec:stack-equality}
+
+Defining equality of instances of non-trivial data types, in
+particular in object-oriented languages, is not an easy task.
+%
+The book \emph{Programming in Scala}\cite[Chapter~28]{OderskyEtAl2008} 
+devotes to this topic a whole chapter of more than twenty pages.
+%
+In the following two sections we give a few hints how \acsl
+and \framac can help to
+correctly define equality for a simple data type.
+
+We consider two stacks as equal if they have the same size and if they contain the same objects.
+%
+To be more precise, let~\inl{s} and~\inl{t} two pointers of type \stacktype,
+then we define the predicate \StackEqual as in the following listing.
+
+\input{Listings/Stack.acsl.tex}
+
+Our use of labels in this listing makes
+the specification somewhat hard to read (in particular in the last line
+where we reuse the predicate \logicref{Equal}.
+%
+However, this definition of \StackEqual will allow us later to compare 
+the same stack object at different points of a program.
+%
+The logical expression \inl{StackEqual\{A,B\}(s,t)}
+reads informally as: 
+{The stack object \inl{*s} at program point \inl{A}
+equals the stack object \inl{*t} at program point \inl{B}}.
+
+The reader might wonder why we exclude the capacity of a stack
+into the definition of stack equality.
+This approach can be motivated with the behavior of the method
+\inl{capacity} of the class \inl{std::vector<T>}.
+There, equal instances of type \inl{std::vector<T>} may very well 
+have different capacities.\footnote{
+See \url{http://www.cplusplus.com/reference/vector/vector/capacity}
+}
+
+If equal stacks can have different capacities then, according to our
+definition of the predicate \logicref{StackFull}, 
+we can have to equal stacks where one is full and the other one is not.
+
+A finer, but very important point in our specification of equality
+of stacks is that the elements of the arrays \inl{s->obj} and \inl{t->obj}
+are compared only up to \inl{s->size} and \emph{not} up  to
+\inl{s->capacity}.
+Thus the two stacks \inl{s} and \inl{t} in Figure~\ref{fig:equal-stacks}
+are considered
+equal although there is are obvious differences in their internal arrays.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.75\linewidth]{Figures/stack12.pdf}
+\caption{\Label{fig:equal-stacks} Example of two equal stacks}
+\end{figure}
+
+\FloatBarrier
+
+If we define an equality relation $(=)$ of objects for a data
+type such as \stacktype,
+we have to make sure that the following rules hold.
+
+\begin{subequations}
+\Label{eq:equivalence-relation}
+\begin{align}
+   \text{reflexivity}\qquad && \forall s \in S&: s = s,\\
+   \text{symmetry}\qquad &&    \forall s,t \in S&: s = t \implies t = s,\\
+   \text{transitivity}\qquad &&    \forall s,t,u \in S&: s = t \land t = u \implies s = u.
+\end{align}
+\end{subequations}
+
+
+Any relation that satisfies the conditions~\eqref{eq:equivalence-relation}
+is referred to as an \emph{equivalence relation}.
+%
+The mathematical set of all instances that are considered equal to
+some given instance \inl{s} is called the equivalence class of \inl{s}
+with respect to that relation.
+
+Our formalization of \logicref{StackEquality} shows 
+these three rules for the relation \StackEqual;
+it can be automatically verified that they are a consequence of the
+definition of \StackEqual.
+
+The two stacks in Figure~\ref{fig:equal-stacks} show that
+an equivalence class of \StackEqual
+can contain more than one element.\footnote{
+    This is a common situation in mathematics. For example,
+    the equivalence class of
+    the rational number $\frac{1}{2}$ contains infinitely many elements,
+    viz.\ $\frac{1}{2},
+    \frac{2}{4}, \frac{7}{14}, \ldots$.
+}
+The stacks \inl{s} and \inl{t} in Figure~\ref{fig:equal-stacks}
+are also referred to as two \emph{representatives} of the
+same equivalence class.
+In such a situation, the question arises whether a function
+that is defined on
+a set with an equivalence relation can be defined in such a
+way that its definition
+is \emph{independent of the chosen representatives}.\footnote{
+    This is why mathematicians know that
+    $\frac{1}{2} + \frac{3}{5}$
+    equals $\frac{7}{14} + \frac{3}{5}$.
+}
+We ask, in other words, whether the function is \emph{well-defined}
+on the set of all equivalence classes of the relation \StackEqual.\footnote{
+  See \url{http://en.wikipedia.org/wiki/Well-definition}.
+}
+The question of well-definition
+will play an important role when verifying the functions of
+the \stacktype (see \S\ref{sec:stack-functions}).
+

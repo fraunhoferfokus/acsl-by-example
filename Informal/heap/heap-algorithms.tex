@@ -1,0 +1,96 @@
+\chapter{Heap Algorithms}
+\Label{cha:heap}
+
+The heap algorithms of the \cxx Standard 
+Library \cite[28.7.7]{cxx-17-draft}
+were already part of \emph{\acsl by Example} from 2010--2012.
+In this chapter we re-introduce them and discuss---based on the
+bachelor thesis of one of the authors---the verification efforts in some 
+detail \cite{Lapawczyk_2016_bachelor}.
+
+
+The \cxx standard\footnote{
+  See \url{http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2011/n3242.pdf}
+} introduces the concept of a \emph{heap} as follows:
+
+\begin{small}
+\begin{quote}
+\begin{enumerate}
+\item A \emph{heap} is a particular organization of elements in a range between two
+random access iterators \inl{[a,b)}. Its two key properties are:
+\begin{enumerate}
+\item There is no element greater than \inl{*a} in the range and
+\item \inl{*a} may be removed by \inl{pop_heap()}, or a new element added by \inl{push_heap()}, in
+       $O(\log(N))$ time.
+\end{enumerate}
+\item These properties make heaps useful as priority queues.
+\item \inl{make_heap()} converts a range into a heap and \inl{sort_heap()}
+      turns a heap into an increasing sequence.
+\end{enumerate}
+\end{quote}
+\end{small}
+
+
+Figure~\ref{fig:heap-overview} gives an overview on the five heap algorithms
+by means of an example.
+Algorithms, which in a typical implementation are in a caller-callee relation, have the same color.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.85\linewidth]{Figures/heap-overview.pdf}
+\caption{\Label{fig:heap-overview}Overview on heap algorithms}
+\end{figure}
+
+\clearpage
+
+Roughly speaking, the algorithms from Figure~\ref{fig:heap-overview} have
+the following behavior.
+
+\begin{itemize}
+\item In \S\ref{sec:heap-concepts} we briefly recapitulate basic
+      heap concepts.
+
+\item In \S\ref{sec:heap-acsl} we show how these heap concepts
+      can be described in \acsl.
+
+\item In \S\ref{sec:auxiliary-heap-functions} we verify two
+      auxiliary heap functions.
+
+\item The algorithms \isheapuntil and \isheap from
+      \S\ref{sec:isheapuntil} and~\S\ref{sec:isheap}
+      allow to test at run time whether a given array is arranged as a heap
+
+\item The algorithm \pushheap from \S\ref{sec:pushheap} \emph{adds} an
+        element to a given heap in such a way
+        that resulting array is again a heap
+
+\item The algorithm \popheap from \S\ref{sec:popheap}, on the other hand,
+        \emph{removes} an element from a given heap in
+        such a way that the resulting array is again a heap
+
+\item The algorithm \makeheap from \S\ref{sec:makeheap} rearranges a given array
+        into a heap.
+
+\item Finally, the algorithm \sortheap from \S\ref{sec:sortheap} sorts a heap
+        into an increasing range.
+\end{itemize}
+
+
+In \S\ref{sec:heap-concepts} we present in more detail how heaps are defined.
+The \acsl logic functions and predicate that formalize the basic heap
+properties of heaps are introduced in \S\ref{sec:heap-acsl}.
+
+
+\clearpage
+
+\input{heap/heap_concepts}
+\input{heap/heap_acsl}
+\input{heap/heap_parent_child}
+\input{heap/is_heap_until}
+\input{heap/is_heap}
+\input{heap/fluctuations}
+\input{heap/push_heap}
+\input{heap/pop_heap}
+\input{heap/make_heap}
+\input{heap/sort_heap}
+

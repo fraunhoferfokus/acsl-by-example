@@ -1,0 +1,250 @@
+
+\section{The \partialsort algorithm}
+\Label{sec:partialsort}
+
+Our version of the \partialsort algorithm compared to the \cxx Standard
+Library \cite[\S 28.7.1.3]{cxx-17-draft} has the signature
+
+\begin{lstlisting}[style = acsl-block]
+
+  void partial_sort(value_type* a, size_type m, size_type n);
+\end{lstlisting}
+
+The algorithm \emph{reorders} the given array \inl{a} in such a way
+that it represents a \emph{partition}:
+each member of the
+left part \inl{a[0..m-1]} is less or equal to each member of the right
+part \inl{a[m..n-1]}.
+%
+Moreover, the algorithm \emph{sorts} the left part in increasing order.
+The order of elements in the right part, however, is \emph{unspecified}.
+%
+Figure~\ref{fig:partialsort} uses a bar chart to
+depict a typical result of a call \inl{partial_sort(a, m, n)}.
+%
+In the post-state, 
+the left and the right part is colored in green and orange,
+respectively.
+
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics[width=0.75\textwidth]{Figures/partial_sort.pdf}
+\caption{\Label{fig:partialsort} Effects of \partialsort}
+\end{center}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{The predicate \Partition}
+
+We start by introducing the new predicate \logicref{Partition}
+which formalizes the partitioning property.
+
+\input{Listings/Partition.acsl.tex}
+
+\clearpage
+
+The lemmas in the following listing are used in proofs of properties and annotations
+related to the loop invariants \inl{upper}, \inl{lower}, and \inl{partition}
+of \partialsort.
+
+\input{Listings/PartitionLemmas.acsl.tex}
+
+
+\begin{itemize}
+\item
+Lemma \MultisetReorderSomeEqual states that a value
+\inl{a[i]} taken from a range \inl{a[0..n-1]} after some reordering
+must have been in that range already before reordering.
+It is used to prove the subsequent lemmas.
+
+\item
+Lemma \MultisetReorderLowerBound
+informally says that a lower bound \inl{v} of a
+range \inl{a[0..n-1]} keeps its property even after the range is
+reordered.
+
+\item
+Dually, lemma \MultisetReorderUpperBound says that reordering a range
+doesn't affect any of its upper bounds.
+
+\item
+Lemma \MultisetReorderPartitionLowerBound 
+describes a more particular
+situation: if each element in \inl{a[0..m-1]}
+is known to be a less or equal than element \inl{a[m..n-1]}
+and the former range is reordered while the latter is kept untouched,
+then \inl{a[0]} will still be a lower bound of \inl{a[m..n-1]}.
+We employ this lemma to infer that, after \specref{pushheap} was called, the new
+heap maximum \inl{a[0]}, is a lower bound of \inl{a[m..i]},
+
+\end{itemize}
+
+The proof of \logicref{MultisetReorderSomeEqual} relies on the lemma \logicref{CountSomeEqual}.
+We also rely on the lemma \logicref{MultisetSwapMiddle}
+in order to verify that the loop invariant \inl{reorder} is preserved.
+
+\subsection{Formal specification of \partialsort}
+
+The formal specification of the \partialsort function is shown in the following listing.
+It uses the just introduced predicate \Partition and reuses the
+previously defined predicates \logicref{Increasing} and \logicref{MultisetReorder}.
+
+\input{Listings/partial_sort.h.tex}
+
+\subsection{Implementation of \partialsort}
+
+Our implementation of \partialsort is shown the next listing.
+%
+It initially calls \specref{makeheap} to rearrange the left part \inl{a[0..m-1]} into a heap.
+%
+After that, it scans the right part, from left to right, for elements
+that are too small;
+each such element is exchanged for the left part's maximum, by applying
+\specref{popheap}  and \specref{pushheap}  appropriately.
+%
+When the scan is done, the smallest elements are collected in the left
+part.
+%
+We finally convert it from a heap into an increasingly ordered range,
+by \sortheap (\ref{sec:sortheap}).
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics[width=0.50\textwidth]{Figures/partial_sort-loop.pdf}
+\caption{\Label{fig:partialsort-loop}An iteration of \partialsort}
+\end{center}
+\end{figure}
+
+\clearpage
+
+In the scan loop, we maintain as invariants
+\begin{itemize}
+\item that the left part is a heap (invariant \inl{heap});
+\item that its maximal element, \inl{a[0]}, is a ``separating element''
+  between the left part \inl{a[0..m-1]} and the right part \inl{a[m..i-1]},
+  i.e., an upper bound of the left (invariant \inl{upper})
+  and a lower bound of the right part (invariant \inl{lower}), respectively;
+\item that \inl{a[i..m-1]} is yet unchanged (invariant \inl{unchanged}); and
+\item that only permutation operations have been applied to
+  \inl{a[0..i-1]} (invariant \inl{reorder}).
+\end{itemize}
+
+In order to preserve the loop invariants after \inl{i} is incremented,
+nothing has to be done if \inl{a[0]} happens to be
+also a lower bound for \inl{a[i]}.
+Otherwise, let us follow the algorithm through the \inl{then} part code,
+depicting the intermediate states in 
+Figure~\ref{fig:partialsort-loop}.
+The elements considered so far are shown colored similar to
+Figure~\ref{fig:partialsort}; in particular the heap part is shown in green.
+
+%\clearpage
+
+%
+The overlaid transparent red shape indicates the ranges to which
+\Partition applies, in each state.
+%
+The figure assumes the initial contents of \inl{a[0]} and
+\inl{a[i]} to be $9$ and $5$,
+for sake of generality, let us
+call them $p$ and $q$, respectively.
+
+After \popheap and \swap,
+we have $p$ at \inl{a[i]}, and $q$ at \inl{a[m-1]}.
+%
+At that point we know
+%
+\begin{enumerate}
+\item $q < p \leq \mbox{\inl{a[k]}}$ for each $m \leq k < i$,
+  since $p$ was a lower bound for \inl{a[m..i-1]};
+\item $q < p = \mbox{\inl{a[i]}}$;
+\item $\mbox{\inl{a[j]}} \leq p \leq \mbox{\inl{a[k]}}$ 
+  for each $0 \leq j < m-1$ and each $m \leq k < i$,
+  since this held on loop entry, and we didn't more than
+  reordering inside the parts; and
+\item $\mbox{\inl{a[j]}} \leq p = \mbox{\inl{a[i]}}$ 
+  since $p$ was the heap maximum on loop entry.
+\end{enumerate}
+
+\begin{listing}[t]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={1-38}, style=acsl-block, frame=single]{Source/partial_sort.c}
+\end{minipage}
+\caption{\Label{lst:partialsort-impl1}Implementation of \partialsort (1)}
+\end{listing}
+
+\index[examples]{partial\_sort@\texttt{partial\_sort}}
+
+
+\FloatBarrier
+
+Altogether, we have  $\mbox{\inl{a[j]}} \leq p \leq \mbox{\inl{a[k]}}$
+for each $0 \leq j < m$ and each $m \leq k < i+1$.
+%
+That is, \inl{Partition(a,m,i+1)} holds, although we cannot name a
+separating element of \inl{a} here.
+
+
+After calling \pushheap, which just performs some more 
+reorderings of the left part, this property is preserved. 
+We can't and we needn't tell which position $q$ is moved to;
+the former is indicated in Figure~\ref{fig:partialsort}
+by the vague grey triangle.
+%
+Moreover, we now know again that \inl{a[0]} has become an upper bound
+of the left part,
+and hence a separating element between
+\inl{a[0..m-1]} and \inl{a[m..i]};
+that is, the loop invariants \inl{upper} and \inl{lower} have been
+re-established.
+%
+These two invariants together are eventually used to prove
+the property \inl{partition} of the contract.
+
+Compared to its size, the algorithm makes a
+lot of procedure calls; in this respect it is closer to real-life
+software than most other algorithms of this tutorial.
+%
+Therefore, we use it to illustrate a methodical point:
+%
+For almost every procedure call, we give the callee's contract,
+tailored to its actual parameters, as a statement contract of the call.
+%
+For example, everything we know from the \popheap contract,
+instantiated to the particular situation, is documented in the
+first statement contract.
+%
+In contrast, we use \inl{assert} clauses to indicate intermediate
+reasoning to obtain subsequently needed properties.
+
+\begin{listing}[t]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={39-99}, style=acsl-block, frame=single]{Source/partial_sort.c}
+\end{minipage}
+\caption{\Label{lst:partialsort-impl2}The Implementation of
+\partialsort (2)}
+\end{listing}
+
+\index[examples]{partial\_sort@\texttt{partial\_sort}}
+
+\FloatBarrier
+
+
+Our implementation has a worst-case time complexity of
+${\cal O}((n+m) \cdot \log m)$.
+%
+On the other hand, an implementation that ignores \inl{m} and just sorts \inl{a[0..n-1]}
+also satisfies the contract of \specref{partialsort},
+and may have ${\cal O}(n \cdot \log n)$ complexity.
+%
+Some arithmetic shows that \partialsort performs better than
+plain sort if, and only if,
+$\log m < \dfrac{n}{m} \cdot \log\left(\dfrac{n}{m}\right)$,
+that is, if $n$ is sufficiently larger than $m$.
+
+
+
+\clearpage
+

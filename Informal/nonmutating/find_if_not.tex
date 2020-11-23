@@ -1,0 +1,108 @@
+
+
+\section{The \findifnot algorithm }
+\label{sec:findifnot}
+
+Many algorithms in the \cxx standard library can be parameterized not only by the type
+of sequence but also using so-called \emph{function objects}.
+One example is the \findifnot algorithm that accepts a 
+\emph{predicate function object}~$P$.
+The algorithm then returns the first position~$i$ in the input sequence where
+$P(i)$ does \emph{not} hold.
+
+While function objects could be emulated in \isoc with \emph{pointers to functions},
+we will not follow this road here.
+The main reason is that function pointers are, so far, only supported momentarily by \framac.
+Moreover, there is as of now no support for parameterized \acsl predicates.
+For these reasons our implementation of \findifnot only returns the first position
+in an array where a given value does \emph{not} occur.
+The signature, thus, reads 
+
+\begin{lstlisting}[style=acsl-block]
+
+       size_type find_if_not(const value_type* a, size_type n, value_type v);
+\end{lstlisting}
+
+On the one hand, this is not a very exciting addition to our
+collections of verified algorithms.
+It gives us, however, an opportunity to introduce the predicates
+\logicref{AllEqual}
+and \logicref{SomeNotEqual}
+and more importantly the logic function
+\logicref{FindNotEqual}
+that will later play
+an essential role in the specification of the algorithm \removecopy,
+or more precisely, its variant \specref{removecopyiii}.
+
+\input{Listings/AllSomeNot.acsl.tex}
+
+\clearpage
+
+The predicate \AllEqual expresses that each member of the array section
+
+\inl{a[m..n-1]} equals~\inl{v}.
+We also introduce the predicate \SomeNotEqual which is the negation of \AllEqual.
+Both predicates complement the predicates 
+\logicref{SomeEqual} and 
+\logicref{NoneEqual}.
+
+There are two additional overloaded versions of \AllEqual.
+The first version uses the value \inl{a[m]} as \inl{v}.
+The second version is just a shortcut when the first index~\inl{m} equals~0.
+
+\subsection{The logic function \FindNotEqual}
+
+The definition of the overloaded logic function \FindNotEqual is shown in
+Listings~\ref{logic:FindNotEqual-1} and~\ref{logic:FindNotEqual-2}.
+This function is very similar to 
+\logicref{Find} except that it
+finds the first element in a sequence that \emph{differs} from a given value.
+%
+Note that in lemma \FindNotEqualUnchanged we are using the predicate \logicref{Unchanged}
+that will be defined in a later chapter.
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={1-41}, style=acsl-block, frame=single]{Source/FindNotEqual.acsl}
+\end{minipage}
+\caption{\label{logic:FindNotEqual-1}
+   The logic function \FindNotEqual (1)}
+\input{Listings/FindNotEqual.acsl.labels.tex}
+\input{Listings/FindNotEqual.acsl.index.tex}
+\end{logic}
+
+\FloatBarrier
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={42-100}, style=acsl-block, frame=single]{Source/FindNotEqual.acsl}
+\end{minipage}
+\caption{\Label{logic:FindNotEqual-2}The logic function \FindNotEqual (2)}
+\end{logic}
+
+\FloatBarrier
+
+\clearpage
+
+\subsection{Formal specification of \findifnot}
+
+The contract of \specref{findifnot} is, unsurprisingly,
+very similar to that of \specref{findiii}.
+The only difference is that we replaced 
+\logicref{Find} by 
+\logicref{FindNotEqual}.
+
+\input{Listings/find_if_not.h.tex}
+
+\subsection{Implementation of \findifnot}
+
+The implementation of \implref{findifnot}
+also has a lot of similarities with of \implref{findiii}.
+Here again we have replaced \Find by \FindNotEqual and, of course,
+we check in the loop body that the value \inl{a[i]} \emph{differs} from the
+given value~\inl{v}.
+
+\input{Listings/find_if_not.c.tex}
+
+\clearpage
+

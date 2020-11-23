@@ -1,0 +1,106 @@
+
+\chapter{Mutating algorithms} \Label{cha:mutating}
+
+Let us now turn our attention to another class of algorithms,
+viz.\ \emph{mutating} algorithms of the \cxx Standard Library \cite[\S
+28.6]{cxx-17-draft}, i.e.,
+algorithms that change one or more ranges.
+%
+In \framac, you can explicitly specify that, e.g., entries in an array
+\inl{a} may be modified by a function
+\inl{f},
+by including the following \emph{assigns clause} into the 
+\inl{f}'s specification:
+
+\begin{lstlisting}[style=acsl-block]
+
+     assigns a[0..length-1];
+\end{lstlisting} %
+The expression \inl{length-1} refers to the value of \inl{length}
+when \inl{f} is entered, see 
+\cite[\S2.3.2]{ACSLSpec}.
+Below are the algorithms we will discuss in this chapter.
+
+\begin{itemize}
+
+\item
+In order to allow for a finer control of which parts of an array,
+we introduce in \S\ref{sec:unchanged} the auxiliary predicate \Unchanged.
+
+\item \filli in \S\ref{sec:filli}
+initializes each element of an array by a given fixed value.
+
+\item \swap in \S\ref{sec:swap} exchanges two values.
+
+\item \swapranges 
+in \S\ref{sec:swapranges} exchanges the contents of the arrays of equal length, element
+by element.
+We use this example to present ``modular verification'',
+as \swapranges reuses the verified properties of \swap.
+
+\item \copyi 
+in \S\ref{sec:copyi} 
+copies a source array to a destination array.
+
+\item \copybackward 
+in \S\ref{sec:copybackward} also
+copies a source array to a destination array. 
+This version, however, uses another separation condition than \copyi.
+
+\item \reversecopy and \reverse 
+in \S\ref{sec:reversecopy} and~\S\ref{sec:reverse}, respectively,
+reverse an array.
+Whereas \reversecopy copies the result to a separate destination array, 
+the \reverse algorithm works in place.
+
+\item \rotatecopy 
+in \S\ref{sec:rotatecopy}
+rotates a source array by \inl{m} positions and copies the results to a
+destination array.
+
+\item \rotatei 
+in \S\ref{sec:rotatei}
+rotates \emph{in place} a source array by \inl{m} positions.
+
+\item \replacecopy and \replace
+in \S\ref{sec:replacecopy} and~\S\ref{sec:replace}, respectively,
+substitute each occurrence of a value by a given new value.
+Whereas \replacecopy copies the result to a separate array, 
+the \replace algorithm works in place.
+
+\item \removecopy and \remove in \S\ref{sec:removecopy}--\S\ref{sec:remove}
+\emph{filter} all occurrences of a given value from an array.
+Whereas \removecopy copies the result to a separate array, 
+the \remove algorithm works in place.
+Note that we provide altogether three versions of how to specify \removecopy.
+This shall help the reader to understand that finding appropriate contracts
+is an iterative process and that it is usually a good idea to \emph{not} strive
+for a ``complete'' contract right from the beginning.
+
+\item \shuffle in \S\ref{sec:shuffle} randomly reorders the elements of an array
+thereby relying on the simple random number generator \randomnumber in 
+\S\ref{sec:randomnumber}.
+
+\end{itemize}
+
+\clearpage
+
+\input{mutating/unchanged}
+\input{mutating/fill}
+\input{mutating/swap}
+\input{mutating/swap_ranges}
+\input{mutating/copy}
+\input{mutating/copy_backward}
+\input{mutating/reverse_copy}
+\input{mutating/reverse}
+\input{mutating/rotate_copy}
+\input{mutating/rotate}
+\input{mutating/replace_copy}
+\input{mutating/replace}
+\input{mutating/remove_copy}
+\input{mutating/remove_copy2}
+\input{mutating/remove_copy3}
+\input{mutating/remove}
+\input{mutating/shuffle}
+\input{mutating/random_number}
+

@@ -1,0 +1,212 @@
+
+\section{The \removecopyiii algorithm (final contract)}
+\label{sec:removecopyiii}
+
+In this section we extend the contracts of \specref{removecopy}
+and \specref{removecopyii} by introducing a 
+logic function, which describes the relationship between the elements of
+input range \inl{a[0..n-1]} and the output range \inl{b[0..\\result-1]}.
+Note that we have shown in the previous section that
+\inl{\\result} equals \inl{CountNotEqual(a, n, v)}.
+
+\subsection{A closer look on the properties of \removecopy}
+\label{sec:formal-view-remove}
+
+Figure~\ref{fig:removecopy-trip} shows a modified version of the
+Figure~\ref{fig:removecopy}. We left out the indices of values that were not copied into the
+target array. Furthermore we have added a dashed arrow which points to the
+index that corresponds to the \emph{one past the end} location of the input and
+output range.
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics[width=0.70\textwidth]{Figures/remove_copy_partition.pdf}
+\end{center}
+\caption{\label{fig:removecopy-trip} Partitioning the input of \removecopy}
+\end{figure}
+\FloatBarrier
+
+These arrows between the indices of the array~\inl{b} and array~\inl{a} define
+the following sequence~$p$ of seven indices. The index of the \emph{one past the end} is underlined. 
+$p = (1, 2, 5, 7, 8, 10, \underline{11})$
+
+
+%\clearpage 
+
+More generally, we refer to the sequence~$p$ as \emph{partitioning sequence} of \removecopy for the array \inl{a[0..n-1]}.
+For the \textbf{length of a partitioning sequence} $m$ we get the following \textbf{strictly monotone increasing} sequence:
+\begin{align}
+  \label{eq:remove-monotone}
+  0 &\leq  p_0 < ... < p_{m} = n \\
+  \intertext{and the open index intervals}
+  %\label{eq:remove-interval}
+  \nonumber
+  (p_i,&p_{i+1}) && \forall i: 0 \leq i < m\\
+  \intertext{mark \textbf{consecutive ranges} of the value \inl{v}
+  in the source array, that is,}
+  \label{eq:between}
+  a[k] &= v &&\forall k: p_i < k < p_{i+1}\\
+  \intertext{Additionally, the half open interval}
+  \nonumber
+  [0,&p_{0})\\ 
+  \intertext{also marks another \textbf{consecutive range} of the value \inl{v} in the
+  source array:}
+  \label{eq:beginning}
+  a[k] &= v &&\forall k: 0 \leq k < p_{0}\\
+  \intertext{Another observation is that} 
+  \label{eq:a_nv}
+  a[p_i] &\neq v &&\forall i: 0 \leq i < m\\
+  \intertext{holds. Finally, we have}
+  \label{eq:b_eqa}
+  a[p_i] &= b[i] &&\forall i: 0 \leq i < m\\
+  \intertext{which, together with the inequality~\eqref{eq:a_nv} 
+  states, that the target does not contain the value~\inl{v}}
+  \nonumber
+  %\label{eq:final}
+  b[i] &\neq v &&\forall i:0 \leq i < m 
+\end{align} 
+
+\subsection{More lemmas on \CountNotEqual}
+
+Our formalization the properties of \S\ref{sec:formal-view-remove}
+relies on the logic function \logicref{CountNotEqual}.
+We also rely on the logic function \logicref{FindNotEqual} and
+the lemmas of \logicref{CountFindNotEqual} in the following listing that provide more
+facts about \CountNotEqual and \FindNotEqual.
+
+\input{Listings/CountFindNotEqual.acsl.tex}
+
+\clearpage
+
+\subsection{Formalizing the properties of the partitions}
+
+The function~\RemovePartition, whose axiomatic definition is given in 
+Listings~\ref{logic:RemovePartition-1} and~\ref{logic:RemovePartition-2}
+defines the partitioning sequence~$p$ from \S\ref{sec:formal-view-remove}.
+
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={1-53}, style=acsl-block, frame=single]{Source/RemovePartition.acsl}
+\end{minipage}
+\caption{\Label{logic:RemovePartition-1} The logic function \RemovePartition (1)}
+\input{Listings/RemovePartition.acsl.labels.tex}
+\input{Listings/RemovePartition.acsl.index.tex}
+\end{logic}
+
+\FloatBarrier
+
+Before we begin to relate the various lemmas
+to the formulas from \S\ref{sec:formal-view-remove} we want to remind
+the reader that logic functions (and predicates) must be total that is they must
+be defined for all possible argument values.
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={54-103}, style=acsl-block, frame=single]{Source/RemovePartition.acsl}
+\end{minipage}
+\caption{\Label{logic:RemovePartition-2}The logic function \RemovePartition (2)}
+\end{logic}
+
+\FloatBarrier
+
+The lemmas for \RemovePartition are related to the properties of 
+\S\ref{sec:formal-view-remove} in the following way.
+
+\begin{itemize}
+  \item Property \eqref{eq:remove-monotone} is expressed by the lemmas
+  \RemovePartitionEmpty, \RemovePartitionLeft
+  \RemovePartitionRight, and \RemovePartitionStrictlyWeakIncreasing
+
+  \item Properties~\eqref{eq:between} and~\eqref{eq:beginning}
+  are described by lemmas \RemovePartitionSegment.
+
+  \item Property~\eqref{eq:a_nv} is expressed by lemma \RemovePartitionNotEqual.
+
+  \item Property~\eqref{eq:b_eqa} is formulated using the predicate \logicref{Remove}.
+\end{itemize}
+
+\clearpage
+
+We would like to point out lemma \RemovePartitionCore which subsumes
+the statements of the subsequent lemmas \RemovePartitionUpper,
+\RemovePartitionNotEqual,\\
+and \RemovePartitionCount.
+While these three lemmas add nothing new 
+we have kept them because they correspond directly to individual properties
+of \S\ref{sec:formal-view-remove}.
+The question may arise why there is the lemma \RemovePartitionCore in the first place.
+The answer is that we found the individual properties so intertwined
+that we were not able to verify them separately but only their joint embodiment.
+
+
+\subsection{The predicate \Remove}
+
+The predicate \logicref{Remove} primarily serves 
+in order to improve the readability of our specification \specref{removecopyiii}.
+As mentioned before this predicate encapsulates the Property~\eqref{eq:b_eqa}
+from \S\ref{sec:formal-view-remove}.
+Note that \logicref{Remove} also contains an overloaded version of
+\Remove which will be used for the specification of the \emph{in-place}
+variant \specref{remove} of \removecopy.
+
+\input{Listings/Remove.acsl.tex}
+
+\clearpage
+
+\subsection{Formal specification of \removecopyiii}
+
+The following listing shows the formal specification of \specref{removecopy}.
+The additional postcondition \inl{remove} makes use of the predicate \logicref{Remove}
+which we have just described.
+Furthermore, we have again the postcondition~\inl{unchanged} which states that
+the source array~\inl{a[0..n-1]} does not change.
+
+\input{Listings/remove_copy3.h.tex}
+
+\subsection{Implementation of \removecopyiii}
+\label{sec:removecopyiii:impl}
+
+We discuss now some aspects of the implementation of \implref{removecopyiii}.
+We introduce the loop invariant~\inl{mapping}.
+This invariant states that the variable~\inl{i} will
+always be smaller or equal to the result of \inl{RemovePartition(a, n, v, k)}.
+We also add the assertion~\inl{mapping} to our implementation as stepping stone
+for the provers to verify the correctness of this loop invariant.
+
+Somewhat surprisingly, in order to reduce excessive verification times we had to add
+an else-branch to our implementation that besides the assertion \inl{unchanged}
+is empty.
+
+Regarding the assertion \inl{update}, one might wonder why we do not simply write
+\inl{\\at(a[i], Pre)}. 
+However, this expression would be wrong because the index~\inl{i}
+would then be interpreted as
+\inl{\\at(i,Pre)} which doesn't makes sense for a local variable.
+\wpframac consequently rejects this expression with the following error message.
+
+\begin{small}
+\begin{verbatim}
+       Warning: unbound logic variable i. Ignoring code annotation
+\end{verbatim}
+\end{small}
+
+\clearpage
+
+We could explicitly refer to the current value of~\inl{i} by using
+the subexpression \inl{\\at(i,Here)} inside the assertion~\inl{update}.
+We felt, however, tow introduce the predicate \logicref{At}
+to simplify the comparison of array elements in programme states 
+where the particular index variable isn't visible.
+
+\input{Listings/At.acsl.tex}
+
+The second argument \At is interpreted at the programme point here it appears,
+that is, \inl{Here}.
+Using this auxiliary logic function the assertion \inl{update}
+is arguably more readable.
+
+\input{Listings/remove_copy3.c.tex}
+
+\clearpage
+
