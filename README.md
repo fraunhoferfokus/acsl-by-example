@@ -36,6 +36,8 @@ Note that these LaTeX files are not sufficient to generate
 
 ## Travis CI
 
+**Travis CI** is currently not working for *ACSL by Example*.
+
 We have added Travis CI to demonstrate what steps are required to set up the toolchain, 
 see the the 
 file [.travis](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/.travis.yml)
