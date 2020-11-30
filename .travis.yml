@@ -10,7 +10,6 @@ addons:
       - libgnomecanvas2-dev
       - libgtk2.0-dev
       - libgtksourceview2.0-dev
-      - cvc4
       - cvc3
       - z3
 
@@ -29,6 +28,10 @@ before_install:
   - which opam || (
       wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.7/opam-2.0.7-x86_64-linux -O $HOME/bin/opam &&
       chmod +x $HOME/bin/opam
+    )
+  - which cvc4 || (
+      wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.7-x86_64-linux-opt -O $HOME/bin/cvc4 &&
+      chmod +x $HOME/bin/cvc4
     )
   - opam init --auto-setup --disable-sandboxing --comp=4.10.1
 
