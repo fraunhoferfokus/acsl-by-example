@@ -45,9 +45,11 @@ install:
   - opam update
   - opam install --yes depext
   - opam depext  --yes --install frama-c alt-ergo why3
-  - eval $(opam config env); rm -f $HOME/.why3.conf; why3 config --detect
+  - eval $(opam env); rm -f $HOME/.why3.conf; why3 config --detect
 
 script:
    - make -C StandardAlgorithms clean
    - make -C StandardAlgorithms test
    - make -C StandardAlgorithms report-clean
+   - eval $(opam env); make -C StandardAlgorithms report
+   - git diff StandardAlgorithms/Results
