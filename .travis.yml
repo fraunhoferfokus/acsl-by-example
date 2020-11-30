@@ -11,7 +11,6 @@ addons:
       - libgtk2.0-dev
       - libgtksourceview2.0-dev
       - cvc3
-      - z3
 
 cache:
   directories:
@@ -26,12 +25,19 @@ env:
 before_install:
   - sudo apt update -qq
   - which opam || (
-      wget --no-clobber https://github.com/ocaml/opam/releases/download/2.0.7/opam-2.0.7-x86_64-linux -O $HOME/bin/opam &&
+      wget --quiet --no-clobber https://github.com/ocaml/opam/releases/download/2.0.7/opam-2.0.7-x86_64-linux -O $HOME/bin/opam &&
       chmod +x $HOME/bin/opam
     )
   - which cvc4 || (
-      wget --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.7-x86_64-linux-opt -O $HOME/bin/cvc4 &&
+      wget --quiet --no-clobber http://cvc4.cs.stanford.edu/downloads/builds/x86_64-linux-opt/cvc4-1.7-x86_64-linux-opt -O $HOME/bin/cvc4 &&
       chmod +x $HOME/bin/cvc4
+    )
+  - which z3 || (
+      wget --quiet https://github.com/Z3Prover/z3/releases/download/z3-4.8.6/z3-4.8.6-x64-ubuntu-16.04.zip &&
+      unzip -j z3-4.8.6-x64-ubuntu-16.04.zip z3-4.8.6-x64-ubuntu-16.04/bin/z3 &&
+      mv z3 $HOME/bin/z3 &&
+      chmod +x $HOME/bin/z3 &&
+      rm -f z3-4.8.6-x64-ubuntu-16.04.zip
     )
   - opam init --auto-setup --disable-sandboxing --comp=4.10.1
 
