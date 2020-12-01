@@ -44,7 +44,8 @@ before_install:
 install:
   - opam update
   - opam install --yes depext
-  - opam depext  --yes --install frama-c alt-ergo why3
+  - opam depext  --yes frama-c
+  - opam install --yes  frama-c alt-ergo why3
   - eval $(opam env); rm -f $HOME/.why3.conf; why3 config --detect
 
 script:
