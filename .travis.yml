@@ -46,7 +46,7 @@ install:
   - opam install --yes depext
   - opam depext  --yes frama-c 
   - opam install --yes  alt-ergo
-  - travis_wait 15 opam install --yes  coq
+  - travis_wait 20 opam install --yes  coq
   - opam install --yes  why3 why3-coq frama-c
   - eval $(opam env); rm -f $HOME/.why3.conf; why3 config --detect
 
