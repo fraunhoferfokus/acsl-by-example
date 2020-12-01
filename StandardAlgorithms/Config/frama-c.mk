@@ -60,7 +60,7 @@ AV_WHY3_CONF := $(shell realpath $(TOP_DIR))/astraver.why3.conf
 # WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 # provers
-PROVERS = alt-ergo 
+PROVERS = alt-ergo native:coq z3 cvc4
 WP_PROVER_FLAGS += $(addprefix -wp-prover , $(PROVERS))
 
 export FR    := frama-c
