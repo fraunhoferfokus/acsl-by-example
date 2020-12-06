@@ -22,7 +22,7 @@ cache:
 env:
   global:
     - WP_TIMEOUT=1
-    - WP_PROCESSES=3
+    - WP_PROCESSES=2
 
 before_install:
   - sudo apt update -qq

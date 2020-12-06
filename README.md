@@ -36,12 +36,20 @@ Note that these LaTeX files are not sufficient to generate
 
 ## Travis CI
 
-
 We have added Travis CI to demonstrate what steps are required to set up the toolchain, 
 see the the 
 file [.travis](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/.travis.yml)
 for details.
 Travis performs the tests and replays the proofs with reduced timeouts.
-That means the results in Travis are possibly downgraded comparing to that we state in the tutorial and the `Results` folder.
-Verification results are also could be different on your machine either because of the hardware.
+This means the results in Travis are possibly downgraded compared to those
+we report in the tutorial and the `Results` folder.
+
+### Remark
+
+In order to remain within the
+[time limit](https://docs.travis-ci.com/user/customizing-the-build/#build-timeouts)
+of Travis we omit the verification of
+[sorting algorithms](https://github.com/fraunhoferfokus/acsl-by-example/tree/master/StandardAlgorithms/sorting).
+In order to re-enable their verification, one has to add the line
+`sorting` to [this file](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/filelist.path).
 
