@@ -1,7 +1,16 @@
+# Important Note: This software is not actively maintained anymore
 
+As of 2021, *ACSL by Example* is **not maintained anymore**. 
+The main reason is that my research centers now on quantum computing.
+Although this field also demands for formal methods, I have not enough time to continue providing
+high quality releases of *ACSL by Example*. 
 
-# ACSL by Example
-[//]: # ([![Replay Status](https://travis-ci.org/fraunhoferfokus/acsl-by-example.svg?branch=master)](https://travis-ci.org/fraunhoferfokus/acsl-by-example))
+It was a great pleasure for me to learn about the [Frama-C](https://frama-c.com) tool chain, in particular 
+the [Frama-C/WP](https://frama-c.com/wp.html) plug-in.
+We at Fraunhofer FOKUS could not have produced *ACSL by Example* without the great help we received
+from the [team of Frama-C at CEA List](https://frama-c.com/html/contact.html)!
+
+#### ACSL by Example
 
 This repository contains version 22.0.0 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
@@ -26,30 +35,10 @@ Frama-C 22.0 and relies among others on the following sofware packages.
 
 For more details on verifying the examples see the file [README.txt](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/README.txt).
 
-## Accompanying LaTeX files
+#### Accompanying LaTeX files
 
 We also inlude for each example corresponding LaTeX file (see directory [Informal](https://github.com/fraunhoferfokus/acsl-by-example/tree/master/Informal)).
 This might be interesting for someone who wants to apply machine learning algorithms
 on this (small) collection of informal and formal specifications.
 Note that these LaTeX files are not sufficient to generate
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf).
-
-## Travis CI
-
-We have added Travis CI to demonstrate what steps are required to set up the toolchain, 
-see the the 
-file [.travis](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/.travis.yml)
-for details.
-Travis performs the tests and replays the proofs with reduced timeouts.
-This means the results in Travis are possibly downgraded compared to those
-we report in the tutorial and the `Results` folder.
-
-### Remark
-
-In order to remain within the
-[time limit](https://docs.travis-ci.com/user/customizing-the-build/#build-timeouts)
-of Travis we omit the verification of
-[sorting algorithms](https://github.com/fraunhoferfokus/acsl-by-example/tree/master/StandardAlgorithms/sorting).
-In order to re-enable their verification, one has to add the line
-`sorting` to [this file](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/filelist.path).
-
