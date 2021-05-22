@@ -1,7 +1,7 @@
 
 
 # ACSL by Example
-[//]: # [![Replay Status](https://travis-ci.org/fraunhoferfokus/acsl-by-example.svg?branch=master)](https://travis-ci.org/fraunhoferfokus/acsl-by-example)
+[//]: # ([![Replay Status](https://travis-ci.org/fraunhoferfokus/acsl-by-example.svg?branch=master)](https://travis-ci.org/fraunhoferfokus/acsl-by-example))
 
 This repository contains version 22.0.0 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
