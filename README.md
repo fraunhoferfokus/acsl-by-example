@@ -10,6 +10,8 @@ the [Frama-C/WP](https://frama-c.com/wp.html) plug-in.
 We at Fraunhofer FOKUS could not have produced *ACSL by Example* without the great help we received
 from the [team of Frama-C at CEA List](https://frama-c.com/html/contact.html)!
 
+Special thanks also to Denis Efremov from [ISPRAS](https://www.ispras.ru) for his contributions to *ACSL by Example*.
+
 #### ACSL by Example
 
 This repository contains version 22.0.0 of
