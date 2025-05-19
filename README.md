@@ -1,7 +1,7 @@
-# Important Note: This software is not actively maintained anymore
+# Important Note: This software is currently not maintained 
 
-As of 2021, *ACSL by Example* is **not maintained anymore**. 
-The main reason is that my research centers now on quantum computing.
+As of 2021, *ACSL by Example* is **not maintained**. 
+The main reason is that my research centers currently on quantum computing.
 Although this field also demands for formal methods, I have not enough time to continue providing
 high quality releases of *ACSL by Example*. 
 
