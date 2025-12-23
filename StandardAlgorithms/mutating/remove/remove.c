@@ -12,8 +12,8 @@ remove(value_type* a, size_type n, value_type v)
     loop invariant bound:      0 <= k <= i <= n;
     loop invariant remove:     Remove{Pre,Here}(a, n, i, v);
     loop invariant discard:    NoneEqual(a, k, v);
-    loop invariant interval:   RemovePartition{Pre}(a, n, v, k-1) <= i;
-    loop invariant interval:   i <= RemovePartition{Pre}(a, n, v, k);
+    loop invariant interval:   IndexOfNotEqual{Pre}(a, n, v, k-1) <= i;
+    loop invariant interval:   i <= IndexOfNotEqual{Pre}(a, n, v, k);
     loop invariant unchanged:  Unchanged{Pre,Here}(a, k, n);
     loop invariant unchanged:  a[k] == At{Pre}(a, k);
     loop assigns   k, i, a[0..n-1];
@@ -24,7 +24,7 @@ remove(value_type* a, size_type n, value_type v)
       a[k++] = a[i];
       //@ assert size:      k == CountNotEqual{Pre}(a, 0, i+1, v);
       //@ assert update:    a[k-1] == At{Pre}(a, i);
-      //@ assert interval:  i == RemovePartition{Pre}(a, n, v, k-1);
+      //@ assert interval:  i == IndexOfNotEqual{Pre}(a, n, v, k-1);
       //@ assert remove:    Remove{Pre,Here}(a, n, i,   v);
       //@ assert remove:    Remove{Pre,Here}(a, n, i+1, v);
     }

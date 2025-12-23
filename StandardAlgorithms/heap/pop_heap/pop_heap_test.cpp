@@ -37,31 +37,37 @@ main(int argc, char** argv)
     std::make_heap(a.begin(), a.end());
     pop_heap_compare(a);
   }
+
   // heap of length 1
   {
     std::vector<value_type> a(1);
     pop_heap_compare(a);
   }
+
   // heap of length 2
   {
     std::vector<value_type> a{3, 1};
     pop_heap_compare(a);
   }
+
   // heap of length 3
   {
     std::vector<value_type> a{3, 1, 3};
     pop_heap_compare(a);
   }
+
   // another heap of length 3
   {
     std::vector<value_type> a{3, 3, 1};
     pop_heap_compare(a);
   }
+
   // another heap
   {
     std::vector<value_type> a{3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 1};
     pop_heap_compare(a);
   }
+
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";
 }
 

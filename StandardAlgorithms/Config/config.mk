@@ -2,6 +2,9 @@
 
 OS := $(shell uname -s)
 
+CP := cp -f
+MV := mv -f
+
 #setup some basic preprocessor flags
 CPPFLAGS := -I$(TOP_DIR)
 CPPFLAGS += -I$(TOP_DIR)/Logic

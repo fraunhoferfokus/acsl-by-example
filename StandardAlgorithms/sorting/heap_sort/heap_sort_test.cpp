@@ -17,6 +17,7 @@ main(int argc, char** argv)
     std::mt19937 g(rd());
     std::shuffle(a.begin(), a.end(), g);
   }
+
   heap_sort(&a[0], a.size());
   assert(a == b);
   std::cout << "\tsuccessful execution of " << argv[0] << "\n";

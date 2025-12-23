@@ -26,7 +26,7 @@ operator<<(std::ostream& stream, const std::vector<value_type>& a)
   return stream;
 }
 
-template<class FwdIt, class Compare = std::less<>>
+template<class FwdIt, class Compare = std::less< >>
 void
 insertion_sort(FwdIt first, FwdIt last, Compare cmp = Compare{})
 {
@@ -63,6 +63,7 @@ main(int argc, char** argv)
     std::mt19937 g(rd());
     std::shuffle(a.begin(), a.end(), g);
   }
+
   auto c = a;
   //std::cout << c << std::endl;
   insertion_sort(c);
