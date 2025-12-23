@@ -3,7 +3,6 @@ MAKEFLAGS += --silent --no-print-directory
 
 FILELIST = filelist.path
 EXAMPLES := $(shell cat $(FILELIST))
-ALLMAKE  := Config/all-action.mk
 
 .PHONY: $(EXAMPLES)
 
@@ -13,13 +12,6 @@ lib:			$(EXAMPLES)
 test:			$(EXAMPLES)
 clean::			$(EXAMPLES)
 format:			$(EXAMPLES)
-report-clean:		$(EXAMPLES)
-qreport-clean:		$(EXAMPLES)
-preport-clean:		$(EXAMPLES)
-areport-clean:		$(EXAMPLES)
-group-files:		$(EXAMPLES)
-group-report-clean:	$(EXAMPLES)
-group-preport-clean:	$(EXAMPLES)
 
 $(EXAMPLES):
 	(echo $@; make -sC $@ $(MAKECMDGOALS))
@@ -28,10 +20,19 @@ $(EXAMPLES):
 clean::
 	@$(RM) -rf errorlogs
 	@$(RM) *.back
-	@$(RM) astraver.why3.conf
 	@$(MAKE) clean -sC Scripts
 	@$(MAKE) clean -sC Drivers
-	@$(MAKE) -f $(ALLMAKE) clean
+
+
+dist-clean: clean
+	@$(RM) -rf cache
+	
+
+wp:
+	@for i in $(EXAMPLES);\
+	do \
+		(echo "wp $$i"; $(MAKE) wp -sC $$i);\
+	done
 
 report:
 	@for i in $(EXAMPLES);\
@@ -39,49 +40,13 @@ report:
 		(echo "report $$i"; $(MAKE) report -sC $$i);\
 	done
 
-qreport:
+result:
 	@for i in $(EXAMPLES);\
 	do \
-		(echo "qreport $$i"; $(MAKE) qreport -sC $$i);\
+		(echo "result $$i"; $(MAKE) result -sC $$i);\
 	done
 
-preport:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "preport $$i"; $(MAKE) preport -sC $$i);\
-	done
+result-clean:
+	@$(RM) Results/*.json
 
-areport:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "areport $$i"; $(MAKE) areport -sC $$i);\
-	done
-
-group-report:
-	@for i in $(EXAMPLES);\
-	do \
-		($(MAKE) group-report -sC $$i);\
-	done
-
-group-preport:
-	@for i in $(EXAMPLES);\
-	do \
-		($(MAKE) group-preport -sC $$i);\
-	done
-
-
-all-files: group-files
-	$(MAKE) -f $(ALLMAKE) source header
-
-all-report: all-files
-	$(MAKE) -f $(ALLMAKE) report
-
-all-report-clean:
-	$(MAKE) -f $(ALLMAKE) report-clean
-
-all-preport: all-files
-	$(MAKE) -f $(ALLMAKE) preport
-
-all-preport-clean:
-	$(MAKE) -f $(ALLMAKE) preport-clean
 

@@ -1,12 +1,12 @@
 
 export FRAMAC_SHARE:=$(shell frama-c -print-share-path)
 
-export TIMEOUT   ?= 1
+export TIMEOUT   ?= 2
 export PROCESSES ?= 1
 
 #setup wp
 export WP_TIMEOUT        ?= $(TIMEOUT)
-export WP_COQ_TIMEOUT    ?= 10
+#export WP_COQ_TIMEOUT    ?= 10
 export WP_PROCESSES      ?= $(PROCESSES)
 export WP_SMOKE_TESTS    ?= 0
 
@@ -15,15 +15,9 @@ export AV_TIMEOUT   ?= $(TIMEOUT)
 export AV_PROCESSES ?= $(PROCESSES)
 
 # flags for when we invoke Frama C directly instead of going
-# through script_functions.sh
-WP_TIME_FLAGS= \
-	-wp-timeout $(WP_TIMEOUT) \
-	-wp-coq-timeout $(WP_COQ_TIMEOUT) \
-	-wp-par $(WP_PROCESSES)
-
-#setup coq
-SCRIPT?='$(TOP_DIR)/wp0.script' # default script
-DRIVER=$(DRIVER_DIR)/driver
+WP_TIME_FLAGS= -wp-timeout $(WP_TIMEOUT)
+WP_TIME_FLAGS+= -wp-par $(WP_PROCESSES)
+#WP_TIME_FLAGS += -wp-coq-timeout $(WP_COQ_TIMEOUT) -wp-par $(WP_PROCESSES)
 
 # having this as a separate variable allows us to override it in
 # algorithm makefiles
@@ -42,36 +36,30 @@ WP_BASE_FLAGS := $(BASE_FLAGS)
 WP_BASE_FLAGS += -wp
 WP_BASE_FLAGS += -wp-rte $(WP_RTE_FLAGS)
 
-AV_BASE_FLAGS := $(BASE_FLAGS)
-AV_BASE_FLAGS += -av
-
 WP_FLAGS := $(WP_BASE_FLAGS)
-WP_FLAGS += -wp-driver $(DRIVER_DIR)/external.driver
-WP_FLAGS += -wp-coq-script $(SCRIPT)
 WP_FLAGS += -wp-model Typed
+WP_FLAGS += -wp-session $(TOP_DIR)
+
+# Default mode
+WP_INTERACTIVE ?= batch
+# Use the chosen mode to build WP_FLAGS
+WP_FLAGS += -wp-interactive=$(WP_INTERACTIVE)
 
 ifeq ($(WP_SMOKE_TESTS),1)
 WP_FLAGS += -wp-smoke-tests
 endif
 
-AV_FLAGS     := $(AV_BASE_FLAGS) -av-extract all_annot
-AV_WHY3_CONF := $(shell realpath $(TOP_DIR))/astraver.why3.conf
-
 # WP_PROVER_FLAGS += -wp-steps $(WP_ALT_ERGO_STEPS)
 
 # provers
-PROVERS = alt-ergo native:coq z3 cvc4
+PROVERS = alt-ergo Z3 CVC5 Coq
 WP_PROVER_FLAGS += $(addprefix -wp-prover , $(PROVERS))
+#WP_PROVER_FLAGS += -wp-run-all-provers
 
 export FR    := frama-c
-export FRGUI := frama-c-gui
+export FRGUI := ivette
 
 export WP_PROVER_FLAGS
-export WP_C_FLAGS   = -cpp-extra-args="$(INCLUDES)" $(WP_FLAGS)
+export WP_C_FLAGS   = -cpp-extra-args="$(INCLUDES)" $(WP_FLAGS) 
 export WP_CXX_FLAGS = -cxx-clang-command="framaCIRGen $(INCLUDES)"  $(WP_FLAGS)
-export WP_C_REPORT  = $(FR) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) -wp-par $(WP_PROCESSES)
-
-export AV_C_FLAGS  = -cpp-extra-args="$(INCLUDES)" $(AV_FLAGS)
-export AV_STRATEGY = acslbyexample
-export AV_C_REPORT = $(FR) $(AV_C_FLAGS) -av-target why3sprove -av-why3-opt " --extra-config $(AV_WHY3_CONF) --no-save-session --strategy $(AV_STRATEGY) "
 

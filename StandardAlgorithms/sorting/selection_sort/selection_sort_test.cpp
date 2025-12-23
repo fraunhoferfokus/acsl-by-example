@@ -7,7 +7,7 @@
 #include <cassert>
 #include <random>
 
-template<class FwdIt, class Compare = std::less<>>
+template<class FwdIt, class Compare = std::less< >>
 void
 cxx(FwdIt first, FwdIt last, Compare cmp = Compare{})
 {
@@ -63,6 +63,7 @@ main(int argc, char** argv)
     std::mt19937 g(rd());
     std::shuffle(a.begin(), a.end(), g);
   }
+
   auto c = a;
   //std::cout << a << std::endl;
   selection_sort(a.data(), a.size());

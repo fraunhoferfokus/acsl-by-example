@@ -23,6 +23,15 @@
       \forall integer i; 0 <= i <= n  ==>
         VALUE_TYPE_MIN <= InnerProduct(a, b, i, init) <= VALUE_TYPE_MAX;
 
+    lemma InnerProduct_Init:
+      \forall value_type *a, *b, init, integer n;
+         n <= 0  ==>  InnerProduct(a, b, n, init) == init;
+
+    lemma InnerProduct_Next{L}:
+      \forall value_type* a, *b, init, integer n;
+        0 <= n  ==>
+        InnerProduct(a, b, n+1, init) == InnerProduct(a, b, n, init) + a[n] * b[n];
+
     lemma InnerProduct_Unchanged{K,L}:
       \forall value_type *a, *b, init, integer n;
         Unchanged{K,L}(a, n)  ==>
