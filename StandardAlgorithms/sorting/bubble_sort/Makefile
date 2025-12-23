@@ -1,6 +1,7 @@
 
 include ../../Config/example.mk
 
+WP_TIMEOUT=5
 #WP_FLAGS += -wp-prop=lower
 #WP_FLAGS += -wp-prop=increasing
 #WP_FLAGS += -wp-prop=unchanged

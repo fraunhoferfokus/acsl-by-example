@@ -1,0 +1,39 @@
+
+\section{The \isheap algorithm}
+\Label{sec:isheap}
+
+The \isheap algorithm of the \cxx Standard Library \cite[\S 28.7.7.5]{cxx-17-draft}
+works on generic sequences. 
+For our purposes we have modified the generic implementation
+to that of an array of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+    bool is_heap(const value_type* a, int n);
+\end{lstlisting}
+
+The algorithm \isheap checks whether a given array satisfies the heap properties
+we have semi-formally described in the beginning of this chapter.
+In particular, \isheap will return \inl{true}
+called with the array argument from Figure~\ref{fig:heap-array}.
+
+%\clearpage
+
+\subsection{Formal specification of \isheap}
+
+The specification of \isheap is shown in the following listing.
+The function returns~\inl{true} if and only if the input array
+satisfies the predicate \logicref{Heap}.
+
+\input{Listings/is_heap.h.tex}
+
+\subsection{Implementation of \isheap}
+
+Our implementation of \isheap in the following listing
+utilizes the function \specref{isheapuntil}.
+
+\input{Listings/is_heap.c.tex}
+
+\clearpage
+

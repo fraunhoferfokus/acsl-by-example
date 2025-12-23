@@ -4,7 +4,7 @@ MAKEFLAGS += --silent --no-print-directory
 
 export TOP_DIR     ?= ..
 export CONFIG_DIR  := $(TOP_DIR)/Config
-export SCRIPT_DIR := $(TOP_DIR)/Scripts
+export GROUPMAKE   := $(CONFIG_DIR)/group-union.mk
 
 FILELIST   	:= filelist.path
 GROUP		:= $(shell basename $$(pwd))
@@ -60,31 +60,51 @@ $(LIB): $(GROUP_OBJECTS)
 clean:: FORCE
 	$(RM) $(LIB)
 	@$(RM) $(GROUP_OBJECTS)
-
-wp:
-	@for i in $(EXAMPLES);\
-        do \
-                ($(MAKE) wp -sC $$i);\
-        done
-
-result:
-	@for i in $(EXAMPLES);\
-        do \
-                ($(MAKE) result -sC $$i);\
-        done
-
-result-clean:
-	@for i in $(EXAMPLES);\
-        do \
-                ($(MAKE) result-clean -sC $$i);\
-	done
+	$(MAKE) -f $(GROUPMAKE) clean
 
 report:
-	@python3 $(SCRIPT_DIR)/print_report_header.py
 	@for i in $(EXAMPLES);\
         do \
-                ($(MAKE) json-report -sC $$i);\
+                ($(MAKE) report -sC $$i);\
         done
 
-FORCE:
+preport:
+	@for i in $(EXAMPLES);\
+        do \
+                ($(MAKE) preport -sC $$i);\
+        done
 
+qreport:
+	@for i in $(EXAMPLES);\
+        do \
+                ($(MAKE) qreport -sC $$i);\
+        done
+
+areport:
+	@for i in $(EXAMPLES);\
+        do \
+                ($(MAKE) areport -sC $$i);\
+        done
+
+group-files:
+	$(MAKE) -f $(GROUPMAKE) files
+
+group-wp: 
+	$(MAKE) -f $(GROUPMAKE) group-wp
+
+group-wpgui: 
+	$(MAKE) -f $(GROUPMAKE) group-wpgui
+
+group-report: group-files
+	$(MAKE) -f $(GROUPMAKE) report
+
+group-report-clean:
+	$(MAKE) -f $(GROUPMAKE) report-clean
+
+group-preport: group-files
+	$(MAKE) -f $(GROUPMAKE) preport
+
+group-preport-clean:
+	$(MAKE) -f $(GROUPMAKE) preport-clean
+
+FORCE:

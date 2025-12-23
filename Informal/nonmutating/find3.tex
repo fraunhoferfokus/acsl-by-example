@@ -1,0 +1,101 @@
+
+\section{The \findiii algorithm---using a logic function}
+\Label{sec:findiii}
+
+In this section we specify linear search yet another way.
+This requires more preparing work but results in a more concise function contract.
+
+\subsection{The logic function \Find}
+
+We start with a \emph{recursive} definition of the \acsl function \Find.
+Due to the considerable number of associated lemmas of the function
+\Find we split its definition into several listings.
+Note that \Find comes as two \emph{overloaded} functions.
+While the first version is defined for \emph{array sections} the latter is intend
+for \emph{complete arrays}.
+
+The listings start with lemmas which express elementary
+properties directly related to an incremental increase of the array \inl{a[0..n-1]}. 
+The latter lemmas are somewhat more higher-level and will
+be useful for the verification of \findiii.
+It will be there that we also reuse the predicates 
+\logicref{SomeEqual}and
+\logicref{NoneEqual}.
+%
+At the end of this section we will also discuss in what sense the contracts
+of \findii and \findiii are equivalent.
+
+\begin{logic}[hbt]
+\begin{minipage}{0.99\textwidth}
+\lstinputlisting[linerange={1-60}, style=acsl-block, frame=single]{Source/Find.acsl}
+\end{minipage}
+\caption{\Label{logic:Find-1}The logic function \Find (1)}
+\input{Listings/Find.acsl.labels.tex}
+\input{Listings/Find.acsl.index.tex}
+\end{logic}
+
+\FloatBarrier
+
+\begin{logic}[hbt]
+\begin{minipage}{0.99\textwidth}
+\lstinputlisting[linerange={61-92}, style=acsl-block, frame=single]{Source/Find.acsl}
+\end{minipage}
+\caption{\Label{logic:Find-2}The logic function \Find (2)}
+\end{logic}
+
+\FloatBarrier
+
+\subsection{Formal specification of \findiii}
+
+Using the logic function \Find we can now give a third specification of linear search.
+The contract of \specref{findiii} is considerably shorter than that of \specref{findii}.
+Of course, we had to put much more effort into the definition of the \acsl
+function \logicref{Find}.
+
+\input{Listings/find3.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \findiii}
+
+The following listing shows the implementation of \implref{findiii}.
+In order to achieve a complete verification we had to add the assertion \inl{found}.
+
+\input{Listings/find3.c.tex}
+
+A question that remains is in what sense the contract of \specref{findii} is equivalent to
+the one of \specref{findiii}.
+We will answer this question in the following section.
+
+\subsection{The equivalence of \findii and \findiii}
+\Label{sec:findiv}
+\Label{sec:findv}
+
+We consider the contracts of \specref{findii} and \specref{findiii} as \emph{equivalent} 
+if each one is sufficient to verify the other.
+To this end we introduce yet another two examples \findiv and \findv.
+
+The implementation of \implref{findiv} consists just of a call to \findiii.
+
+\input{Listings/find4.c.tex}
+
+\clearpage
+
+The contract of \specref{findiv}, however, is the same as the one of \specref{findii}.
+
+\input{Listings/find4.h.tex}
+
+Analogously, the implementation of \implref{findv} is simply a call to \findii.
+
+\input{Listings/find5.c.tex}
+
+On the other hand, the contract of \specref{findv} is the same as the one of \specref{findiii}.
+%
+The verification of the functions \findiv and \findv 
+(cf.\ Table~\ref{tbl:result-nonmutating}) then shows the equivalence
+of the respective contracts of \specref{findii} and \specref{findiii}.
+
+\input{Listings/find5.h.tex}
+
+\clearpage
+

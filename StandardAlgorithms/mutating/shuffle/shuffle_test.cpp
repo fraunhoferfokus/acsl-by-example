@@ -20,7 +20,6 @@ main(int argc, char** argv)
     random_init(seed.data());
     shuffle(a.data(), a.size(), seed.data());
   }
-
   {
     std::random_device rd;
     std::mt19937 g(rd());

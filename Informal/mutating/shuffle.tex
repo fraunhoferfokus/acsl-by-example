@@ -1,0 +1,130 @@
+
+\section{The \shuffle algorithm}
+\Label{sec:shuffle}
+
+The \shuffle  algorithm in the \cxx Standard Library \cite[\S 28.6.13]{cxx-17-draft}
+randomly rearranges the elements of a given range, that is,
+it randomly picks one of its possible orderings.
+For our purposes we have modified
+the generic implementation
+to that of a range of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  void shuffle(value_type* a, size_type n, unsigned short* rand);
+\end{lstlisting}
+
+The argument \inl{rand} holds the state of a simple random number generator
+that is used in the implementation of \shuffle.
+
+Figure~\ref{fig:shuffle} illustrates an example run of \shuffle.
+In this figure, the values 1, 2, 3, and 4 occur 
+twice, once, once, and three times, respectively, both before and
+after the \shuffle run.
+This expresses that the range has been reordered.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/shuffle.pdf}
+\caption{\Label{fig:shuffle} Effects of \shuffle}
+\end{figure}
+
+\clearpage
+
+\subsection{The predicate \MultisetReorder}
+\Label{sec:multisetunchanged}
+
+The \shuffle algorithm is the first example in this document
+where we have to specify a \emph{rearrangement} or \emph{reordering}
+of the elements of a given range.
+We say that an array has been reordered between two states
+if the number of each element in the array remains unchanged.
+In other words, reordering leaves the \emph{multiset}\footnote{
+ See \url{http://en.wikipedia.org/wiki/Multiset}
+}
+of elements in the range unchanged.
+
+We use the predicate \logicref{MultisetReorder} 
+to formally describe this property.
+This predicate, which is given in two overloaded versions,
+relies on the logic function \logicref{Count}.
+We list here several lemma with basic properties of \MultisetReorder.
+We will use these lemmas during the verification of various algorithms.
+
+\input{Listings/MultisetReorder.acsl.tex}
+
+\clearpage
+
+\subsection{Formal specification of \shuffle}
+
+In the specification of the \specref{shuffle} algorithm we demand that the range \inl{a[0..n-1]}
+is valid for reading and writing.
+We use the predicate \logicref{MultisetReorder} to express that the
+contents of \inl{a[0..n-1]} is just permuted, i.e., the number of occurrences
+of each of its members remains unchanged. 
+The array \inl{rand} contains a seed for the random number generator used to randomize the
+shuffle.
+By specifying that the function assigns to \inl{rand}
+we capture that the function may return a different permutation every time.
+
+Note that our specification only states that the resulting range is
+a reordering of the input range; nothing more and nothing less.
+Ideally, we would also specify that sequence of reorderings
+obtained by repeated
+calls of \shuffle is required to be random.
+The informal specification\cite[\S 28.6.13]{cxx-17-draft} of \shuffle states that
+\emph{that each possible permutation of those elements has 
+equal probability of appearance}.
+However, \acsl does currently not support the specification of
+temporal properties related to repeated call results.
+
+\input{Listings/shuffle.h.tex}
+
+More generally speaking, it is not trivial to capture
+the notion of randomness in a mathematically precise way.
+As a typical example, we refer to a paper\cite[p.6--8]{Moses.Oakford.1963},
+which just gives four statistical tests indicating the randomness of the
+permutations computed with their algorithm.
+From a theoretical point of view, a sequence of permutations
+can be called ``random'' if its Kolmogorov complexity exceeds
+a certain measure, however, this property is undecidable\cite{Li.Vitanyi.1997}.
+
+\clearpage
+
+\subsection{Implementation of \shuffle}
+
+The following listing shows our implementation of the function \implref{shuffle}.
+It repeatedly calls the function \specref{swap} to \emph{transpose}
+(randomly) selected elements.
+For details of out source of randomness we refer to the function \specref{randomnumber}.
+
+\input{Listings/shuffle.c.tex}
+
+The loop invariants \inl{reorder} and \inl{unchanged} of \shuffle 
+are necessary for the verification of the postcondition~\inl{reorder}:
+in the \inl{i}th loop cycle, the subrange \inl{a[0..i-1]} has been
+reordered, while the remaining subrange \inl{a[i..n-1]} is yet unchanged.
+We also formulate several auxiliary assertions \inl{reorder} which use the
+the predefined label \inl{LoopCurrent},
+to guide the automatic verification the loop invariant \inl{reorder}.
+Please not the empty \inl{else}-branch hat only contains an assertion \inl{reorder}.
+We introduced this assertion to support the verification of the \inl{reorder} property.
+
+
+\clearpage
+
+In addition, we rely on the predicate \logicref{ArraySwap}
+rather than the literal postcondition of \specref{swap}, since this leads to
+to more concise annotations and better a performance of the automatic provers.
+
+\input{Listings/ArraySwap.acsl.tex}
+
+The lemma \logicref{MultisetSwapMiddle} states that swapping the elements
+\inl{a[i]} and \inl{a[k]} is a particular
+kind of reordering on the range \inl{a[i..k]}.
+
+\input{Listings/MultisetSwap.acsl.tex}
+
+\clearpage
+

@@ -1,0 +1,52 @@
+
+\section{The \partialsum algorithm}
+\Label{sec:partialsum}
+
+The \partialsum algorithm in the \cxx Standard Library \cite[\S 29.8.6]{cxx-17-draft} computes
+the sum of a given initial value and the elements in a range.
+%
+Our version of the original signature
+reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  size_type
+  partial_sum(const value_type* a, size_type n, value_type* b);
+\end{lstlisting} 
+
+After executing the function \partialsum the array \inl{b[0..n-1]} holds the following values
+\begin{align}
+\Label{eq:partialsum}
+   \mathtt{b}[i] &= \sum_{k = 0}^{\mathtt{i}} \mathtt{a}[k]
+\end{align}
+for $0 \leq i < n$.
+%
+Equations~\eqref{eq:partialsum} and~\eqref{eq:accumulate-default}
+suggest that we define in the following listing the \acsl predicate \PartialSum
+by using the logic function \logicref{AccumulateDefault}.
+
+\input{Listings/PartialSum.acsl.tex}
+
+\clearpage
+
+\subsection{Formal specification of \partialsum}
+
+The specification of \specref{partialsum} demands that the arrays
+\inl{a[0..n-1]} and \inl{b[0..n-1]} 
+are separated, that is, they do not overlap.
+Note that is a stricter requirement than in the case of the original
+\cxx version of \partialsum, which allows that~\inl{a} equals~\inl{b},
+thus allowing the computation of partial sums \emph{in place}.
+
+\input{Listings/partial_sum.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \partialsum}
+
+The following listing shows an implementation of \partialsum with corresponding loop annotations.
+
+\input{Listings/partial_sum.c.tex}
+
+\clearpage
+

@@ -1,0 +1,95 @@
+
+\section{The \removecopy algorithm (basic contract)}
+\Label{sec:removecopy}
+
+The \removecopy algorithm of the \cxx Standard Library \cite[\S 28.6.8]{cxx-17-draft}
+copies all elements of a sequence other than a given value.
+Here, the general implementation has been altered to process \valuetype ranges.
+The new signature reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  size_type
+  remove_copy(const value_type* a, size_type n, value_type* b, value_type v);
+\end{lstlisting}
+
+The requirements of \removecopy are:
+
+\begin{table}[hbt]
+  \begin{center}
+    \begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Requirements} & \textbf{Description}
+\\\hline
+\hline
+\namedlabel{itm:remove-size}
+{\textbf{Remove Copy Size}} &
+The output range has to fit in all the elements of
+the input range, except the ones that equal the value~\inl{v}
+        by \removecopy.
+\\\hline
+        \namedlabel{itm:remove-separation}{\textbf{Remove Copy Separated}} &
+        The input range and the output range do not overlap
+\\\hline
+        \namedlabel{itm:remove-elements}{\textbf{Remove Copy Elements}} &
+        The \removecopy algorithm copies elements that
+        are not equal to \inl{v}
+        from range
+        \inl{a[0..n-1]} to the range {\inl{b[0..\\result-1]}}.
+\\\hline
+        \namedlabel{itm:remove-order}{\textbf{Remove Copy Stability}} &
+        The algorithm is stable, that is, the
+        relative order of the elements in \inl{b} is the same as in \inl{a}.
+\\\hline
+        \namedlabel{itm:remove-return}{\textbf{Remove Copy Return}} &
+        The return value is the length of the resulting range.                  
+\\\hline
+        \namedlabel{itm:remove-complexity}{\textbf{Remove Copy Complexity}} &
+        The algorithm takes $n$ comparisons in every case.
+\\\hline
+      \end{tabular}
+    \end{center}
+  \caption{\label{tbl:remove_copy_props}Properties of \removecopy}
+\end{table}
+\FloatBarrier
+
+Figure~\ref{fig:removecopy} shows an example of how \removecopy is supposed
+to copy elements that differ from~\inl{4} from the input range to the output range.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.75\textwidth]{Figures/remove_copy.pdf}
+\caption{\Label{fig:removecopy}Effects of \removecopy}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Formal specification of \removecopy}
+
+The following listing shows our first attempt to specify \removecopy.
+In postcondition~\inl{discard} we use of the predicate \logicref{NoneEqual}
+to show that the value \inl{v} does not occur in the range \inl{b[0..\\result]}.
+
+\input{Listings/remove_copy.h.tex}
+
+One shortcoming of this specification is that the postcondition \inl{bound}
+only makes very general and not very precise statements about the number of copied elements.
+We will address this problem in the contract of \specref{removecopyii}.
+A more serious shortcoming is, however, that we haven't specified what
+the relationship between the elements of the input range \inl{a[0..n-1]}
+and the output range \inl{b[0..\\result-1]} looks like.
+This problem will be tackled in the contract of \specref{removecopyiii}.
+
+%\clearpage
+
+\subsection{Implementation of \removecopy}
+
+An implementation of \removecopy is shown in the following listing.
+
+\input{Listings/remove_copy.c.tex}
+
+Here we also need to add another loop invariant~\inl{discard} which basically 
+checks if \inl{v} occurs in \inl{b[0..k]} for each iteration of the loop.
+
+%\clearpage
+

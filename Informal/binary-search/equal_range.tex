@@ -1,0 +1,207 @@
+\section{The \equalrange algorithm}
+\Label{sec:equalrange}
+\Label{sec:equalrangeii}
+
+The \equalrange algorithm is one of the four binary search algorithms
+of the \cxx Standard Library \cite[\S 28.7.3.3]{cxx-17-draft}.
+As with the other binary search algorithms \equalrange requires that
+its input array is in increasing order.
+The specification of \equalrange states that it \emph{combines} the results of the algorithms
+\specref{lowerbound} and \specref{upperbound}.
+
+For our purposes we have modified
+\equalrange
+to take an array of type \valuetype.
+Moreover, instead of a pair of iterators, our version returns a pair of indices.
+To be more precise, the return type of \equalrange is the
+struct \sizetypepair from Listing~\ref{lst:size_type_pair}.
+Thus, the signature of \equalrange now reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+  size_type_pair
+  equal_range(const value_type* a, size_type n, value_type v);
+\end{lstlisting}
+
+Figure~\ref{fig:equalrange} combines Figure~\ref{fig:lowerbound} with Figure~\ref{fig:upperbound}
+in order visualize the behavior of \equalrange for select test cases.
+The two types of arrows~$\rightarrow$ and~$\dashrightarrow$ represent the
+respective fields \inl{first} and \inl{second} of the return value.
+For values that are not contained in the array, the two arrows point to the same index.
+More generally, if \equalrange returns the pair $(\mathtt{lb},\mathtt{ub})$, then
+the difference $\mathtt{ub} - \mathtt{lb}$ is equal to the number of occurrences of the 
+argument \inl{v} in the array.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/equal_range.pdf}
+\caption{\Label{fig:equalrange}Some examples for \equalrange}
+\end{figure}
+
+\FloatBarrier
+
+We will provide two implementations of \equalrange and verify both of them.
+The first implementation \implref{equalrange} just straightforwardly
+calls \specref{lowerbound} and \specref{upperbound} and simply
+returns the pair of their respective results.
+The second implementation \implref{equalrangeii}, which is more elaborate, follows the
+original \cxx code by attempting to minimize duplicate computations.
+%
+Let $(\mathtt{lb}, \mathtt{ub})$ be the return value  \equalrange, then
+the conditions~\eqref{eq:lower-bound-result}--\eqref{eq:upper-bound-right} can
+be merged into the inequality
+%
+\begin{align}
+\Label{eq:equal-range-result}
+0 \leq \mathtt{lb} \leq \mathtt{ub} \leq n 
+\end{align}
+
+and the following three implications for a valid index $k$ of the array under
+consideration
+%
+\begin{alignat}{3}
+\Label{eq:equal-range-left}
+0           &\leq  k < \mathtt{lb} && \qquad\Longrightarrow\qquad &&  a[k] < \mathtt{v} \\
+\Label{eq:equal-range-middle}
+\mathtt{lb} &\leq k < \mathtt{ub} && \qquad\Longrightarrow\qquad &&  a[k] = \mathtt{v} \\
+\Label{eq:equal-range-right}
+\mathtt{ub} &\leq k < n           && \qquad\Longrightarrow\qquad &&  a[k] > \mathtt{v} 
+\end{alignat}
+
+%\clearpage
+
+Here are some justifications for these conditions.
+
+\begin{itemize}
+\item 
+Conditions~\eqref{eq:equal-range-left} and~\eqref{eq:equal-range-right} are just the 
+Conditions~\eqref{eq:lower-bound-left} and~\eqref{eq:upper-bound-right}, respectively.
+
+\item
+The Inequality~\eqref{eq:equal-range-result} follows from the Inequalities~\eqref{eq:lower-bound-result}
+and~\eqref{eq:upper-bound-result} and the following considerations:
+If $\mathtt{ub}$ were less than $\mathtt{lb}$, then according to~\eqref{eq:equal-range-left}
+we would have $a[\mathtt{ub}] < \mathtt{v}$.
+One the other hand, we know from~\eqref{eq:equal-range-right} that opposite
+inequality $\mathtt{v} < a[\mathtt{ub}]$ holds.
+Therefore, we have $\mathtt{lb} \leq \mathtt{ub}$.
+
+\item
+Condition~\eqref{eq:equal-range-middle} follows from the combination of~\eqref{eq:lower-bound-right}
+and~\eqref{eq:upper-bound-left} and the fact that~$\leq$ is a total order on the integers.
+\end{itemize}
+
+%\clearpage
+
+\subsection{Formal specification of \equalrange}
+
+The following listing show the specification of \specref{equalrange}
+(and of \equalrangeii).
+
+\input{Listings/equal_range.h.tex}
+
+The precondition \inl{increasing} expresses
+that the array values need to be in increasing order.
+
+The postconditions reflect the conditions listed above and can be expressed
+using the already introduced predicates
+\logicref{AllEqual},
+\logicref{StrictUpperBound} and \logicref{StrictLowerBound}.
+
+\begin{itemize}
+\item Condition~\eqref{eq:equal-range-result} becomes postcondition \inl{result}
+\item Condition~\eqref{eq:equal-range-left} becomes postcondition \inl{left}
+\item Condition~\eqref{eq:equal-range-middle} becomes postcondition \inl{middle}
+\item Condition~\eqref{eq:equal-range-right} becomes postcondition \inl{right}
+\end{itemize}
+
+%\clearpage 
+
+\subsection{Implementation of \equalrange}
+
+Our first implementation of \implref{equalrange} is shown in the following listing.
+We just call the two functions \specref{lowerbound} and \specref{upperbound}
+and return their respective results as a pair.
+
+\input{Listings/equal_range.c.tex}
+
+In a very early version of this document we had proven the similar assertion
+\inl{first <= second} with the interactive theorem prover \coq.
+After reviewing this proof we formulated the new assertion \inl{aux}
+that uses a fact from the postcondition of \specref{upperbound}.
+The benefit of this reformulation is that both the assertion \inl{aux}
+and the postcondition \inl{first <= second} can now be verified automatically.
+
+%\clearpage 
+
+\subsection{Implementation of \equalrangeii}
+
+The first implementation of \implref{equalrange} does more work than needed.
+In the following listing \implref{equalrangeii} we show that it is possible to
+perform as much range reduction as possible before calling \specref{upperbound}
+and \specref{lowerbound} on the reduced ranges.
+
+
+\input{Listings/equal_range2.c.tex}
+
+Due to the higher code complexity of the second implementation, additional
+assertions had to be inserted in order to ensure that \wpframac is able to verify the
+correctness of the code.
+All of these assertions are related to pointer arithmetic and shifting base pointers.
+They fall into three groups and are briefly discussed below.
+In order to enable the automatic verification of these properties we
+added the following collection of \logicref{ArrayBoundsShift}.
+
+\input{Listings/ShiftLemmas.acsl.tex}
+
+\subsubsection*{The \inl{increasing} properties}
+
+Both \specref{lowerbound} and \specref{upperbound} expect that they
+operate on increasingly ordered arrays.
+This is of course also true for \specref{equalrange}, however,
+inside our second implementation we need a more specific formulation, namely,
+
+\begin{lstlisting}[style=acsl-block]
+
+        Increasing(a + middle, last - middle)
+\end{lstlisting}
+
+With the three-argument form of predicate \logicref{Increasing}
+we can formulate out an intermediate step.
+This enables the provers to verify the preconditions of the call to
+\specref{lowerbound} automatically.
+A similar assertion is present before the call to \specref{upperbound}.
+
+%\clearpage
+
+\subsubsection*{The \inl{strict} and \inl{constant} properties}
+
+Part of the post conditions of \specref{equalrange} is that \inl{v}
+is both a strict upper and a strict lower bound.
+However, the calls to \lowerbound and \upperbound only give us
+
+\begin{lstlisting}[style=acsl-block]
+
+        StrictUpperBound(a + first, 0, left - first, v) 
+
+        StrictLowerBound(a + middle, right - middle, last - middle, v)
+\end{lstlisting}
+
+which is not enough to reach the desired post conditions automatically.
+One intermediate step for each of the assertions was sufficient to guide
+the prover to the desired result.
+
+Conceptually similar to the \inl{strict} properties
+the \inl{constant} properties guide the prover towards
+
+\begin{lstlisting}[style=acsl-block]
+
+        LowerBound(a, left, n, v) 
+
+        UpperBound(a, 0, right, v)
+\end{lstlisting}
+
+Combining these properties allow the postcondition \inl{middle} to be derived automatically.
+
+%\clearpage
+

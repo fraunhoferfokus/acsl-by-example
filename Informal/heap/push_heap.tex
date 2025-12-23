@@ -1,0 +1,235 @@
+
+\section{The \pushheap algorithm}
+\Label{sec:pushheap}
+
+The \pushheap algorithm assumes that the first $n-1$ elements of an array
+of length~$n$ form already a heap and adds to it the element \inl{a[n-1]}.
+
+Whereas in the \cxx Standard Library \cite[\S 28.7.7.1]{cxx-17-draft}
+\pushheap works on a range of random access iterators,
+our version operates on an array of \valuetype.
+We therefore use the following signature for \pushheap
+
+\begin{lstlisting}[style = acsl-block]
+
+    void push_heap(value_type* a, size_type n);
+\end{lstlisting}
+
+
+The \pushheap algorithm expects that \inl{n} is greater or equal than~1.
+It also assumes that the array\\
+\inl{a[0..n-2]} forms a heap.
+The algorithms then \emph{rearranges} the array \inl{a[0..n-1]} such that the 
+resulting array is a heap.
+In this sense the algorithm \emph{pushes} the element \inl{a[n-1]} on the given heap.
+
+\subsection{Formal specification of \pushheap}
+
+The following listing shows our specification of \pushheap.
+Note that the post condition \inl{reorder} states
+that \pushheap is not allowed to change the number of occurrences
+of an array element.
+Without this post condition,
+an implementation that assigns \inl{0} to each array element
+would satisfy the post condition \inl{heap}---surely
+not what a user of the algorithm has in mind.
+
+\input{Listings/push_heap.h.tex}
+
+Pushing an element on a heap usually \emph{rearranges} several elements of the array
+(cf.\xspace Figures~\ref{fig:pushheap-pre} and~\ref{fig:pushheap-post}).
+We therefore must be able express that \pushheap only reorders
+the elements of the array.
+We re-use the predicate \logicref{MultisetReorder} to formally describe this property.
+
+
+\subsection{Implementation of \pushheap}
+
+The following two figures illustrate how \pushheap affects an array,
+which is shown as a tree with blue and grey nodes, representing
+heap and non-heap nodes, respectively.
+Figure~\ref{fig:pushheap-pre} shows the heap from
+Figure~\ref{fig:heap-tree} together with the additional element~\inl{12} that
+is to be pushed on the heap.
+To be quite clear about it: the new element~\inl{12} is the last element of the
+array and not yet part of the heap.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.70\linewidth]{Figures/push_heap_pre.pdf}
+\caption{\Label{fig:pushheap-pre}Example heap before the call of \pushheap}
+\end{figure}
+
+\FloatBarrier
+
+Figure~\ref{fig:pushheap-post} shows the array
+after the call of \pushheap.
+We can see that now all nodes are colored in blue, i.e., they are part of the heap.
+The dashed nodes highlight which heap nodes have changed during the function call.
+The element to be pushed into the heap is now at its correct position.
+The arrows indicate the \emph{cyclic reordering} of array elements to achieve the
+desired result.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.70\linewidth]{Figures/push_heap_post.pdf}
+\caption{\Label{fig:pushheap-post}Example heap after the call of \pushheap}
+\end{figure}
+
+\FloatBarrier
+
+
+Verifying our implementation of \implref{pushheap} is a non-trivial undertaking.
+In order to better structure our discussion we refer to the central
+loop of the algorithm as the \emph{main act} and the parts before and after
+it as \emph{prologue} and \emph{epilogue}.
+
+We can establish the \inl{heap} property of \specref{pushheap}
+already in the prologue.
+The \inl{reorder} property, however, only holds at the function boundaries
+and is violated while \pushheap manipulates the array.
+To be more precise:
+We loose the \inl{reorder} property in the prologue and
+formally capture and maintain a slightly more general property
+in the main act.
+From this we will recover the \inl{reorder} property in the epilogue.
+
+We will illustrate the changes to the underlying array after each stage 
+by figures of the array in tree form,
+based on the \pushheap example from Figure~\ref{fig:pushheap-pre}.
+
+\input{Listings/push_heap.c.tex}
+
+\subsubsection{Prologue}
+\Label{sec:push-heap-prologue}
+
+In the prologue we check whether the initial heap is nonempty,
+initialize some variables,
+\emph{and} also check by comparing with the parent node
+whether \inl{a[c]}, which is the value to be pushed on the heap and which
+is the last element of the array, is by chance already at the right place.
+If not we set aside this value in the variable \inl{v} and
+assign the parent value \inl{a[p]} to \inl{a[c]}.
+Note that this assignment only occurs if the respective values
+differ. 
+This allows us to formally describe the effect of the assignment using the predicate
+\logicref{ArrayUpdate}.
+%
+Figure~\ref{fig:pushheap-prologue} highlights the main effects of the prologue.
+Here and in the following figures we highlight the currently active node.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.70\linewidth]{Figures/push_heap_prologue.pdf}
+\caption{\Label{fig:pushheap-prologue}Heap after the prologue of \pushheap}
+\end{figure}
+
+At this point we have achieved several things.
+\begin{enumerate}
+\item The array \inl{a[0..n-1]} is now a heap.
+\item Regarding their respective number of occurences in the array \inl{a[0..n-1]}
+\begin{itemize}
+\item the original value \inl{a[c]} occurs one time less
+\item the original value \inl{a[p]} occurs one time more
+\item whereas all other values have not changed their number of occurences.
+\end{itemize}
+\end{enumerate}
+
+The first observation is expressed in the assertion \inl{heap}
+whereas the small fluctuation of array elements described in
+the second observation is expressed by using the predicate \logicref{MultisetParity}
+in the assertion \inl{reorder}.
+
+
+\subsubsection{Main act}
+\Label{sec:push-heap-main-act}
+
+In the main act, we start at the parent location, which is now stored
+in the variable \inl{c} (\emph{child}).
+Compared to the pre-state of \pushheap
+at the beginning of the main act the array \inl{a[0..n-1]} 
+\begin{itemize}
+\item contains the value \inl{v} one time less
+\item contains the value \inl{a[c]} one time more
+\item whereas all other values have not changed their number of occurences.
+\end{itemize}
+
+Now, as long as the index~\inl{c} is not yet the root of the heap
+and its consequently existing parent value \inl{a[p]} is less than \inl{v},
+we haven't found yet an index \inl{c} where we could insert \inl{v} without
+violating the heap property.
+
+In the loop body we proceed as follows.
+
+\begin{itemize}
+\item
+If \inl{a[c]} is less than \inl{a[p]} we copy the latter value on the former.
+Note that this assignment preserves the heap property of the array.
+The value \inl{a[p]} now occurs one time more than in the pre-state whereas
+the now overwritten value \inl{a[c]} occurs as often as in the pre-state.
+The value \inl{v} continues to occur one time less.
+%
+We then proceed to the next iteration by setting \inl{c} to \inl{p}.
+
+The verification of tracking the number of occurences happens
+in smaller steps than just described.
+It relies on the predicates \logicref{ArrayUpdate} and \logicref{MultisetUpdate}
+which we can apply in this guarded assignment.
+Lemma \logicref{MultisetParityCombined} also plays an important role here.
+
+\item
+Otherwise, since \inl{c} is a child of \inl{p},  we can conclude that
+\inl{a[c]} equals \inl{a[p]} and we continue with the next iteration
+after setting \inl{c} to \inl{p}.
+\end{itemize}
+
+This means that at the begin of the next iteration again
+the following conditions hold.
+Compared to the pre-state of \pushheap the array \inl{a[0..n-1]} 
+
+\begin{itemize}
+\item contains the value \inl{v} one time less
+\item contains the value \inl{a[c]} one time more
+\item whereas all other values have not changed their number of occurences.
+\end{itemize}
+
+Figure~\ref{fig:pushheap-main-act} shows the our example heap after the main act.
+For this particular heap, only one iteration is performed until a node is reached
+whose parent value \inl{a[p]} is greater or equal than \inl{v}.
+Note that assignments which have previously occurred are marked with dashed arrows. 
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.70\linewidth]{Figures/push_heap_main_act.pdf}
+\caption{\Label{fig:pushheap-main-act}Heap after the main act of \pushheap}
+\end{figure}
+
+\FloatBarrier
+\clearpage
+
+\subsubsection{Epilogue}
+\Label{sec:push-heap-epilogue}
+
+At this point, we have arrived at an index \inl{c} where 
+the assignment of the value \inl{v} preserves the heap property.
+We express this formally using the predicate \logicref{HeapCompatible}.
+
+Moreover, this assignment also corrects the imbalance in the number of
+occurences of the values \inl{a[c]} and \inl{v} and consequently
+establishes the desired property \inl{reorder} of \pushheap.
+The verification that this correction leads to a proper reordering relies
+on lemma \logicref{MultisetParityMultisetReorder}.
+
+Figure~\ref{fig:pushheap-epilogue} shows the final assignment and highlights the
+completion of the cycle depicted in Figure~\ref{fig:pushheap-prologue}.
+The figure also makes clear that the value \inl{v} acts like an additional
+element in this assignment cycle.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.70\linewidth]{Figures/push_heap_epilogue.pdf}
+\caption{\Label{fig:pushheap-epilogue}Heap after the epilogue of \pushheap}
+\end{figure}
+
+\clearpage
+

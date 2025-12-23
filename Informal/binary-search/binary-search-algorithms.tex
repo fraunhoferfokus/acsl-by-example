@@ -1,0 +1,86 @@
+
+\chapter{Binary search algorithms}
+\Label{cha:binary-search}
+
+In this chapter, we consider the four
+\emph{binary search} algorithms of the \cxx Standard Library \cite[\S
+28.7.3]{cxx-17-draft}, namely
+
+\begin{itemize}
+\item \lowerbound in \S\ref{sec:lowerbound}
+
+\item \upperbound in \S\ref{sec:upperbound}
+
+\item two variants for the implementation of  \equalrange in \S\ref{sec:equalrange}
+
+\item two variants for the formal specification of \binarysearch in \S\ref{sec:binarysearch}
+\end{itemize}
+
+As in the case of the of maximum/minimum algorithms from Chapter~\ref{cha:maxmin}
+the binary search algorithms primarily use the less-than operator~\inl{<}
+(and the derived operators \inl{<=}, \inl{>} and \inl{>=}) to determine whether a particular
+value is contained in an increasing range.
+Thus, different to the \find algorithm in \S\ref{sec:find},
+the equality operator~\inl{==} will play only a supporting part
+in the specification of binary search.
+
+In order to make the specifications of the binary search algorithms 
+more compact and (arguably) more readable we re-use the predicates
+\logicref{LowerBound}, \logicref{StrictLowerBound},
+\logicref{UpperBound}, and \logicref{StrictUpperBound}.
+
+All binary search algorithms require that their input array is arranged in 
+increasing order.
+The following listing shows two versions of predicate \logicref{Increasing}.
+The first one defines when a section of an array is in increasing order.
+The second version uses the first one to express that the whole array is in increasing order.
+
+\input{Listings/Increasing.acsl.tex}
+
+%\clearpage
+
+There is also the overloaded predicate \logicref{WeaklyIncreasing} that we will user for 
+the verification of other algorithms.
+
+\input{Listings/WeaklyIncreasing.acsl.tex}
+
+Users inexperienced in formal verification often have a blind spot at the
+difference between \Increasing and \WeaklyIncreasing.
+%
+Both versions are logically equivalent,
+and proving that \Increasing implies \WeaklyIncreasing is even trivial.
+%
+However, proving the converse direction is not, and requires an induction on the
+array size~\inl{n}, employing the transitivity of \inl{<=} in the induction step.
+%
+Humans are trained to perform such inductions unnoticed,
+but none of the automated provers supported by \framac is able to perform induction.
+%
+The following Listing contains several lemmas on the relationship of
+\WeaklyIncreasing and \Increasing.
+
+\input{Listings/IncreasingLemmas.acsl.tex}
+
+\clearpage
+
+We usually exploit the relationship of the predicates \Increasing and \WeaklyIncreasing
+in the following way:
+
+\begin{itemize}
+\item We use the predicate \Increasing in the preconditions and postconditions of
+      function contracts.
+\item The \WeaklyIncreasing is employed for assertions and loop invariants
+      whenever we have to verify that an algorithm (typically a sorting algorithm)
+      produces an increasing array.
+\item Finally, to conclude that a \emph{weakly increasing} array is in fact \emph{increasing}
+      we rely on lemma\\
+      \logicref{WeaklyIncreasingIncreasing} .
+\end{itemize}
+
+\clearpage
+
+\input{binary-search/lower_bound}
+\input{binary-search/upper_bound}
+\input{binary-search/equal_range}
+\input{binary-search/binary_search}
+

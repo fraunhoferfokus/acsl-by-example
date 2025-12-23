@@ -16,7 +16,7 @@ prover_list = argv[2:]
 prover_list = [
     'coq' if prover == 'native:coq' else prover for prover in prover_list
 ]
-report_list = ['qed', 'alt-ergo', 'cvc5', 'coq', 'cvc3', 'z3']
+report_list = ['qed', 'alt-ergo', 'cvc4', 'coq', 'cvc3', 'z3']
 
 ########################################################################
 

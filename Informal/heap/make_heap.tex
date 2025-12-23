@@ -1,0 +1,78 @@
+
+\section{The \makeheap algorithm}
+\Label{sec:makeheap}
+
+
+Whereas in the \cxx Standard Library \cite[\S 28.7.7.3]{cxx-17-draft}
+\makeheap works on a pair of generic random access
+iterators,
+our version operators on a range of \valuetype.
+Thus the signature of \makeheap reads
+
+\begin{lstlisting}[style = acsl-block]
+
+    void make_heap(value_type* a, size_type n);
+\end{lstlisting}
+
+The function \makeheap rearranges the elements of the given
+array \inl{a[0..n-1]} such that they form a heap.
+
+As an examples we look at the array in Figure~\ref{fig:makeheap-array-pre}.
+The elements of this array do not form a heap, as indicated by the grey colouring.
+Executing the \makeheap algorithm on this array rearranges its elements
+so that they form a heap as shown in Figure~\ref{fig:heap-array}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.65\linewidth]{Figures/make_heap_array_pre.pdf}
+\caption{\Label{fig:makeheap-array-pre}Array before the call of \makeheap}
+\end{figure}
+
+
+\FloatBarrier
+
+\subsection{Formal specification of \makeheap}
+
+The following listing shows the specification of \makeheap.
+
+\input{Listings/make_heap.h.tex}
+
+Like with \pushheap the formal specification of \makeheap
+must ensure that the resulting array is a heap of size \inl{n}
+and contains the same multiset of elements as in the pre-state of the function.
+These properties are expressed by the \inl{heap} and \inl{reorder}
+postconditions respectively.
+The \inl{reorder} postcondition uses the predicate \logicref{MultisetReorder}
+to ensure that \makeheap only rearranges the array elements.
+
+\clearpage
+
+\subsection{Implementation of \makeheap}
+
+The implementation of \makeheap, shown in the next listing, is straightforward.
+%
+From low to high the array's elements are pushed to the growing heap.
+%
+We used \inl{i < n} as loop condition, rather than the more tempting
+\inl{i <= n}, in order to admit also \inl{n == SIZE_TYPE_MAX};
+as a consequence, we had to call \specref{pushheap} with \inl{i+1}.
+%
+The iteration starts at \inl{i+1 == 2}, because an array with length one is
+a heap already.
+
+\input{Listings/make_heap.c.tex}
+
+Since the loop statement consists just of a call to \specref{pushheap}
+we obtain the both loop invariants \inl{heap} and \inl{reorder} by simply 
+lifting them from the contract of \pushheap.
+
+The postcondition of \pushheap only specifies the multiset
+of elements from index 0 to \inl{i}.
+%
+We therefore also have to specify
+that the elements from index \inl{i+1} to \inl{n-1}  are only reordered.
+%
+This property can be derived from the \inl{unchanged} property of \pushheap.
+
+\clearpage
+

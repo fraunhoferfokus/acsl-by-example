@@ -1,4 +1,24 @@
 
+A number of environment variables affect the generation of reports:
+Please check Makefile.template for their precise definitions (including default values).
+
+WP_TIMEOUT (1)
+    The default timeout when running provers.  This value is multiplied
+    by 1.1 for each additional process after the first in $WP_PROCESSES.
+
+WP_COQ_TIMEOUT (5)
+    The timeout for coq.  This timeout is scaled in the same way
+    WP_TIMEOUT is.
+
+
+WP_PROCESSES (1)
+    The number of provers to run in parallel.
+
+SCRIPT (wp0.script)
+    The proof script used for discharging proof obligations with coq.
+    You probably won't need to touch this variable.
+
+
 Library of Standard Algorithms
 ================================
 
@@ -27,7 +47,7 @@ make clean
 make wpgui
 - runs Frama-C/WP on the example and shows the results in the Frama-C GUI
 
-make report
+make wp
 - runs Frama-C/WP on the example and shows the results on the command line
 
 
@@ -40,6 +60,9 @@ make clean
 make report-clean
 - remove verification results for all examples
 
+make preport-clean
+- remove verification results for all examples and all provers
+
 make test	
 - compiles and runs the testfiles for each algorithm in the subfolders
 - if successful it outputs: successful test of different <algorithm> implementations
@@ -47,4 +70,9 @@ make test
 make report
 - generate verification results for all examples
 - call 'make report-clean' before generating new reports
+
+make preport
+- generate verification results for all examples when running all provers on all 
+  proof obligations
+- call 'make preport-clean' before generating new reports
 

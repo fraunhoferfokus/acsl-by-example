@@ -1,0 +1,15 @@
+qed : typed_external_stack_size_assigns
+alt-ergo : typed_external_lemma_StackEqual_Reflexive
+alt-ergo : typed_external_lemma_StackEqual_Symmetric
+alt-ergo : typed_external_lemma_StackEqual_Transitive
+alt-ergo : typed_external_stack_size_assert_rte_mem_access
+alt-ergo : typed_external_stack_size_ensures_size
+coq : typed_external_stack_size_ensures_size
+cvc4 : typed_external_lemma_StackEqual_Reflexive
+cvc4 : typed_external_lemma_StackEqual_Symmetric
+cvc4 : typed_external_lemma_StackEqual_Transitive
+cvc4 : typed_external_stack_size_assert_rte_mem_access
+cvc4 : typed_external_stack_size_ensures_size
+z3 : typed_external_lemma_StackEqual_Reflexive
+z3 : typed_external_stack_size_assert_rte_mem_access
+z3 : typed_external_stack_size_ensures_size

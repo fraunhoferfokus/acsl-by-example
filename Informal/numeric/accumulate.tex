@@ -1,0 +1,100 @@
+
+\section{The \accumulate algorithm}
+\Label{sec:accumulate}
+
+The \accumulate algorithm in the \cxx Standard Library \cite[\S 29.8.2]{cxx-17-draft} computes
+the sum of an given initial value and the elements in a range.
+%
+Our version of the original signature
+reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  value_type
+  accumulate(const value_type* a, size_type n, value_type init);
+\end{lstlisting} 
+
+The result of \accumulate shall equal the value
+$\displaystyle{ \mathtt{init} + \sum_{i = 0}^{\mathtt{n}-1} \mathtt{a}[i] }$.
+This implies that \accumulate will return \inl{init} for an empty range.
+
+%\clearpage
+
+\subsection{The logic function \Accumulate}
+
+As in the case of \specref{counti}  we specify \accumulate by first defining the
+\emph{logic function} \logicref{Accumulate} that formally defines
+the summation of elements in an array.
+
+\input{Listings/Accumulate.acsl.tex}
+
+With this definition the following equation holds for $n \geq 0$
+\begin{align}
+\Label{eq:accumulate}
+    \mathtt{Accumulate}(\mathtt{a}, \mathtt{n}, \mathtt{init})
+    &= \mathtt{init} + \sum_{i = 0}^{\mathtt{n-1}} \mathtt{a}[i]
+\end{align}
+
+The predicate \logicref{AccumulateBounds} that we will subsequently use
+in order to compactly express requirements that exclude numeric
+overflows while accumulating value.
+This predicate states that  for $0 \leq i < n$ the \emph{partial sums} 
+%
+\begin{gather}
+\Label{eq:accumulate1}
+\mathtt{init} + \sum_{k = 0}^{\mathtt{i}} \mathtt{a}[k]
+\end{gather}
+%
+do not overflow.
+If one of them did, one couldn't guarantee that the result of \isoc implementation
+of \accumulate equals the mathematical description of \Accumulate.
+
+%\clearpage
+
+\subsection{\AccumulateDefault ---a variant of \Accumulate}
+
+The following listing shows another version of \logicref{Accumulate},
+called \logicref{AccumulateDefault}.
+
+\input{Listings/AccumulateDefault.acsl.tex}
+
+The function \AccumulateDefault uses~\inl{a[0]} as default value of \inl{init}.
+Thus, for \AccumulateDefault we have
+
+\begin{align}
+\Label{eq:accumulate-default}
+    \mathtt{AccumulateDefault}(\mathtt{a}, \mathtt{n})
+    &= \sum_{i = 0}^{\mathtt{n-1}} \mathtt{a}[i]
+\end{align}
+We will use this version for the specification of the algorithm \specref{partialsum}.
+
+This listing also includes additional properties of observable
+\AccumulateDefault behavior, here given as a lemmas.
+It also contains the predicate \logicref{AccumulateDefaultBounds}
+with corresponding numeric limits for the predicate~\AccumulateDefault.
+
+%\clearpage
+
+\subsection{Formal specification of \accumulate}
+
+Using the logic function \Accumulate and the predicate \AccumulateBounds,
+the specification of \accumulate is then as simple
+as shown in the following listing.
+
+\input{Listings/accumulate.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \accumulate}
+
+The following listing shows an implementation of the
+\accumulate function with corresponding loop annotations.
+
+\input{Listings/accumulate.c.tex}
+
+Note that loop invariant \inl{partial} claims that in the $i$-th iteration step \inl{result}
+equals the accumulated value of Equation~\eqref{eq:accumulate1}.
+This depends on the property \inl{bounds} of \specref{accumulate} which expresses that
+there is no numeric overflow when updating the variable \inl{init}.
+
+\clearpage

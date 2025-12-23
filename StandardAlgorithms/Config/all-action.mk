@@ -4,6 +4,7 @@ MAKEFLAGS += --silent --no-print-directory
 export TOP_DIR    := .
 export CONFIG_DIR := $(TOP_DIR)/Config
 export SCRIPT_DIR := $(TOP_DIR)/Scripts
+export DRIVER_DIR := $(TOP_DIR)/Drivers
 
 export ALL_DIR    ?= $(basename $(TOP_DIR))
 
@@ -58,10 +59,24 @@ $(ALL_HEADER): $(GROUP_HEADERS)
 
 header: $(ALL_HEADER) FORCE
 
+$(DRIVER): FORCE
+	@ ($(MAKE) compile -sC $(DRIVER_DIR))
+
+$(TOP_DIR)/Results/$(CMD).report:
+	@. $(SCRIPT_DIR)/script_functions.sh; extract_data_Wp $(CMD) $(CMD) $(SEC) > $@
+
+report: $(TOP_DIR)/Results/$(CMD).report
+	@. $(SCRIPT_DIR)/script_functions.sh; prettyPrintReport $<
 
 report-clean: clean FORCE
 	@$(RM) $(TOP_DIR)/Results/$(CMD).report
 
+
+$(TOP_DIR)/Results/$(CMD).preport:
+	@. $(SCRIPT_DIR)/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(CMD)  $(CMD) $(SEC) > $@
+
+preport: $(TOP_DIR)/Results/$(CMD).preport
+	@. $(SCRIPT_DIR)/script_functions.sh; prettyPrintReport $<
 
 preport-clean:
 	@$(RM) $(TOP_DIR)/Results/$(CMD).preport

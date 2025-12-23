@@ -1,0 +1,90 @@
+
+\section{The \findend algorithm}
+\Label{sec:findend}
+
+The \findend algorithm in the \cxx Standard Library \cite[\S
+28.5.6]{cxx-17-draft} searches for the last
+subsequence that is identical to a given sequence when 
+compared element-by-element.
+For our purposes we have modified
+the generic implementation
+to that of an array of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+  size_type
+  find_end(const value_type* a, size_type n, const value_type* b, size_type p);
+\end{lstlisting}
+
+The function \findend returns the greatest
+index \inl{s} of the array \inl{a} where the condition \inl{a[s+k] == b[k]} holds for each
+index~\inl{k} with \inl{0 <= k < p}
+(see Figure~\ref{fig:findend}).
+If no such index exists, then \findend returns the length
+\inl{n} of the array \inl{a}. One has to remark the special case \inl{p == 0}.
+In this case the last position of the empty string is found (the length \inl{n})
+and returned.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.69\textwidth]{Figures/find_end.pdf}
+\caption{\Label{fig:findend} Finding the last occurrence \inl{b[0..p-1]} in \inl{a[0..n-1]}}
+\end{figure}
+
+\clearpage
+
+\subsection{Formal specification of \findend}
+
+The following listing shows the specification of \specref{findend}.
+Conceptually, the specification of the function \findend is very similar to that of
+\specref{findii}.
+We therefore use again behaviors to capture the essential aspects of \findend.
+It is quite clear that these behaviors are \emph{complete} and \emph{disjoint}.
+
+The behavior \inl{has_match} applies if the sequence \inl{a} 
+contains a subsequence identical to \inl{b}. 
+We express this condition with \inl{assumes} using the predicate 
+\logicref{HasSubRange}.
+The \inl{ensures} clause \inl{bound} indicates that the return
+value must be in the range~\inl{0..n-p}.
+The clause \inl{result} of behavior \inl{has_match} expresses that \findend
+returns an index where \inl{b} can be found in \inl{a}.
+%
+Finally, the clause \inl{last}
+indicates that the sequence \inl{a} does not contain
+\inl{b} beginning at a position larger than \inl{\\result}.
+
+The behavior \inl{no_match} covers the case that there is no
+subsequence of \inl{a} that equals
+\inl{b}. In this case, \findend must return the length \inl{n} of the
+range \inl{a}.
+
+\input{Listings/find_end.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \findend}
+
+Our implementation of \implref{findend} is similar to the one of \implref{search}.
+
+\input{Listings/find_end.c.tex}
+
+We maintain in the variable \inl{r} the prospective value to be
+returned, according to the current knowledge.
+Initially, it is set to \inl{n}, meaning ``no occurrence of \inl{b}
+found yet''.
+Whenever an occurrence is found, \inl{r} is updated to its starting
+position.
+
+The invariant \inl{bound} states that \inl{r} either still has the value
+\inl{n} or has a value up to \inl{n-p}.
+For the former case, invariant \inl{not_found}
+indicates that no occurrence of \inl{b} has been found.
+For the latter case, the loop invariant \inl{found} indicates that an occurrence
+\inl{b[0..p-1]} at \inl{r} has indeed been found.
+The invariant \inl{last}, on the other hand states that
+none was found \emph{after} the index~\inl{r}.
+
+\clearpage
+

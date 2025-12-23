@@ -1,0 +1,65 @@
+
+\section{The \minmaxelement algorithm}
+\Label{sec:minmaxelement}
+
+The \minmaxelement algorithm in the
+\cxx Standard Library \cite[\S 28.7.8]{cxx-17-draft} searches
+\emph{both} the minimum \emph{and} the maximum in a sequence.
+The signature of our version of \minelement reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+        size_type_pair minmax_element(const value_type* a, size_type n);
+\end{lstlisting}
+
+Note that \minmaxelement returns a \emph{pair} of indices (see \S\ref{sec:makepair}).
+This pair contains the \emph{first} position where the minimum occurs in
+the sequence \inl{a[0..n-1]} and the \emph{last} position where maximum occurs.
+
+The properties of the index for the minimum value are the same as the properties
+of \specref{minelement}.
+However, the properties of the index that marks the maximum
+element, are slightly different from the properties of \specref{maxelement}.
+The \maxelement algorithm returns the position of the \emph{first} occurrence of
+the maximum element if it occurs multiple times in the sequence. The
+\minmaxelement algorithm returns the position of the last occurrence of the
+maximum element.
+
+%\clearpage
+
+\subsection{Formal specification of \minmaxelement}
+
+The following listing shows the acsl specification of \specref{minmaxelement}.
+Note that we use the predicates \logicref{StrictLowerBound} and
+\logicref{StrictUpperBound} in order to express that the algorithm returns
+the positions of both the \emph{first minimum} and the \emph{last maximum}.
+We also use the predicates \logicref{MinElement} and \logicref{MaxElement}.
+Thus reflects of course the use of this predicates for the algorithms
+\specref{minelement} and \specref{maxelement}.
+
+\input{Listings/minmax_element.h.tex}
+
+
+The specification is similar to the specifications of \minelement and
+\maxelement. The only difference lies in the postcondition \inl{last}. Here the
+postcondition states that after the position of the maximum element there is no
+value greater or equal the maximum element. This differs from the specification
+of \maxelement, where the first occurrence of the maximum value has to be
+returned.
+
+%\clearpage
+
+\subsection{Implementation of \minmaxelement}
+
+The implementation of \implref{minmaxelement} uses the auxiliary
+function \specref{makepair} to construct a pair of indices.
+We will focus on the loop invariant \inl{last}, because it is the
+only loop invariant that differs from the implementations of \implref{minelement} and
+\implref{maxelement}.
+
+\input{Listings/minmax_element.c.tex}
+
+As already mentioned we had to alter the range for the predicate
+\logicref{StrictUpperBound} to fit into the property of returning
+the last maximum position that occurred.
+

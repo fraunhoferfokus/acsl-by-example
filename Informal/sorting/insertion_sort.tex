@@ -1,0 +1,106 @@
+
+\section{The \insertionsort algorithm}
+\Label{sec:insertionsort}
+
+Like \selectionsort,
+the algorithm \insertionsort traverses the given array \inl{a[0..n-1]}
+left to right, maintaining a left-adjusted, 
+constantly increasing range \inl{a[0..i-1]} that is already in increasing order.
+
+Unlike \selectionsort, however, \insertionsort adds \inl{a[i]} to the
+initial segment in the \inl{i}th step (see Figure~\ref{fig:insertionsort-example}).
+%
+It determines the (rightmost) appropriate position to insert \inl{a[i]}
+by a call to \specref{upperbound} and then uses \specref{rotatei} to 
+perform a \emph{circular shift} to establish the insertion.
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics[width=0.65\textwidth]{Figures/insertion_sort.pdf}
+\caption{An iteration of \insertionsort}
+\Label{fig:insertionsort-example}
+\end{center}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Formal specification of \insertionsort}
+
+The following listing shows our (generic sorting) contract for \insertionsort.
+
+\input{Listings/insertion_sort.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \insertionsort}
+
+The implementation of \insertionsort is shown in the next listing.
+%
+We used an \acsl statement contract to specify those aspects of the
+\rotatei contract that are needed here.
+%
+Properties related to the result of \insertionsort being in increasing
+order are labelled \inl{increasing}.
+Properties related to the rearrangement of elements are labelled \inl{reorder} and,
+whenever their order isn't changed, \inl{unchanged}.
+
+\input{Listings/insertion_sort.c.tex}
+
+When we originally 
+implemented and verified \rotatei, we hadn't yet in mind to
+use that function inside of \insertionsort.
+%
+Consequently, the properties needed for the latter
+aren't directly provided by the former.
+%
+One approach to solve this problem is to add the new properties to
+the contract of \specref{rotatei} and repeat its verification proof.
+However, if \rotatei is assumed to be part of a pre-verified library,
+this approach isn't feasible, since \rotatei's implementation may not
+be available for re-verification.
+%
+Therefore, we used another approach, viz.\ to prove that \rotatei's
+original specification \emph{implies} all the properties we need in
+\insertionsort.
+This is another use of the Hoare calculus' implication rule
+(\S\ref{sec:The Implication Rule}).
+%
+We used several lemmas, shown below,
+to make the necessary implications explicit, and to help the provers to
+establish them.
+%
+Some of them needed manual proofs by induction.
+
+\clearpage
+
+Lemma \logicref{IncreasingEqual} in the following listing assumes an ordered range
+\inl{a[m..n-1]} and claims that every (elementwise) equal range
+range \inl{a[m+p..n+p-1]} is ordered, too.
+%
+It is needed to establish that the call to \specref{rotatei} preserves the order of
+those elements that are shifted upwards 
+(cf.\ Figure~\ref{fig:insertionsort-example}).
+
+Similarly, lemma \logicref{CountEqual} says that two elementwise equal ranges
+\inl{a[m..n-1]} and \inl{a[p..p+n-m-1]} will result in the same occurrence count,
+for each value \inl{v}.
+%
+This lemma is useful in the proof of the lemma
+\logicref{CircularShiftMultisetReorder} (discussed below),
+since the predicate \logicref{MultisetReorder}
+is defined via the logic function \logicref{Count}.
+
+Lemma \logicref{CircularShiftStrictLowerBound} in the next listing
+is used to prove that the range \inl{a[k..i-1]} having 
+\inl{a[i]} as strict lower bound before our call to \rotatei ensures
+that it has \inl{a[k]} as such a bound after the call.
+Note that this lemma reflects that \rotatei is uses as a \emph{circular shift}
+at the call site.
+%
+Similarly, lemma \CircularShiftMultisetReorder establishes that 
+a circular shift just reorders the range it is applied to.
+
+\input{Listings/CircularShiftLemmas.acsl.tex}
+
+\clearpage
+

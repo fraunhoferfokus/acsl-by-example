@@ -1,0 +1,106 @@
+
+\section{The \findii algorithm---reuse of specification elements}
+\Label{sec:findii}
+
+In this section we specify \find in a slightly different way.
+Our approach is motivated by a considerable number of closely related \acsl formulas
+in the contract \specref{find} and the implementation \implref{find}.
+
+\begin{lstlisting}[style=acsl-block]
+
+    \exists integer i; 0 <= i < n        &&   a[i] == v;
+
+    \forall integer i; 0 <= i < \result  ==>  a[i] != v;
+
+    \forall integer i; 0 <= i < n        ==>  a[i] != v;
+
+    \forall integer k; 0 <= k < i        ==>  a[k] != v;
+\end{lstlisting}
+
+Note that the first formula is the negation of the third one.
+
+\subsection{The predicates \SomeEqual and \NoneEqual}
+
+In order to be more explicit about the commonalities of these formulas
+we define a predicate, called 
+\logicref{SomeEqual},
+which describes the situation that there is a valid index \inl{i} 
+where~\inl{a[i]} equals~\inl{v}.
+
+\input{Listings/SomeNone.acsl.tex}
+
+We first remark that the \SomeEqual, its negation \NoneEqual
+and the lemmas \NotSomeEqualNoneEqual and \NoneEqualNotSomeEqual are encapsulated
+in the \emph{axiomatic block} 
+\logicref{SomeNone}.
+This is a \emph{feeble} attempt to establish some modularization for the various predicates,
+logic functions and lemmas.
+We say \emph{feeble} because axiomatic blocks are, in contrast to \acsl \inl{module}s,
+\emph{not} name spaces.
+\acsl modules, however, are not yet implemented by \framac.
+
+We also remark that both predicates come in overloaded versions.
+The first of theses versions is a definition for array sections while the
+second definition is for the case of complete arrays.
+
+Note that we have provided a label, viz.\ \inl{A}, to the
+predicate \SomeEqual.
+Its purposes to express that the evaluation of the predicate depends on a memory state,
+viz.\ the contents of \inl{a[0..n-1]}.
+In general, we have to write
+
+\begin{lstlisting}[style=acsl-block]
+
+    \exists integer i; 0 <= i < n && \at(a[i],A) == v;
+\end{lstlisting}
+
+in order to express that we refer to the value \inl{a[i]} in
+the program state~\inl{A}.
+However, \acsl allows to abbreviate \inl{\\at(a[i],A)} by \inl{a[i]} if, as in
+\SomeEqual or \NoneEqual, the label~\inl{A} is the only available label.
+In particular, we have omitted the label in the overloaded versions for complete arrays.
+
+%\clearpage
+
+\subsection{Formal specification of \findii}
+
+With the predicates \logicref{SomeEqual}
+and \logicref{NoneEqual}
+we are able to encapsulate all uses of the universal and existential 
+quantifiers in both the specification and implementation of \findii.
+
+As a result, the revised contract \specref{findii} is more concise
+than that of \specref{find}.
+%
+In particular, it can be seen immediately that the conditions in the
+assumes clauses
+of the two behaviors \inl{some} and \inl{none} are mutually
+exclusive since
+one is the literal negation of the other.
+Moreover, the requirement that \find returns the smallest index can
+also be expressed
+using the \logicref{NoneEqual} predicate, as depicted with the last postcondition of
+behavior \inl{some}.
+
+\input{Listings/find2.h.tex}
+
+We also enriched the specification of \find by user-defined names
+(sometimes called \emph{labels}, too, the distinction to program state identifiers
+being obvious)  to refer to
+the \inl{requires} and \inl{ensures} clauses.
+We highly recommend this practice in particular for more complex annotations.
+For example, \framac can be instructed to verify only clauses with a
+given name.
+
+\clearpage
+
+\subsection{Implementation of \findii}
+
+The predicate \NoneEqual is also used in the loop annotation inside
+the implementation of \implref{findii}.
+Note that, as in the case of the specification, we use labels to name individual annotations.
+
+\input{Listings/find2.c.tex}
+
+%\clearpage
+

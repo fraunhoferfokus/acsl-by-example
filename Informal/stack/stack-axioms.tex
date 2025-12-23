@@ -1,0 +1,145 @@
+
+\section{Stack axioms}
+\Label{sec:stack-axioms}
+
+To specify the interplay of the stack access functions,
+we use a set of axioms\footnote{
+There is an analogy in geometry:
+Euclid (e.g.\ \cite{Fitzpatrick.2008}) invented the use of
+axioms there, but still kept definitions of \emph{point},
+\emph{line}, \emph{plane}, etc.
+Hilbert \cite{Hilbert.1968} recognized that the latter are not
+only unformalizable, but also unnecessary, and dropped them,
+keeping only the formal descriptions of relations between them.
+},
+all but one of them having the form of a conditional equation.
+
+
+Let $V$ denote an arbitrary type.
+We denote by $S_c$ the type of stacks with capacity $c > 0$ of
+elements of type $V$.
+The aforementioned functions then have the following signatures.
+
+\begin{align*}
+\mathrm{init} &:  S_c \rightarrow S_c, \\
+\mathrm{push} &: S_c\times V \rightarrow S_c, \\
+\mathrm{pop} &: S_c \rightarrow S_c,\\
+\mathrm{top} &: S_c \rightarrow V, \\
+\mathrm{size} &: S_c \rightarrow \mathbb{N}.\\
+\end{align*}
+
+With $\mathbb{B}$ denoting the \emph{boolean}
+type we will also define two auxiliary functions
+\begin{align*}
+\mathrm{empty} &: S_c \rightarrow \mathbb{B},\\
+\mathrm{full} &: S_c \rightarrow \mathbb{B}.
+\end{align*}
+
+To qualify as a stack these functions must satisfy the following rules
+which are also referred to as \emph{stack axioms}.
+
+\subsection{Stack initialization}
+
+After a stack has been initialized its size is~0.
+\begin{align}
+\Label{eq:stack-init-size}
+\mathrm{size}(\mathrm{init}(s)) &= 0.
+\end{align}
+
+The auxiliary functions $\mathrm{empty}$ and $\mathrm{full}$
+are defined as follows
+\begin{align}
+\Label{eq:empty-stack}
+\mathrm{empty}(s), & \qquad\text{iff}\qquad \mathrm{size(s)} = 0,  \\
+\Label{eq:full-stack}
+\mathrm{full}(s), & \qquad\text{iff}\qquad  \mathrm{size(s)} = c.
+\end{align}
+
+We expect that for every stack $s$ the following condition holds
+\begin{align}
+\Label{eq:stack-invariant}
+ 0 \leq \mathrm{size}(s) \leq c.
+\end{align}
+
+\clearpage
+
+\subsection{Adding an element to a stack}
+
+To push an element $v$ on a stack the stack must not be full.
+If an element has been pushed on an eligible stack, its size increases by~1
+\begin{align}
+\Label{eq:stack-size-push}
+\mathrm{size}(\mathrm{push}(s, v)) &= \mathrm{size}(s)+1, 
+  &\text{if}\quad  \neg\mathrm{full}(s).\\
+\intertext{Moreover, the element pushed on a stack is the top element of the resulting stack}
+\Label{eq:stack-top-push}
+\mathrm{top}(\mathrm{push}(s, v)) &= v, 
+  &\text{if}\quad \neg\mathrm{full}(s).
+\end{align}
+
+\subsection{Removing an element from a stack}
+
+An element can only be removed from a non-empty stack.
+If an element has been removed from an eligible stack the
+stack size decreases by~1
+\begin{align}
+\Label{eq:stack-size-pop}
+\mathrm{size}(\mathrm{pop}(s)) &= \mathrm{size}(s)-1,
+  &&\text{if}\quad \neg\mathrm{empty}(s).
+%
+\intertext{
+If an element is pushed on a stack and immediately afterwards
+an element is removed from the resulting stack then the final stack
+is equal to the original stack}
+%
+\Label{eq:stack-pop-push}
+\mathrm{pop}(\mathrm{push}(s, v)) &= s,
+  &&\text{if}\quad \neg\mathrm{full}(s). \\
+\intertext{Conversely, if an element is removed from a non-empty stack
+  and if afterwards the top element of the original stack is
+  pushed on the new stack
+  then the resulting stack is equal to the original stack.}
+%
+\Label{eq:stack-push-pop-top}
+\mathrm{push}(\mathrm{pop}(s),\mathrm{top}(s)) &= s, &&\text{if}\quad \neg\mathrm{empty}(s). 
+\end{align}
+
+\clearpage
+
+\subsection{A note on exception handling}
+
+We don't impose a requirement on \inl{push(s, v)} if \inl{s}
+is a full stack, nor on \inl{pop(s)} or \inl{top(s)} if \inl{s} is an
+empty stack.
+%
+Specifying the behavior in such \emph{exceptional} situations is a
+problem by its own; a variety of approaches is discussed in the
+literature.
+%
+We won't elaborate further on this issue, but only give an example to warn
+about ``innocent-looking'' exception specifications that may lead to
+undesired results.
+
+If we'd introduce an additional error value \inl{err} in the element type 
+$V$ and require \inl{top(s) = err} if \inl{s} is empty, we'd be faced
+with the problem of specifying the behavior of \inl{push(s, err)}.
+%
+At first glance, it would seem a good idea to have \inl{err} just been
+ignored by \inl{push}, i.e.\ to require
+\begin{align}
+\Label{eq:err}
+\mathrm{push}(s,\mathrm{err}) & = s.
+\end{align}
+
+However, we then could derive for any non-full and non-empty stack \inl{s}, that
+
+\begin{align*}
+\mathrm{size}(s)
+   &=  \mathrm{size}(\mathrm{pop}(\mathrm{push}(s, \mathrm{err}))) && \text{by \ref{eq:stack-pop-push}}\\
+   &=  \mathrm{size}(\mathrm{pop}(s)) && \text{as assumed in \ref{eq:err}}\\
+   &=  \mathrm{size}(s) - 1 && \text{by \ref{eq:stack-size-pop}}\\
+\end{align*}
+%
+i.e.\ no such stacks could exist, or all \inl{int} values would be equal.
+
+

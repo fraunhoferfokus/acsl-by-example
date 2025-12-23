@@ -1,0 +1,67 @@
+
+\section{The \swapranges algorithm}
+\Label{sec:swapranges}
+
+The \swapranges algorithm
+in the \cxx Standard Library \cite[\S 28.6.3]{cxx-17-draft} exchanges the
+contents of two expressed ranges element-wise.
+%
+After translating \cxx reference types and iterators to \isoc,
+our version of the original signature reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  void swap_ranges(value_type* a, size_type n, value_type* b);
+\end{lstlisting} 
+%
+We do not return a value since it would equal \inl{n}, anyway.
+
+
+\subsection{Formal specification of \swapranges}
+
+The following listing shows a specification for the \specref{swapranges} algorithm.
+
+\input{Listings/swap_ranges.h.tex}
+
+The \swapranges algorithm works correctly only if \inl{a} and \inl{b} do not overlap.
+Because of that fact we use the clause \inl{sep} to
+tell \framac that \inl{a} and \inl{b} must not overlap.
+
+With the \inl{assigns}-clause we postulate
+that the \swapranges algorithm alters the elements contained
+in two distinct ranges, modifying the corresponding
+elements and nothing else.
+
+The postconditions of \swapranges specify that the content
+of each element in its post-state must equal the pre-state
+of its counterpart.
+We can use the predicate \logicref{Equal} together with the
+label \inl{Old} and \inl{Here} to express the postcondition of \swapranges.
+In our specification, for example, we specify that the array \inl{a} in the memory
+state that corresponds to the label \inl{Here} is equal
+to the array~\inl{b} at the label \inl{Old}.
+Since we are specifying a postcondition \inl{Here} refers to the post-state
+of \swapranges whereas \inl{Old} refers to the pre-state.
+
+\clearpage
+
+\subsection{Implementation of \swapranges}
+
+The implementation of \implref{swapranges} together with the necessary
+loop annotations is shown in the following listing.
+Unsurprisingly, we are repeatedly calling \specref{swap}.
+
+\input{Listings/swap_ranges.c.tex}
+
+For the postcondition \specref{swapranges} to hold, 
+our loop invariants must ensure that at each iteration all of the
+corresponding elements that have already been visited are swapped.
+
+Note that there are two additional loop invariants which claim
+that all the elements that have not visited yet equal their original values.
+This annotation allows us to prove the postconditions of \swapranges
+despite the fact that the loop assigns is coarser than it should be.
+The predicate \logicref{Unchanged} is used to express this property.
+
+\clearpage
+

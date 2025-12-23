@@ -1,0 +1,51 @@
+
+\section{The \rotatei algorithm}
+\Label{sec:rotatei}
+
+The algorithm \rotatei is an \emph{in-place} variant of the algorithm \specref{rotatecopy}.
+We have modified the generic specification of \rotatei \cite[\S 28.6.11]{cxx-17-draft}
+such that it refers to a range of objects of \valuetype.
+%
+The signature now reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  size_type rotate(const value_type* a, size_type m, size_type n);
+\end{lstlisting}
+
+
+\subsection{Formal specification of \rotatei}
+
+Figure~\ref{fig:rotate} shows informally the behavior of \rotatei.
+The figure is of course very similar to the one for
+\rotatecopy (see Figure~\ref{fig:rotatecopy}).
+The notable difference is that \rotatei operates \emph{in place} of the array
+\inl{a[0..n-1]}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.75\textwidth]{Figures/rotate.pdf}
+\caption{\Label{fig:rotate} Effects of \rotatei}
+\end{figure}
+
+The specification of \rotatei is shown in the following listing.
+
+\input{Listings/rotate.h.tex}
+
+\subsection{Implementation of \rotatei}
+
+The following listing shows an implementation of the \rotatei function
+together with several \acsl annotations.
+Actually, there are several ways to implement \rotatei.
+We have chosen a particularly simple one that is derived from an implementation of
+\inl{std::rotate} for \emph{bidirectional iterators} \cite[\S 27.2.6]{cxx-17-draft}
+and which essentially consists of several calls to the algorithm~\specref{reverse}.
+
+Note the statement contract of the final call of \specref{reverse}.
+Here we use both the labels~\inl{Pre} and~\inl{Old} which refer
+to the pre-states of~\reverse and the function \rotatei itself, respectively.
+
+\input{Listings/rotate.c.tex}
+
+\clearpage
+

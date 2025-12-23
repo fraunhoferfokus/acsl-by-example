@@ -1,0 +1,4 @@
+qed : typed_external_make_pair_assigns_part1
+qed : typed_external_make_pair_assigns_part2
+qed : typed_external_make_pair_ensures_result
+qed : typed_external_make_pair_ensures_result_2

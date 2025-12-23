@@ -1,0 +1,65 @@
+
+\section{Stack invariants}
+\Label{sec:stack-invariants}
+
+Not every possible instance of type \stacktype is considered a
+valid one, e.g., with our definition of \stacktype in Listing~\ref{lst:stack-definition},
+\inl{Stack s = \{\{0,0,0,0\},4,5\}} is not.
+In the following listing, we present
+basic logic functions and predicates that we will use
+throughout this chapter
+In particular, we  define the predicate \logicref{StackInvariant} that
+discriminates valid and invalid instances.
+
+\input{Listings/StackInvariant.acsl.tex}
+
+We start, with the auxiliary logic function
+\StackCapacity, \StackSize and \StackStorage
+which we can use in specifications to refer
+to the fields \inl{capacity}, \inl{size} and \inl{obj} of \stacktype, respectively.
+%
+This listing also contains the logic function \StackTop which defines
+the array element with index \inl{size - 1} as the top place of a stack.
+
+The reader can consider this as an attempt to hide
+implementation details from
+the specification.
+%
+We intentionally use here integer as a return value of these logic functions.
+Inaccurate use of logic functions with bounded types in axioms with
+arithmetic operations may lead to inconsistencies.
+
+We also introduce the predicates \logicref{StackEmpty} and \logicref{StackFull}
+that express the concepts of empty and full stacks
+by referring to a stack's size and capacity (see Equations~\eqref{eq:empty-stack}
+and~\eqref{eq:full-stack}).
+
+There are some obvious invariants that must be fulfilled by every
+valid object of type \stacktype:
+\begin{itemize}
+\item The stack capacity shall be strictly greater than zero
+      (an empty stack is ok but a stack that cannot hold anything is not useful).
+
+\item The pointer \inl{obj} shall refer to an array of length \inl{capacity}.
+
+\item The number of elements \inl{size} of a stack the must
+      be non-negative and not greater than its capacity.
+\end{itemize}
+
+These invariants are all formalized in the predicate \logicref{StackInvariant}.
+
+Note how the use of the previously defined logic functions and predicates
+allows us to define the stack invariant without
+directly referring to the fields of \stacktype.
+
+We sometimes wish to express that there is no \emph{memory aliasing} between two stacks.
+If there were aliasing, then modifying one stack could modify the other
+stack in unexpected ways.
+In order to express that there is no aliasing between two stacks,
+we define the predicate \StackSeparated in the next listing.
+
+\input{Listings/StackUtility.acsl.tex}
+
+This listing also contains the predicate \logicref{StackUnchanged}
+that we will use to describe cases that the contents of a stack hasn't changed.
+

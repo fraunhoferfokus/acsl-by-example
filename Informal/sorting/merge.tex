@@ -1,0 +1,133 @@
+
+\section{The \merge algorithm}
+\label{sec:merge}
+
+Our version of the \merge algorithm from the \cxx standard library\cite[28.7.5]{cxx-17-draft}
+has the following signature.
+
+\begin{lstlisting}[style = acsl-block]
+
+void
+merge(const value_type* a, size_type n,
+      const value_type* b, size_type m,
+      value_type* result);
+\end{lstlisting}
+
+The \merge algorithm is a part of the \emph{merge sort} algorithm.
+It operates on the second step to merge two increasingly ordered sub-arrays into a new one.
+The algorithm merges two increasingly ordered arrays
+\inl{a[0..n-1]} and \inl{b[0..m-1]}, respectively.
+The merged values are stored in the output array that starts at
+\inl{result} which must be able to hold $m+n$ values of both input arrays.
+
+
+\subsection{Formal specification of \merge}
+
+The following listing~\ref{lst:merge:spec} shows the specification of \merge.
+The specification expects the input arrays of the proper size and in increasing order
+and the output array of enough size to contain all the input elements.
+The input arrays should not overlap with the output array.
+%
+In the current edition of this guide, we prove only that the
+resulting array is in increasing order.
+Future editions will contain additional postconditions stating that the
+result array consists of reordered input elements and the stability of the algorithm,
+i.e., the same elements of the input arrays preserve their order in the output array.
+
+\input{Listings/merge.h.tex}
+
+%\clearpage
+
+\subsection{More Lemmas on \WeaklyIncreasing}
+\label{sec:WeaklyIncreasingLemmas}
+
+We introduce in the following listing several lemmas about \logicref{WeaklyIncreasing}
+that are helpful for the verification of \merge.
+
+\begin{itemize}
+\item
+Lemma \logicref{WeaklyIncreasingShrink} allows to restrict the property
+\emph{weakly increasing} onto a sub-array.
+
+\item
+Lemma \logicref{WeaklyIncreasingAddElement} defines the way a weakly
+increasing array can be constructed.
+
+\item
+Lemma \logicref{WeaklyIncreasingShift} is used to handle
+pointer arithmetic with respect to the \WeaklyIncreasing property.
+
+\item
+Lemmas  \logicref{WeaklyIncreasingUnchanged} and \logicref{WeaklyIncreasingEqual} state
+that if an array is weakly increasing,
+then another array (or the same array at another program point),
+whose elements are in a one-to-one correspondence with the
+original array, is also weakly increasing.
+
+\item
+Lemma \logicref{WeaklyIncreasingJoin} defines the conditions that two
+consequent weakly increasing ranges
+can be viewed as merged weakly increasing range.
+\end{itemize}
+
+\input{Listings/WeaklyIncreasingLemmas.acsl.tex}
+
+%\clearpage
+
+\subsection{Implementation of \merge}
+
+The implementation of \merge, shown in the next listings is straightforward.
+The algorithm operates by traversing both input arrays.
+On each iteration it writes the smaller of both elements into the result array,
+thus constructing an increasingly ordered array.
+If the algorithm reaches the end of one of the input arrays,
+it just copies the rest elements of the other array to the result array.
+The listing contains a number of assertions to trigger an application of lemmas by 
+the provers.
+The \inl{while} loop traverses the input arrays and constructs, in accordance with
+\logicref{WeaklyIncreasingAddElement}, the resulting weakly increasing array.
+After the loop, the algorithm copies the remaining elements to the resulting array.
+
+
+\begin{listing}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={1-33}, style=acsl-block, frame=single]{Source/merge.c}
+\end{minipage}
+\caption{\label{lst:merge-impl1}Implementation of \merge (1)}
+\end{listing}
+
+\index[examples]{merge@\texttt{merge}}
+
+%\clearpage
+
+We also use the following lemmas to support the verification of several properties.
+
+\begin{itemize}
+\item
+Lemma \logicref{WeaklyIncreasingEqual} is used to show that the
+copied elements from one of the input arrays preserve the \WeaklyIncreasing property.
+
+\item
+Lemma \logicref{WeaklyIncreasingJoin} is used
+to
+extend the \WeaklyIncreasing 
+property of the two sub-ranges of the resulting array over the whole range.
+In order to deal with pointer arithmetic we employ Lemma \WeaklyIncreasingShift.
+
+\item 
+Finally, Lemma \logicref{WeaklyIncreasingIncreasing}
+is used to prove the output array is in increasing order.
+\end{itemize}
+
+\begin{listing}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={34-100}, style=acsl-block, frame=single]{Source/merge.c}
+\end{minipage}
+\caption{\label{lst:merge-impl2}The Implementation of \merge (2)}
+\end{listing}
+
+\index[examples]{merge@\texttt{merge}}
+
+
+\clearpage
+

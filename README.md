@@ -1,7 +1,20 @@
+# Important Note: This software is currently not maintained 
 
-# ACSL by Example
+As of 2021, *ACSL by Example* is **not maintained**. 
+The main reason is that my research centers currently on quantum computing.
+Although this field also demands for formal methods, I have not enough time to continue providing
+high quality releases of *ACSL by Example*. 
 
-This repository contains version 32.0.0 of
+It was a great pleasure for me to learn about the [Frama-C](https://frama-c.com) tool chain, in particular 
+the [Frama-C/WP](https://frama-c.com/wp.html) plug-in.
+We at Fraunhofer FOKUS could not have produced *ACSL by Example* without the great help we received
+from the [team of Frama-C at CEA List](https://frama-c.com/html/contact.html)!
+
+Special thanks also to Denis Efremov from [ISPRAS](https://www.ispras.ru) for his contributions to *ACSL by Example*.
+
+#### ACSL by Example
+
+This repository contains version 22.0.0 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
 --- a collection of C functions and data types whose
 behavior has been formally specified
@@ -12,50 +25,22 @@ The directory
 contains the complete C source code including ACSL annotations of the examples.
 
 This version of *ACSL by Example* is intended for
-[Frama-C 32.0 (Germanium)](https://www.frama-c.com/fc-versions/germanium.html)
- and relies among others on the following sofware packages.
+Frama-C 22.0 and relies among others on the following sofware packages.
 
 *Package* | *Version*
 --------- | ---------
- Why3     | 1.8.2
- Alt-Ergo | 2.6.2
- CVC5     | 1.3.2
- Z3       | 4.15.2
- Coq      | 8.20.1
+ Why3     | 1.3.3
+ Alt-Ergo | 2.3.3
+ CVC4     | 1.7
+ Z3       | 4.8.6
+ Coq      | 8.12.1
 
-## Improvements
+For more details on verifying the examples see the file [README.txt](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/StandardAlgorithms/README.txt).
 
-The main changes in this release concern the rewriting of Coq proofs to reflect
-changes in WP (Frama-C).
+#### Accompanying LaTeX files
 
-- Logic and proofs:
-  Renamed `RemovePartition` to `IndexOfNotEqual` and adjusted `remove` and
-  `remove_copy3` implementations as well as the tutorial text accordingly.
-
-- Verification support:
-  Added new lemmas to improve verification rate:
-  `AccumulateNext`, `InnerProductInit`, and `InnerProductNext`.
-
-- Cleanup:
-  Removed references to `count2` from the tutorial.
-
-- Build system:
-  Fixed and cleaned up Makefile targets.
-
-## Open issues
-
-The following warnings are mainly due to changes in the behavior and diagnostics
-of WP (Frama-C) and will be addressed in a later revision of *ACSL by Example*.
-
-- Missing explicit `terminates` / `exits` clauses:
-  Function contracts are present but lack explicit `terminates` and/or `exits`
-  clauses for functions without visible bodies; WP therefore generates default
-  clauses.
-
-- Pedantic assigns warning:
-  An `assigns` clause is missing or too weak compared to the implementation,
-  reported under `wp:pedantic-assigns`.
-
-- Unsupported statement-level specification:
-  A statement contract is present but currently ignored by WP due to lack of
-  support.
+We also inlude for each example corresponding LaTeX file (see directory [Informal](https://github.com/fraunhoferfokus/acsl-by-example/tree/master/Informal)).
+This might be interesting for someone who wants to apply machine learning algorithms
+on this (small) collection of informal and formal specifications.
+Note that these LaTeX files are not sufficient to generate
+[ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf).

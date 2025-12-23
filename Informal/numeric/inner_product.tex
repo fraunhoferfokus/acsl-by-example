@@ -1,0 +1,83 @@
+
+\section{The \innerproduct algorithm}
+\Label{sec:innerproduct}
+
+The \innerproduct algorithm in the \cxx Standard Library \cite[\S 29.8.4]{cxx-17-draft} computes
+the \emph{inner product}\footnote{
+  Also referred to as \emph{dot product}, see \url{http://en.wikipedia.org/wiki/Dot_product}
+}
+of two ranges.
+%
+Our version of the original signature
+reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  value_type
+  inner_product(const value_type* a, const value_type* b,
+                size_type n, value_type init);
+\end{lstlisting} 
+
+The result of \innerproduct equals the value
+\begin{gather*}
+\mathtt{init} + \sum_{i = 0}^{\mathtt{n}-1} \mathtt{a}[i] \cdot \mathtt{b}[i]
+\end{gather*}
+thus, \innerproduct will return \inl{init} for empty ranges.
+
+%\clearpage
+
+\subsection{The logic function \InnerProduct}
+
+As in the case of \specref{accumulate} we specify \innerproduct
+by defining in the following listing the logic function \InnerProduct
+that formally expresses the summation of the element-wise product of two arrays.
+
+Predicate \logicref{ProductBounds} expresses that for $0 \leq i < n$ the products 
+%
+\begin{align}
+\Label{eq:innerproduct1}
+\mathtt{a}[i] \cdot \mathtt{b}[i] 
+\end{align}
+%
+do not overflow. 
+Predicate \logicref{InnerProductBounds}, on the other hand, states that for $0 \leq i < n$
+the following sums do not overflow.
+cc%
+\begin{align}
+\Label{eq:innerproduct2}
+\mathtt{init} + \sum_{k = 0}^{\mathtt{i}} \mathtt{a}[k] \cdot \mathtt{b}[k]
+\end{align}
+
+Otherwise, one cannot guarantee that the result of our implementation
+of \implref{innerproduct} equals the mathematical description of \InnerProduct.
+Finally, Lemma \logicref{InnerProductUnchanged} states that the result of the \InnerProduct only
+depends on the values of \inl{a[0..n-1]} and \inl{b[0..n-1]}.
+
+\input{Listings/InnerProduct.acsl.tex}
+
+\subsection{Formal specification of \innerproduct}
+
+Using the logic function \logicref{InnerProduct}, we specify \innerproduct as shown 
+in the following listing.
+Note that we needn't require that \inl{a} and \inl{b} are separated.
+
+\input{Listings/inner_product.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \innerproduct}
+
+The following listing shows an implementation of \innerproduct
+with corresponding loop annotations.
+
+\input{Listings/inner_product.c.tex}
+
+Note that the loop invariant \inl{inner} claims
+that in the $i$-th iteration step the current value of \inl{init}
+equals the accumulated value of Equation~\eqref{eq:innerproduct2}.
+This depends of course on the properties \inl{bounds} in the contract
+of \specref{innerproduct}, which express that there is no arithmetic overflow
+when computing the updates of the variable \inl{init}.
+
+\clearpage
+

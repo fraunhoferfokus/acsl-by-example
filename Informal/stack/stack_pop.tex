@@ -1,0 +1,28 @@
+
+\subsection{The function \stackpop}
+\Label{sec:stackpop}
+\Label{sec:stackpopwd}
+
+The following listing shows the specification of the function \stackpop.
+In accordance with Axiom~\eqref{eq:stack-size-pop}, \stackpop is supposed
+to reduce the number of elements in a non-empty stack by one.
+In addition to the requirements imposed by the axioms,
+our specification demands that \stackpop changes no memory location if it
+is applied to an empty stack.
+
+\input{Listings/stack_pop.h.tex}
+
+The implementation of \stackpop is shown in the next listing.
+It checks whether its argument is a non-empty stack in which case it
+decreases the field \inl{size} by one.
+
+\input{Listings/stack_pop.c.tex}
+
+\clearpage
+
+The next listing shows our check whether \stackpop is well-defined.
+As in the case of \stackpush we use the predicate \logicref{StackSeparated}
+in order to express that there is no aliasing between the two stack arguments.
+
+\input{Listings/stack_pop_wd.c.tex}
+

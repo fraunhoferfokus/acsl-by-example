@@ -1,0 +1,50 @@
+
+\section{The \minelement algorithm}
+\Label{sec:minelement}
+
+The \minelement  algorithm in the \cxx Standard Library \cite[\S 28.7.8]{cxx-17-draft}
+searches the minimum in a general sequence. 
+The signature of our version of \minelement reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+  size_type min_element(const value_type* a, size_type n);
+\end{lstlisting}
+
+The function \minelement finds the smallest element in the range \inl{a[0..n-1]}.
+More precisely, it returns the unique valid index \inl{i} such that
+\inl{a[i]} is minimal among the values \inl{a[0]}, \ldots,
+\inl{a[n-1]}, and \inl{i} is the first position with that property.
+The return value of \minelement is \inl{n} if and only if \inl{n == 0}.
+
+We use the predicate \logicref{LowerBound} that
+basically expresses that a given value is less or equal than all
+elements of a given array (section).
+%
+Closely related to the predicate \LowerBound is the predicate \logicref{StrictLowerBound}.
+%
+We also use the predicate \logicref{MinElement} which states that the element
+at a given index \inl{min} is a \emph{lower bound} of the sequence \inl{a[0..n-1]},
+and, by construction, a member of that sequence.
+
+
+\subsection{Formal specification of \minelement}
+
+
+The following listing contains the specification of \specref{minelement}.
+Note that we also use the predicate \logicref{StrictLowerBound} in order to
+express that \minelement returns the \emph{first} minimum position in \inl{a[0..n-1]}.
+
+\input{Listings/min_element.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \minelement}
+
+The implementation of \implref{minelement} uses the predicates \logicref{LowerBound}
+and \logicref{StrictLowerBound} in its loop annotations.
+
+\input{Listings/min_element.c.tex}
+
+\clearpage
+

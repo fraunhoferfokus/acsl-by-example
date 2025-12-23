@@ -6,6 +6,7 @@ MAKEFLAGS += --silent --no-print-directory
 export TOP_DIR    ?= ..
 export CONFIG_DIR := $(TOP_DIR)/Config
 export SCRIPT_DIR := $(TOP_DIR)/Scripts
+export DRIVER_DIR := $(TOP_DIR)/Drivers
 
 FILELIST   	:= filelist.path
 EXAMPLES	:= $(shell cat $(FILELIST))
@@ -70,6 +71,9 @@ header: $(GROUP_HEADER) FORCE
 
 files: header sources
 
+driver: FORCE
+	@ ($(MAKE) compile -sC $(DRIVER_DIR))
+
 $(GROUP_FILE).wp: files driver
 	@$(RM) -r $@
 	@$(FR) $(WP_C_FLAGS) $(WP_PROVER_FLAGS) $(WP_TIME_FLAGS) -wp-out $@ $(GROUP_SRC)
@@ -83,15 +87,29 @@ group-wp: $(GROUP_FILE).wp
 group-wpgui: $(GROUP_FILE).wpgui
 
 
+$(TOP_DIR)/Results/$(GROUP_FILE).report:
+	@ ($(MAKE) compile -sC $(DRIVER_DIR))
+	@. $(SCRIPT_DIR)/script_functions.sh; extract_data_Wp $(GROUP_FILE) $(CMD) $(SEC) > $@
+
+report: $(TOP_DIR)/Results/$(GROUP_FILE).report
+	@. $(SCRIPT_DIR)/script_functions.sh; prettyPrintReport $<
+
 report-clean: clean FORCE
 	@$(RM) $(TOP_DIR)/Results/$(GROUP_FILE).report
 
+
+$(TOP_DIR)/Results/$(GROUP_FILE).preport:
+	@. $(SCRIPT_DIR)/script_functions.sh; REPORT_BACKEND=wp_runner extract_data_Wp $(GROUP_FILE) $(CMD) $(SEC) > $@
+
+preport: $(TOP_DIR)/Results/$(GROUP_FILE).preport
+	@. $(SCRIPT_DIR)/script_functions.sh; prettyPrintReport $<
 
 preport-clean: clean FORCE
 	@$(RM) $(TOP_DIR)/Results/$(GROUP_FILE).preport
 
 
 clean:: FORCE
+	@ ($(MAKE) clean -sC $(DRIVER_DIR))
 	@ $(RM) .lia.cache
 	@ $(RM) $(GROUP_SRC)
 	@ $(RM) $(GROUP_HEADER)

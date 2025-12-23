@@ -1,0 +1,35 @@
+
+\section{The \heapsort algorithm}
+\Label{sec:heapsort}
+
+The \heapsort algorithm has the signature
+
+\begin{lstlisting}[style = acsl-block]
+
+  void heap_sort(value_type* a, size_type n);
+\end{lstlisting}
+
+It relies upon the heap algorithms discussed in Chapter~\ref{cha:heap}
+to efficiently transform the array into increasing order.
+
+\FloatBarrier
+
+\subsection{Formal specification of \heapsort}
+
+The following Listing shows the specification of \heapsort.
+
+\input{Listings/heap_sort.h.tex}
+
+
+\subsection{Implementation of \heapsort}
+
+The implementation of \heapsort, shown in the next listing is straightforward.
+%
+Given the input array \inl{a[0..n-1]}, we use \specref{makeheap} to
+arrange it into a heap; after that, we call \specref{sortheap} to
+sort this heap into increasing order.
+
+\input{Listings/heap_sort.c.tex}
+
+\clearpage
+

@@ -13,6 +13,3 @@ astraver.why3.conf
 *.union.c
 *.union.h
 
-*.json
-*.wplog
-

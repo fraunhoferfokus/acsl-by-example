@@ -1,0 +1,53 @@
+
+\section{The \rotatecopy algorithm}
+\Label{sec:rotatecopy}
+
+The \rotatecopy algorithm of the \cxx Standard Library \cite[\S 28.6.11]{cxx-17-draft} copies, in a particular way,
+the elements of one sequence of length~$n$ into a separate sequence.
+More precisely,
+
+\begin{itemize}
+\item the first~$m$ elements of the first sequence become the last~$m$ elements of the second sequence, and
+\item the last~$n-m$ elements of the first sequence become the first~$n-m$ elements of the second sequence.
+\end{itemize}
+
+Figure~\ref{fig:rotatecopy} illustrates the effects of \rotatecopy
+by highlighting how the initial and final segments of the array~\inl{a[0..n-1]} are mapped
+to corresponding subranges of the array~\inl{b[0..n-1]}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.62\textwidth]{Figures/rotate_copy.pdf}
+\caption{\Label{fig:rotatecopy} Effects of \rotatecopy}
+\end{figure}
+
+For our purposes we have modified the generic implementation
+to that of a range of type \valuetype.
+%
+The signature now reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  void rotate_copy(const value_type* a, size_type m, size_type n, value_type* b);
+\end{lstlisting}
+
+
+%\clearpage
+
+\subsection{Formal specification of \rotatecopy}
+
+The specification of \rotatecopy is shown in the following listing.
+Note that we require explicitly that both ranges do not overlap and that we are only
+able to \emph{read} from the range~\inl{a[0..n-1]}.
+
+\input{Listings/rotate_copy.h.tex}
+
+\subsection{Implementation of \rotatecopy}
+
+The following listing shows an implementation of the \rotatecopy function.
+The implementation simply calls the function \copyi twice.
+
+\input{Listings/rotate_copy.c.tex}
+
+%\clearpage
+

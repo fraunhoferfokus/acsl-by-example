@@ -21,11 +21,6 @@
       \forall value_type *a, init, integer n;
          n <= 0  ==>  Accumulate(a, n, init) == init;
 
-    lemma Accumulate_Next{L}:
-      \forall value_type* a, init, integer n;
-        0 <= n  ==>
-        Accumulate(a, n+1, init) == Accumulate(a, n, init) + a[n];
-
     lemma Accumulate_Unchanged{K,L}:
       \forall value_type *a, init, integer n;
         Unchanged{K,L}(a, n)  ==>

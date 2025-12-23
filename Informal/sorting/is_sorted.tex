@@ -1,0 +1,57 @@
+
+\section{The \issorted algorithm}
+\Label{sec:issorted}
+
+Our version of the \issorted algorithm compared to the \cxx Standard
+Library \cite[\S 28.7.1.5]{cxx-17-draft} has the signature
+\begin{lstlisting}[style = acsl-block]
+
+  bool is_sorted(const value_type* a, size_type n);
+\end{lstlisting}
+
+It returns \inl{true} if the given array is in increasing order, and
+\inl{false} otherwise.
+
+\FloatBarrier
+
+\subsection{Formal specification of \issorted}
+
+The following listing shows the acsl specification of \issorted.
+%
+In the contract, we use the predicate \logicref{Increasing},
+which states that any array element is always less or equal to any other element right of it.
+%
+We'll use an easier-to-handle predicate in the implementation of \implref{issorted}.
+
+\input{Listings/is_sorted.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \issorted}
+
+The implementation of \issorted is shown in the next Listing.
+%
+As usual, \issorted doesn't compare every array element to all that are right
+to it, but only to the immediately adjacent one, which is of course
+more efficient.
+For this, we use the predicate \logicref{WeaklyIncreasing}
+in the loop invariant of the implementation.
+
+\input{Listings/is_sorted.c.tex}
+
+Since our implementation uses \WeaklyIncreasing in its loop invariant, and
+follows the same principle in its code, its verification is
+straight-forward---except for the final reasoning that
+\inl{WeaklyIncreasing(a,n)} implies \inl{Increasing(a,n)}.
+
+We have the lemma \logicref{WeaklyIncreasingIncreasing} for that step,
+which needs to be proven manually with \coq.
+%
+The converse lemma \logicref{IncreasingWeaklyIncreasing}
+is proven automatically, but isn't actually needed to verify our
+\issorted implementation.
+Alternatively, we could have dragged the predicate \Increasing along the
+loop, which happens to cause no particular problems in this case.
+
+\clearpage
+

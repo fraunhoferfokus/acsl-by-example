@@ -1,0 +1,19 @@
+
+\subsection{The function \stackfull}
+\Label{sec:stackfull}
+
+The function \stackfull is the runtime version of the predicate \logicref{StackFull}.
+
+\input{Listings/stack_full.h.tex}
+
+As in the definition of the predicate \StackFull the implementation of
+\stackfull in the next listing simply checks whether the
+size of the stack equals its capacity.
+
+\input{Listings/stack_full.c.tex}
+
+Note that with our definition of stack equality (\S\ref{sec:stack-equality})
+there can be equal stack with different capacities.
+As a consequence, there can are equal stacks where one is full while the other is not.
+In other words, \stackfull is not well-defined!
+

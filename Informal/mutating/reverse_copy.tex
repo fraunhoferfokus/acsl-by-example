@@ -1,0 +1,60 @@
+
+\section{The \reversecopy algorithm}
+\Label{sec:reversecopy}
+
+The \reversecopy
+algorithm of the \cxx Standard Library \cite[\S 28.6.10]{cxx-17-draft} inverts the order of elements
+in a sequence.
+\reversecopy does not change the input sequence, and
+copies its result to the output sequence.
+For our purposes we have modified the generic implementation
+to that of a range of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  void reverse_copy(const value_type* a, size_type n, value_type* b);
+\end{lstlisting}
+
+%\subsection{The predicate \Reverse}
+
+Informally, \reversecopy copies the elements from the array \inl{a} into
+array \inl{b} such that the copy is a reverse of the original array. 
+In order to concisely formalize these conditions we define in the following
+listing the predicate \logicref{Reverse} (see also Figure~\ref{fig:Reverse}).
+
+\input{Listings/Reverse.acsl.tex}
+
+We also define several overloaded variants of \Reverse that 
+provide default values for some of the parameters.
+These overloaded versions enable us to write later more concise \acsl annotations.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/reverse_logic.pdf}
+\caption{\Label{fig:Reverse} Sketch of predicate~\Reverse}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Formal specification of \reversecopy}
+
+The specification of \specref{reversecopy} is shown in the following listing
+We use the second version of predicate \logicref{Reverse}
+in order to formulate the postcondition of \reversecopy.
+
+\input{Listings/reverse_copy.h.tex}
+
+\subsection{Implementation of \reversecopy}
+
+The implementation of \implref{reversecopy} is shown in the following listing.
+%
+For the postcondition to be true, we must ensure that for
+every element \inl{i}, the comparison \inl{b[i] == a[n-1-i]} holds.
+This is formalized by the loop invariant~\inl{reverse} where we employ
+the first version of \logicref{Reverse}.
+
+\input{Listings/reverse_copy.c.tex}
+
+\clearpage
+

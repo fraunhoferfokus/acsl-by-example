@@ -1,0 +1,72 @@
+
+\section{The \adjacentdifference algorithm}
+\Label{sec:adjacentdifference}
+
+The \adjacentdifference algorithm in the \cxx Standard Library \cite[\S 29.8.11]{cxx-17-draft}
+computes the differences of adjacent elements in a range.
+%
+Our version of the original signature reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+size_type
+adjacent_difference(const value_type* a, size_type n, value_type* b);
+\end{lstlisting} 
+
+After executing the function \adjacentdifference the array \inl{b[0..n-1]} holds the following values
+\begin{align}
+   \mathtt{b}[0] &= \mathtt{a}[0] \nonumber \\
+   \mathtt{b}[1] &= \mathtt{a}[1] - \mathtt{a}[0] \nonumber \\
+                 &\vdotswithin{=} \nonumber \\
+   \mathtt{b}[n-1] &= \mathtt{a}[n-1] - \mathtt{a}[n-2] \nonumber \\
+\end{align}
+
+\subsection{The predicate \AdjacentDifference}
+
+We start with the definition of the logic function \Difference whose definition
+is shown in the following listing.
+
+\input{Listings/Difference.acsl.tex}
+
+\clearpage 
+
+Building on top of \Difference we now introduce the predicate \AdjacentDifference.
+We also provide the predicate \AdjacentDifferenceBounds
+that captures conditions that prevent numeric overflows
+while computing differences of the form \inl{a[i] - a[i-1]}.
+
+\input{Listings/AdjacentDifference.acsl.tex}
+
+Lemmas \logicref{AdjacentDifferenceStep} and \logicref{AdjacentDifferenceSection}
+will help us later in the verification of \implref{adjacentdifferenceinv}.
+
+\clearpage
+
+\subsection{Formal specification of \adjacentdifference}
+
+Using the predicates \logicref{AdjacentDifference} and \logicref{AdjacentDifferenceBounds}
+we can provide in the following listing a concise formal specification of \adjacentdifference.
+As in the case of the specification of \specref{partialsum}
+we require that the arrays \inl{a[0..n-1]} and \inl{b[0..n-1]} 
+are separated.
+
+\input{Listings/adjacent_difference.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \adjacentdifference}
+
+The following listing shows an implementation of \adjacentdifference
+with corresponding loop annotations.
+In order to achieve the verification of the loop invariant \inl{difference} we 
+rely on
+\begin{itemize}
+\item the assertions \inl{bound} and \inl{difference}
+\item the lemmas \logicref{AdjacentDifferenceStep} and \logicref{AdjacentDifferenceSection}
+\item a statement contract with the two postconditions labeled as \inl{step}
+\end{itemize}
+
+\input{Listings/adjacent_difference.c.tex}
+
+\clearpage
+

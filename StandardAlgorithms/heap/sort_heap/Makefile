@@ -1,6 +1,8 @@
 
 include ../../Config/example.mk
 
+WP_TIMEOUT=3
+
 #WP_FLAGS += -wp-prop reorder
 #WP_FLAGS += -wp-prop max
 #WP_FLAGS += -wp-prop unchanged

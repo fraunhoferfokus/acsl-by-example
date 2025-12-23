@@ -13,11 +13,9 @@ equal_range_test(const std::vector<value_type>& a, value_type value,
   auto less = [value](value_type x) {
     return x < value;
   };
-
   auto less_equal = [value](value_type x) {
     return x <= value;
   };
-
   {
     auto pair = equal_range(a.data(), a.size(), value);
     assert(lower == pair.first);
@@ -26,7 +24,6 @@ equal_range_test(const std::vector<value_type>& a, value_type value,
     assert(ptr + lower == std::partition_point(ptr, ptr + a.size(), less));
     assert(ptr + upper == std::partition_point(ptr, ptr + a.size(), less_equal));
   }
-
   {
     auto pair = std::equal_range(a.begin(), a.end(), value);
     assert(pair.first  == a.begin() + lower);

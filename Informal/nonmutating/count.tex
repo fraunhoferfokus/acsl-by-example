@@ -1,0 +1,150 @@
+
+\section{The \counti algorithm}
+\Label{sec:counti}
+
+The \counti algorithm in the \cxx Standard Library \cite[\S
+28.5.9]{cxx-17-draft} counts
+the frequency of occurrences for a particular element in
+a sequence.
+For our purposes we have modified
+the generic implementation
+to that of arrays of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+  size_type
+  count(const value_type* a, size_type n, value_type v);
+\end{lstlisting}
+
+Informally, the function returns the number of occurrences of
+\inl{v} in the array \inl{a}.
+
+\subsection{The logic function \Count}
+
+When trying to specify \counti we are faced with the situation that
+\acsl does not provide a definition of counting a value in an array.\footnote{
+  This statement is not quite true because the \acsl documentation 
+  lists \inl{numof} as one of several \emph{higher order logic constructions} \cite[\S 2.6.7]{ACSLSpec}.
+  However, these \emph{extended quantifiers} are mentioned only as experimental features.
+}
+We therefore start with an axiomatic definition of \emph{logic function} \Count
+that captures the basic intuitive features of counting on an array section.
+The expression \inl{Count(a,m,n,v)} returns the number of
+occurrences of \inl{v} in \inl{a[m],...,a[n-1]}.
+
+The specification of \counti will then be fairly short because it employs
+our \emph{logic function}
+\Count whose (considerably) longer definition is given in the 
+Listings~\ref{logic:Count-1} and~\ref{logic:Count-2}.\footnote{
+ This definition of \Count is a generalization of
+ the \emph{logic function} \inl{nb_occ} of the \acsl specification \cite{ACSLSpec}.
+}
+
+
+\begin{itemize}
+\item
+The \acsl keyword \inl{axiomatic} 
+is used to structure the specification and gather the logic function \Count and related lemmas.
+Note that the interval bounds \inl{m} and \inl{n} and the return value for \Count are of type \inl{integer}.
+
+\item
+The logic functions \Count is recursively defined.
+It consist of two checks: whether the range is empty and for the value of
+the "current" element in the array. The recursion goes down on the range length.
+We also provide an overloaded version of \Count that accepts only
+the length of an array, thus relieving the use the supply the argument $m=0$ for the
+case of a complete array.
+
+\item
+Lemma \logicref{CountEmpty} covers the cases of empty ranges.
+
+\item
+Lemmas \logicref{CountHit} and 
+\logicref{CountMiss} reduce
+counting of a range of length~$n-m$ to a range of length~$n-m-1$.
+
+\item
+Lemmas \logicref{CountOne} and \logicref{CountSingle} built on on top of \CountHit
+and \CountMiss. 
+Using them simplifies several \coq proofs.
+They also slightly change the induction scheme from $n-1 \rightarrow n$
+to $n \rightarrow n+1$.
+\end{itemize}
+
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={1-45}, style=acsl-block, frame=single]{Source/Count.acsl}
+\end{minipage}
+\caption{\label{logic:Count-1}The logic function \Count (1)}
+\input{Listings/Count.acsl.labels.tex}
+\input{Listings/Count.acsl.index.tex}
+\end{logic}
+
+\FloatBarrier
+
+\begin{itemize}
+
+\item
+The logic function \Count depends only on the set \inl{a[m..n-1]} of memory locations.
+Lemma \logicref{CountUnchanged} makes this claim explicit by ensuring that
+\Count produces the same result
+if the values \inl{a[0..n-1]} do not change between two program states indicated
+by the labels~\inl{K} and~\inl{L}.
+We use here predicate \logicref{Unchanged} to express the premise.
+
+\item 
+Lemma \logicref{CountEqual} is a generalization of lemma \CountUnchanged for
+the case of comparing \Count on two arrays.
+
+\item
+Lemmas \logicref{CountUnion} and \logicref{CountCut} 
+allow to deal with partitions of arrays.
+\end{itemize}
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={46-90}, style=acsl-block, frame=single]{Source/Count.acsl}
+\end{minipage}
+\caption{\label{logic:Count-2}The logic function \Count (2)}
+\end{logic}
+
+\FloatBarrier
+
+\begin{itemize}
+\item 
+Lemmas \logicref{CountSingleBounds} and \logicref{CountBounds}
+express lower and upper bounds of \Count.
+Lemma \logicref{CountIncreasing} states that \Count is a monotonically increasing.
+
+\item
+Finally, lemmas \logicref{CountSingleShift} and \logicref{CountShift}
+state that \Count is invariant under array shifts.
+\end{itemize}
+
+We mention here also lemma \logicref{CountSomeEqual}
+which brings together properties of \logicref{Count} and \logicref{Find}.
+
+\input{Listings/CountFind.acsl.tex}
+
+\clearpage 
+
+\subsection{Formal specification of \counti}
+
+In the contract of \specref{counti} we use the logic function
+\logicref{Count}
+Note that our specification also states that the result of \counti is non-negative
+and less than or equal the size of the array.
+
+\input{Listings/count.h.tex}
+
+\subsection{Implementation of \counti}
+
+The following listing shows a possible implementation of \implref{counti}.
+Note that we refer to the logic function \Count in one of the loop invariants.
+
+\input{Listings/count.c.tex}
+
+\clearpage
+

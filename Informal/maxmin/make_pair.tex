@@ -1,0 +1,27 @@
+
+\section{The auxiliary function \makepair}
+\label{sec:makepair}
+
+In order to be able to specify functions that work
+on pairs of indices we introduce in the following listing
+the type \sizetypepair.
+
+\begin{listing}[hbt]
+\begin{minipage}{0.99\textwidth}
+\lstinputlisting[style=acsl-block, frame=single]{Source/size_type_pair.h}
+\end{minipage}
+  \caption{\Label{lst:size_type_pair}The type \sizetypepair}
+\end{listing}
+
+\index[examples]{size\_pair\_type@\texttt{size\_pair\_type}}
+
+%\clearpage
+
+We will also use the auxiliary function \makepair which turns
+two indices \inl{first} and \inl{second} into an object of \sizetypepair.
+The specification and implementation of \specref{makepair} is shown here.
+
+\input{Listings/make_pair.h.tex}
+
+\clearpage
+

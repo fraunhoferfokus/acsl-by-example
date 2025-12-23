@@ -1,0 +1,85 @@
+
+
+\section{Reorderings and fluctuations}
+\label{sec:heap-reordering}
+
+One particular challenge posed by heap algorithms is that
+while temporarily causing \emph{small fluctuations} in the number of values
+within an array they essentially only \emph{reorder} it,
+that is they leave the multiset of its values unchanged.
+In this section we will introduce various predicates that will help
+us mastering this challenge.
+
+\subsection{Formalizing small fluctuations}
+
+The predicate \MultisetAdd in the following listing
+expresses that the number of occurrences of a specific element in an array
+has increased by one between two program points~\inl{K} and~\inl{L}.
+
+\input{Listings/MultisetOperations.acsl.tex}
+
+The predicate \MultisetMinus, on the other hand,
+expresses that the number of occurrences of a specific element in an array
+has decreased by one between two program points~\inl{K} and~\inl{L}.
+Note that we have defined \MultisetMinus by calling \MultisetAdd
+with the labels reversed.
+%
+Finally, the predicate \MultisetRetain expresses that a the number
+of occurrences of a given value does not change between two program points.
+In order to guide the automatic provers, we also provide some
+lemmas that formalize conditions under which the respective predicates hold.
+
+Using the predicate \logicref{MultisetReorder} and the logic function \logicref{At}
+we also formulate a few simple lemmas that describe when the
+predicates from Listing~\logicref{MultisetOperations} hold.
+
+\subsection{Simple properties of fluctuations}
+
+The predicate \logicref{MultisetRetainRest} uses \logicref{MultisetRetain}
+in order to express that all values of an array,
+except the two given values \inl{u} and \inl{v}, occur as often in program
+point \inl{K} and program point \inl{L}. 
+
+The lemmas in this listing express conditions under which small
+fluctuations---expressed by the predicates \logicref{MultisetAdd}
+and \logicref{MultisetMinus}---in the number of occurrences between three
+program points even with each other.
+
+\input{Listings/MultisetRetainRest.acsl.tex}
+
+
+\subsection{Combining fluctuations}
+
+Small fluctuations are so prevalent in the central heap algorithms \implref{pushheap}
+and \implref{popheap} that it is worthwhile to introduce another predicate
+to concisely capture this feature.
+We refer to this predicate as \logicref{MultisetParity} because it describes
+the situation where the number of occurrences 
+
+\begin{itemize}
+\item of the first of two given values increases by one
+\item while that of the second value decreases by one
+\item and the remaining values retain their respective number of occurrences.
+\end{itemize}
+
+With this predicate we can formulate several lemmas that describe useful
+combinations of reorderings and fluctuations.
+For example, lemma \logicref{MultisetParityMultisetReorder} describes
+the situation where two fluctuation cancel each other and consequently
+establish a reordering of an array.
+
+\input{Listings/MultisetParity.acsl.tex}
+
+\subsection{How do fluctuations arise?}
+
+The simplest way to creation a small fluctuation is to
+update an array element with a different value.
+Thus, similar to the predicate \logicref{ArrayUpdate} we introduce 
+predicate \logicref{MultisetUpdate} which in turn relies on \logicref{MultisetParity}.
+Lemma \logicref{ArrayUpdateMultisetUpdate} then formalizes the claim
+that updating an array element with a different value creates a small fluctuation.
+
+\input{Listings/MultisetUpdate.acsl.tex}
+
+\clearpage
+

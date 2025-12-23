@@ -1,0 +1,52 @@
+
+\section{The structure \stacktype and its associated functions}
+\Label{sec:stack-definition}
+
+We now introduce one possible \isoc implementation of the above axioms.
+It is centred around the \isoc structure \stacktype shown in the following listing.
+
+\begin{listing}[hbt]
+\centering
+\begin{minipage}{0.9\textwidth}
+\lstinputlisting[style=acsl-block, frame=single]{Source/stack.h}
+\end{minipage}
+\caption{\Label{lst:stack-definition}Definition of type \stacktype}
+\end{listing}
+
+This struct holds an array \inl{obj} of positive length called \inl{capacity}. 
+The capacity of a stack is the maximum number of elements this stack can hold.
+The field \inl{size} indicates the number elements that
+are currently in the stack.
+See also Figure~\ref{fig:stack-struct} which attempts to interpret
+this definition according to Figure~\ref{fig:stack}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\linewidth]{Figures/stack-struct.pdf}
+\caption{\Label{fig:stack-struct}Interpreting the data structure \stacktype}
+\end{figure}
+
+\FloatBarrier
+\clearpage
+
+Based on the stack functions from \S\ref{sec:stack-axioms},
+we declare in the next listing the following functions as part of
+our \stacktype data type.
+
+\begin{listing}[hbt]
+\centering
+\begin{minipage}{0.9\textwidth}
+\lstinputlisting[style=acsl-block, frame=single]{Source/stack_functions.h}
+\end{minipage}
+\caption{\Label{lst:stack-functions}Declaration of functions of type \stacktype}
+\end{listing}
+
+Most of these functions directly correspond to methods of the
+\cxx \inl{std::stack} template class \cite[\S 26.6.6.1]{cxx-17-draft}.
+The function \stackequal corresponds to the comparison operator~\inl{==},
+whereas one use of \stackinit is to bring a stack into a
+well-defined initial state.
+The function \stackfull has no counterpart in \inl{std::stack}.
+This reflects the fact that we 
+avoid dynamic memory allocation, while \inl{std::stack} does not.
+

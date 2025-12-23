@@ -1,0 +1,75 @@
+
+\section{The \removecopyii algorithm (number of copied elements)}
+\label{sec:removecopyii}
+
+In this section we improve the contract of \specref{removecopy}
+by formally specifying the number~\inl{\\result} of elements copied by \removecopy.
+
+The number of copied elements equals of course the number of elements
+in the input range \inl{a[0..n-1]} that are different from~\inl{v}.
+One can formally describe this number by relying on the logic function~\logicref{Count}.
+
+\begin{lstlisting}[style=acsl-block]
+
+  logic integer
+  CountNotEqual(value_type* a, integer n, value_type v) =  n - Count(a, n, v);
+\end{lstlisting}
+
+In fact, we have used this kind of definition in earlier version of this document.
+We have found it, however, worthwhile to provide a separate definition of \CountNotEqual
+and express the relationship with \Count as a lemma.
+This definition is shown in the Listings~\ref{logic:CountNotEqual-1}
+and~\ref{logic:CountNotEqual-2}.
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={1-34}, style=acsl-block, frame=single]{Source/CountNotEqual.acsl}
+\end{minipage}
+\caption{\Label{logic:CountNotEqual-1} The logic function \CountNotEqual (1)}
+\input{Listings/CountNotEqual.acsl.labels.tex}
+\input{Listings/CountNotEqual.acsl.index.tex}
+\end{logic}
+
+
+\clearpage
+
+The  above mentioned relationship with \logicref{Count} is expressed as
+lemma \logicref{CountNotEqualCount} in the following listing.
+
+\begin{logic}[hbt]
+\begin{minipage}{\textwidth}
+\lstinputlisting[linerange={35-60}, style=acsl-block, frame=single]{Source/CountNotEqual.acsl}
+\end{minipage}
+\caption{\Label{logic:CountNotEqual-2} The logic function \CountNotEqual (2)}
+\end{logic}
+
+\FloatBarrier
+
+
+\subsection{Formal specification of \removecopyii}
+
+We extend our formal specification by using \logicref{CountNotEqual}
+and add the new postcondition \inl{size}, which states that the returning value
+of \removecopyii equals \CountNotEqual.
+The following listing shows the formal specification of \specref{removecopyii}.
+
+\input{Listings/remove_copy2.h.tex}
+
+\subsection{Implementation of \removecopyii}
+
+The following listing shows the implementation of our
+extended of \removecopyii.
+Here we added the loop invariant \inl{size} which corresponds to the 
+postcondition in \specref{removecopyii}.
+In order to ensure that the loop invariant \inl{size} can be verified
+we have added the assertions \inl{size} and \inl{unchanged}.
+
+\input{Listings/remove_copy2.c.tex}
+
+While we now can precisely speak of the number of copied elements,
+it is still not possible to say something about the exact relationship between
+the elements of range~\inl{a[0..n-1]} and range~\inl{b[0..n-1]}.
+We will address this question the contract of \specref{removecopyiii}.
+
+\clearpage
+

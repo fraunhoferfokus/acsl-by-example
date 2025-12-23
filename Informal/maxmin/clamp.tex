@@ -1,0 +1,36 @@
+
+\section{The \clamp algorithm}
+\label{sec:clamp}
+
+
+The \clamp algorithm in the \cxx Standard Library \cite[\S 28.7.9]{cxx-17-draft} ``clamps'' a value
+between a pair of boundary values.
+The signature of our version of \clamp reads:
+
+\begin{lstlisting}[style = acsl-block]
+
+  value_type clamp(value_type v, value_type lower, value_type upper);
+\end{lstlisting}
+
+The function \clamp returns \inl{v} if the value is greater
+than \inl{lower} and smaller than \inl{upper}.
+Otherwise, if \inl{v} is smaller than \inl{lower}, then \inl{lower} is returned.
+Finally, if \inl{v} is greater than \inl{upper}, \inl{upper} is the returned.
+
+\subsection{Formal specification of \clamp}
+
+The following listing contains the specification of \specref{clamp}.
+Note that we require that \inl{lower} must be less or equal than \inl{upper}.
+
+\input{Listings/clamp.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \clamp}
+
+The implementation of \implref{clamp} can be verified without any additional annotations.
+
+\input{Listings/clamp.c.tex}
+
+%\clearpage
+

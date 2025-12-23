@@ -1,0 +1,50 @@
+
+\section{The \remove algorithm}
+\Label{sec:remove}
+
+The \cxx Standard Library also
+contains a function \remove\cite[28.6.8]{cxx-17-draft} performing
+the same operation as \removecopy as an in-place algorithm.
+Its signature is very similar to that of \removecopy,
+except that there is no need for an output array.
+
+\begin{lstlisting}[style=acsl-block]
+
+  size_type remove(value_type* a, size_type n, value_type v);
+\end{lstlisting}
+
+Figure~\ref{fig:remove} shows how \remove is supposed
+to remove all occurrences of the given value~4 from a range.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.85\textwidth]{Figures/remove.pdf}
+\caption{\Label{fig:remove}Effects of \remove}
+\end{figure}
+
+\FloatBarrier
+
+\subsection{Formal specification of \remove}
+
+The following listing shows a formal specification of the function \specref{remove}.
+Our specification is very similar to the one of \specref{removecopyiii}
+except that we using a version of \logicref{Remove} that takes only one pointer argument.
+
+\input{Listings/remove.h.tex}
+
+\clearpage
+
+\subsection{Implementation of \remove}
+
+In the following listing we show our implementation of \implref{remove} together with
+the additional loop annotations.
+Again, the annotations are very similar to those of the
+implementation of \implref{removecopyiii}.
+
+\input{Listings/remove.c.tex}
+
+Also note the use of the predicate \logicref{At} in the loop invariant \inl{unchanged}
+and the assertion \inl{update}.
+
+\clearpage
+

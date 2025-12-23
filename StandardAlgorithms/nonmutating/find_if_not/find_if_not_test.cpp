@@ -15,7 +15,6 @@ main(int argc, char** argv)
   auto it = std::find_if_not(a.begin(), a.end(), [value](int i) {
     return i == value;
   });
-
   auto pos = find_if_not(a.data(), a.size(), value);
   assert(it == a.begin() + pos);
   assert(*it == a[pos]);

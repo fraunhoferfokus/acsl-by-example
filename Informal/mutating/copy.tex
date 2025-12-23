@@ -1,0 +1,79 @@
+
+\section{The \copyi algorithm}
+\Label{sec:copyi}
+
+The \copyi  algorithm in the \cxx Standard Library \cite[\S 28.6.1]{cxx-17-draft} implements
+a duplication algorithm for general sequences.
+For our purposes we have modified
+the generic implementation
+to that of a range of type \valuetype.
+The signature now reads:
+
+\begin{lstlisting}[style=acsl-block]
+
+  void copy(const value_type* a, size_type n, value_type* b);
+\end{lstlisting}
+
+Informally, the function copies every element from the source range \inl{a[0..n-1]} to the
+destination range~\inl{b[0..n-1]}, as shown in Figure~\ref{fig:copy}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.50\textwidth]{Figures/copy.pdf}
+\caption{\Label{fig:copy} Effects of \copyi}
+\end{figure}
+
+\subsection{Formal specification of \copyi}
+
+Figure~\ref{fig:copy} might suggest that the ranges \inl{a[0..n-1]} and \inl{b[0..n-1]}
+must not overlap.
+However, since the informal specification requires that elements are copied in the
+order of increasing indices only a weaker condition is necessary.
+To be more specific, it is required that the pointer~\inl{b} does not refer
+to elements of \inl{a[0..n-1]} as shown in the example in Figure~\ref{fig:copy-overlap}.
+
+\begin{figure}[hbt]
+\centering
+\includegraphics[width=0.60\textwidth]{Figures/copy-overlap.pdf}
+\caption{\Label{fig:copy-overlap} Possible overlap of \copyi ranges}
+\end{figure}
+
+\FloatBarrier
+
+The specification of \copyi is shown in the following listing.
+The \copyi algorithm expects that the ranges \inl{a} and \inl{b} are valid for reading
+and writing, respectively.
+Note the precondition~\inl{sep} that expresses the previously discussed non-overlapping property.
+
+\input{Listings/copy.h.tex}
+
+Again, we can use the \logicref{Equal} predicate to express that the
+array~\inl{a} equals~\inl{b} after \copyi has been called.
+Nothing else must be altered.
+To state this we use the \inl{assigns}-clause.
+
+%\clearpage
+
+\subsection{Implementation of \copyi}
+
+The following listing shows an implementation of the \copyi function.
+
+\input{Listings/copy.c.tex}
+
+For the postcondition \equal to be true, we must ensure that for every index
+\inl{i}, the value \inl{a[i]} must not yet have been changed before it is 
+copied to \inl{b[i]}.
+We express this by using the  \Unchanged predicate.\footnote{
+Alternatively, this could also be expressed by changing the
+\inl{loop assigns} clause to \inl{i, b[0..i-1]}; however,
+\framac doesn't yet support \inl{loop assigns} clauses
+containing the loop variable.
+}
+
+The \inl{assigns} clause ensures that nothing but the range \inl{b[0..n-1]}
+and the loop variable \inl{i} is modified.
+Keep in mind, however, that parts of the source range \inl{a[0..n-1]} might change
+due to its potential overlap with the destination range.
+
+\clearpage
+
