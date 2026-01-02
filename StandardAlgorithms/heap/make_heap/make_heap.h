@@ -6,10 +6,14 @@
 #include "MultisetReorder.acsl"
 
 /*@
-   requires valid:  \valid(a + (0..n-1));
-   assigns          a[0..n-1];
-   ensures heap:    Heap(a, n);
-   ensures reorder: MultisetReorder{Old,Here}(a, n);
+   requires   valid:    \valid(a + (0..n-1));
+
+   terminates           \true;
+   exits                \false;
+   assigns              a[0..n-1];
+
+   ensures    heap:     Heap(a, n);
+   ensures    reorder:  MultisetReorder{Old,Here}(a, n);
 */
 void
 make_heap(value_type* a, size_type n);

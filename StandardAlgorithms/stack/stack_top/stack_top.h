@@ -5,9 +5,13 @@
 #include "Stack.acsl"
 
 /*@
-    requires valid: \valid(s) && StackInvariant(s);
-    assigns         \nothing;
-    ensures  top:   !StackEmpty(s) ==> \result == StackTop(s);
+  requires   valid:  \valid(s) && StackInvariant(s);
+
+  terminates         \true;
+  exits              \false;
+  assigns            \nothing;
+
+  ensures    top:    !StackEmpty(s) ==> \result == StackTop(s);
 */
 value_type
 stack_top(const Stack* s);

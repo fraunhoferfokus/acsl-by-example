@@ -3,15 +3,20 @@
 #define BINARY_SEARCH_H_INCLUDED
 
 #include "Increasing.acsl"
+#include "SomeNone.acsl"
 
 /*@
-  requires valid:      \valid_read(a + (0..n-1));
-  requires increasing: Increasing(a, n);
-  assigns              \nothing;
-  ensures  result:     \result <==> \exists integer i; 0 <= i < n && a[i] == v;
+  requires   valid:       \valid_read(a + (0..n-1));
+  requires   increasing:  Increasing(a, n);
+
+  terminates              \true;
+  exits                   \false;
+  assigns                 \nothing;
+
+  ensures    result:      \result <==> SomeEqual(a, n, v);
 */
 bool
 binary_search(const value_type* a, size_type n, value_type v);
 
-#endif /* BINARY_SEARCH_H_INCLUDED */
+#endif /* BINARY_SEARCH2_H_INCLUDED */
 

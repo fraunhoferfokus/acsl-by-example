@@ -5,10 +5,14 @@
 #include "Equal.acsl"
 
 /*@
-  requires valid:  \valid_read(a + (0..n-1));
-  requires valid:  \valid_read(b + (0..n-1));
-  assigns          \nothing;
-  ensures result:  \result <==> Equal{Here,Here}(a, n, b);
+  requires   valid:   \valid_read(a + (0..n-1));
+  requires   valid:   \valid_read(b + (0..n-1));
+
+  terminates          \true;
+  exits               \false;
+  assigns             \nothing;
+
+  ensures    result:  \result <==> Equal{Here,Here}(a, n, b);
 */
 bool
 equal(const value_type* a, size_type n, const value_type* b);

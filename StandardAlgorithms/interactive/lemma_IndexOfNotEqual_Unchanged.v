@@ -745,6 +745,35 @@ Axiom Q_CountNotEqual_Union :
   (((L_CountNotEqual_1_ Mint a k m v) + (L_CountNotEqual_1_ Mint a m n v))%Z
    = (L_CountNotEqual_1_ Mint a k n v)).
 
+(* Why3 assumption *)
+Definition P_AllEqual_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
+    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
+  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
+  ((Mint (shift a i)) = v).
+
+(* Why3 assumption *)
+Definition P_AllEqual_2_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
+    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
+  P_AllEqual_1_ Mint a m n (Mint (shift a m)).
+
+(* Why3 assumption *)
+Definition P_SomeNotEqual_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
+    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
+  exists i:Numbers.BinNums.Z,
+  (~ ((Mint (shift a i)) = v) /\ (m <= i)%Z) /\ (i < n)%Z.
+
+Axiom Q_NotAllEqual_SomeNotEqual :
+  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
+    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
+  is_sint32_chunk Mint -> is_sint32 v -> ~ P_AllEqual_1_ Mint a m n v ->
+  P_SomeNotEqual_1_ Mint a m n v.
+
+Axiom Q_SomeNotEqual_NotAllEqual :
+  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
+    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
+  is_sint32_chunk Mint -> is_sint32 v -> P_SomeNotEqual_1_ Mint a m n v ->
+  ~ P_AllEqual_1_ Mint a m n v.
+
 Parameter L_FindNotEqual_1_:
   (addr -> Numbers.BinNums.Z) -> addr -> Numbers.BinNums.Z ->
   Numbers.BinNums.Z -> Numbers.BinNums.Z -> Numbers.BinNums.Z.
@@ -822,14 +851,6 @@ Axiom Q_FindNotEqual_WeaklyIncreasing :
   ((L_FindNotEqual_1_ Mint a m n v) <=
    (L_FindNotEqual_1_ Mint a m (1%Z + n)%Z v))%Z.
 
-Axiom Q_FindNotEqual_Extend :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
-    (k:Numbers.BinNums.Z) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
-  let x := Mint (shift a k) in
-  ~ (x = v) -> ((m + (L_FindNotEqual_1_ Mint a m k v))%Z = k) ->
-  (m <= k)%Z -> (k < n)%Z -> is_sint32_chunk Mint -> is_sint32 v ->
-  is_sint32 x -> ((m + (L_FindNotEqual_1_ Mint a m n v))%Z = k).
-
 Axiom Q_FindNotEqual_Increasing :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
     (k:Numbers.BinNums.Z) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
@@ -843,35 +864,6 @@ Axiom Q_FindNotEqual_Limit :
   ~ (x = v) -> (m <= k)%Z -> (k < n)%Z -> is_sint32_chunk Mint ->
   is_sint32 v -> is_sint32 x ->
   ((m + (L_FindNotEqual_1_ Mint a m n v))%Z <= k)%Z.
-
-(* Why3 assumption *)
-Definition P_AllEqual_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  ((Mint (shift a i)) = v).
-
-(* Why3 assumption *)
-Definition P_AllEqual_2_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  P_AllEqual_1_ Mint a m n (Mint (shift a m)).
-
-(* Why3 assumption *)
-Definition P_SomeNotEqual_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
-  exists i:Numbers.BinNums.Z,
-  (~ ((Mint (shift a i)) = v) /\ (m <= i)%Z) /\ (i < n)%Z.
-
-Axiom Q_NotAllEqual_SomeNotEqual :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
-  is_sint32_chunk Mint -> is_sint32 v -> ~ P_AllEqual_1_ Mint a m n v ->
-  P_SomeNotEqual_1_ Mint a m n v.
-
-Axiom Q_SomeNotEqual_NotAllEqual :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
-  is_sint32_chunk Mint -> is_sint32 v -> P_SomeNotEqual_1_ Mint a m n v ->
-  ~ P_AllEqual_1_ Mint a m n v.
 
 Axiom Q_FindNotEqual_AllEqual :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
@@ -920,15 +912,6 @@ Axiom L_IndexOfNotEqual_def :
       ((1%Z + x)%Z + (L_FindNotEqual_1_ Mint a (1%Z + x)%Z n v))%Z)) /\
     (~ (k < (L_CountNotEqual_1_ Mint a 0%Z n v))%Z ->
      ((L_IndexOfNotEqual Mint a n v k) = n)))).
-
-Axiom Q_IndexOfNotEqual_Extend :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (k:Numbers.BinNums.Z),
-  (0%Z < n)%Z -> (0%Z <= k)%Z ->
-  (k < (L_CountNotEqual_1_ Mint a 0%Z n v))%Z -> is_sint32_chunk Mint ->
-  is_sint32 v ->
-  ((L_IndexOfNotEqual Mint a (1%Z + n)%Z v k) =
-   (L_IndexOfNotEqual Mint a n v k)).
 
 Axiom Q_IndexOfNotEqual_Segment :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)

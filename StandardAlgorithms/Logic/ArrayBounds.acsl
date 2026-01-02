@@ -2,7 +2,7 @@
 #ifndef ARRAYBOUNDS_ACSL_INCLUDED
 #define ARRAYBOUNDS_ACSL_INCLUDED
 
-#include "typedefs.h"
+#include "LessThanComparable.acsl"
 
 /*@
   axiomatic ArrayBounds

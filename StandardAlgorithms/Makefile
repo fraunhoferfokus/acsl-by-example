@@ -24,9 +24,12 @@ clean::
 	@$(MAKE) clean -sC Drivers
 
 
-dist-clean: clean
+clean-cache:
 	@$(RM) -rf cache
 	
+dist-clean:
+	$(MAKE) clean
+	$(MAKE) clean-cache
 
 wp:
 	@for i in $(EXAMPLES);\

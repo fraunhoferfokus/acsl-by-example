@@ -59,13 +59,6 @@
       \forall value_type *a, v, integer m, n;
         m <= n  ==>  FindNotEqual(a, m, n, v) <= FindNotEqual(a, m, n+1, v);
 
-    lemma FindNotEqual_Extend:
-      \forall value_type *a, v, integer k, m, n;
-        m <= k < n                        ==>
-        a[k] != v                         ==>
-        FindNotEqual(a, m, k, v) == k-m   ==>
-        FindNotEqual(a, m, n, v) == k-m;
-
     lemma FindNotEqual_Increasing:
       \forall value_type *a, v, integer k, m, n;
         m <= k <= n  ==>  FindNotEqual(a, m, k, v) <= FindNotEqual(a, m, n, v);

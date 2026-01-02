@@ -6,7 +6,11 @@
 
 /*@
   requires   \valid_read(a + (0..n-1));
+
+  terminates \true;
+  exits      \false;
   assigns    \nothing;
+
   ensures    0 <= \result <= n;
 
   behavior some:

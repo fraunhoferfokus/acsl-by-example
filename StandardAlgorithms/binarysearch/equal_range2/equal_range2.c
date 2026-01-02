@@ -3,7 +3,7 @@
 #include "lower_bound.h"
 #include "upper_bound.h"
 #include "make_pair.h"
-#include "ShiftLemmas.acsl"
+#include "ArrayBoundsShift.acsl"
 #include "IncreasingLemmas.acsl"
 
 size_type_pair

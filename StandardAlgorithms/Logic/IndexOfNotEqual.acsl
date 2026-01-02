@@ -88,12 +88,6 @@
           AllEqual(a, IndexOfNotEqual(a, n, v, k) + 1,
                       IndexOfNotEqual(a, n, v, k+1), v);
 
-    lemma IndexOfNotEqual_Extend:
-      \forall value_type *a, v, integer n, k;
-        0 < n                            ==>
-        0 <= k < CountNotEqual(a, n, v)  ==>
-        IndexOfNotEqual(a, n, v, k) == IndexOfNotEqual(a, n+1, v, k);
-
     lemma IndexOfNotEqual_Unchanged{K,L}:
       \forall value_type *a, v, integer n, k;
         Unchanged{K,L}(a, n)  ==>

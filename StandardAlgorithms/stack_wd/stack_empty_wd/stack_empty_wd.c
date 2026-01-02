@@ -2,11 +2,15 @@
 #include "stack_empty.h"
 
 /*@
-  requires valid:  \valid(s) && StackInvariant(s);
-  requires valid:  \valid(t) && StackInvariant(t);
-  requires equal:  StackEqual{Here,Here}(s, t);
-  assigns          \nothing;
-  ensures  equal:  \result;
+  requires   valid:  \valid(s) && StackInvariant(s);
+  requires   valid:  \valid(t) && StackInvariant(t);
+  requires   equal:  StackEqual{Here,Here}(s, t);
+
+  terminates         \true;
+  exits              \false;
+  assigns            \nothing;
+
+  ensures    equal:  \result;
 */
 bool
 stack_empty_wd(const Stack* s, const Stack* t)

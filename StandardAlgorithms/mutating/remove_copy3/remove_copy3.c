@@ -34,6 +34,7 @@ remove_copy3(const value_type* a, size_type n, value_type* b, value_type v)
       //@ assert unchanged: Unchanged{Pre,Here}(a, n);
     }
 
+    //@ assert remove:    Remove{Pre,Here}(a, n, i, b, v);
     //@ assert unchanged: Unchanged{Pre,Here}(a, n);
   }
 

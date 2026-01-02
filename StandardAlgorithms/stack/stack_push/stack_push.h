@@ -5,27 +5,30 @@
 #include "Stack.acsl"
 
 /*@
-  requires valid:      \valid(s) && StackInvariant(s);
-  assigns              s->size, s->obj[s->size];
+  requires valid:       \valid(s) && StackInvariant(s);
+
+  terminates            \true;
+  exits                 \false;
+  assigns               s->size, s->obj[s->size];
 
   behavior full:
-    assumes            StackFull(s);
-    assigns            \nothing;
-    ensures valid:     \valid(s) && StackInvariant(s);
-    ensures full:      StackFull(s);
-    ensures unchanged: StackUnchanged{Old,Here}(s);
+    assumes             StackFull(s);
+    assigns             \nothing;
+    ensures valid:      \valid(s) && StackInvariant(s);
+    ensures full:       StackFull(s);
+    ensures unchanged:  StackUnchanged{Old,Here}(s);
 
   behavior not_full:
-    assumes            !StackFull(s);
-    assigns            s->size;
-    assigns            s->obj[s->size];
-    ensures valid:     \valid(s) && StackInvariant(s);
-    ensures size:      StackSize(s) == StackSize{Old}(s) + 1;
-    ensures top:       StackTop(s) == v;
-    ensures storage:   StackStorage(s) == StackStorage{Old}(s);
-    ensures capacity:  StackCapacity(s) == StackCapacity{Old}(s);
-    ensures not_empty: !StackEmpty(s);
-    ensures unchanged: Unchanged{Old,Here}(StackStorage(s), StackSize{Old}(s));
+    assumes             !StackFull(s);
+    assigns             s->size;
+    assigns             s ->obj[s->size];
+    ensures valid:      \valid(s) && StackInvariant(s);
+    ensures size:       StackSize(s) == StackSize{Old}(s) + 1;
+    ensures top:        StackTop(s) == v;
+    ensures storage:    StackStorage(s) == StackStorage{Old}(s);
+    ensures capacity:   StackCapacity(s) == StackCapacity{Old}(s);
+    ensures not_empty:  !StackEmpty(s);
+    ensures unchanged:  Unchanged{Old,Here}(StackStorage(s), StackSize{Old}(s));
 
   complete behaviors;
   disjoint behaviors;

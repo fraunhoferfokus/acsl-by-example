@@ -3,10 +3,14 @@
 #include "stack_top.h"
 
 /*@
-  requires valid:     \valid(s) && StackInvariant(s);
-  requires not_full:  !StackFull(s);
-  assigns             s->size, s->obj[s->size];
-  ensures  top:       \result == v;
+  requires   valid:     \valid(s) && StackInvariant(s);
+  requires   not_full:  !StackFull(s);
+
+  terminates            \true;
+  exits                 \false;
+  assigns               s->size, s->obj[s->size];
+
+  ensures    top:       \result == v;
 */
 value_type
 axiom_top_of_push(Stack* s, value_type v)

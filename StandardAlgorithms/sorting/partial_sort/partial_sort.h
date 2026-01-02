@@ -7,12 +7,16 @@
 #include "MultisetReorder.acsl"
 
 /*@
-  requires valid:        \valid(a + (0..n-1));
-  requires split:        0 <= m <= n;
-  assigns                a[0..n-1];
-  ensures reorder:       MultisetReorder{Old,Here}(a, n);
-  ensures partition:     Partition(a, m, n);
-  ensures increasing:    Increasing(a, m);
+  requires   valid:      \valid(a + (0..n-1));
+  requires   split:      0 <= m <= n;
+
+  terminates              \true;
+  exits                   \false;
+  assigns                 a[0..n-1];
+
+  ensures    reorder:     MultisetReorder{Old,Here}(a, n);
+  ensures    partition:   Partition(a, m, n);
+  ensures    increasing:  Increasing(a, m);
 */
 void
 partial_sort(value_type* a, size_type m, size_type n);

@@ -57,13 +57,6 @@
         m <= k <= n  ==>
         Find(a, m, k, v) <= Find(a, m, n, v);
 
-    lemma Find_Extend:
-      \forall value_type *a, v, integer k, m, n;
-        m <= k < n                ==>
-        a[k] == v                 ==>
-        Find(a, m, k, v) == k-m   ==>
-        Find(a, m, n, v) == k-m;
-
     lemma Find_Limit:
       \forall value_type *a, v, integer k, m, n;
         m <= k < n  ==>

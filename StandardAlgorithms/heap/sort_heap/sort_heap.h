@@ -8,11 +8,15 @@
 #include "Increasing.acsl"
 
 /*@
-   requires valid:       \valid(a + (0..n-1));
-   requires heap:        Heap(a, n);
-   assigns               a[0..n-1];
-   ensures reorder:      MultisetReorder{Old,Here}(a, n);
-   ensures increasing:   Increasing(a, n);
+   requires   valid:       \valid(a + (0..n-1));
+   requires   heap:        Heap(a, n);
+
+   terminates              \true;
+   exits                   \false;
+   assigns                 a[0..n-1];
+
+   ensures    reorder:     MultisetReorder{Old,Here}(a, n);
+   ensures    increasing:  Increasing(a, n);
 */
 void
 sort_heap(value_type* a, size_type n);

@@ -35,8 +35,8 @@
 
     lemma WeaklyIncreasing_Unchanged{K,L}:
       \forall value_type *a, integer m, n;
-        WeaklyIncreasing{K}(a, m, n)  ==>
         Unchanged{K,L}(a, m, n)       ==>
+        WeaklyIncreasing{K}(a, m, n)  ==>
         WeaklyIncreasing{L}(a, m, n);
 
     lemma WeaklyIncreasing_Join{L}:

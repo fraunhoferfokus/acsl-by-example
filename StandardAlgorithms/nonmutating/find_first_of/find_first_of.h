@@ -5,22 +5,26 @@
 #include "HasValueOf.acsl"
 
 /*@
-  requires valid:   \valid_read(a + (0..m-1));
-  requires valid:   \valid_read(b + (0..n-1));
+  requires   valid:  \valid_read(a + (0..m-1));
+  requires   valid:  \valid_read(b + (0..n-1));
+
+  terminates        \true;
+  exits             \false;
   assigns           \nothing;
-  ensures result:   0 <= \result <= m;
+
+  ensures    result:   0 <= \result <= m;
 
   behavior found:
-    assumes         HasValueOf(a, m, b, n);
-    assigns         \nothing;
-    ensures bound:  0 <= \result < m;
-    ensures result: SomeEqual(b, n, a[\result]);
-    ensures first:  !HasValueOf(a, \result, b, n);
+    assumes          HasValueOf(a, m, b, n);
+    assigns          \nothing;
+    ensures bound:   0 <= \result < m;
+    ensures result:  SomeEqual(b, n, a[\result]);
+    ensures first:   !HasValueOf(a, \result, b, n);
 
   behavior not_found:
-    assumes         !HasValueOf(a, m, b, n);
-    assigns         \nothing;
-    ensures result: \result == m;
+    assumes          !HasValueOf(a, m, b, n);
+    assigns          \nothing;
+    ensures result:  \result == m;
 
   complete behaviors;
   disjoint behaviors;

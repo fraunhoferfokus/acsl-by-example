@@ -1,11 +1,9 @@
 
-// dummy file
 #include "heap_parent.h"
 
-// avoid "no symbols" warning under macOS
-int
-DUMMY_heap_parent()
+size_type
+heap_parent(size_type child)
 {
-  return 0;
+  return (0u < child) ?  (child - 1u) / 2u : 0u;
 }
 

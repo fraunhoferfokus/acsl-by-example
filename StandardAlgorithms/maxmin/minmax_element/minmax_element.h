@@ -6,10 +6,14 @@
 #include "ArrayExtrema.acsl"
 
 /*@
-  requires valid:    \valid_read(a + (0..n-1));
+  requires   valid:  \valid_read(a + (0..n-1));
+
+  terminates         \true;
+  exits              \false;
   assigns            \nothing;
-  ensures result:    0 <= \result.first  <= n;
-  ensures result:    0 <= \result.second <= n;
+
+  ensures    result:  0 <= \result.first  <= n;
+  ensures    result:  0 <= \result.second <= n;
 
   behavior empty:
     assumes          0 == n;

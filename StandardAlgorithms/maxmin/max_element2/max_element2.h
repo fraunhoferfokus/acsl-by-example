@@ -5,9 +5,13 @@
 #include "ArrayExtrema.acsl"
 
 /*@
-  requires valid:    \valid_read(a + (0..n-1));
-  assigns            \nothing;
-  ensures  result:   0 <= \result <= n;
+  requires   valid:   \valid_read(a + (0..n-1));
+
+  terminates          \true;
+  exits               \false;
+  assigns             \nothing;
+
+  ensures    result:  0 <= \result <= n;
 
   behavior empty:
     assumes          n == 0;

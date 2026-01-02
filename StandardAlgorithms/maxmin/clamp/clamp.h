@@ -5,24 +5,28 @@
 #include "typedefs.h"
 
 /*@
-  requires bound:   lower < upper;
-  assigns           \nothing;
-  ensures bound:    lower <= \result <= upper;
+  requires   bound:  lower < upper;
+
+  terminates         \true;
+  exits              \false;
+  assigns            \nothing;
+
+  ensures    bound:  lower <= \result <= upper;
 
   behavior lower_bound:
-    assumes         v < lower;
-    assigns         \nothing;
-    ensures result: \result == lower;
+    assumes          v < lower;
+    assigns          \nothing;
+    ensures result:  \result == lower;
 
   behavior between:
-    assumes         lower <= v <= upper;
-    assigns         \nothing;
-    ensures result: \result == v;
+    assumes          lower <= v <= upper;
+    assigns          \nothing;
+    ensures result:  \result == v;
 
   behavior upper_bound:
-    assumes         upper < v;
-    assigns         \nothing;
-    ensures result: \result == upper;
+    assumes          upper < v;
+    assigns          \nothing;
+    ensures result:  \result == upper;
 
   complete behaviors;
   disjoint behaviors;

@@ -5,11 +5,15 @@
 #include "Stack.acsl"
 
 /*@
-    requires valid:     \valid(s) && StackInvariant(s);
-    requires valid:     \valid(t) && StackInvariant(t);
-    assigns             \nothing;
-    ensures  equal:     \result == 1  <==>  StackEqual{Here,Here}(s, t);
-    ensures  not_equal: \result == 0  <==> !StackEqual{Here,Here}(s, t);
+  requires   valid:      \valid(s) && StackInvariant(s);
+  requires   valid:      \valid(t) && StackInvariant(t);
+
+  terminates             \true;
+  exits                  \false;
+  assigns                \nothing;
+
+  ensures    equal:      \result == 1  <==>  StackEqual{Here,Here}(s, t);
+  ensures    not_equal:  \result == 0  <==> !StackEqual{Here,Here}(s, t);
 */
 bool
 stack_equal(const Stack* s, const Stack* t);

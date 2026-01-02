@@ -822,14 +822,6 @@ Axiom Q_FindNotEqual_WeaklyIncreasing :
   ((L_FindNotEqual_1_ Mint a m n v) <=
    (L_FindNotEqual_1_ Mint a m (1%Z + n)%Z v))%Z.
 
-Axiom Q_FindNotEqual_Extend :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
-    (k:Numbers.BinNums.Z) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
-  let x := Mint (shift a k) in
-  ~ (x = v) -> ((m + (L_FindNotEqual_1_ Mint a m k v))%Z = k) ->
-  (m <= k)%Z -> (k < n)%Z -> is_sint32_chunk Mint -> is_sint32 v ->
-  is_sint32 x -> ((m + (L_FindNotEqual_1_ Mint a m n v))%Z = k).
-
 Axiom Q_FindNotEqual_Increasing :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
     (k:Numbers.BinNums.Z) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),

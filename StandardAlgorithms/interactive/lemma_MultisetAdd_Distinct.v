@@ -750,6 +750,7 @@ Theorem wp_goal :
   is_sint32_chunk t1 -> is_sint32_chunk t -> is_sint32 x ->
   P_MultisetReorder_1_ t t1 a 0%Z i ->
   P_MultisetReorder_1_ t t1 a (1%Z + i)%Z i1 -> P_MultisetAdd t t1 a i1 x.
+(* Why3 intros t t1 a i i1 x h1 h2 h3 h4 h5 h6 h7 h8. *)
 Proof.
   Require Import Psatz.
   intros L K a i n Lai Kai.

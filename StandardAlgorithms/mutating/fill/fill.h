@@ -5,9 +5,13 @@
 #include "AllSomeNot.acsl"
 
 /*@
-  requires valid:   \valid(a + (0..n-1));
-  assigns           a[0..n-1];
-  ensures constant: AllEqual(a, n, v);
+  requires   valid:   \valid(a + (0..n-1));
+
+  terminates           \true;
+  exits                \false;
+  assigns              a[0..n-1];
+
+  ensures    constant: AllEqual(a, n, v);
 */
 void
 fill(value_type* a, size_type n, value_type v);

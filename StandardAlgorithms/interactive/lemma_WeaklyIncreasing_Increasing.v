@@ -524,64 +524,13 @@ Axiom Q_Increasing_WeaklyIncreasing :
   (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
   P_Increasing_1_ Mint a m n -> P_WeaklyIncreasing_1_ Mint a m n.
 
-(* Why3 assumption *)
-Definition P_LowerBound_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  (v <= (Mint (shift a i)))%Z.
-
-(* Why3 assumption *)
-Definition P_StrictLowerBound_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  (v < (Mint (shift a i)))%Z.
-
-(* Why3 assumption *)
-Definition P_UpperBound_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  ((Mint (shift a i)) <= v)%Z.
-
-(* Why3 assumption *)
-Definition P_StrictUpperBound_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  ((Mint (shift a i)) < v)%Z.
-
-Axiom Q_LowerBound_Shift :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (val:Numbers.BinNums.Z)
-    (b:Numbers.BinNums.Z) (c:Numbers.BinNums.Z) (d:Numbers.BinNums.Z),
-  is_sint32_chunk Mint -> is_sint32 val ->
-  P_LowerBound_1_ Mint (shift a b) c d val ->
-  P_LowerBound_1_ Mint a (b + c)%Z (b + d)%Z val.
-
-Axiom Q_StrictLowerBound_Shift :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (val:Numbers.BinNums.Z)
-    (b:Numbers.BinNums.Z) (c:Numbers.BinNums.Z) (d:Numbers.BinNums.Z),
-  is_sint32_chunk Mint -> is_sint32 val ->
-  P_StrictLowerBound_1_ Mint (shift a b) c d val ->
-  P_StrictLowerBound_1_ Mint a (b + c)%Z (b + d)%Z val.
-
-Axiom Q_UpperBound_Shift :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (val:Numbers.BinNums.Z)
-    (b:Numbers.BinNums.Z) (c:Numbers.BinNums.Z),
-  is_sint32_chunk Mint -> is_sint32 val ->
-  P_UpperBound_1_ Mint (shift a b) 0%Z (c + ((-1%Z)%Z * b)%Z)%Z val ->
-  P_UpperBound_1_ Mint a b c val.
-
-Axiom Q_StrictUpperBound_Shift :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (val:Numbers.BinNums.Z)
-    (b:Numbers.BinNums.Z) (c:Numbers.BinNums.Z),
-  is_sint32_chunk Mint -> is_sint32 val ->
-  P_StrictUpperBound_1_ Mint (shift a b) 0%Z (c + ((-1%Z)%Z * b)%Z)%Z val ->
-  P_StrictUpperBound_1_ Mint a b c val.
-
 (* Why3 goal *)
 Theorem wp_goal :
   forall (t:addr -> Numbers.BinNums.Z) (a:addr) (i:Numbers.BinNums.Z)
     (i1:Numbers.BinNums.Z),
   (i <= i1)%Z -> (0%Z <= i)%Z -> is_sint32_chunk t ->
   P_WeaklyIncreasing_1_ t a i i1 -> P_Increasing_1_ t a i i1.
+(* Why3 intros t a i i1 h1 h2 h3 h4. *)
 Proof.
   Require Import Psatz.
   intros L a m n Upper Lower L32 Weak.

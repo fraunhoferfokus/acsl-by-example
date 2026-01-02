@@ -277,26 +277,6 @@ Axiom table_to_offset_monotonic :
   forall (t:table), forall (o1:Numbers.BinNums.Z) (o2:Numbers.BinNums.Z),
   (o1 <= o2)%Z <-> ((table_to_offset t o1) <= (table_to_offset t o2))%Z.
 
-Parameter L_FindNotEqual_1_:
-  (addr -> Numbers.BinNums.Z) -> addr -> Numbers.BinNums.Z ->
-  Numbers.BinNums.Z -> Numbers.BinNums.Z -> Numbers.BinNums.Z.
-
-Axiom L_FindNotEqual_1__def :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z),
-  let x := ((-1%Z)%Z + n)%Z in
-  let x1 := L_FindNotEqual_1_ Mint a m x v in
-  let x2 := ((-1%Z)%Z * m)%Z in
-  ((n <= m)%Z -> ((L_FindNotEqual_1_ Mint a m n v) = 0%Z)) /\
-  (~ (n <= m)%Z ->
-   ((0%Z <= x1)%Z /\ (((2%Z + m)%Z + x1)%Z <= n)%Z ->
-    ((L_FindNotEqual_1_ Mint a m n v) = x1)) /\
-   (~ ((0%Z <= x1)%Z /\ (((2%Z + m)%Z + x1)%Z <= n)%Z) ->
-    (((Mint (shift a x)) = v) ->
-     ((L_FindNotEqual_1_ Mint a m n v) = (n + x2)%Z)) /\
-    (~ ((Mint (shift a x)) = v) ->
-     ((L_FindNotEqual_1_ Mint a m n v) = (((-1%Z)%Z + n)%Z + x2)%Z)))).
-
 (* Why3 assumption *)
 Definition is_bool (x:Numbers.BinNums.Z) : Prop := (x = 0%Z) \/ (x = 1%Z).
 
@@ -526,13 +506,25 @@ Axiom proj_int64 :
 Definition is_sint32_chunk (m:addr -> Numbers.BinNums.Z) : Prop :=
   forall (a:addr), is_sint32 (m a).
 
-Axiom Q_FindNotEqual_Extend :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
-    (k:Numbers.BinNums.Z) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
-  let x := Mint (shift a k) in
-  ~ (x = v) -> ((m + (L_FindNotEqual_1_ Mint a m k v))%Z = k) ->
-  (m <= k)%Z -> (k < n)%Z -> is_sint32_chunk Mint -> is_sint32 v ->
-  is_sint32 x -> ((m + (L_FindNotEqual_1_ Mint a m n v))%Z = k).
+Parameter L_FindNotEqual_1_:
+  (addr -> Numbers.BinNums.Z) -> addr -> Numbers.BinNums.Z ->
+  Numbers.BinNums.Z -> Numbers.BinNums.Z -> Numbers.BinNums.Z.
+
+Axiom L_FindNotEqual_1__def :
+  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z),
+  let x := ((-1%Z)%Z + n)%Z in
+  let x1 := L_FindNotEqual_1_ Mint a m x v in
+  let x2 := ((-1%Z)%Z * m)%Z in
+  ((n <= m)%Z -> ((L_FindNotEqual_1_ Mint a m n v) = 0%Z)) /\
+  (~ (n <= m)%Z ->
+   ((0%Z <= x1)%Z /\ (((2%Z + m)%Z + x1)%Z <= n)%Z ->
+    ((L_FindNotEqual_1_ Mint a m n v) = x1)) /\
+   (~ ((0%Z <= x1)%Z /\ (((2%Z + m)%Z + x1)%Z <= n)%Z) ->
+    (((Mint (shift a x)) = v) ->
+     ((L_FindNotEqual_1_ Mint a m n v) = (n + x2)%Z)) /\
+    (~ ((Mint (shift a x)) = v) ->
+     ((L_FindNotEqual_1_ Mint a m n v) = (((-1%Z)%Z + n)%Z + x2)%Z)))).
 
 Axiom Q_FindNotEqual_WeaklyIncreasing :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)

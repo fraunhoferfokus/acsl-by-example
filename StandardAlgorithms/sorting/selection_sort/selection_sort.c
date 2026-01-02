@@ -2,7 +2,7 @@
 #include "selection_sort.h"
 #include "min_element.h"
 #include "swap.h"
-#include "ShiftLemmas.acsl"
+#include "ArrayBoundsShift.acsl"
 #include "MultisetSwap.acsl"
 #include "IncreasingLemmas.acsl"
 
@@ -21,11 +21,9 @@ selection_sort(value_type* a, size_type n)
     const size_type sel = i + min_element(a + i, n - i);
 
     if (i < sel) {
-      /*@
-         assigns          a[sel], a[i];
-         ensures swapped: ArraySwap{Old,Here}(a, i, sel, n);
-      */
+      //@ ghost Before: ;
       swap(a + sel, a + i);
+      //@ assert swapped: ArraySwap{Before,Here}(a, i, sel, n);
     }
 
     //@ assert reorder: MultisetReorder{LoopCurrent,Here}(a, n);

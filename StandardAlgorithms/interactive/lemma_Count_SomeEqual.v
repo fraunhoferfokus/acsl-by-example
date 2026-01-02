@@ -726,6 +726,7 @@ Theorem wp_goal :
     (i1:Numbers.BinNums.Z) (i2:Numbers.BinNums.Z),
   (0%Z <= i)%Z -> (i < i1)%Z -> (0%Z < (L_Count_1_ t a i i1 i2))%Z ->
   is_sint32_chunk t -> is_sint32 i2 -> P_SomeEqual_1_ t a i i1 i2.
+(* Why3 intros t a i i1 i2 h1 h2 h3 h4 h5. *)
 Proof.
   Require Import Psatz.
   intros L a m n v.

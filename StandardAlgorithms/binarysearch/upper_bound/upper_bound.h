@@ -6,12 +6,16 @@
 #include "ArrayBounds.acsl"
 
 /*@
-  requires valid:      \valid_read(a + (0..n-1));
-  requires increasing: Increasing(a, n);
-  assigns              \nothing;
-  ensures result:      0 <= \result <= n;
-  ensures left:        UpperBound(a, 0, \result, v);
-  ensures right:       StrictLowerBound(a, \result, n, v);
+  requires   valid:       \valid_read(a + (0..n-1));
+  requires   increasing:  Increasing(a, n);
+
+  terminates              \true;
+  exits                   \false;
+  assigns                 \nothing;
+
+  ensures    result:      0 <= \result <= n;
+  ensures    left:        UpperBound(a, 0, \result, v);
+  ensures    right:       StrictLowerBound(a, \result, n, v);
 */
 size_type
 upper_bound(const value_type* a, size_type n, value_type v);

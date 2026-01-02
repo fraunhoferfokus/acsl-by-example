@@ -1,11 +1,14 @@
 
-// dummy file
 #include "make_pair.h"
 
-// avoid "no symbols" warning under macOS
-int
-DUMMY_make_pair()
+size_type_pair
+make_pair(size_type first, size_type second)
 {
-  return 0;
+  size_type_pair pair;
+
+  pair.first  = first;
+  pair.second = second;
+
+  return pair;
 }
 

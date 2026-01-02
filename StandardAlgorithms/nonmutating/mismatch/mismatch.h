@@ -5,22 +5,26 @@
 #include "Equal.acsl"
 
 /*@
-  requires valid:   \valid_read(a + (0..n-1));
-  requires valid:   \valid_read(b + (0..n-1));
-  assigns           \nothing;
-  ensures  result:  0 <= \result <= n;
+  requires   valid:   \valid_read(a + (0..n-1));
+  requires   valid:   \valid_read(b + (0..n-1));
+
+  terminates          \true;
+  exits               \false;
+  assigns             \nothing;
+
+  ensures    result:  0 <= \result <= n;
 
   behavior all_equal:
-    assumes         Equal{Here,Here}(a, n, b);
-    assigns         \nothing;
-    ensures result: \result == n;
+    assumes           Equal{Here,Here}(a, n, b);
+    assigns           \nothing;
+    ensures result:   \result == n;
 
   behavior some_not_equal:
-    assumes         !Equal{Here,Here}(a, n, b);
-    assigns         \nothing;
-    ensures bound:  0 <= \result < n;
-    ensures result: a[\result] != b[\result];
-    ensures first:  Equal{Here,Here}(a, \result, b);
+    assumes           !Equal{Here,Here}(a, n, b);
+    assigns           \nothing;
+    ensures bound:    0 <= \result < n;
+    ensures result:   a[\result] != b[\result];
+    ensures first:    Equal{Here,Here}(a, \result, b);
 
   complete behaviors;
   disjoint behaviors;

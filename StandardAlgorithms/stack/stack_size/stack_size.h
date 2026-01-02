@@ -5,9 +5,13 @@
 #include "Stack.acsl"
 
 /*@
-    requires valid: \valid(s) && StackInvariant(s);
-    assigns         \nothing;
-    ensures  size:  \result == StackSize(s);
+  requires   valid: \valid(s) && StackInvariant(s);
+
+  terminates        \true;
+  exits             \false;
+  assigns           \nothing;
+
+  ensures    size:  \result == StackSize(s);
 */
 size_type
 stack_size(const Stack* s);

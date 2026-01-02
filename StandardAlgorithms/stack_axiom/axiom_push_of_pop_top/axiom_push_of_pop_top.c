@@ -4,10 +4,14 @@
 #include "stack_top.h"
 
 /*@
-  requires  valid:     \valid(s) && StackInvariant(s);
-  requires  not_empty: !StackEmpty(s);
-  assigns              s->size, s->obj[s->size-1];
-  ensures   equal:     StackEqual{Old,Here}(s, s);
+  requires   valid:      \valid(s) && StackInvariant(s);
+  requires   not_empty:  !StackEmpty(s);
+
+  terminates             \true;
+  exits                  \false;
+  assigns                 s->size, s->obj[s->size-1];
+
+  ensures    equal:      StackEqual{Old,Here}(s, s);
 */
 void
 axiom_push_of_pop_top(Stack* s)

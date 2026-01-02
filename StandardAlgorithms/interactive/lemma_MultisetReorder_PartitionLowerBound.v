@@ -825,6 +825,7 @@ Theorem wp_goal :
   (0%Z < i)%Z -> (i <= i1)%Z -> is_sint32_chunk t1 -> is_sint32_chunk t ->
   P_Partition t1 a i i1 -> is_sint32 x -> P_Unchanged_1_ t t1 a i i1 ->
   P_MultisetReorder_1_ t t1 a 0%Z i -> P_LowerBound_1_ t a i i1 x.
+(* Why3 intros t t1 a i i1 x h1 h2 h3 h4 h5 h6 h7 h8. *)
 Proof.
   intros L K a.
   intros m n La mLower mUpper.

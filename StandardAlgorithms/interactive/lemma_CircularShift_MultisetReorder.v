@@ -814,6 +814,7 @@ Theorem wp_goal :
   (i <= i1)%Z -> (0%Z <= i)%Z -> is_sint32_chunk t1 -> is_sint32_chunk t ->
   P_Equal_4_ t t1 a i1 x i -> P_Equal_4_ t t1 a i i1 (1%Z + i)%Z ->
   P_MultisetReorder_1_ t t1 a i x.
+(* Why3 intros t t1 a i i1 x h1 h2 h3 h4 h5 h6. *)
 Proof.
   Require Import Psatz.
 

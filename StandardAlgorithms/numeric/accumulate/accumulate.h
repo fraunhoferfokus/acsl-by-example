@@ -5,10 +5,14 @@
 #include "Accumulate.acsl"
 
 /*@
-  requires valid:  \valid_read(a + (0..n-1));
-  requires bounds: AccumulateBounds(a, n, init);
-  assigns          \nothing;
-  ensures  result: \result == Accumulate(a, n, init);
+  requires   valid:   \valid_read(a + (0..n-1));
+  requires   bounds:  AccumulateBounds(a, n, init);
+
+  terminates          \true;
+  exits               \false;
+  assigns             \nothing;
+
+  ensures    result:  \result == Accumulate(a, n, init);
 */
 value_type
 accumulate(const value_type* a, size_type n, value_type init);

@@ -803,6 +803,7 @@ Theorem wp_goal :
   (0%Z <= i)%Z -> is_sint32_chunk t1 -> is_sint32_chunk t -> is_sint32 i1 ->
   P_MultisetReorder_1_ t t1 a 0%Z i -> P_LowerBound_1_ t1 a 0%Z i i1 ->
   P_LowerBound_1_ t a 0%Z i i1.
+(* Why3 intros t t1 a i i1 h1 h2 h3 h4 h5 h6. *)
 Proof.
   intros L K a n v  nNN L32 K32. 
   intros V32 Reorder K_Lower.

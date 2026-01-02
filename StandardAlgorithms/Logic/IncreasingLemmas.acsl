@@ -9,18 +9,6 @@
 /*@
   axiomatic IncreasingLemmas
   {
-    lemma Increasing_WeaklyIncreasing{L}:
-      \forall value_type* a, integer m, n;
-        0 <= m <= n                 ==>
-        Increasing(a, m, n)         ==>
-        WeaklyIncreasing(a, m, n);
-
-    lemma WeaklyIncreasing_Increasing{L}:
-      \forall value_type* a, integer m, n;
-        0 <= m <= n                ==>
-        WeaklyIncreasing(a, m, n)  ==>
-        Increasing(a, m, n);
-
     lemma Increasing_Shift{L}:
       \forall value_type *a, integer l, r;
         0 <= l <= r             ==>
@@ -32,6 +20,18 @@
         Increasing{K}(a, m, n)    ==>
         Equal{K,L}(a, m, n, m+p)  ==>
         Increasing{L}(a, m+p, n+p);
+
+    lemma WeaklyIncreasing_Increasing{L}:
+      \forall value_type* a, integer m, n;
+        0 <= m <= n                ==>
+        WeaklyIncreasing(a, m, n)  ==>
+        Increasing(a, m, n);
+
+    lemma Increasing_WeaklyIncreasing{L}:
+      \forall value_type* a, integer m, n;
+        0 <= m <= n                 ==>
+        Increasing(a, m, n)         ==>
+        WeaklyIncreasing(a, m, n);
   }
 */
 
