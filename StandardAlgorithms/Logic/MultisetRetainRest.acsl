@@ -15,14 +15,12 @@
     lemma Multiset_AddMinusRetain{K,L,M}:
       \forall value_type *a, u, integer n;
         MultisetAdd{K,L}(a, n, u)    ==>
-        MultisetMinus{L,M}(a, n, u)  ==>
-        MultisetRetain{K,M}(a, n, u);
+        MultisetMinus{L,M}(a, n, u)  ==>  MultisetRetain{K,M}(a, n, u);
 
     lemma Multiset_MinusAddRetain{K,L,M}:
       \forall value_type *a, u, integer n;
         MultisetMinus{K,L}(a, n, u) ==>
-        MultisetAdd{L,M}(a, n, u)   ==>
-        MultisetRetain{K,M}(a, n, u);
+        MultisetAdd{L,M}(a, n, u)   ==>  MultisetRetain{K,M}(a, n, u);
 
     lemma Multiset_AddMinusRetainReorder{K,L,M}:
       \forall value_type *a, u, v, integer n;
@@ -32,8 +30,7 @@
         MultisetRetainRest{K,L}(a, n, u, v)  ==>
         MultisetAdd{L,M}(a, n, v)            ==>
         MultisetMinus{L,M}(a, n, u)          ==>
-        MultisetRetainRest{L,M}(a, n, v, u)  ==>
-        MultisetReorder{K,M}(a, n);
+        MultisetRetainRest{L,M}(a, n, v, u)  ==>  MultisetReorder{K,M}(a, n);
   }
 */
 

@@ -3,8 +3,7 @@
 #include "upper_bound.h"
 #include "rotate.h"
 #include "ArrayBounds.acsl"
-#include "CircularShiftLemmas.acsl"
-#include "IncreasingLemmas.acsl"
+#include "RotateLemmas.acsl"
 
 void
 insertion_sort(value_type* a, size_type n)
@@ -23,9 +22,10 @@ insertion_sort(value_type* a, size_type n)
     //@ ghost Before: ;
     //@ assert lower:       StrictLowerBound(a, k, i, a[i]);
     //@ assert upper:       UpperBound(a, k, a[i]);
-    rotate(a + k, i - k, i - k + 1u);
-    //@ assert rotate:      Equal{Before,Here}(a, k, i, k+1);
-    //@ assert rotate:      Equal{Before,Here}(a, i, i+1, k);
+    rotate(a + k, i - k, i + 1u - k);
+    //@ assert rotate:      Rotate{Before,Here}(a, k, i, i+1);
+    //@ assert upper:       UpperBound(a, k, a[k]);
+    //@ assert increasing:  WeaklyIncreasing(a, k+1);
     //@ assert increasing:  WeaklyIncreasing(a, k+1, i+1);
     //@ assert increasing:  WeaklyIncreasing(a, i+1);
     //@ assert reorder:     MultisetReorder{LoopCurrent,Here}(a, 0, k);

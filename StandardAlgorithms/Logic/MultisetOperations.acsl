@@ -22,30 +22,24 @@
 
     lemma MultisetAdd_Distinct{K,L}:
       \forall value_type *a, v, integer m, n;
-        0 <= m < n                       ==>
-        At{K}(a, m) != v                 ==>
-        At{L}(a, m) == v                 ==>
+        0 <= m < n                       ==> 
+        At{K}(a, m) != v                 ==>  At{L}(a, m) == v  ==>
         MultisetReorder{K,L}(a, 0, m)    ==>
-        MultisetReorder{K,L}(a, m+1, n)  ==>
-        MultisetAdd{K,L}(a, n, v);
+        MultisetReorder{K,L}(a, m+1, n)  ==>  MultisetAdd{K,L}(a, n, v);
 
     lemma MultisetMinus_Distinct{K,L}:
       \forall value_type *a, v, integer m, n;
         0 <= m < n                       ==>
-        At{K}(a, m) == v                 ==>
-        At{L}(a, m) != v                 ==>
+        At{K}(a, m) == v                 ==>  At{L}(a, m) != v  ==>
         MultisetReorder{K,L}(a, 0, m)    ==>
-        MultisetReorder{K,L}(a, m+1, n)  ==>
-        MultisetMinus{K,L}(a, n, v);
+        MultisetReorder{K,L}(a, m+1, n)  ==>  MultisetMinus{K,L}(a, n, v);
 
     lemma MultisetRetain_Distinct{K,L}:
       \forall value_type *a, v, integer m, n;
         0 <= m < n                       ==>
-        At{K}(a, m) != v                 ==>
-        At{L}(a, m) != v                 ==>
+        At{K}(a, m) != v                 ==>  At{L}(a, m) != v  ==>
         MultisetReorder{K,L}(a, 0, m)    ==>
-        MultisetReorder{K,L}(a, m+1, n)  ==>
-        MultisetRetain{K,L}(a, n, v);
+        MultisetReorder{K,L}(a, m+1, n)  ==>  MultisetRetain{K,L}(a, n, v);
   }
 */
 

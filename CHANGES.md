@@ -7,26 +7,27 @@ provided in `README.md`.
 
 ---
 
-## Version 32.0.1  
+## Version 32.0.2  
 (Targeting Frama-C 32.0 “Germanium”)
 
 ### Improvements
 
-- Added `terminates` and `exits` clauses to all function contracts.
+**ACSL specifications and source code**
+- Introduced the predicate `Rotate` and employed it systematically in the
+  specification and verification of `rotatecopy`, `rotatei`, and
+  `insertionsort`.
+  - Added the lemma `RotateShift`.
+  - Renamed `CircularShift_StrictLowerBound` to
+    `RotateOneStrictLowerBound`.
+  - Renamed `CircularShift_MultisetReorder` to
+    `RotateOneMultisetReorder`.
 
-- Completed the `assigns` clauses of `stackinit` and `axiomsizeofinit`
-  with explicit `\from` dependencies, clarifying the origin of assigned
-  values and aligning the contracts with WP’s pedantic assigns checks.
+**Changes in [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)**
+- Improved and expanded the descriptions of the algorithms in Parts 3–5.
+- Updated and revised numerous figures.
+- Introduced the slice notation `a[m..n)` in place of `a[m..n-1]`.
+- Refined the presentation of the predicate `Unchanged` and clarified its
+  relationship to the `assigns` clause.
+- Revised the overall structure of the document.
+- Updated the font packages used for the report.
 
-- Replaced statement contracts in `pop_heap`, `partial_sort`,
-  `selection_sort`, `insertion_sort`, and `merge` by assertions referring to
-  an explicit ghost label, thereby making the proof obligations local to
-  the respective loop bodies.
-
-- Improved the description of non-mutating algorithms; removed `count2`
-  and the inductively defined logic function `CountInd`.
-
-- Improved the description of minimum and maximum algorithms.
-
-- Improved the description of binary search algorithms and removed
-  `binary_search2`.

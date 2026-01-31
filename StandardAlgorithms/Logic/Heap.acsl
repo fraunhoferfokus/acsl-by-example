@@ -38,8 +38,7 @@
          0 <= m < n                      ==>
          Heap{K}(a, n)                   ==>
          HeapCompatible{K}(a, n, m, v)   ==>
-         ArrayUpdate{K,L}(a, n, m, v)    ==>
-         Heap{L}(a, n);
+         ArrayUpdate{K,L}(a, n, m, v)    ==>  Heap{L}(a, n);
 
   }
 */

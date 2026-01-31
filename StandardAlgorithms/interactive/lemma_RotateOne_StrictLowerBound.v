@@ -507,37 +507,6 @@ Definition is_sint32_chunk (m:addr -> Numbers.BinNums.Z) : Prop :=
   forall (a:addr), is_sint32 (m a).
 
 (* Why3 assumption *)
-Definition P_Increasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z) (i1:Numbers.BinNums.Z), (i < i1)%Z ->
-  (m <= i)%Z -> (i1 < n)%Z -> ((Mint (shift a i)) <= (Mint (shift a i1)))%Z.
-
-(* Why3 assumption *)
-Definition P_WeaklyIncreasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> ((2%Z + i)%Z <= n)%Z ->
-  ((Mint (shift a i)) <= (Mint (shift a (1%Z + i)%Z)))%Z.
-
-Axiom Q_Increasing_WeaklyIncreasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_Increasing_1_ Mint a m n -> P_WeaklyIncreasing_1_ Mint a m n.
-
-Axiom Q_WeaklyIncreasing_Increasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_WeaklyIncreasing_1_ Mint a m n -> P_Increasing_1_ Mint a m n.
-
-Axiom Q_Increasing_Shift :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (l:Numbers.BinNums.Z)
-    (r:Numbers.BinNums.Z),
-  (0%Z <= l)%Z -> (l <= r)%Z -> is_sint32_chunk Mint ->
-  P_Increasing_1_ Mint a l r ->
-  P_Increasing_1_ Mint (shift a l) 0%Z (r + ((-1%Z)%Z * l)%Z)%Z.
-
-(* Why3 assumption *)
 Definition P_Equal_1_ (Mint:addr -> Numbers.BinNums.Z)
     (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z) (b:addr) : Prop :=
@@ -556,14 +525,44 @@ Definition P_Equal_4_ (Mint:addr -> Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z) (p:Numbers.BinNums.Z) : Prop :=
   P_Equal_3_ Mint Mint1 a m n a p.
 
-Axiom Q_Increasing_Equal :
+(* Why3 assumption *)
+Definition P_Rotate_1_ (Mint:addr -> Numbers.BinNums.Z)
+    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (p:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z) (b:addr) : Prop :=
+  let x := (n + ((-1%Z)%Z * p)%Z)%Z in
+  P_Equal_3_ Mint Mint1 a 0%Z p b x /\ P_Equal_3_ Mint Mint1 a p x b 0%Z.
+
+(* Why3 assumption *)
+Definition P_Rotate_2_ (Mint:addr -> Numbers.BinNums.Z)
+    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (p:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
+  P_Equal_4_ Mint Mint1 a p n m /\
+  P_Equal_4_ Mint Mint1 a m p ((m + n)%Z + ((-1%Z)%Z * p)%Z)%Z.
+
+Axiom Q_Rotate_Shift :
   forall (Mint:addr -> Numbers.BinNums.Z) (Mint1:addr -> Numbers.BinNums.Z)
-    (a:addr) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z)
-    (p:Numbers.BinNums.Z),
-  let x := (m + p)%Z in
+    (a:addr) (k:Numbers.BinNums.Z) (m:Numbers.BinNums.Z)
+    (p:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
   is_sint32_chunk Mint -> is_sint32_chunk Mint1 ->
-  P_Increasing_1_ Mint1 a m n -> P_Equal_4_ Mint Mint1 a m n x ->
-  P_Increasing_1_ Mint a x (n + p)%Z.
+  P_Rotate_2_ Mint Mint1 (shift a k) m p n ->
+  P_Rotate_2_ Mint Mint1 a (k + m)%Z (k + p)%Z (k + n)%Z.
+
+Axiom Q_Less_Irreflexivity : True.
+
+Axiom Q_Less_Antisymmetry :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z), (a < b)%Z ->
+  is_sint32 a -> is_sint32 b -> (a <= b)%Z.
+
+Axiom Q_Less_Transitivity :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z) (c:Numbers.BinNums.Z),
+  (a < b)%Z -> (b < c)%Z -> is_sint32 a -> is_sint32 b -> is_sint32 c ->
+  (a < c)%Z.
+
+Axiom Q_Greater_Less : True.
+
+Axiom Q_LessOrEqual_Less : True.
+
+Axiom Q_GreaterOrEqual_Less : True.
 
 (* Why3 assumption *)
 Definition P_Unchanged_1_ (Mint:addr -> Numbers.BinNums.Z)
@@ -643,11 +642,10 @@ Theorem wp_goal :
   let x := t1 (shift a i1) in
   let x1 := t (shift a i) in
   let x2 := (1%Z + i1)%Z in
-  let x3 := (1%Z + i)%Z in
   is_sint32_chunk t1 -> is_sint32_chunk t -> is_sint32 x -> is_sint32 x1 ->
-  P_Equal_4_ t t1 a i1 x2 i -> P_Equal_4_ t t1 a i i1 x3 ->
-  P_StrictLowerBound_1_ t1 a i i1 x -> P_StrictLowerBound_1_ t a x3 x2 x1.
-(* Why3 intros t t1 a i i1 x x1 x2 x3 h1 h2 h3 h4 h5 h6 h7. *)
+  P_StrictLowerBound_1_ t1 a i i1 x -> P_Rotate_2_ t t1 a i i1 x2 ->
+  P_StrictLowerBound_1_ t a (1%Z + i)%Z x2 x1.
+(* Why3 intros t t1 a i i1 x x1 x2 h1 h2 h3 h4 h5 h6. *)
 Proof.
   Require Import Psatz.
   assert (shift_shift :
@@ -661,19 +659,20 @@ Proof.
     }
 
   intros L K a m n.
-  intros Kan Lam n1 m1.
-  subst Kan Lam n1 m1.
+  intros Kan Lam n1.
+  subst Kan Lam n1.
   intros K32 L32 Kan32 Lam32.
-  intros Equal1 Equal2 StrictLower.
+  intros StrictLower Rotate.
+  unfold P_Rotate_2_ in Rotate.
+  destruct Rotate as [Equal1 Equal2].
   unfold P_StrictLowerBound_1_ in *.
   intros p pLower pUpper.
-  
+
   unfold P_Equal_4_ in *.
   unfold P_Equal_3_ in *.
-  replace (1 + n + - (1) * n)%Z with 
-        1%Z in Equal1 by lia.
-  replace (n + - (1) * m)%Z with
-        (n-m)%Z in Equal2 by lia.
+  replace (1 + n + - (1) * n)%Z       with 1%Z     in Equal1 by lia.
+  replace (n + - (1) * m)%Z           with (n-m)%Z in Equal2 by lia.
+  replace (m + (1 + n) + - (1) * n)%Z with (1+m)%Z in Equal2 by lia.
 
   unfold P_Equal_1_ in *.
 
@@ -690,5 +689,6 @@ Proof.
   apply StrictLower; auto with zarith.
   - lia.
   - lia.
+
 Qed.
 

@@ -592,10 +592,8 @@ Axiom Q_Count_Single :
   forall (Mint:addr -> Numbers.BinNums.Z) (Mint1:addr -> Numbers.BinNums.Z)
     (a:addr) (b:addr) (v:Numbers.BinNums.Z) (m:Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z),
-  let x := Mint1 (shift a m) in
-  let x1 := Mint (shift b n) in
-  (x = x1) -> is_sint32_chunk Mint -> is_sint32_chunk Mint1 -> is_sint32 v ->
-  is_sint32 x1 -> is_sint32 x ->
+  ((Mint1 (shift a m)) = (Mint (shift b n))) -> is_sint32_chunk Mint ->
+  is_sint32_chunk Mint1 -> is_sint32 v ->
   ((L_Count_1_ Mint1 a m (1%Z + m)%Z v) =
    (L_Count_1_ Mint b n (1%Z + n)%Z v)).
 
@@ -611,17 +609,15 @@ Axiom Q_Count_Miss :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z) (m:Numbers.BinNums.Z),
   let x := ((-1%Z)%Z + n)%Z in
-  let x1 := Mint (shift a x) in
-  ~ (x1 = v) -> (m < n)%Z -> is_sint32_chunk Mint -> is_sint32 v ->
-  is_sint32 x1 -> ((L_Count_1_ Mint a m x v) = (L_Count_1_ Mint a m n v)).
+  ~ ((Mint (shift a x)) = v) -> (m < n)%Z -> is_sint32_chunk Mint ->
+  is_sint32 v -> ((L_Count_1_ Mint a m x v) = (L_Count_1_ Mint a m n v)).
 
 Axiom Q_Count_Hit :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z) (m:Numbers.BinNums.Z),
   let x := ((-1%Z)%Z + n)%Z in
-  let x1 := Mint (shift a x) in
-  (x1 = v) -> (m < n)%Z -> is_sint32_chunk Mint -> is_sint32 v ->
-  is_sint32 x1 ->
+  ((Mint (shift a x)) = v) -> (m < n)%Z -> is_sint32_chunk Mint ->
+  is_sint32 v ->
   ((1%Z + (L_Count_1_ Mint a m x v))%Z = (L_Count_1_ Mint a m n v)).
 
 Axiom Q_Count_Empty :

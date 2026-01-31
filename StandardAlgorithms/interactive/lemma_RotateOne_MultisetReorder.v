@@ -507,25 +507,6 @@ Definition is_sint32_chunk (m:addr -> Numbers.BinNums.Z) : Prop :=
   forall (a:addr), is_sint32 (m a).
 
 (* Why3 assumption *)
-Definition P_Equal_1_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (b:addr) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  ((Mint1 (shift a i)) = (Mint (shift b i))).
-
-(* Why3 assumption *)
-Definition P_Equal_3_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (b:addr) (p:Numbers.BinNums.Z) : Prop :=
-  P_Equal_1_ Mint Mint1 (shift a m) 0%Z (n + ((-1%Z)%Z * m)%Z)%Z (shift b p).
-
-(* Why3 assumption *)
-Definition P_Equal_4_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (p:Numbers.BinNums.Z) : Prop :=
-  P_Equal_3_ Mint Mint1 a m n a p.
-
-(* Why3 assumption *)
 Definition P_LowerBound_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
     (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) (v:Numbers.BinNums.Z) : Prop :=
   forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
@@ -549,41 +530,63 @@ Definition P_StrictUpperBound_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
   forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
   ((Mint (shift a i)) < v)%Z.
 
-Axiom Q_CircularShift_StrictLowerBound :
+(* Why3 assumption *)
+Definition P_Equal_1_ (Mint:addr -> Numbers.BinNums.Z)
+    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z) (b:addr) : Prop :=
+  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
+  ((Mint1 (shift a i)) = (Mint (shift b i))).
+
+(* Why3 assumption *)
+Definition P_Equal_3_ (Mint:addr -> Numbers.BinNums.Z)
+    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z) (b:addr) (p:Numbers.BinNums.Z) : Prop :=
+  P_Equal_1_ Mint Mint1 (shift a m) 0%Z (n + ((-1%Z)%Z * m)%Z)%Z (shift b p).
+
+(* Why3 assumption *)
+Definition P_Equal_4_ (Mint:addr -> Numbers.BinNums.Z)
+    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z) (p:Numbers.BinNums.Z) : Prop :=
+  P_Equal_3_ Mint Mint1 a m n a p.
+
+(* Why3 assumption *)
+Definition P_Rotate_1_ (Mint:addr -> Numbers.BinNums.Z)
+    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (p:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z) (b:addr) : Prop :=
+  let x := (n + ((-1%Z)%Z * p)%Z)%Z in
+  P_Equal_3_ Mint Mint1 a 0%Z p b x /\ P_Equal_3_ Mint Mint1 a p x b 0%Z.
+
+(* Why3 assumption *)
+Definition P_Rotate_2_ (Mint:addr -> Numbers.BinNums.Z)
+    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (p:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
+  P_Equal_4_ Mint Mint1 a p n m /\
+  P_Equal_4_ Mint Mint1 a m p ((m + n)%Z + ((-1%Z)%Z * p)%Z)%Z.
+
+Axiom Q_RotateOne_StrictLowerBound :
   forall (Mint:addr -> Numbers.BinNums.Z) (Mint1:addr -> Numbers.BinNums.Z)
     (a:addr) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
   let x := Mint (shift a m) in
   let x1 := Mint1 (shift a n) in
-  let x2 := (1%Z + m)%Z in
-  let x3 := (1%Z + n)%Z in
+  let x2 := (1%Z + n)%Z in
   is_sint32_chunk Mint -> is_sint32_chunk Mint1 -> is_sint32 x ->
-  is_sint32 x1 -> P_Equal_4_ Mint Mint1 a m n x2 ->
-  P_Equal_4_ Mint Mint1 a n x3 m -> P_StrictLowerBound_1_ Mint1 a m n x1 ->
-  P_StrictLowerBound_1_ Mint a x2 x3 x.
+  is_sint32 x1 -> P_StrictLowerBound_1_ Mint1 a m n x1 ->
+  P_Rotate_2_ Mint Mint1 a m n x2 ->
+  P_StrictLowerBound_1_ Mint a (1%Z + m)%Z x2 x.
+
+Axiom Q_Rotate_Shift :
+  forall (Mint:addr -> Numbers.BinNums.Z) (Mint1:addr -> Numbers.BinNums.Z)
+    (a:addr) (k:Numbers.BinNums.Z) (m:Numbers.BinNums.Z)
+    (p:Numbers.BinNums.Z) (n:Numbers.BinNums.Z),
+  is_sint32_chunk Mint -> is_sint32_chunk Mint1 ->
+  P_Rotate_2_ Mint Mint1 (shift a k) m p n ->
+  P_Rotate_2_ Mint Mint1 a (k + m)%Z (k + p)%Z (k + n)%Z.
 
 (* Why3 assumption *)
 Definition P_Increasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
     (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
   forall (i:Numbers.BinNums.Z) (i1:Numbers.BinNums.Z), (i < i1)%Z ->
   (m <= i)%Z -> (i1 < n)%Z -> ((Mint (shift a i)) <= (Mint (shift a i1)))%Z.
-
-(* Why3 assumption *)
-Definition P_WeaklyIncreasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> ((2%Z + i)%Z <= n)%Z ->
-  ((Mint (shift a i)) <= (Mint (shift a (1%Z + i)%Z)))%Z.
-
-Axiom Q_Increasing_WeaklyIncreasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_Increasing_1_ Mint a m n -> P_WeaklyIncreasing_1_ Mint a m n.
-
-Axiom Q_WeaklyIncreasing_Increasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_WeaklyIncreasing_1_ Mint a m n -> P_Increasing_1_ Mint a m n.
 
 Axiom Q_Increasing_Shift :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (l:Numbers.BinNums.Z)
@@ -600,6 +603,41 @@ Axiom Q_Increasing_Equal :
   is_sint32_chunk Mint -> is_sint32_chunk Mint1 ->
   P_Increasing_1_ Mint1 a m n -> P_Equal_4_ Mint Mint1 a m n x ->
   P_Increasing_1_ Mint a x (n + p)%Z.
+
+(* Why3 assumption *)
+Definition P_WeaklyIncreasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
+    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
+  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> ((2%Z + i)%Z <= n)%Z ->
+  ((Mint (shift a i)) <= (Mint (shift a (1%Z + i)%Z)))%Z.
+
+Axiom Q_WeaklyIncreasing_Increasing :
+  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z),
+  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
+  P_WeaklyIncreasing_1_ Mint a m n -> P_Increasing_1_ Mint a m n.
+
+Axiom Q_Increasing_WeaklyIncreasing :
+  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
+    (n:Numbers.BinNums.Z),
+  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
+  P_Increasing_1_ Mint a m n -> P_WeaklyIncreasing_1_ Mint a m n.
+
+Axiom Q_Less_Irreflexivity : True.
+
+Axiom Q_Less_Antisymmetry :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z), (a < b)%Z ->
+  is_sint32 a -> is_sint32 b -> (a <= b)%Z.
+
+Axiom Q_Less_Transitivity :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z) (c:Numbers.BinNums.Z),
+  (a < b)%Z -> (b < c)%Z -> is_sint32 a -> is_sint32 b -> is_sint32 c ->
+  (a < c)%Z.
+
+Axiom Q_Greater_Less : True.
+
+Axiom Q_LessOrEqual_Less : True.
+
+Axiom Q_GreaterOrEqual_Less : True.
 
 (* Why3 assumption *)
 Definition P_Unchanged_1_ (Mint:addr -> Numbers.BinNums.Z)
@@ -673,16 +711,18 @@ Axiom Q_Count_Hit :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z) (m:Numbers.BinNums.Z),
   let x := ((-1%Z)%Z + n)%Z in
-  ((Mint (shift a x)) = v) -> (m < n)%Z -> is_sint32_chunk Mint ->
-  is_sint32 v ->
+  let x1 := Mint (shift a x) in
+  (x1 = v) -> (m < n)%Z -> is_sint32_chunk Mint -> is_sint32 v ->
+  is_sint32 x1 ->
   ((1%Z + (L_Count_1_ Mint a m x v))%Z = (L_Count_1_ Mint a m n v)).
 
 Axiom Q_Count_Miss :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z) (m:Numbers.BinNums.Z),
   let x := ((-1%Z)%Z + n)%Z in
-  ~ ((Mint (shift a x)) = v) -> (m < n)%Z -> is_sint32_chunk Mint ->
-  is_sint32 v -> ((L_Count_1_ Mint a m x v) = (L_Count_1_ Mint a m n v)).
+  let x1 := Mint (shift a x) in
+  ~ (x1 = v) -> (m < n)%Z -> is_sint32_chunk Mint -> is_sint32 v ->
+  is_sint32 x1 -> ((L_Count_1_ Mint a m x v) = (L_Count_1_ Mint a m n v)).
 
 Axiom Q_Count_One :
   forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (v:Numbers.BinNums.Z)
@@ -696,8 +736,10 @@ Axiom Q_Count_Single :
   forall (Mint:addr -> Numbers.BinNums.Z) (Mint1:addr -> Numbers.BinNums.Z)
     (a:addr) (b:addr) (v:Numbers.BinNums.Z) (m:Numbers.BinNums.Z)
     (n:Numbers.BinNums.Z),
-  ((Mint1 (shift a m)) = (Mint (shift b n))) -> is_sint32_chunk Mint ->
-  is_sint32_chunk Mint1 -> is_sint32 v ->
+  let x := Mint1 (shift a m) in
+  let x1 := Mint (shift b n) in
+  (x = x1) -> is_sint32_chunk Mint -> is_sint32_chunk Mint1 -> is_sint32 v ->
+  is_sint32 x1 -> is_sint32 x ->
   ((L_Count_1_ Mint1 a m (1%Z + m)%Z v) =
    (L_Count_1_ Mint b n (1%Z + n)%Z v)).
 
@@ -812,16 +854,15 @@ Theorem wp_goal :
     (a:addr) (i:Numbers.BinNums.Z) (i1:Numbers.BinNums.Z),
   let x := (1%Z + i1)%Z in
   (i <= i1)%Z -> (0%Z <= i)%Z -> is_sint32_chunk t1 -> is_sint32_chunk t ->
-  P_Equal_4_ t t1 a i1 x i -> P_Equal_4_ t t1 a i i1 (1%Z + i)%Z ->
-  P_MultisetReorder_1_ t t1 a i x.
-(* Why3 intros t t1 a i i1 x h1 h2 h3 h4 h5 h6. *)
+  P_Rotate_2_ t t1 a i i1 x -> P_MultisetReorder_1_ t t1 a i x.
 Proof.
   Require Import Psatz.
 
   intros L K a m n x.
   subst x.
   intros Upper Lower K32 L32.
-  intros Equal1 Equal2.
+  intros Rotate.
+  destruct Rotate as [Equal1 Equal2].
   unfold P_MultisetReorder_1_.
   intros w w32.
 
@@ -840,11 +881,16 @@ Proof.
 
   assert(Help2: (L_Count_1_ K a m n w = 
                  L_Count_1_ L a (1 + m) (1 + n) w)%Z).
+  {
     rewrite <- Q_Count_Equal with (Mint:=L) (p:=(1+m)%Z) ; auto with zarith.
     replace (n + (1 + m) + - (1) * m)%Z with (1+n)%Z by lia.
     auto.
+    replace (m + (1 + n) + - (1) * n)%Z with (1+m)%Z in Equal2 by lia.
+    auto.
+  }
 
   rewrite Help2.
   lia.
+
 Qed.
 

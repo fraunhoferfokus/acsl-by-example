@@ -6,7 +6,7 @@
 #include "Unchanged.acsl"
 
 /*@
-  requires   valid:     \valid_read(a + (0..n-1));
+  requires   valid:      \valid_read(a + (0..n-1));
   requires   valid:      \valid(b + (0..n-1));
   requires   sep:        \separated(a + (0..n-1), b + (0..n-1));
 

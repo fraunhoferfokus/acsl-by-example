@@ -3,9 +3,9 @@
 #include "copy.h"
 
 void
-rotate_copy(const value_type* a, size_type m, size_type n, value_type* b)
+rotate_copy(const value_type* a, size_type p, size_type n, value_type* b)
 {
-  copy(a,  m, b + (n - m));
-  copy(a + m, n - m, b);
+  copy(a,  p, b + (n - p));
+  copy(a + p, n - p, b);
 }
 

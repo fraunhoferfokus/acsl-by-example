@@ -1,7 +1,7 @@
 
 # ACSL by Example
 
-This repository contains version 32.0.1 of
+This repository contains version 32.0.2 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
 --- a curated collection of C functions and data types whose behavior has been
 formally specified using **ACSL** (ANSI/ISO C Specification Language) and

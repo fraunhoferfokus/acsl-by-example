@@ -3,26 +3,16 @@
 #include "reverse.h"
 
 size_type
-rotate(value_type* a, size_type m, size_type n)
+rotate(value_type* a, size_type p, size_type n)
 {
   // if one subrange is empty, then nothings needs to be done
-  if ((0u < m) && (m < n)) {
-    reverse(a,  m);
-    reverse(a + m, n - m);
-    /*@
-      requires left:   Reverse{Pre,Here}(a, 0, m, 0);
-      requires right:  Reverse{Pre,Here}(a, m, n, m);
-
-      assigns          a[0..n-1];
-
-      ensures left:    Reverse{Old,Here}(a, 0, m, n-m);
-      ensures right:   Reverse{Old,Here}(a, m, n, 0);
-    */
+  if ((0u < p) && (p < n)) {
+    reverse(a,  p);
+    reverse(a + p, n - p);
     reverse(a, n);
-    //@ assert left:   Equal{Pre,Here}(a, 0, m, n-m);
-    //@ assert right:  Equal{Pre,Here}(a, m, n, 0);
+    //@ assert rotate:   Rotate{Pre,Here}(a, p, n);
   }
 
-  return n - m;
+  return n - p;
 }
 

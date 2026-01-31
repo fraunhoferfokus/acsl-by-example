@@ -14,23 +14,20 @@
     lemma PartialSum_Section{K}:
       \forall value_type *a, *b, integer m, n;
       0 <= m <= n             ==>
-      PartialSum{K}(a, n, b)  ==>
-      PartialSum{K}(a, m, b);
+      PartialSum{K}(a, n, b)  ==>  PartialSum{K}(a, m, b);
 
     lemma PartialSum_Step{L}:
       \forall value_type *a, *b, integer n;
         0 <= n                             ==>
         PartialSum(a, n, b)                ==>
-        b[n] == AccumulateDefault(a, n+1)  ==>
-        PartialSum(a, n+1, b);
+        b[n] == AccumulateDefault(a, n+1)  ==>  PartialSum(a, n+1, b);
 
     lemma PartialSum_Unchanged{K,L}:
       \forall value_type *a, *b, integer n;
         0 <= n  ==>
         PartialSum{K}(a, n, b)  ==>
         Unchanged{K, L}(a, n)   ==>
-        Unchanged{K, L}(b, n)   ==>
-        PartialSum{L}(a, n, b);
+        Unchanged{K, L}(b, n)   ==>  PartialSum{L}(a, n, b);
 
     lemma PartialSum_One{L}:
       \forall value_type *a, *b, integer n;

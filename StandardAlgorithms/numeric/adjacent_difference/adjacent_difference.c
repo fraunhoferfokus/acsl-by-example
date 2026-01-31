@@ -16,11 +16,6 @@ adjacent_difference(const value_type* a, size_type n, value_type* b)
     */
     for (size_type i = 1u; i < n; ++i) {
       //@ assert bound: VALUE_TYPE_MIN <= Difference(a, i) <= VALUE_TYPE_MAX;
-      /*@
-        assigns b[i];
-        ensures step: Unchanged{Old,Here}(b, i);
-        ensures step: b[i] == Difference(a, i);
-      */
       b[i] = a[i] - a[i - 1u];
       //@ assert difference: AdjacentDifference(a, i+1, b);
     }

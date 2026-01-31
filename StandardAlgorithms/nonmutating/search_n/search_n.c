@@ -27,7 +27,9 @@ search_n(const value_type* a, size_type n, value_type v, size_type p)
           if (p == i + 1u - start) {
             //@ assert bound: start + p == i + 1;
             //@ assert match: AllEqual(a, start, start+p, v);
-            //@ assert match: \exists integer k; 0 <= k <= n-p && AllEqual(a, k, k+p, v);
+            /*@ assert match: \exists integer k;
+                                0 <= k <= n-p && AllEqual(a, k, k+p, v);
+             */
             //@ assert match: HasConstantSubRange(a, n, v, p);
             return start;
           }
