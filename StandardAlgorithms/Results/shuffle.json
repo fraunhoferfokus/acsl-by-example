@@ -1,0 +1,15 @@
+[
+  {
+    "name": "shuffle",
+    "proved": 69,
+    "total": 69,
+    "percent": 100,
+    "qed": 28,
+    "alt_ergo": 32,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 9,
+    "term": 0,
+    "unreach": 0
+  }
+]

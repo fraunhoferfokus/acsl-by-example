@@ -1,0 +1,15 @@
+[
+  {
+    "name": "remove_copy3",
+    "proved": 124,
+    "total": 124,
+    "percent": 100,
+    "qed": 30,
+    "alt_ergo": 71,
+    "cvc5": 0,
+    "z3": 1,
+    "coq": 20,
+    "term": 1,
+    "unreach": 1
+  }
+]

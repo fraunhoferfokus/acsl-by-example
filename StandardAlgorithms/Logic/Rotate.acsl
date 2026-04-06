@@ -5,22 +5,16 @@
 #include "Equal.acsl"
 
 /*@
-  axiomatic Rotate
-  {
-    predicate
-    Rotate{K,L}(value_type* a, integer p, integer n, value_type* b) =
-       Equal{K,L}(a, 0, p, b, n-p) &&
-       Equal{K,L}(a, p, n-p, b, 0);
+  predicate Rotate{K,L}(value_type* a, integer p, integer n, value_type* b) =
+     Equal{K,L}(a, 0, p, b, n-p) &&
+     Equal{K,L}(a, p, n, b, 0);
 
-    predicate
-    Rotate{K,L}(value_type* a, integer m, integer p, integer n) =
-      Equal{K,L}(a, m, p, m+n-p) &&
-      Equal{K,L}(a, p, n, m);
+  predicate Rotate{K,L}(value_type* a, integer m, integer p, integer n) =
+    Equal{K,L}(a, m, p, m+n-p) &&
+    Equal{K,L}(a, p, n, m);
 
-    predicate
-    Rotate{K,L}(value_type* a, integer p, integer n) =
-      Rotate{K,L}(a, 0, p, n);
-  }
+  predicate Rotate{K,L}(value_type* a, integer p, integer n) =
+    Rotate{K,L}(a, 0, p, n);
 */
 
 #endif /* ROTATE_ACSL_INCLUDED */

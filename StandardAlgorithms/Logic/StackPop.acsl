@@ -1,0 +1,15 @@
+
+#ifndef STACKPOP_ACSL_INCLUDED
+#define STACKPOP_ACSL_INCLUDED
+
+#include "StackObservers.acsl"
+
+/*@
+  predicate StackPop{S,T}(Stack* s, Stack* t) =
+    StackCapacity{S}(s) == StackCapacity{T}(t)  &&
+    StackSize{S}(s) - 1 == StackSize{T}(t)      &&
+    StackPrefix{T,S}(t, s);
+*/
+
+#endif /* STACKPOP_ACSL_INCLUDED */
+

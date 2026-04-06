@@ -1,0 +1,15 @@
+[
+  {
+    "name": "minmax_element",
+    "proved": 107,
+    "total": 107,
+    "percent": 100,
+    "qed": 79,
+    "alt_ergo": 28,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 0,
+    "unreach": 0
+  }
+]

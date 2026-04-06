@@ -3,10 +3,7 @@
 #define AT_ACSL_INCLUDED
 
 /*@
-  axiomatic At
-  {
-    logic value_type At{L}(value_type* x, integer i) = \at(x[i],L);
-  }
+  logic value_type At{L}(value_type* x, integer i) = \at(x[i],L);
 */
 
 #endif /* AT_ACSL_INCLUDED */

@@ -1,0 +1,30 @@
+
+#ifndef STACKEQUAL_ACSL_INCLUDED
+#define STACKEQUAL_ACSL_INCLUDED
+
+#include "Stack.acsl"
+#include "Equal.acsl"
+
+/*@
+  predicate StackPrefix{S,T}(Stack* s, Stack* t) =
+    StackSize{S}(s) <= StackSize{T}(t)  &&
+    Equal{S,T}(StackData{S}(s), StackSize{S}(s), StackData{T}(t));
+
+  predicate StackEqual{S,T}(Stack* s, Stack* t) =
+    StackSize{S}(s) == StackSize{T}(t) &&
+    StackPrefix{S,T}(s, t);
+
+  lemma StackEqual_Reflexive{S} :
+    \forall Stack* s; StackEqual{S,S}(s, s);
+
+  lemma StackEqual_Symmetric{S,T} :
+    \forall Stack *s, *t;
+      StackEqual{S,T}(s, t) ==>  StackEqual{T,S}(t, s);
+
+  lemma StackEqual_Transitive{S,T,U}:
+    \forall Stack *s, *t, *u;
+      StackEqual{S,T}(s, t) ==> StackEqual{T,U}(t, u) ==> StackEqual{S,U}(s, u);
+*/
+
+#endif /* STACKEQUAL_ACSL_INCLUDED */
+

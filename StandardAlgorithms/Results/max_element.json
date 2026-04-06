@@ -1,0 +1,15 @@
+[
+  {
+    "name": "max_element",
+    "proved": 44,
+    "total": 44,
+    "percent": 100,
+    "qed": 32,
+    "alt_ergo": 10,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 1,
+    "unreach": 1
+  }
+]

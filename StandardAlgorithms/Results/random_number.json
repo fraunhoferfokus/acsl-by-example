@@ -1,0 +1,15 @@
+[
+  {
+    "name": "random_number",
+    "proved": 40,
+    "total": 40,
+    "percent": 100,
+    "qed": 21,
+    "alt_ergo": 15,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 2,
+    "unreach": 2
+  }
+]

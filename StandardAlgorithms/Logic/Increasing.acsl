@@ -5,15 +5,10 @@
 #include "WeaklyIncreasing.acsl"
 
 /*@
-  axiomatic Increasing
-  {
-    predicate
-    Increasing{L}(value_type* a, integer m, integer n) =
-      \forall integer i, j; m <= i < j < n  ==>  a[i] <= a[j];
+  predicate Increasing{L}(value_type* a, integer m, integer n) =
+    \forall integer i, j; m <= i < j < n  ==>  a[i] <= a[j];
 
-    predicate
-    Increasing{L}(value_type* a, integer n) = Increasing{L}(a, 0, n);
-  }
+  predicate Increasing{L}(value_type* a, integer n) = Increasing{L}(a, 0, n);
 */
 
 

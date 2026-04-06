@@ -1,0 +1,15 @@
+[
+  {
+    "name": "find3",
+    "proved": 34,
+    "total": 34,
+    "percent": 100,
+    "qed": 12,
+    "alt_ergo": 17,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 3,
+    "term": 1,
+    "unreach": 1
+  }
+]

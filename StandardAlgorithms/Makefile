@@ -1,55 +1,19 @@
 
-MAKEFLAGS += --silent --no-print-directory
+# Top-level Makefile.
 
-FILELIST = filelist.path
-EXAMPLES := $(shell cat $(FILELIST))
+include Config/dispatch.mk
 
-.PHONY: $(EXAMPLES)
+.PHONY: all clean-cache clean-results \
+        lib tests check format clean results reports distclean
 
-it: lib
+all: lib tests
 
-lib:			$(EXAMPLES)
-test:			$(EXAMPLES)
-clean::			$(EXAMPLES)
-format:			$(EXAMPLES)
-
-$(EXAMPLES):
-	(echo $@; make -sC $@ $(MAKECMDGOALS))
-
-
-clean::
-	@$(RM) -rf errorlogs
-	@$(RM) *.back
-	@$(MAKE) clean -sC Scripts
-	@$(MAKE) clean -sC Drivers
-
+# Top level is a pure dispatcher, so these are synonyms for -subdirs.
+lib tests check format clean results reports distclean: %: %-subdirs ;
 
 clean-cache:
-	@$(RM) -rf cache
-	
-dist-clean:
-	$(MAKE) clean
-	$(MAKE) clean-cache
+	@$(RM) -r Session/cache
 
-wp:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "wp $$i"; $(MAKE) wp -sC $$i);\
-	done
-
-report:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "report $$i"; $(MAKE) report -sC $$i);\
-	done
-
-result:
-	@for i in $(EXAMPLES);\
-	do \
-		(echo "result $$i"; $(MAKE) result -sC $$i);\
-	done
-
-result-clean:
-	@$(RM) Results/*.json
-
+clean-results:
+	@$(MAKE) clean -sC Results
 

@@ -5,12 +5,8 @@
 #include "typedefs.h"
 
 /*@
-  axiomatic Partition
-  {
-    predicate
-    Partition{L}(value_type* a, integer m, integer n) =
-      \forall integer i, k; 0 <= i < m <= k < n  ==>  a[i] <= a[k];
-  }
+  predicate Partition{L}(value_type* a, integer m, integer n) =
+    \forall integer i, k; 0 <= i < m <= k < n  ==>  a[i] <= a[k];
 */
 
 #endif /* PARTITION_ACSL_INCLUDED */

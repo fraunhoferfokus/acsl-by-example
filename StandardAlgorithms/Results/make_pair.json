@@ -1,0 +1,15 @@
+[
+  {
+    "name": "make_pair",
+    "proved": 5,
+    "total": 5,
+    "percent": 100,
+    "qed": 3,
+    "alt_ergo": 0,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 1,
+    "unreach": 1
+  }
+]

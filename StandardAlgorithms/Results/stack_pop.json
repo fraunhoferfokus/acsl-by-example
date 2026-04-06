@@ -1,0 +1,15 @@
+[
+  {
+    "name": "stack_pop",
+    "proved": 33,
+    "total": 33,
+    "percent": 100,
+    "qed": 23,
+    "alt_ergo": 10,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 0,
+    "unreach": 0
+  }
+]

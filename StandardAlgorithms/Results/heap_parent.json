@@ -1,0 +1,15 @@
+[
+  {
+    "name": "heap_parent",
+    "proved": 14,
+    "total": 14,
+    "percent": 100,
+    "qed": 3,
+    "alt_ergo": 9,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 1,
+    "unreach": 1
+  }
+]

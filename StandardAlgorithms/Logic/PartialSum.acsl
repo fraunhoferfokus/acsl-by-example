@@ -1,38 +1,33 @@
-
 #ifndef PARTIALSUM_ACSL_INCLUDED
 #define PARTIALSUM_ACSL_INCLUDED
 
 #include "AccumulateDefault.acsl"
 
 /*@
-  axiomatic PartialSum
-  {
-    predicate
-    PartialSum{L}(value_type* a, integer n, value_type* b) =
-      \forall integer i; 0 <= i < n  ==>  b[i] == AccumulateDefault(a, i+1);
+  predicate PartialSum{L}(value_type* a, integer n, value_type* b) =
+    \forall integer i; 0 <= i < n  ==>  b[i] == AccumulateDefault(a, i+1);
 
-    lemma PartialSum_Section{K}:
-      \forall value_type *a, *b, integer m, n;
-      0 <= m <= n             ==>
-      PartialSum{K}(a, n, b)  ==>  PartialSum{K}(a, m, b);
+  lemma PartialSum_Section{K}:
+    \forall value_type *a, *b, integer m, n;
+    0 <= m <= n             ==>
+    PartialSum{K}(a, n, b)  ==>  PartialSum{K}(a, m, b);
 
-    lemma PartialSum_Step{L}:
-      \forall value_type *a, *b, integer n;
-        0 <= n                             ==>
-        PartialSum(a, n, b)                ==>
-        b[n] == AccumulateDefault(a, n+1)  ==>  PartialSum(a, n+1, b);
+  lemma PartialSum_Step{L}:
+    \forall value_type *a, *b, integer n;
+      0 <= n                             ==>
+      PartialSum(a, n, b)                ==>
+      b[n] == AccumulateDefault(a, n+1)  ==>  PartialSum(a, n+1, b);
 
-    lemma PartialSum_Unchanged{K,L}:
-      \forall value_type *a, *b, integer n;
-        0 <= n  ==>
-        PartialSum{K}(a, n, b)  ==>
-        Unchanged{K, L}(a, n)   ==>
-        Unchanged{K, L}(b, n)   ==>  PartialSum{L}(a, n, b);
+  lemma PartialSum_Unchanged{K,L}:
+    \forall value_type *a, *b, integer n;
+      0 <= n  ==>
+      PartialSum{K}(a, n, b)  ==>
+      Unchanged{K, L}(a, n)   ==>
+      Unchanged{K, L}(b, n)   ==>  PartialSum{L}(a, n, b);
 
-    lemma PartialSum_One{L}:
-      \forall value_type *a, *b, integer n;
-        b[0] == AccumulateDefault(a, 1)  ==>  PartialSum(a, 1, b);
-  }
+  lemma PartialSum_One{L}:
+    \forall value_type *a, *b, integer n;
+      b[0] == AccumulateDefault(a, 1)  ==>  PartialSum(a, 1, b);
 */
 
 #endif /* PARTIALSUM_ACSL_INCLUDED */

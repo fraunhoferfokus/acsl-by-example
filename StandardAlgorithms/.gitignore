@@ -1,18 +1,4 @@
 
-*_test
-*.tex
-coq/driver
-astraver.why3.conf
-
-*.simple.c
-*.simple.h
-
-*.separated.c
-*.separated.h
-
-*.union.c
-*.union.h
-
+*.report
 *.json
 *.wplog
-

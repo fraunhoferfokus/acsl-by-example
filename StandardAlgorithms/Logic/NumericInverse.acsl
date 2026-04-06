@@ -7,27 +7,24 @@
 #include "PartialSum.acsl"
 
 /*@
-  axiomatic NumericInverse
-  {
-    lemma PartialSum_Inverse:
-      \forall value_type *a, *b, integer n;
-        0 <= n               ==>
-        PartialSum(a, n, b)  ==>
-        AdjacentDifference(b, n, a);
+  lemma PartialSum_Inverse:
+    \forall value_type *a, *b, integer n;
+      0 <= n               ==>
+      PartialSum(a, n, b)  ==>
+      AdjacentDifference(b, n, a);
 
-    lemma AdjacentDifference_Inverse:
-      \forall value_type *a, *b, integer n;
-        0 <= n                       ==>
-        AdjacentDifference(a, n, b)  ==>
-        PartialSum(b, n, a);
+  lemma AdjacentDifference_Inverse:
+    \forall value_type *a, *b, integer n;
+      0 <= n                       ==>
+      AdjacentDifference(a, n, b)  ==>
+      PartialSum(b, n, a);
 
-    lemma AdjacentDifference_InverseBounds:
-      \forall value_type *a, *b, integer n;
-        0 <= n                       ==>
-        DefaultBounds(a, n)          ==>
-        AdjacentDifference(a, n, b)  ==>
-        AccumulateDefaultBounds(b, n);
-  }
+  lemma AdjacentDifference_InverseBounds:
+    \forall value_type *a, *b, integer n;
+      0 <= n                       ==>
+      DefaultBounds(a, n)          ==>
+      AdjacentDifference(a, n, b)  ==>
+      AccumulateDefaultBounds(b, n);
 */
 
 #endif /* NUMERICINVERSE_ACSL_INCLUDED */

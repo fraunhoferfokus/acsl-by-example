@@ -1,0 +1,15 @@
+[
+  {
+    "name": "find4",
+    "proved": 34,
+    "total": 34,
+    "percent": 100,
+    "qed": 13,
+    "alt_ergo": 18,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 3,
+    "term": 0,
+    "unreach": 0
+  }
+]

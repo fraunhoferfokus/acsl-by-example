@@ -1,7 +1,7 @@
 
 # ACSL by Example
 
-This repository contains version 32.0.2 of
+This repository contains version 32.0.3 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
 --- a curated collection of C functions and data types whose behavior has been
 formally specified using **ACSL** (ANSI/ISO C Specification Language) and
@@ -20,7 +20,7 @@ and relies, among others, on the following software packages:
 --------- | ---------
  Why3     | 1.8.2
  Alt-Ergo | 2.6.2
- CVC5     | 1.3.2
+ CVC5     | 1.3.3
  Z3       | 4.15.2
  Coq      | 8.20.1
 
@@ -41,7 +41,7 @@ and relies, among others, on the following software packages:
   It is intended for reading, verification, and experimentation rather than
   incremental development.
 
-- `StandardAlgorithms/filelist.path`  
+- `StandardAlgorithms/subdirs.list`  
   The authoritative list of **example groups** and their ordering.
 
 - `README.md`  
@@ -56,7 +56,7 @@ and relies, among others, on the following software packages:
 The examples are organised into **groups**, not as an unstructured collection
 of individual files.
 
-- The groups are listed in `StandardAlgorithms/filelist.path`.
+- The groups are listed in `StandardAlgorithms/subdirs.list`.
 - A short description, motivation, and discussion of each group is given in the
   corresponding chapters of `ACSL-by-Example.pdf`.
 
@@ -89,7 +89,7 @@ At a high level, working with the examples involves:
 
 1. Installing a compatible Frama-C version with the WP plugin.
 2. Ensuring suitable automatic provers (and optionally Coq) are available.
-3. Selecting an example group via `StandardAlgorithms/filelist.path`.
+3. Selecting an example group via `StandardAlgorithms/subdirs.list`.
 4. Running Frama-C/WP on the corresponding source files.
 5. Inspecting proof results and, where applicable, interactive proofs.
 

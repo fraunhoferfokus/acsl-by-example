@@ -1,0 +1,15 @@
+[
+  {
+    "name": "search_n",
+    "proved": 81,
+    "total": 81,
+    "percent": 100,
+    "qed": 55,
+    "alt_ergo": 24,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 1,
+    "unreach": 1
+  }
+]

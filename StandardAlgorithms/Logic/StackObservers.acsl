@@ -1,0 +1,17 @@
+
+#ifndef STACKOBSERVERS_ACSL_INCLUDED
+#define STACKOBSERVERS_ACSL_INCLUDED
+
+#include "StackEqual.acsl"
+#include "StackInvariant.acsl"
+
+/*@
+  logic value_type StackTop{S}(Stack* s)  =  StackData(s)[StackSize(s)-1];
+
+  predicate StackEmpty{S}(Stack* s)       =  StackSize(s) == 0;
+
+  predicate StackFull{S}(Stack* s)        =  StackSize(s) == StackCapacity(s);
+*/
+
+#endif /* STACKOBSERVERS_ACSL_INCLUDED */
+

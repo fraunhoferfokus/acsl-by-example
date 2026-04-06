@@ -1,0 +1,9 @@
+axiom_size_of_init
+axiom_capacity_of_init
+axiom_size_of_push
+axiom_capacity_of_push
+axiom_top_of_push
+axiom_size_of_pop
+axiom_capacity_of_pop
+axiom_pop_of_push
+axiom_push_of_pop_top

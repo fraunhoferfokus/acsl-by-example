@@ -1,0 +1,16 @@
+
+#ifndef STACKPUSH_ACSL_INCLUDED
+#define STACKPUSH_ACSL_INCLUDED
+
+#include "StackObservers.acsl"
+
+/*@
+  predicate StackPush{S,T}(Stack* s, value_type v, Stack* t) =
+    StackTop{T}(t)      == v                    &&
+    StackCapacity{S}(s) == StackCapacity{T}(t)  &&
+    StackSize{S}(s) + 1 == StackSize{T}(t)      &&
+    StackPrefix{S,T}(s, t);
+*/
+
+#endif /* STACKPUSH_ACSL_INCLUDED */
+

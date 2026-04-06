@@ -1,3 +1,0 @@
-
-include ../../Config/example.mk
-

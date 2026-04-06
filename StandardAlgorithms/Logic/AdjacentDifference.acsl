@@ -6,14 +6,10 @@
 #include "Difference.acsl"
 
 /*@
-  axiomatic AdjacentDifference
-  {
-    predicate
-    AdjacentDifference{L}(value_type* a, integer n, value_type* b) =
+    predicate AdjacentDifference{L}(value_type* a, integer n, value_type* b) =
       \forall integer i; 0 <= i < n  ==>  b[i] == Difference(a, i);
 
-    predicate
-    AdjacentDifferenceBounds(value_type* a, integer n) =
+    predicate AdjacentDifferenceBounds(value_type* a, integer n) =
       \forall integer i; 1 <= i < n  ==>
         VALUE_TYPE_MIN <= Difference(a, i) <= VALUE_TYPE_MAX;
 
@@ -30,7 +26,6 @@
         0 <= m <= n                     ==>
         AdjacentDifference{K}(a, n, b)  ==>
         AdjacentDifference{K}(a, m, b);
-  }
 */
 
 #endif /* ADJACENTDIFFERENCE_ACSL_INCLUDED */

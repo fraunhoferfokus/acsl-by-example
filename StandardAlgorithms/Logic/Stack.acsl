@@ -1,32 +1,16 @@
 
-#ifndef STACKEQUALITY_ACSL_INCLUDED
-#define STACKEQUALITY_ACSL_INCLUDED
+#ifndef STACK_ACSL_INCLUDED
+#define STACK_ACSL_INCLUDED
 
-#include "StackUtility.acsl"
-#include "Equal.acsl"
+#include "Stack.h"
 
 /*@
-  axiomatic StackEquality
-  {
-    predicate
-    StackEqual{S,T}(Stack* s, Stack* t) =
-      StackSize{S}(s) == StackSize{T}(t) &&
-      Equal{S,T}(StackStorage{S}(s), StackSize{S}(s), StackStorage{T}(t));
+  logic value_type* StackData{S}(Stack* s)     = s->data;
 
-    lemma StackEqual_Reflexive{S} :
-      \forall Stack* s; StackEqual{S,S}(s, s);
+  logic integer     StackCapacity{S}(Stack* s) = s->cap;
 
-    lemma StackEqual_Symmetric{S,T} :
-      \forall Stack *s, *t;
-        StackEqual{S,T}(s, t)  ==>  StackEqual{T,S}(t, s);
-
-    lemma StackEqual_Transitive{S,T,U}:
-      \forall Stack *s, *t, *u;
-        StackEqual{S,T}(s, t)  ==>
-        StackEqual{T,U}(t, u)  ==>
-        StackEqual{S,U}(s, u);
-  }
+  logic integer     StackSize{S}(Stack* s)     = s->sz;
 */
 
-#endif /* STACKEQUALITY_ACSL_INCLUDED */
+#endif /* STACK_ACSL_INCLUDED */
 

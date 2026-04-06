@@ -1,0 +1,15 @@
+[
+  {
+    "name": "is_sorted",
+    "proved": 29,
+    "total": 29,
+    "percent": 100,
+    "qed": 13,
+    "alt_ergo": 12,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 2,
+    "term": 1,
+    "unreach": 1
+  }
+]

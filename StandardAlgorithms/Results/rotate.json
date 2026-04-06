@@ -1,0 +1,15 @@
+[
+  {
+    "name": "rotate",
+    "proved": 30,
+    "total": 30,
+    "percent": 100,
+    "qed": 19,
+    "alt_ergo": 10,
+    "cvc5": 0,
+    "z3": 1,
+    "coq": 0,
+    "term": 0,
+    "unreach": 0
+  }
+]

@@ -7,27 +7,39 @@ provided in `README.md`.
 
 ---
 
-## Version 32.0.2  
+## Version 32.0.3  
 (Targeting Frama-C 32.0 “Germanium”)
 
 ### Improvements
 
-**ACSL specifications and source code**
-- Introduced the predicate `Rotate` and employed it systematically in the
-  specification and verification of `rotatecopy`, `rotatei`, and
-  `insertionsort`.
-  - Added the lemma `RotateShift`.
-  - Renamed `CircularShift_StrictLowerBound` to
-    `RotateOneStrictLowerBound`.
-  - Renamed `CircularShift_MultisetReorder` to
-    `RotateOneMultisetReorder`.
+- **Refactored `\Stack` example**  
+  Shift from a procedure-oriented workflow to a structured, multi-level methodology emphasizing observational equality, well-definedness, and modular reasoning.  
+  - Introduced a clear three-level separation: abstract axioms --- logical specifications --- implementation  
+  - Strengthened role of observational equality (including equivalence properties)  
+  - Added systematic well-definedness witnesses, separated from axiom verification  
+  - Reorganized verification flow: operations → axioms → well-definedness  
+  - Simplified witness specifications (removed low-level clauses for readability)  
+  - Improved modularization of the logical interface and separation of representation vs.\ specification  
 
-**Changes in [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)**
-- Improved and expanded the descriptions of the algorithms in Parts 3–5.
-- Updated and revised numerous figures.
-- Introduced the slice notation `a[m..n)` in place of `a[m..n-1]`.
-- Refined the presentation of the predicate `Unchanged` and clarified its
-  relationship to the `assigns` clause.
-- Revised the overall structure of the document.
-- Updated the font packages used for the report.
+- **Removed axiomatic blocks** in logic definitions  
 
+- **Revised `\Equal` (third version)**  
+  Now an explicit expansion with fully written-out universal quantification  
+
+- **Adjusted `\Reverse` predicate**  
+  Second range now specified via one-past-the-end index  
+
+- **Fixed bug in `\Rotate` (first version)**  
+  Corrected argument usage  
+
+- **Simplified `\makepair`**  
+
+- **Added figures**  
+  Supporting `\Reverse`, `\reversecopy`, and `\reverse`  
+
+- **Improved description of `\rotatei`**  
+  Clarified implementation and verification  
+
+- **Expanded specification of `\clamp`**  
+
+- **Corrected misplaced LaTeX labels** for ACSL listings  

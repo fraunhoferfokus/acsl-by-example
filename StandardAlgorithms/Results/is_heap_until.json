@@ -1,0 +1,15 @@
+[
+  {
+    "name": "is_heap_until",
+    "proved": 52,
+    "total": 52,
+    "percent": 100,
+    "qed": 23,
+    "alt_ergo": 26,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 1,
+    "term": 1,
+    "unreach": 1
+  }
+]

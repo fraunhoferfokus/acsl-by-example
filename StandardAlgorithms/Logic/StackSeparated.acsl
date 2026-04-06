@@ -1,0 +1,13 @@
+
+#ifndef STACKSEPARATED_ACSL_INCLUDED
+#define STACKSEPARATED_ACSL_INCLUDED
+
+#include "Stack.acsl"
+
+/*@
+  predicate StackSeparated(Stack* s, Stack* t) =
+    \separated(s, s->data + (0..s->cap-1), t, t->data + (0..t->cap-1));
+*/
+
+#endif /* STACKSEPARATED_ACSL_INCLUDED */
+

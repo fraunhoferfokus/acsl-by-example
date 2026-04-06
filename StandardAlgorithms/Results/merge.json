@@ -1,0 +1,15 @@
+[
+  {
+    "name": "merge",
+    "proved": 389,
+    "total": 389,
+    "percent": 100,
+    "qed": 268,
+    "alt_ergo": 109,
+    "cvc5": 2,
+    "z3": 6,
+    "coq": 4,
+    "term": 0,
+    "unreach": 0
+  }
+]

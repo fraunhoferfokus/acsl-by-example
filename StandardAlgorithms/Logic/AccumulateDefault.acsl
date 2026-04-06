@@ -5,14 +5,11 @@
 #include "Accumulate.acsl"
 
 /*@
-  axiomatic AccumulateDefault
-  {
     logic integer
     AccumulateDefault{L}(value_type* a, integer n) =
       Accumulate(a, n, (value_type)(0));
 
-    predicate
-    AccumulateDefaultBounds{L}(value_type* a, integer n) =
+    predicate AccumulateDefaultBounds{L}(value_type* a, integer n) =
       AccumulateBounds(a, n, (value_type)(0));
 
     lemma AccumulateDefault_Unchanged{K,L}:
@@ -36,7 +33,6 @@
       \forall value_type* a, integer m, n;
         0 <= m <= n                    ==>
         AccumulateDefaultBounds(a, n)  ==>  AccumulateDefaultBounds(a, m);
-  }
 */
 
 #endif /* ACCUMULATEDEFAULT_ACSL_INCLUDED */

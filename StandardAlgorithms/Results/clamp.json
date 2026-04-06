@@ -1,0 +1,15 @@
+[
+  {
+    "name": "clamp",
+    "proved": 27,
+    "total": 27,
+    "percent": 100,
+    "qed": 21,
+    "alt_ergo": 4,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 1,
+    "unreach": 1
+  }
+]

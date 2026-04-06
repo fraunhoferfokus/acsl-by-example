@@ -1,0 +1,15 @@
+[
+  {
+    "name": "partial_sum",
+    "proved": 62,
+    "total": 62,
+    "percent": 100,
+    "qed": 19,
+    "alt_ergo": 39,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 2,
+    "term": 1,
+    "unreach": 1
+  }
+]

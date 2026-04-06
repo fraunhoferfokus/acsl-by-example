@@ -1,0 +1,11 @@
+
+axiom_size_of_init_test
+axiom_capacity_of_init_test
+axiom_size_of_push_test
+axiom_capacity_of_push_test
+axiom_top_of_push_test
+axiom_size_of_pop_test
+axiom_capacity_of_pop_test
+axiom_pop_of_push_test
+axiom_push_of_pop_top_test
+

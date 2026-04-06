@@ -5,31 +5,22 @@
 #include "typedefs.h"
 
 /*@
-  axiomatic Reverse
-  {
-    predicate
-    Reverse{K,L}(value_type* a, integer n, value_type* b) =
-      \forall integer i; 0 <= i < n  ==>  \at(a[i],K) == \at(b[n-1-i], L);
+  predicate Reverse{K,L}(value_type* a, integer m, integer n, value_type* b, integer q) =
+    \forall integer i; m <= i < n  ==>  \at(a[i],K) == \at(b[q-1 - (i-m)],L);
 
-    predicate
-    Reverse{K,L}(value_type* a, integer m, integer n,
-                 value_type* b, integer p) = Reverse{K,L}(a+m, n-m, b+p);
+  predicate Reverse{K,L}(value_type* a, integer m, integer n, value_type* b) =
+    Reverse{K,L}(a, m, n, b, n);
 
-    predicate
-    Reverse{K,L}(value_type* a, integer m, integer n, value_type* b) =
-      Reverse{K,L}(a, m, n, b, m);
+  predicate Reverse{K,L}(value_type* a, integer n, value_type* b) =
+    Reverse{K,L}(a, 0, n, b, n);
 
-    predicate
-    Reverse{K,L}(value_type* a, integer m, integer n, integer p) =
-      Reverse{K,L}(a, m, n, a, p);
+  predicate Reverse{K,L}(value_type* a, integer m, integer n, integer q) =
+    Reverse{K,L}(a, m, n, a, q);
 
-    predicate
-    Reverse{K,L}(value_type* a, integer m, integer n) =
-      Reverse{K,L}(a, m, n, m);
+  predicate Reverse{K,L}(value_type* a, integer m, integer n) =
+    Reverse{K,L}(a, m, n, n);
 
-    predicate
-    Reverse{K,L}(value_type* a, integer n) = Reverse{K,L}(a, 0, n);
-  }
+  predicate Reverse{K,L}(value_type* a, integer n) = Reverse{K,L}(a, 0, n);
 */
 
 #endif /* REVERSE_ACSL_INCLUDED */

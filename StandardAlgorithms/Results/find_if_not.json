@@ -1,0 +1,15 @@
+[
+  {
+    "name": "find_if_not",
+    "proved": 40,
+    "total": 40,
+    "percent": 100,
+    "qed": 12,
+    "alt_ergo": 21,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 5,
+    "term": 1,
+    "unreach": 1
+  }
+]

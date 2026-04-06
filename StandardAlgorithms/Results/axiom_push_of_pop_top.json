@@ -1,0 +1,15 @@
+[
+  {
+    "name": "axiom_push_of_pop_top",
+    "proved": 10,
+    "total": 10,
+    "percent": 100,
+    "qed": 6,
+    "alt_ergo": 4,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 0,
+    "unreach": 0
+  }
+]

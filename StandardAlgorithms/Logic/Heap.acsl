@@ -8,39 +8,35 @@
 #include "Unchanged.acsl"
 
 /*@
-  axiomatic Heap
-  {
-    predicate
-    Heap{L}(value_type* a, integer n) =
-      \forall integer i; 0 < i < n  ==>  a[i] <= a[HeapParent(i)];
+  predicate Heap{L}(value_type* a, integer n) =
+    \forall integer i; 0 < i < n  ==>  a[i] <= a[HeapParent(i)];
 
-    lemma Heap_Maximum{L} :
-      \forall value_type* a, integer n;
-        0 < n  ==>  Heap(a, n)  ==>  MaxElement(a, n, 0);
+  lemma Heap_Maximum{L} :
+    \forall value_type* a, integer n;
+      0 < n  ==>  Heap(a, n)  ==>  MaxElement(a, n, 0);
 
-   lemma Heap_Shrink{L}:
-     \forall value_type *a, integer m, n;
-       0 <= m <= n  ==>  Heap(a, n)   ==>  Heap(a, m);
+ lemma Heap_Shrink{L}:
+   \forall value_type *a, integer m, n;
+     0 <= m <= n  ==>  Heap(a, n)   ==>  Heap(a, m);
 
-   lemma Heap_Unchanged{K,L}:
-     \forall value_type *a, integer n;
-       0 <= n  ==>  Unchanged{K,L}(a, n)  ==>  Heap{K}(a, n)  ==>  Heap{L}(a, n);
+ lemma Heap_Unchanged{K,L}:
+   \forall value_type *a, integer n;
+     0 <= n  ==>  Unchanged{K,L}(a, n)  ==>  Heap{K}(a, n)  ==>  Heap{L}(a, n);
 
-   predicate
-   HeapCompatible{L}(value_type* a, integer n, integer m, value_type v) =
-     (0 <= m < n)                                      &&
-     (0 <= HeapParent(m)  ==>  v <= a[HeapParent(m)])  &&
-     (HeapLeft(m)  <  n   ==>  a[HeapLeft(m)]  <= v)   &&
-     (HeapRight(m) <  n   ==>  a[HeapRight(m)] <= v);
+ predicate
+ HeapCompatible{L}(value_type* a, integer n, integer m, value_type v) =
+   (0 <= m < n)                                      &&
+   (0 <= HeapParent(m)  ==>  v <= a[HeapParent(m)])  &&
+   (HeapLeft(m)  <  n   ==>  a[HeapLeft(m)]  <= v)   &&
+   (HeapRight(m) <  n   ==>  a[HeapRight(m)] <= v);
 
-    lemma HeapCompatible_Update{K,L}:
-      \forall value_type *a, v, integer m, n;
-         0 <= m < n                      ==>
-         Heap{K}(a, n)                   ==>
-         HeapCompatible{K}(a, n, m, v)   ==>
-         ArrayUpdate{K,L}(a, n, m, v)    ==>  Heap{L}(a, n);
+  lemma HeapCompatible_Update{K,L}:
+    \forall value_type *a, v, integer m, n;
+       0 <= m < n                      ==>
+       Heap{K}(a, n)                   ==>
+       HeapCompatible{K}(a, n, m, v)   ==>
+       ArrayUpdate{K,L}(a, n, m, v)    ==>  Heap{L}(a, n);
 
-  }
 */
 
 #endif /* HEAP_ACSL_INCLUDED */

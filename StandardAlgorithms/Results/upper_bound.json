@@ -1,0 +1,15 @@
+[
+  {
+    "name": "upper_bound",
+    "proved": 32,
+    "total": 32,
+    "percent": 100,
+    "qed": 16,
+    "alt_ergo": 14,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 1,
+    "unreach": 1
+  }
+]

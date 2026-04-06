@@ -1,0 +1,15 @@
+[
+  {
+    "name": "find_first_of",
+    "proved": 48,
+    "total": 48,
+    "percent": 100,
+    "qed": 38,
+    "alt_ergo": 10,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 0,
+    "unreach": 0
+  }
+]

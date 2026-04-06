@@ -1,0 +1,15 @@
+
+#ifndef REVERSELEMMAS_ACSL_INCLUDED
+#define REVERSELEMMAS_ACSL_INCLUDED
+
+#include "Reverse.acsl"
+
+
+/*@
+  lemma Reverse_Shift{K,L}:
+    \forall value_type* a, integer n, p;
+    0 <= p <= n ==>
+    (Reverse{K,L}(a + p, 0, n - p) ==> Reverse{K,L}(a, p, n));
+*/
+
+#endif /* REVERSELEMMAS_ACSL_INCLUDED */

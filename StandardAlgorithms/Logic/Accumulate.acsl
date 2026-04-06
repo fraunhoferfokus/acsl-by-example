@@ -6,14 +6,11 @@
 #include "limits.h"
 
 /*@
-  axiomatic Accumulate
-  {
     logic integer
     Accumulate{L}(value_type* a, integer n, integer init) =
       n <= 0 ? init : Accumulate(a, n-1, init) + a[n-1];
 
-    predicate
-    AccumulateBounds{L}(value_type* a, integer n, value_type init) =
+    predicate AccumulateBounds{L}(value_type* a, integer n, value_type init) =
       \forall integer i; 0 <= i <= n  ==>
         VALUE_TYPE_MIN <= Accumulate(a, i, init) <= VALUE_TYPE_MAX;
 
@@ -42,7 +39,6 @@
         Unchanged{K, L}(a, n)           ==>
         AccumulateBounds{K}(a, n, init) ==>
         AccumulateBounds{L}(a, n, init);
-  }
 */
 
 #endif /* ACCUMULATE_ACSL_INCLUDED */

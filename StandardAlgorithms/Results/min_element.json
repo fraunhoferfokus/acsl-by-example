@@ -1,0 +1,15 @@
+[
+  {
+    "name": "min_element",
+    "proved": 50,
+    "total": 50,
+    "percent": 100,
+    "qed": 37,
+    "alt_ergo": 11,
+    "cvc5": 0,
+    "z3": 0,
+    "coq": 0,
+    "term": 1,
+    "unreach": 1
+  }
+]

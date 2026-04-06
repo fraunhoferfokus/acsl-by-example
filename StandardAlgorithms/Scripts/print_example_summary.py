@@ -13,12 +13,12 @@ for i, s in enumerate(summaries, 1):
         f"{label:<25} "
         f"{proved_vs_total:>8} "
         f"{f'{s['percent']}%':>8} "
+        f"{s['term']:>5} "
+        f"{s['unreach']:>5} "
         f"{s['qed']:>4} "
         f"{s['alt_ergo']:>4} "
         f"{s['cvc5']:>4} "
         f"{s['z3']:>4} "
         f"{s['coq']:>4} "
-        f"{s['term']:>13} "
-        f"{s['unreach']:>13}"
     )
 

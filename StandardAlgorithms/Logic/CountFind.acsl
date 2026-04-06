@@ -7,14 +7,11 @@
 #include "SomeNone.acsl"
 
 /*@
-  axiomatic CountFind
-  {
-    lemma Count_SomeEqual:
-      \forall value_type *a, v, integer m, n;
-        0 <= m < n             ==>
-        0 < Count(a, m, n, v)  ==>
-        SomeEqual(a, m, n, v);
-  }
+  lemma Count_SomeEqual:
+    \forall value_type *a, v, integer m, n;
+      0 <= m < n             ==>
+      0 < Count(a, m, n, v)  ==>
+      SomeEqual(a, m, n, v);
 */
 
 #endif /* COUNTFIND_H_INCLUDED */
