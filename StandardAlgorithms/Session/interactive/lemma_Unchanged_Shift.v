@@ -531,64 +531,78 @@ Axiom Q_Unchanged_Shrink :
   is_sint32_chunk Mint1 -> P_Unchanged_1_ Mint Mint1 a m n ->
   P_Unchanged_1_ Mint Mint1 a p q.
 
-(* Why3 assumption *)
-Definition P_Increasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z) (i1:Numbers.BinNums.Z), (i < i1)%Z ->
-  (m <= i)%Z -> (i1 < n)%Z -> ((Mint (shift a i)) <= (Mint (shift a i1)))%Z.
+Axiom Q_GreaterOrEqual_Less : True.
+
+Axiom Q_LessOrEqual_Less : True.
+
+Axiom Q_Greater_Less : True.
+
+Axiom Q_Less_Transitivity :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z) (c:Numbers.BinNums.Z),
+  (a < b)%Z -> (b < c)%Z -> is_sint32 a -> is_sint32 b -> is_sint32 c ->
+  (a < c)%Z.
+
+Axiom Q_Less_Antisymmetry :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z), (a < b)%Z ->
+  is_sint32 a -> is_sint32 b -> (a <= b)%Z.
+
+Axiom Q_Less_Irreflexivity : True.
 
 (* Why3 assumption *)
-Definition P_WeaklyIncreasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> ((2%Z + i)%Z <= n)%Z ->
-  ((Mint (shift a i)) <= (Mint (shift a (1%Z + i)%Z)))%Z.
-
-Axiom Q_Increasing_WeaklyIncreasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_Increasing_1_ Mint a m n -> P_WeaklyIncreasing_1_ Mint a m n.
-
-Axiom Q_WeaklyIncreasing_Increasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_WeaklyIncreasing_1_ Mint a m n -> P_Increasing_1_ Mint a m n.
-
-Axiom Q_Increasing_Shift :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (l:Numbers.BinNums.Z)
-    (r:Numbers.BinNums.Z),
-  (0%Z <= l)%Z -> (l <= r)%Z -> is_sint32_chunk Mint ->
-  P_Increasing_1_ Mint a l r ->
-  P_Increasing_1_ Mint (shift a l) 0%Z (r + ((-1%Z)%Z * l)%Z)%Z.
+Definition L_HeapParent (i:Numbers.BinNums.Z) : Numbers.BinNums.Z :=
+  ZArith.BinInt.Z.quot ((-1%Z)%Z + i)%Z 2%Z.
 
 (* Why3 assumption *)
-Definition P_Equal_1_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (b:addr) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  ((Mint1 (shift a i)) = (Mint (shift b i))).
+Inductive P_HeapAncestor: Numbers.BinNums.Z -> Numbers.BinNums.Z -> Prop :=
+  | Q_P_HeapAncestor_HeapAncestor_Refl :
+      forall (m:Numbers.BinNums.Z), (0%Z <= m)%Z -> P_HeapAncestor m m
+  | Q_P_HeapAncestor_HeapAncestor_Step :
+      forall (m:Numbers.BinNums.Z) (c:Numbers.BinNums.Z), (0%Z < c)%Z ->
+      P_HeapAncestor m (L_HeapParent c) -> P_HeapAncestor m c.
+
+Axiom Q_HeapAncestor_Root :
+  forall (c:Numbers.BinNums.Z), (0%Z <= c)%Z -> P_HeapAncestor 0%Z c.
+
+Axiom Q_HeapAncestor_Bounds :
+  forall (m:Numbers.BinNums.Z) (c:Numbers.BinNums.Z), P_HeapAncestor m c ->
+  (m <= c)%Z /\ (0%Z <= m)%Z.
 
 (* Why3 assumption *)
-Definition P_Equal_3_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (b:addr) (p:Numbers.BinNums.Z) : Prop :=
-  P_Equal_1_ Mint Mint1 (shift a m) 0%Z (n + ((-1%Z)%Z * m)%Z)%Z (shift b p).
+Definition L_HeapLeft (i:Numbers.BinNums.Z) : Numbers.BinNums.Z :=
+  (1%Z + (2%Z * i)%Z)%Z.
 
 (* Why3 assumption *)
-Definition P_Equal_4_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (p:Numbers.BinNums.Z) : Prop :=
-  P_Equal_3_ Mint Mint1 a m n a p.
+Definition L_HeapRight (i:Numbers.BinNums.Z) : Numbers.BinNums.Z :=
+  (2%Z + (2%Z * i)%Z)%Z.
 
-Axiom Q_Increasing_Equal :
-  forall (Mint:addr -> Numbers.BinNums.Z) (Mint1:addr -> Numbers.BinNums.Z)
-    (a:addr) (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z)
-    (p:Numbers.BinNums.Z),
-  let x := (m + p)%Z in
-  is_sint32_chunk Mint -> is_sint32_chunk Mint1 ->
-  P_Increasing_1_ Mint1 a m n -> P_Equal_4_ Mint Mint1 a m n x ->
-  P_Increasing_1_ Mint a x (n + p)%Z.
+Axiom Q_Heap_ChildBounds :
+  forall (p:Numbers.BinNums.Z),
+  let x := L_HeapLeft p in
+  (0%Z <= p)%Z -> (p < x)%Z /\ (x < (L_HeapRight p))%Z.
+
+Axiom Q_Heap_ParentBounds :
+  forall (c:Numbers.BinNums.Z),
+  let x := L_HeapParent c in (0%Z < c)%Z -> (0%Z <= x)%Z /\ (x < c)%Z.
+
+Axiom Q_Heap_Childs :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z),
+  ((L_HeapParent b) = (L_HeapParent a)) -> (0%Z < a)%Z -> (0%Z < b)%Z ->
+  ((b = a) \/ ((1%Z + a)%Z = b)) \/ ((1%Z + b)%Z = a).
+
+Axiom Q_Heap_ParentChild :
+  forall (c:Numbers.BinNums.Z) (p:Numbers.BinNums.Z),
+  ((L_HeapParent c) = p) -> (0%Z < c)%Z ->
+  ((L_HeapLeft p) = c) \/ ((L_HeapRight p) = c).
+
+Axiom Q_Heap_ParentRight :
+  forall (p:Numbers.BinNums.Z), (0%Z <= p)%Z ->
+  ((L_HeapParent (L_HeapRight p)) = p).
+
+Axiom Q_Heap_ParentLeft :
+  forall (p:Numbers.BinNums.Z), (0%Z <= p)%Z ->
+  ((L_HeapParent (L_HeapLeft p)) = p).
+
+Axiom Q_HeapParent_Zero : ((L_HeapParent 0%Z) = 0%Z).
 
 (* Why3 goal *)
 Theorem wp_goal :

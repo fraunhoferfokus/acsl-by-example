@@ -1,0 +1,37 @@
+
+#ifndef HEAPFROM_ACSL_INCLUDED
+#define HEAPFROM_ACSL_INCLUDED
+
+#include "HeapNodes.acsl"
+#include "ArrayUpdate.acsl"
+
+/*@
+  predicate HeapFrom{L}(value_type* a, integer m, integer n) =
+    \forall integer c;
+      0 < c < n && m <= HeapParent(c) ==>
+      a[c] <= a[HeapParent(c)];
+
+  lemma HeapFrom_Maximum{L}:
+    \forall value_type* a, integer m, c, n;
+      0 <= m <= c < n ==>
+      HeapFrom(a, m, n) ==>
+      HeapAncestor(m, c) ==>
+      a[c] <= a[m];
+
+  predicate
+  HeapFromCompatible{L}(value_type* a, integer n, integer root, integer p, value_type v) =
+    root <= p < n &&
+    (0 < p && root <= HeapParent(p) ==> v <= a[HeapParent(p)]) &&
+    (HeapLeft(p)  < n ==> a[HeapLeft(p)]  <= v) &&
+    (HeapRight(p) < n ==> a[HeapRight(p)] <= v);
+
+  lemma HeapFromCompatible_Update{K,L}:
+    \forall value_type* a, integer n, root, p, value_type v;
+      HeapFrom{K}(a, root, n) ==>
+      HeapFromCompatible{K}(a, n, root, p, v) ==>
+      ArrayUpdate{K,L}(a, n, p, v) ==>
+      HeapFrom{L}(a, root, n);
+*/
+
+#endif /* HEAPFROM_ACSL_INCLUDED */
+

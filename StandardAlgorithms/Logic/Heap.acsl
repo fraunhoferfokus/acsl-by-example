@@ -3,13 +3,14 @@
 #define HEAP_ACSL_INCLUDED
 
 #include "HeapNodes.acsl"
+#include "HeapFrom.acsl"
 #include "ArrayExtrema.acsl"
 #include "ArrayUpdate.acsl"
 #include "Unchanged.acsl"
 
 /*@
   predicate Heap{L}(value_type* a, integer n) =
-    \forall integer i; 0 < i < n  ==>  a[i] <= a[HeapParent(i)];
+    HeapFrom(a, 0, n);
 
   lemma Heap_Maximum{L} :
     \forall value_type* a, integer n;
@@ -23,12 +24,8 @@
    \forall value_type *a, integer n;
      0 <= n  ==>  Unchanged{K,L}(a, n)  ==>  Heap{K}(a, n)  ==>  Heap{L}(a, n);
 
- predicate
- HeapCompatible{L}(value_type* a, integer n, integer m, value_type v) =
-   (0 <= m < n)                                      &&
-   (0 <= HeapParent(m)  ==>  v <= a[HeapParent(m)])  &&
-   (HeapLeft(m)  <  n   ==>  a[HeapLeft(m)]  <= v)   &&
-   (HeapRight(m) <  n   ==>  a[HeapRight(m)] <= v);
+  predicate HeapCompatible{L}(value_type* a, integer n, integer m, value_type v) =
+    HeapFromCompatible{L}(a, n, 0, m, v);
 
   lemma HeapCompatible_Update{K,L}:
     \forall value_type *a, v, integer m, n;

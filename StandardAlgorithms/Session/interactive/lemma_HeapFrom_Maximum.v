@@ -96,6 +96,62 @@ Axiom cdiv_closed_remainder :
   ((ZArith.BinInt.Z.rem a n) = (ZArith.BinInt.Z.rem b n)) -> (a = b).
 
 (* Why3 assumption *)
+Definition L_HeapParent (i:Numbers.BinNums.Z) : Numbers.BinNums.Z :=
+  ZArith.BinInt.Z.quot ((-1%Z)%Z + i)%Z 2%Z.
+
+(* Why3 assumption *)
+Inductive P_HeapAncestor: Numbers.BinNums.Z -> Numbers.BinNums.Z -> Prop :=
+  | Q_P_HeapAncestor_HeapAncestor_Refl :
+      forall (m:Numbers.BinNums.Z), (0%Z <= m)%Z -> P_HeapAncestor m m
+  | Q_P_HeapAncestor_HeapAncestor_Step :
+      forall (m:Numbers.BinNums.Z) (c:Numbers.BinNums.Z), (0%Z < c)%Z ->
+      P_HeapAncestor m (L_HeapParent c) -> P_HeapAncestor m c.
+
+Axiom Q_HeapAncestor_Root :
+  forall (c:Numbers.BinNums.Z), (0%Z <= c)%Z -> P_HeapAncestor 0%Z c.
+
+Axiom Q_HeapAncestor_Bounds :
+  forall (m:Numbers.BinNums.Z) (c:Numbers.BinNums.Z), P_HeapAncestor m c ->
+  (m <= c)%Z /\ (0%Z <= m)%Z.
+
+(* Why3 assumption *)
+Definition L_HeapLeft (i:Numbers.BinNums.Z) : Numbers.BinNums.Z :=
+  (1%Z + (2%Z * i)%Z)%Z.
+
+(* Why3 assumption *)
+Definition L_HeapRight (i:Numbers.BinNums.Z) : Numbers.BinNums.Z :=
+  (2%Z + (2%Z * i)%Z)%Z.
+
+Axiom Q_Heap_ChildBounds :
+  forall (p:Numbers.BinNums.Z),
+  let x := L_HeapLeft p in
+  (0%Z <= p)%Z -> (p < x)%Z /\ (x < (L_HeapRight p))%Z.
+
+Axiom Q_Heap_ParentBounds :
+  forall (c:Numbers.BinNums.Z),
+  let x := L_HeapParent c in (0%Z < c)%Z -> (0%Z <= x)%Z /\ (x < c)%Z.
+
+Axiom Q_Heap_Childs :
+  forall (a:Numbers.BinNums.Z) (b:Numbers.BinNums.Z),
+  ((L_HeapParent b) = (L_HeapParent a)) -> (0%Z < a)%Z -> (0%Z < b)%Z ->
+  ((b = a) \/ ((1%Z + a)%Z = b)) \/ ((1%Z + b)%Z = a).
+
+Axiom Q_Heap_ParentChild :
+  forall (c:Numbers.BinNums.Z) (p:Numbers.BinNums.Z),
+  ((L_HeapParent c) = p) -> (0%Z < c)%Z ->
+  ((L_HeapLeft p) = c) \/ ((L_HeapRight p) = c).
+
+Axiom Q_Heap_ParentRight :
+  forall (p:Numbers.BinNums.Z), (0%Z <= p)%Z ->
+  ((L_HeapParent (L_HeapRight p)) = p).
+
+Axiom Q_Heap_ParentLeft :
+  forall (p:Numbers.BinNums.Z), (0%Z <= p)%Z ->
+  ((L_HeapParent (L_HeapLeft p)) = p).
+
+Axiom Q_HeapParent_Zero : ((L_HeapParent 0%Z) = 0%Z).
+
+(* Why3 assumption *)
 Inductive addr :=
   | addr'mk : Numbers.BinNums.Z -> Numbers.BinNums.Z -> addr.
 Axiom addr_WhyType : WhyType addr.
@@ -507,91 +563,43 @@ Definition is_sint32_chunk (m:addr -> Numbers.BinNums.Z) : Prop :=
   forall (a:addr), is_sint32 (m a).
 
 (* Why3 assumption *)
-Definition P_Increasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
+Definition P_HeapFrom (Mint:addr -> Numbers.BinNums.Z) (a:addr)
     (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z) (i1:Numbers.BinNums.Z), (i < i1)%Z ->
-  (m <= i)%Z -> (i1 < n)%Z -> ((Mint (shift a i)) <= (Mint (shift a i1)))%Z.
-
-Axiom Q_Increasing_Shift :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (l:Numbers.BinNums.Z)
-    (r:Numbers.BinNums.Z),
-  (0%Z <= l)%Z -> (l <= r)%Z -> is_sint32_chunk Mint ->
-  P_Increasing_1_ Mint a l r ->
-  P_Increasing_1_ Mint (shift a l) 0%Z (r + ((-1%Z)%Z * l)%Z)%Z.
-
-(* Why3 assumption *)
-Definition P_WeaklyIncreasing_1_ (Mint:addr -> Numbers.BinNums.Z) (a:addr)
-    (m:Numbers.BinNums.Z) (n:Numbers.BinNums.Z) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> ((2%Z + i)%Z <= n)%Z ->
-  ((Mint (shift a i)) <= (Mint (shift a (1%Z + i)%Z)))%Z.
-
-Axiom Q_WeaklyIncreasing_Increasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_WeaklyIncreasing_1_ Mint a m n -> P_Increasing_1_ Mint a m n.
-
-Axiom Q_Increasing_WeaklyIncreasing :
-  forall (Mint:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z),
-  (0%Z <= m)%Z -> (m <= n)%Z -> is_sint32_chunk Mint ->
-  P_Increasing_1_ Mint a m n -> P_WeaklyIncreasing_1_ Mint a m n.
-
-(* Why3 assumption *)
-Definition P_Equal_1_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (b:addr) : Prop :=
-  forall (i:Numbers.BinNums.Z), (m <= i)%Z -> (i < n)%Z ->
-  ((Mint1 (shift a i)) = (Mint (shift b i))).
-
-(* Why3 assumption *)
-Definition P_Equal_3_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (b:addr) (p:Numbers.BinNums.Z) : Prop :=
-  P_Equal_1_ Mint Mint1 (shift a m) 0%Z (n + ((-1%Z)%Z * m)%Z)%Z (shift b p).
-
-(* Why3 assumption *)
-Definition P_Equal_4_ (Mint:addr -> Numbers.BinNums.Z)
-    (Mint1:addr -> Numbers.BinNums.Z) (a:addr) (m:Numbers.BinNums.Z)
-    (n:Numbers.BinNums.Z) (p:Numbers.BinNums.Z) : Prop :=
-  P_Equal_3_ Mint Mint1 a m n a p.
+  forall (i:Numbers.BinNums.Z),
+  let x := L_HeapParent i in
+  (0%Z < i)%Z -> (i < n)%Z -> (m <= x)%Z ->
+  ((Mint (shift a i)) <= (Mint (shift a x)))%Z.
 
 (* Why3 goal *)
 Theorem wp_goal :
-  forall (t:addr -> Numbers.BinNums.Z) (t1:addr -> Numbers.BinNums.Z)
-    (a:addr) (i:Numbers.BinNums.Z) (i1:Numbers.BinNums.Z)
-    (i2:Numbers.BinNums.Z),
-  let x := (i + i2)%Z in
-  is_sint32_chunk t1 -> is_sint32_chunk t -> P_Increasing_1_ t1 a i i1 ->
-  P_Equal_4_ t t1 a i i1 x -> P_Increasing_1_ t a x (i1 + i2)%Z.
-(* Why3 intros t t1 a i i1 i2 x h1 h2 h3 h4. *)
+  forall (t:addr -> Numbers.BinNums.Z) (a:addr) (i:Numbers.BinNums.Z)
+    (i1:Numbers.BinNums.Z) (i2:Numbers.BinNums.Z),
+  let x := t (shift a i1) in
+  let x1 := t (shift a i) in
+  (0%Z <= i1)%Z -> (i < i2)%Z -> (i1 <= i)%Z -> is_sint32_chunk t ->
+  P_HeapAncestor i1 i -> P_HeapFrom t a i1 i2 -> is_sint32 x ->
+  is_sint32 x1 -> (x1 <= x)%Z.
+(* Why3 intros t a i i1 i2 x x1 h1 h2 h3 h4 h5 h6 h7 h8. *)
 Proof.
- Require Import Psatz.
- intros K L a m n p mp L32 K32 Increasing Equal.
- subst mp.
- unfold P_Increasing_1_.
- intros i j; intros IJ H HH.
+  From Stdlib Require Import Psatz.
 
- assert (shift_shift :
-   forall (x:addr) (k l:Numbers.BinNums.Z),
-          shift (shift x k) l = shift x (k + l)%Z).
-    {
-      intros [b off] k1 k2.
-      unfold shift, base, offset; simpl.
-      f_equal. lia.
-    }
+  intros L a c m n.
+  intros Lm Lc Hm_nonneg Hc_lt_n Hm_le_c Hchunk Hanc Hheap Hx Hx1.
+  
+  change (L (shift a c) <= L (shift a m))%Z.
+  clear Lm Lc Hx Hx1 Hm_nonneg.
+  revert n Hc_lt_n Hm_le_c Hheap.
+  
+  induction Hanc as
+    [m Hc_pos
+    |m c Hc_pos Hanc IHanc];
+    intros n Hc_lt_n Hm_le_c Hheap.
 
- replace i with ((m + p) + (i - p - m))%Z by lia.
- rewrite <- shift_shift.
- rewrite <- Equal; auto with zarith.
-
- replace j with ((m + p) + (j - p - m))%Z by lia.
- rewrite <- shift_shift.
- rewrite <- Equal; auto with zarith.
-
- repeat rewrite shift_shift.
-
- apply Increasing; lia.
-
+  - lia.
+  - pose proof (Q_HeapAncestor_Bounds _ _ Hanc) as Hanc_bounds.
+    pose proof (Hheap c ltac:(lia) Hc_lt_n ltac:(lia)) as Hedge.
+    pose proof (Q_Heap_ParentBounds c Hc_pos) as Hparent_bounds.
+    pose proof (IHanc n ltac:(lia) ltac:(lia) Hheap) as Hparent_max.
+    lia.
 Qed.
 

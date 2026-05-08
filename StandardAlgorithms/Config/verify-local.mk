@@ -18,7 +18,7 @@ ifndef RESULT_DIR
 endif
 
 # Tuning knobs.
-WP_TIMEOUT   ?= 2
+WP_TIMEOUT   ?= 5
 WP_PROCESSES ?= 1
 
 # WP mode: batch (default), edit, command, ...

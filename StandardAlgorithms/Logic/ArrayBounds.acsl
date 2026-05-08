@@ -3,6 +3,7 @@
 #define ARRAYBOUNDS_ACSL_INCLUDED
 
 #include "LessThanComparable.acsl"
+#include "MultisetReorder.acsl"
 
 /*@
     predicate LowerBound{L}(value_type* a, integer m, integer n, value_type v) =
@@ -28,6 +29,16 @@
 
     predicate StrictUpperBound{L}(value_type* a, integer n, value_type v) =
       StrictUpperBound{L}(a, 0, n, v);
+
+    lemma UpperBound_MultisetReorder{K,L}:
+      \forall value_type* a, integer n, value_type bound;
+        UpperBound{K}(a, n, bound) ==>
+        MultisetReorder{K,L}(a, n) ==> UpperBound{L}(a, n, bound);
+
+    lemma UpperBound_ExtendLast{L}:
+      \forall value_type* a, integer n;
+        0 < n ==>
+        UpperBound(a, n-1, a[n-1]) ==> UpperBound(a, n, a[n-1]);
 */
 
 #endif /* ARRAYBOUNDS_ACSL_INCLUDED */

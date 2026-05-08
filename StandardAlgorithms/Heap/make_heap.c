@@ -1,29 +1,35 @@
 
 #include "make_heap.h"
+#include "heap_child.h"
+#include "heap_parent.h"
 #include "push_heap.h"
+#include "sift_down.h"
+#include "MultisetUpdate.acsl"
 #include "Unchanged.acsl"
 
 void make_heap(value_type* a, size_type n)
 {
-  if (0u < n) {
-    /*@
-       loop invariant bounds:     1 <= i <= n;
-       loop invariant heap:       Heap(a, i);
-       loop invariant reorder:    MultisetReorder{Pre,Here}(a, n);
-       loop invariant unchanged:  Unchanged{Pre,Here}(a, i+1, n);
-       loop assigns   i, a[0..n-1];
-       loop   variant n - i;
-    */
-    for (size_type i = 1u; i < n; ++i) {
-      push_heap(a, i + 1u);
-      //@ assert reorder:    MultisetReorder{LoopCurrent,Here}(a, i+1);
-      //@ assert unchanged:  Unchanged{LoopCurrent,Here}(a, i+1, n);
-      //@ assert reorder:    MultisetReorder{LoopCurrent,Here}(a, n);
-    }
+  if (1u < n) {
+    size_type root = heap_parent(n - 1u) + 1u;
 
-    //@ assert reorder:    MultisetReorder{Pre,Here}(a, n);
+    /*@
+       loop invariant bounds:     0 <= root <= HeapParent(n - 1u) + 1;
+       loop invariant hfrom:      HeapFrom(a, root, n);
+       loop invariant reorder:    MultisetReorder{Pre,Here}(a, n);
+       loop assigns               root, a[0..n-1];
+       loop variant               root;
+    */
+    while (0u < root) {
+      --root;
+      //@ assert hfrom_next:     HeapFrom(a, root + 1u, n);
+      sift_down(a, n, root);
+      //@ assert hfrom:          HeapFrom(a, root, n);
+      //@ assert reorder_step:   MultisetReorder{LoopCurrent,Here}(a, n);
+      //@ assert reorder:        MultisetReorder{Pre,Here}(a, n);
+    }
+    //@ assert hfrom_zero:       HeapFrom(a, 0, n);
   }
 
-  //@ assert  heap: Heap(a, n);
+  //@ assert heap:               Heap(a, n);
 }
 
