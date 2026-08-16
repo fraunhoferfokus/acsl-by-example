@@ -6,8 +6,8 @@
     "percent": 100,
     "qed": 22,
     "alt_ergo": 71,
-    "cvc5": 0,
-    "z3": 1,
+    "cvc5": 1,
+    "z3": 0,
     "coq": 20,
     "term": 1,
     "unreach": 1

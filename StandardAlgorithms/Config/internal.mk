@@ -7,6 +7,8 @@ ifeq ($(origin SUBDIRS),undefined)
   SUBDIRS := $(strip $(if $(wildcard $(SUBDIRS_FILE)),$(file <$(SUBDIRS_FILE)),))
 endif
 
+include $(CONFIG_DIR)/help.mk
+
 .PHONY: $(SUBDIRS) \
         lib lib-local lib-subdirs \
         tests tests-local tests-subdirs \
@@ -16,7 +18,10 @@ endif
         results results-local results-subdirs \
         clean clean-local clean-subdirs \
         clean-results clean-results-local clean-results-subdirs \
-        distclean distclean-local distclean-subdirs
+        clean-tests-subdirs clean-lib-subdirs \
+        clean-proofs-subdirs clean-format-subdirs \
+        clean-everything clean-everything-subdirs \
+        clean-slate
 
 define _dispatch
 set -e; \
@@ -50,18 +55,53 @@ clean-results-subdirs:
 clean-subdirs:
 	@$(call _dispatch,clean)
 
-distclean-subdirs:
-	@$(call _dispatch,distclean)
+clean-tests-subdirs:
+	@$(call _dispatch,clean-tests)
 
-lib: lib-local lib-subdirs
-tests: tests-local tests-subdirs
-check: check-local check-subdirs
-format: format-local format-subdirs
-reports: reports-local reports-subdirs
-results: results-local results-subdirs
-clean-results: clean-results-local clean-results-subdirs
+clean-lib-subdirs:
+	@$(call _dispatch,clean-lib)
 
+clean-proofs-subdirs:
+	@$(call _dispatch,clean-proofs)
+
+clean-format-subdirs:
+	@$(call _dispatch,clean-format)
+
+clean-everything-subdirs:
+	@$(call _dispatch,clean-everything)
+
+##@ Building and testing
+
+lib: lib-local lib-subdirs        ## build the static libraries
+tests: tests-local tests-subdirs  ## build the test executables
+check: check-local check-subdirs  ## build and run the tests
+
+##@ Formal verification
+
+results: results-local results-subdirs  ## run WP and refresh Results/*.json
+reports: reports-local reports-subdirs  ## print the per-example proof reports
+
+##@ Formatting
+
+format: format-local format-subdirs  ## run astyle over the sources
+
+##@ Cleaning
+
+# Stack/ is both an internal directory and a leaf with its own examples, so
+# every aggregate here has to cover the local artifacts as well as the
+# subdirectories.
 clean:: clean-local
-clean:: clean-subdirs
+clean:: clean-subdirs               ## remove test output, WP output and astyle backups
+clean-everything: clean-local clean-lib clean-results-local clean-everything-subdirs  ## remove every artifact these directories own
 
-distclean: distclean-local distclean-subdirs
+clean-tests: clean-tests-subdirs    ## remove objects, dependency files and test executables
+clean-lib: clean-lib-subdirs        ## remove the static libraries
+clean-proofs: clean-proofs-subdirs  ## remove WP output (*.wp, *.wplog, *.json, *.report)
+clean-results: clean-results-local clean-results-subdirs  ## remove these directories' Results/*.json
+clean-format: clean-format-subdirs  ## remove astyle backup files (*.orig)
+clean-cache:                        ## remove the shared WP proof cache (GLOBAL, all examples)
+
+# Two of the three parts are global (the cache and all of Results/), so this
+# always means the whole project, whichever directory it is run from.
+clean-slate:                        ## reset the whole project: clean-everything + Results/ + the WP cache
+	@$(MAKE) -C "$(TOP_DIR)" clean-slate

@@ -1,12 +1,12 @@
 [
   {
     "name": "push_heap",
-    "proved": 152,
-    "total": 152,
+    "proved": 158,
+    "total": 158,
     "percent": 100,
     "qed": 50,
-    "alt_ergo": 89,
-    "cvc5": 2,
+    "alt_ergo": 96,
+    "cvc5": 1,
     "z3": 0,
     "coq": 11,
     "term": 0,

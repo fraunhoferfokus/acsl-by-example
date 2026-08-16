@@ -1,9 +1,20 @@
 
 # -----------------------------------------------------------------------------
 # examples.mk --- per-directory Makefile glue for example collections.
+#
+# The indentation of the include directives below is deliberate. Shell
+# completion of "make <TAB>" does not ask make what its targets are: zsh's
+# _make reads the makefile text, follows an "include" only when it starts in
+# column 0 and its path expands textually (which is why CONFIG_DIR is spelled
+# relative in every directory Makefile), and ignores ifneq/else entirely.
+#
+# So: column 0 for leaf.mk, the front-end that declares the documented targets
+# -- that is the list completion should offer. Indented for everything else,
+# whose targets are internal (*-local, wp-force, the library and stamp files).
+# make itself does not care either way. See Config/README.md.
 # -----------------------------------------------------------------------------
 
-include $(CONFIG_DIR)/central.mk
+  include $(CONFIG_DIR)/central.mk
 
 # Relative path from the current directory to the top-level directory.
 # Use ':=' so this is computed once (and does not change unexpectedly later).
@@ -24,14 +35,14 @@ ADDITIONAL ?=
 # Local overrides/hooks.
 # Using -include keeps the build working even if a directory does not provide
 # one of these customization files.
--include $(CONFIG_DIR)/libtests-local.mk
--include $(CONFIG_DIR)/verify-local.mk
--include $(CONFIG_DIR)/format-local.mk
+  -include $(CONFIG_DIR)/libtests-local.mk
+  -include $(CONFIG_DIR)/verify-local.mk
+  -include $(CONFIG_DIR)/format-local.mk
 
 # Automatically select internal or leaf make logic.
 # We check for a local "subdirs.list" file.
 ifneq ($(wildcard subdirs.list),)
   include $(CONFIG_DIR)/internal.mk
 else
-  include $(CONFIG_DIR)/leaf.mk
+include $(CONFIG_DIR)/leaf.mk
 endif

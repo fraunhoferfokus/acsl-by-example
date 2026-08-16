@@ -2,18 +2,45 @@
 # Top-level Makefile.
 
 include Config/dispatch.mk
+include Config/help.mk
+include Config/cache.mk
 
-.PHONY: all clean-cache clean-results \
-        lib tests check format clean results reports distclean
+.PHONY: all clean-results clean-slate
 
-all: lib tests
+##@ Building and testing
 
-# Top level is a pure dispatcher, so these are synonyms for -subdirs.
-lib tests check format clean results reports distclean: %: %-subdirs ;
+all: lib tests    ## build the libraries and the tests
+lib:              ## build the static libraries
+tests:            ## build the test executables
+check:            ## build and run the tests
 
-clean-cache:
-	@$(RM) -r Session/cache
+##@ Formal verification
 
-clean-results:
+results:          ## run WP and refresh Results/*.json
+reports:          ## print the per-example proof reports
+
+##@ Formatting
+
+format:           ## run astyle over the sources
+
+##@ Cleaning
+
+# The top level is a pure dispatcher, so these are synonyms for *-subdirs.
+$(DISPATCH_TARGETS): %: %-subdirs ;
+
+clean:            ## remove test output, WP output and astyle backups
+clean-everything: ## remove every artifact the subdirectories own
+clean-tests:      ## remove objects, dependency files and test executables
+clean-lib:        ## remove the static libraries
+clean-proofs:     ## remove WP output (*.wp, *.wplog, *.json, *.report)
+clean-format:     ## remove astyle backup files (*.orig)
+
+clean-cache:      ## remove the shared WP proof cache (GLOBAL, all examples)
+
+# Not a dispatch target: Results/ is one shared directory, not one per subdir.
+clean-results:    ## remove all of Results/*.json
 	@$(MAKE) clean -sC Results
 
+# Not a dispatch target either: the top level would forward it into every
+# subdirectory, and each of those calls straight back up here.
+clean-slate: clean-everything clean-results clean-cache  ## clean-everything + all of Results/ + the WP cache

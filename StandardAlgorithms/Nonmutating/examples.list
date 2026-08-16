@@ -1,4 +1,5 @@
 find
+find_last
 find2
 find3
 find4
@@ -8,6 +9,9 @@ find_first_of
 adjacent_find
 mismatch
 equal
+all_of
+any_of
+none_of
 search
 search_n
 find_end

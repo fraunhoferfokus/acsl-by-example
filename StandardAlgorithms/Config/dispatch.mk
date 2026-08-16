@@ -4,7 +4,18 @@
 DIRLIST ?= subdirs.list
 SUBDIRS ?= $(strip $(shell test -f "$(DIRLIST)" && cat "$(DIRLIST)"))
 
-DISPATCH_TARGETS ?= lib tests check format clean results reports distclean
+# Targets forwarded into every subdirectory.
+#
+# "clean-cache" is deliberately absent: the WP cache is shared by the whole
+# project, so recursing would wipe it once per subdirectory. "help" is absent
+# too -- it describes the directory you are standing in.
+# "clean-results" is absent as well: Results/ is a single shared directory, so
+# the top level empties it in one step instead of once per subdirectory.
+# "clean-slate" must stay absent for a stronger reason: outside the top level it
+# is a rule that calls back up here, so dispatching it would loop.
+DISPATCH_TARGETS ?= lib tests check format results reports \
+                    clean clean-everything \
+                    clean-tests clean-lib clean-proofs clean-format
 
 .PHONY: $(DISPATCH_TARGETS) $(DISPATCH_TARGETS:%=%-subdirs) $(SUBDIRS)
 

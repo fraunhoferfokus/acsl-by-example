@@ -24,6 +24,9 @@ format-local:
 	$(ASTYLE) $(ASTYLEOPTIONS) $(FORMAT_FILES)
 
 # Remove backup files created by astyle (*.orig).
-.PHONY: clean-local
-clean-local::
+.PHONY: clean-local clean-format
+
+clean-format:
 	@$(RM) -f *.orig
+
+clean-local:: clean-format

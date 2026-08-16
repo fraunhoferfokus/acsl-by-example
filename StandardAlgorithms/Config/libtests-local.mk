@@ -43,7 +43,9 @@ TEST_OBJ := $(addsuffix _test.o,$(EXAMPLES))
 TEST_DEP := $(addsuffix _test.d,$(EXAMPLES))
 TEST_BIN := $(addsuffix _test,$(EXAMPLES))
 
-.PHONY: all lib tests check clean distclean
+# Only names that actually have a rule belong here: a .PHONY target with no
+# rule makes "make <name>" succeed silently while doing nothing.
+.PHONY: all lib tests check clean
 all: lib tests
 
 lib-local: $(LIB_NAME)
@@ -78,9 +80,13 @@ check-local: $(TEST_BIN)
 # Auto-generated dependency files.
 -include $(DEP) $(TEST_DEP)
 
-clean-local::
+.PHONY: clean-tests clean-lib
+
+clean-tests:
 	$(RM) $(OBJ) $(DEP) $(TEST_OBJ) $(TEST_DEP) $(TEST_BIN)
 
-distclean-local: clean-local
+clean-lib:
 	$(RM) $(LIB_NAME)
+
+clean-local:: clean-tests
 

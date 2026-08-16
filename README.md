@@ -1,7 +1,7 @@
 
 # ACSL by Example
 
-This repository contains version 32.0.3 of
+This repository contains version 33.0.0 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
 --- a curated collection of C functions and data types whose behavior has been
 formally specified using **ACSL** (ANSI/ISO C Specification Language) and
@@ -13,15 +13,15 @@ deductive verification of C programs.  It accompanies the report
 patterns, and verification discussions for the examples contained here.
 
 This version targets
-[Frama-C 32.0 (Germanium)](https://www.frama-c.com/fc-versions/germanium.html)
+[Frama-C 33.0 (Arsenic)](https://www.frama-c.com/fc-versions/arsenic.html)
 and relies, among others, on the following software packages:
 
 *Package* | *Version*
 --------- | ---------
  Why3     | 1.8.2
- Alt-Ergo | 2.6.2
- CVC5     | 1.3.3
- Z3       | 4.15.2
+ Alt-Ergo | 2.6.3
+ CVC5     | 1.3.4
+ Z3       | 4.16.0
  Coq      | 8.20.1
 
 ---

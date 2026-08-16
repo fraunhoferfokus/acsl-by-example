@@ -46,12 +46,15 @@ void push_heap(value_type* a, size_type n)
       //@ assert update:     ac == At{Epilogue}(a, c) < v;
       //@ assert reorder:    MultisetParity{Pre,Here}(a, n, ac, v);
       a[c] = v;
-      //@ assert update:   ArrayUpdate{Epilogue,Here}(a, n, c, v);
-      //@ assert heap:     HeapCompatible(a, n, c, v);
-      //@ assert heap:     Heap(a, n);
-      //@ assert update:   MultisetUpdate{Epilogue,Here}(a, n, c, v);
-      //@ assert reorder:  MultisetParity{Epilogue,Here}(a, n, v, ac);
-      //@ assert reorder:  MultisetReorder{Pre,Here}(a, n);
+      //@ assert unchanged:  Unchanged{Epilogue,Here}(a, 0, c);
+      //@ assert unchanged:  Unchanged{Epilogue,Here}(a, c+1, n);
+      //@ assert update:     At{Here}(a, c) == v;
+      //@ assert update:     ArrayUpdate{Epilogue,Here}(a, n, c, v);
+      //@ assert heap:       HeapCompatible(a, n, c, v);
+      //@ assert heap:       Heap(a, n);
+      //@ assert update:     MultisetUpdate{Epilogue,Here}(a, n, c, v);
+      //@ assert reorder:    MultisetParity{Epilogue,Here}(a, n, v, ac);
+      //@ assert reorder:    MultisetReorder{Pre,Here}(a, n);
     }
   }
 }

@@ -26,7 +26,6 @@ void pop_heap(value_type* a, size_type n)
         loop invariant child:      HeapLeft(p)  < n-1 ==> a[HeapLeft(p)]  <= a[c];
         loop invariant child:      HeapRight(p) < n-1 ==> a[HeapRight(p)] <= a[c];
         loop invariant unchanged:  Unchanged{LoopEntry,Here}(a, p, n);
-        loop invariant update:     a[p] == a[HeapParent(p)];
         loop invariant max:        UpperBound(a, n, a[n-1]);
         loop invariant reorder:    MultisetParity{Pre,Here}(a, n, a[p], v);
         loop invariant heap:       v < a[p];
@@ -54,6 +53,9 @@ void pop_heap(value_type* a, size_type n)
       //@ assert parent:     p <  n-1  &&  v < a[p];
       //@ assert compatible: HeapCompatible(a, n-1, p, v);
       a[p] = v;
+      //@ assert unchanged:  Unchanged{Epilogue,Here}(a, 0, p);
+      //@ assert unchanged:  Unchanged{Epilogue,Here}(a, p+1, n);
+      //@ assert update:     At{Epilogue}(a, p) != v;
       //@ assert update:     ArrayUpdate{Epilogue,Here}(a, n, p, v);
       //@ assert update:     MultisetUpdate{Epilogue,Here}(a, n, p, v);
       //@ assert reorder:    MultisetReorder{Pre,Here}(a, n);
