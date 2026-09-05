@@ -11,6 +11,5 @@
   predicate WeaklyIncreasing{L}(value_type* a, integer n) = WeaklyIncreasing{L}(a, 0, n);
 */
 
-
 #endif /* WEAKLYINCREASING_ACSL_INCLUDED */
 

@@ -8,7 +8,7 @@
 /*@
   logic integer
   FindNotEqual(value_type* a, integer m, integer n, value_type v) =
-    (n <= m) ? 
+    (n <= m) ?
      0 : ((0 <= FindNotEqual(a, m, n-1, v) < n-m-1) ?
        FindNotEqual(a, m, n-1, v) : ((a[n-1] != v) ? n-m-1 : n-m));
 

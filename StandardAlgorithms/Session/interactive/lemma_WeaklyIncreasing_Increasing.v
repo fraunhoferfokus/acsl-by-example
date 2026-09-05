@@ -536,7 +536,6 @@ Proof.
   intros L a m n Upper Lower L32 Weak.
   remember (n-m)%Z as p.
   replace n with (m + p)%Z in * by lia.
-  assert(pNN: (0 <= p)%Z) by lia.
   revert Weak.
 
   apply natlike_rec2 with (z := p); auto with zarith.

@@ -1,11 +1,11 @@
 [
   {
     "name": "remove_copy3",
-    "proved": 124,
-    "total": 124,
+    "proved": 122,
+    "total": 122,
     "percent": 100,
     "qed": 30,
-    "alt_ergo": 71,
+    "alt_ergo": 69,
     "cvc5": 1,
     "z3": 0,
     "coq": 20,

@@ -1,11 +1,11 @@
 [
   {
     "name": "is_heap_until",
-    "proved": 52,
-    "total": 52,
+    "proved": 49,
+    "total": 49,
     "percent": 100,
     "qed": 23,
-    "alt_ergo": 26,
+    "alt_ergo": 23,
     "cvc5": 0,
     "z3": 0,
     "coq": 1,

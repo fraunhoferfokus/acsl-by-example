@@ -1,24 +1,43 @@
 
 #include <algorithm>
-#include <vector>
-#include <iostream>
 #include <cassert>
+#include <cstdlib>
+#include <vector>
 
 #include "replace_copy.h"
+#include "test_data.hpp"
+
+// The destination starts out filled with a value that occurs in no test
+// array, so a copy that does nothing cannot pass.
+const value_type sentinel = -12345;
+
+
+void test_replace_copy(const std::vector<value_type>& a, value_type v, value_type w)
+{
+  const std::vector<value_type> source = a;
+  std::vector<value_type> b(a.size(), sentinel);
+  std::vector<value_type> expected(a.size(), sentinel);
+
+  const size_type written = replace_copy(a.data(), a.size(), b.data(), v, w);
+  std::replace_copy(a.begin(), a.end(), expected.begin(), v, w);
+
+  assert(written == a.size());
+  assert(b == expected);
+  assert(a == source);
+}
+
 
 int main(int, char**)
 {
-  std::vector<value_type> a{1, 2, 3, 3, 3, 7, 8};
-  std::vector<value_type> b(a.size());
-  std::vector<value_type> c(a.size());
-  const value_type old_value = 3;
-  const value_type new_value = 4;
+  for (const auto& a : test_arrays()) {
+    test_replace_copy(a, present_value(), 4);
+    test_replace_copy(a, absent_value(), 4);        // nothing is replaced
+    test_replace_copy(a, present_value(), present_value());
 
-  auto last_b = std::replace_copy(a.data(), a.data() + a.size(), b.data(), old_value, new_value);
-  auto size_c =      replace_copy(a.data(), a.size(), c.data(), old_value, new_value);
-  assert(size_c == last_b - b.data());
-  assert(b == c);
+    for (size_type i = 0; i < a.size(); ++i) {
+      test_replace_copy(a, a[i], absent_value());
+    }
+  }
 
   return EXIT_SUCCESS;
 }
-

@@ -1,0 +1,29 @@
+{
+  "frama_c": {
+    "codename": "Arsenic",
+    "version": "33.0"
+  },
+  "provers": {
+    "Alt-Ergo": {
+      "goals": 2021,
+      "version": "2.6.3"
+    },
+    "CVC5": {
+      "goals": 23,
+      "source": "/opt/homebrew/Caskroom/cvc5/1.3.4/cvc5-macOS-arm64-static/bin/cvc5 --version",
+      "version": "1.3.4",
+      "wp_version": ""
+    },
+    "Coq": {
+      "goals": 303,
+      "version": "8.20.1"
+    },
+    "Z3": {
+      "goals": 6,
+      "version": "5.1.0"
+    }
+  },
+  "reports": 99,
+  "schema": 1,
+  "why3": "1.8.2"
+}

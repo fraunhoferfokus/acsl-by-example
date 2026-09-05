@@ -642,48 +642,91 @@ Theorem wp_goal :
   (0%Z < i)%Z -> is_sint32_chunk t -> P_Heap t a i -> P_MaxElement t a i 0%Z.
 (* Why3 intros t a i h1 h2 h3. *)
 Proof.
+  (*
+    The goal is that index 0 holds a maximum of a[0..n), given that a[0..n)
+    is a heap.  Rename what Why3 hands over:
+
+      L    : memory (addr -> Z)
+      a    : base address
+      n    : length of the range
+      nPos : 0 < n
+      L32  : the memory holds sint32 values
+
+    P_Heap L a n says a[i] <= a[HeapParent i] for every 0 < i < n, and
+    P_MaxElement L a n 0 says 0 is in range and a[0] bounds a[0..n).
+  *)
   Require Import Psatz.
 
-  intros L a n Pos L32.
-  assert(Pos1:=Pos).
-  revert Pos.
+  intros L a n nPos L32.
+
+  (*
+    The induction is on n, so 0 < n has to travel with the goal; keep a copy
+    under a second name, since the reverted one is consumed by natlike_rec2.
+  *)
+  assert(nPosKept := nPos).
+  revert nPos.
   apply natlike_rec2 with (z := n); auto with zarith.
+
+  (* ------------------------------------------------------------------ *)
+  (* Base case: n = 0, which the hypothesis 0 < n excludes               *)
+  (* ------------------------------------------------------------------ *)
   {
-    intros; lia. 
+    intros zeroPos Heap.
+    lia.
   }
+
+  (* ------------------------------------------------------------------ *)
+  (* Step case: from a heap of length z to one of length z + 1           *)
+  (* ------------------------------------------------------------------ *)
   {
     intros z zNN IHz.
-    intros.
+    intros succPos Heap.
     replace (Z.succ z) with (1+z)%Z in * by lia.
-    assert(X: P_Heap L a z).
+
+    (* A heap of length z + 1 is a heap of length z. *)
+    assert(HeapPrefix: P_Heap L a z).
     {
       unfold P_Heap.
-      intros.
-      apply H; auto with zarith.
+      intros i iPos iUpper.
+      apply Heap; auto with zarith.
     }
+
     assert(zero_pos: (z = 0 \/ 0 < z)%Z) by lia.
     destruct zero_pos as [zero|pos].
+
+    (* z = 0: the range is the single cell 0, which bounds itself. *)
     {
       replace (1+z)%Z with 1%Z in * by lia.
       unfold P_MaxElement.
       split; auto with zarith.
       unfold P_UpperBound_1_.
-      intros.
+      intros i iLower iUpper.
       now replace i%Z with 0%Z by lia.
     }
+
+    (*
+      0 < z: every index below z is covered by the induction hypothesis, and
+      the new index z reaches a[0] through its parent.
+    *)
     {
-      assert(Y: P_MaxElement L a z 0) by (apply IHz; auto with zarith).
       unfold P_MaxElement.
       split; auto with zarith.
       unfold P_UpperBound_1_.
-      intros.
+      intros i iLower iUpper.
       assert(less_equal: (i < z \/ i = z)%Z) by lia.
       destruct less_equal as [less|equal].
       - apply IHz; auto with zarith.
       - rewrite equal in *.
-        assert(A: (L(shift a z) <= L(shift a (L_HeapParent  z)))%Z) by
-          (apply H; auto with zarith).
-        assert(B: (L(shift a (L_HeapParent  z)) <= L(shift a 0))%Z).
+
+        (* a[z] <= a[parent z] is the heap property at z itself. *)
+        assert(ChildLeParent: (L(shift a z) <= L(shift a (L_HeapParent z)))%Z) by
+          (apply Heap; auto with zarith).
+
+        (*
+          a[parent z] <= a[0] is the induction hypothesis, which applies
+          because the parent of z lies strictly below z.
+        *)
+        assert(ParentLeRoot: (L(shift a (L_HeapParent z)) <= L(shift a 0))%Z).
         {
           apply IHz; auto with zarith.
           - unfold L_HeapParent.
@@ -695,7 +738,7 @@ Proof.
             apply int.ComputerDivision.Div_bound; lia.
         }
         auto with zarith.
-     }
+    }
   }
 Qed.
 

@@ -13,6 +13,12 @@
       Increasing{L}(a, l, r)  ==>
       Increasing{L}(a+l, r-l);
 
+  lemma Increasing_Unshift{L}:
+    \forall value_type *a, integer p, q, r;
+      0 <= p                     ==>  0 <= q <= r  ==>
+      Increasing{L}(a+p, q, r)   ==>
+      Increasing{L}(a, p+q, p+r);
+
   lemma Increasing_Equal{K,L}:
     \forall value_type* a, integer m, n, p;
       Increasing{K}(a, m, n)    ==>

@@ -39,5 +39,12 @@ int main(int, char**)
   lower_bound_test(a, 14, 7);
   lower_bound_test(a, 17, 9);
 
+  // The degenerate arrays the contract admits.
+  lower_bound_test({}, 3, 0);
+  lower_bound_test({3}, 2, 0);
+  lower_bound_test({3}, 3, 0);
+  lower_bound_test({3}, 4, 1);
+  lower_bound_test({3, 3, 3}, 3, 0);
+
   return EXIT_SUCCESS;
 }

@@ -3,6 +3,7 @@ heap_child
 is_heap_until
 is_heap
 push_heap
+heap_sift_down
 pop_heap
 make_heap
 sort_heap

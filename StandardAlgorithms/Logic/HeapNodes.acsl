@@ -11,7 +11,7 @@
 
   logic integer HeapParent(integer i) = (i-1) / 2;
 
-  lemma HeapParent_Zero{L}: HeapParent(0) == 0;
+  lemma HeapParent_Zero: HeapParent(0) == 0;
 
   lemma Heap_ParentLeft:
     \forall integer p; 0 <= p  ==>  HeapParent(HeapLeft(p)) == p;

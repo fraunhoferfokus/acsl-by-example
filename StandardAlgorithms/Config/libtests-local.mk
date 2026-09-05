@@ -69,13 +69,14 @@ $(LIB_NAME): $(OBJ)
 	$(CXX) $(LDFLAGS) -o $@ $< $(LIB_NAME) $(LDLIBS)
 
 # Run tests in EXAMPLES order.
+# No blank line of its own: separating one directory from the next is the
+# dispatch loop's job (Config/banner.mk).
 check-local: $(TEST_BIN)
 	@set -e; \
 	for t in $(TEST_BIN); do \
 		printf "\tRunning %s\n" "$$t"; \
 		./$$t; \
 	done
-	printf "\n"
 
 # Auto-generated dependency files.
 -include $(DEP) $(TEST_DEP)

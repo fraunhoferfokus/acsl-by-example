@@ -13,7 +13,7 @@ size_type_pair equal_range2(const value_type* a, size_type n, value_type v)
   size_type last   = n;
 
   /*@
-    loop invariant bounds: 0 <= first <= last <= n;
+    loop invariant bound:  0 <= first <= last <= n;
     loop invariant left:   StrictUpperBound(a, 0, first, v);
     loop invariant right:  StrictLowerBound(a, last, n, v);
     loop assigns first, last, middle;

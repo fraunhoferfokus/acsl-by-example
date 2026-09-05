@@ -1,0 +1,18 @@
+
+#ifndef MULTISETUNIONTOREORDER_ACSL_INCLUDED
+#define MULTISETUNIONTOREORDER_ACSL_INCLUDED
+
+#include "MultisetUnionLemmas.acsl"
+#include "MultisetReorder.acsl"
+
+/*@
+  lemma MultisetUnion_Reorder{K,L}:
+    \forall value_type *a, *b, integer m, n;
+      0 <= m <= n                          ==>
+      MultisetUnion{K}(a, m, a+m, n-m, b)  ==>
+      Equal{K,L}(b, n, a)                  ==>
+      MultisetReorder{K,L}(a, 0, n);
+*/
+
+#endif /* MULTISETUNIONTOREORDER_ACSL_INCLUDED */
+

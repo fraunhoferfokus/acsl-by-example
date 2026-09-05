@@ -6,7 +6,7 @@
 #include "MultisetReorder.acsl"
 
 /*@
-   requires   bounds:   0 < n;
+   requires   nonempty: 0 < n;
    requires   valid:    \valid(a + (0..n-1));
    requires   heap:     Heap(a, n);
 

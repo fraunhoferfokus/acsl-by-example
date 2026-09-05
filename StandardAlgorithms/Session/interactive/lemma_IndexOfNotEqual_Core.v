@@ -1038,17 +1038,59 @@ Theorem wp_goal :
   (x < i1)%Z.
 (* Why3 intros t a i i1 i2 x x1 h1 h2 h3 h4 h5 h6. *)
 Proof.
+  (*
+    The goal comes from the ACSL lemma IndexOfNotEqual_Core.  Why3 binds two
+    abbreviations ahead of the hypotheses, so introduce and substitute them
+    away first, then rename what is left to the vocabulary of the lemma:
+
+      L   : memory (addr -> Z)
+      a   : base address
+      k   : rank among the elements of a[0..n) that differ from v
+      n   : upper bound of the range
+      v   : value to compare against
+
+      nPos    : 0 < n
+      kLower  : 0 <= k
+      kUpper  : k < CountNotEqual(a, n, v)
+      L32     : the memory holds sint32 values
+      V32     : v is an sint32
+      W32     : a[IndexOfNotEqual(a, n, v, k)] is an sint32
+
+    Throughout, p_j abbreviates IndexOfNotEqual(a, n, v, j).
+  *)
   Require Import Psatz.
   intros L a k n v.
   intros i a_i.
   subst i a_i.
   intros nPos kLower kUpper L32 V32 W32.
 
+  (*
+    The three conjuncts -- a[p_k] <> v, the counting identity, and p_k < n --
+    are proved together, by induction on the rank k.  The joint statement is
+    what carries the induction: the step case consumes all three at rank z,
+    each at a different place, so an induction that carried only one of them
+    would have too weak a hypothesis.  The uses are named where they occur.
+
+    kUpper and W32 mention k, so they have to travel with the goal.
+    natlike_rec2 supplies the induction 0 -> z -> z + 1 over Z; the sibling
+    scripts lemma_IndexOfNotEqual_Lower.v and lemma_IndexOfNotEqual_Unchanged.v
+    use natlike_rec3 instead.
+  *)
   revert kUpper W32.
 
   apply natlike_rec2 with (z:=k); auto with zarith.
+
+  (* ------------------------------------------------------------------ *)
+  (* Base case: k = 0                                                   *)
+  (* ------------------------------------------------------------------ *)
   {
-    intros.
+    intros kUpper W32.
+
+    (*
+      Unfold p_0.  IndexOfNotEqual is defined from its predecessor, and
+      p_(-1) = -1, so p_0 is the first index at or after 0 whose value
+      differs from v.
+    *)
     rewrite <- Q_IndexOfNotEqual_Next; auto with zarith.
     replace (- (1) + 0)%Z with (-1)%Z by lia.
     rewrite Q_IndexOfNotEqual_Left; auto with zarith.
@@ -1058,115 +1100,167 @@ Proof.
     {
       split.
       {
+        (* a[p_0] <> v: FindNotEqual stops on an element different from v. *)
         apply Q_FindNotEqual_ResultNotEqual; auto with zarith.
-         - now apply Q_FindNotEqual_Lower.
-         - apply Q_CountNotEqual_FindNotEqual; auto with zarith.
+        { now apply Q_FindNotEqual_Lower. }
+        { apply Q_CountNotEqual_FindNotEqual; auto with zarith. }
       }
-      assert(X: (0 + L_CountNotEqual_1_ L a 0 (0 + L_FindNotEqual_1_ L a 0 n v) v = 0)%Z).
+
+      (*
+        The counting identity at rank 0.  Every element before p_0 equals v,
+        so that prefix contributes nothing and counting from p_0 is the same
+        as counting from 0.
+      *)
+      assert(NoneBeforeFirst:
+               (0 + L_CountNotEqual_1_ L a 0 (0 + L_FindNotEqual_1_ L a 0 n v) v = 0)%Z).
       {
         rewrite Q_CountNotEqual_Zero; auto with zarith.
       }
       symmetry.
       rewrite <- Q_CountNotEqual_Union
             with (m:=(0 + L_FindNotEqual_1_ L a 0 n v)%Z); auto with zarith.
-          * apply Q_FindNotEqual_Lower; auto with zarith.
-          * apply Q_FindNotEqual_Upper; auto with zarith.
+      { apply Q_FindNotEqual_Lower; auto with zarith. }
+      { apply Q_FindNotEqual_Upper; auto with zarith. }
     }
+
+    (* p_0 < n, because a[0..n) holds at least one element different from v. *)
     apply Q_CountNotEqual_FindNotEqual; auto with zarith.
   }
+
+  (* ------------------------------------------------------------------ *)
+  (* Step case: from rank z to rank z + 1                               *)
+  (* ------------------------------------------------------------------ *)
   {
     intros z zNN IHz.
-    intros.
+    intros kUpper W32.
     replace (Z.succ z) with (1+z)%Z in * by lia.
-    assert(X: (z < L_CountNotEqual_1_ L a 0 n v)%Z) by lia.
-    apply IHz in X; auto with zarith.
-    destruct X as [[A1 A2] A3].
 
-    assert(B: (0 <= L_IndexOfNotEqual L a n v z)%Z).
+    (*
+      Rank z is in range as well, so the induction hypothesis applies.  Its
+      three conjuncts are used below as follows:
+
+        IH_NotEqual  a[p_z] <> v   side condition of Q_CountNotEqual_Hit,
+                                   where the counting identity is carried
+                                   from rank z to rank z + 1
+        IH_Count     the identity  with kUpper it yields MoreAfterIdx, hence
+                                   that a next element exists at all
+        IH_Upper     p_z < n       side condition of Q_CountNotEqual_Union
+                                   inside SplitAfterIdx
+    *)
+    assert(zInRange: (z < L_CountNotEqual_1_ L a 0 n v)%Z) by lia.
+    apply IHz in zInRange; auto with zarith.
+    destruct zInRange as [[IH_NotEqual IH_Count] IH_Upper].
+
+    assert(IdxLower: (0 <= L_IndexOfNotEqual L a n v z)%Z).
     {
       apply Q_IndexOfNotEqual_Lower; auto with zarith.
     }
 
-    assert(C: (1 < L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v)%Z) by lia.
-
-    assert(D: (0 < L_CountNotEqual_1_ L a (1 + L_IndexOfNotEqual L a n v z) n v)%Z).
+    (*
+      Strictly after p_z there is still an element different from v, which is
+      what lets p_(z+1) be formed at all.  Split the count at p_z + 1: the
+      single cell p_z contributes at most one, while IH_Count and kUpper make
+      the whole tail from p_z contribute more than one.
+    *)
+    assert(MoreAfterIdx:
+             (0 < L_CountNotEqual_1_ L a (1 + L_IndexOfNotEqual L a n v z) n v)%Z).
     {
-      assert(Y: (L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v =
-                  L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) (1+ L_IndexOfNotEqual L a n v z) v +
-                  L_CountNotEqual_1_ L a (1+ L_IndexOfNotEqual L a n v z) n v)%Z).
+      assert(SplitAfterIdx:
+               (L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v =
+                 L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) (1+ L_IndexOfNotEqual L a n v z) v +
+                 L_CountNotEqual_1_ L a (1+ L_IndexOfNotEqual L a n v z) n v)%Z).
       {
-        rewrite <- Q_CountNotEqual_Union with 
+        rewrite <- Q_CountNotEqual_Union with
           (m := (1+ L_IndexOfNotEqual L a n v z)%Z); auto with zarith.
       }
       enough(0 <= L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) (1 + L_IndexOfNotEqual L a n v z) v <= 1)%Z by lia.
       split.
-      - apply Q_CountNotEqual_Lower; auto with zarith.
-      - enough (L_IndexOfNotEqual L a n v z + 
-                L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) (1 + L_IndexOfNotEqual L a n v z) v <= 
+      { apply Q_CountNotEqual_Lower; auto with zarith. }
+      {
+        enough (L_IndexOfNotEqual L a n v z +
+                L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) (1 + L_IndexOfNotEqual L a n v z) v <=
                 1 + L_IndexOfNotEqual L a n v z)%Z by lia.
         apply Q_CountNotEqual_Upper; auto with zarith.
+      }
     }
 
     split.
     {
       split.
       {
+        (* a[p_(z+1)] <> v, again because FindNotEqual stops on such an element. *)
         rewrite <- Q_IndexOfNotEqual_Next; auto with zarith.
         replace (- (1) + (1 + z))%Z with z by lia.
         apply Q_FindNotEqual_ResultNotEqual; auto with zarith.
-        - now apply Q_FindNotEqual_Lower.
-        - apply Q_CountNotEqual_FindNotEqual; auto with zarith.
-
-        assert(E: (L_IndexOfNotEqual L a n v z + L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v <= n)%Z).
-        + apply Q_CountNotEqual_Upper; auto with zarith.
-        + lia.
+        { now apply Q_FindNotEqual_Lower. }
+        {
+          apply Q_CountNotEqual_FindNotEqual; auto with zarith.
+          assert(IdxCountFits:
+                   (L_IndexOfNotEqual L a n v z +
+                    L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v <= n)%Z).
+          { apply Q_CountNotEqual_Upper; auto with zarith. }
+          lia.
+        }
       }
 
-      remember (L_IndexOfNotEqual L a n v z) as x.
+      (*
+        The counting identity at rank z + 1.  Write p for p_z and f for the
+        offset that FindNotEqual adds to p + 1, so that p_(z+1) = p + 1 + f.
+      *)
+      remember (L_IndexOfNotEqual L a n v z) as p.
       symmetry.
       rewrite <- Q_IndexOfNotEqual_Next; auto with zarith.
       replace (- (1) + (1 + z))%Z with z by lia.
-      rewrite <- Heqx.
-      symmetry in A2.
+      rewrite <- Heqp.
+      symmetry in IH_Count.
 
-      remember (L_FindNotEqual_1_ L a (1 + x) n v) as y.
+      remember (L_FindNotEqual_1_ L a (1 + p) n v) as f.
 
-      assert(P: (L_CountNotEqual_1_ L a 0 n v = 
-                  L_CountNotEqual_1_ L a 0 (1+x) v + 
-                  L_CountNotEqual_1_ L a (1 + x + L_FindNotEqual_1_ L a (1 + x) n v) n v)%Z).
+      (* Everything below p + 1, plus everything from p_(z+1) on, is the whole. *)
+      assert(SplitAtNext:
+               (L_CountNotEqual_1_ L a 0 n v =
+                 L_CountNotEqual_1_ L a 0 (1+p) v +
+                 L_CountNotEqual_1_ L a (1 + p + L_FindNotEqual_1_ L a (1 + p) n v) n v)%Z).
       {
-        rewrite <- Q_CountNotEqual_Decrement with (m := (1+x)%Z); auto with zarith.
-        rewrite Heqx.
-        assert(E: (L_IndexOfNotEqual L a n v z + L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v <= n)%Z).
-        * apply Q_CountNotEqual_Upper; auto with zarith.
-        * subst x; lia.
+        rewrite <- Q_CountNotEqual_Decrement with (m := (1+p)%Z); auto with zarith.
+        rewrite Heqp.
+        assert(IdxCountFits:
+                 (L_IndexOfNotEqual L a n v z +
+                  L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v <= n)%Z).
+        { apply Q_CountNotEqual_Upper; auto with zarith. }
+        subst p; lia.
       }
 
-      rewrite <- Heqy in P.
-      enough(L_CountNotEqual_1_ L a 0 (1 + x) v = 1 + z)%Z by lia.
-      assert(Q: (L_CountNotEqual_1_ L a 0 n v = 
-                 L_CountNotEqual_1_ L a 0 x v + L_CountNotEqual_1_ L a x n v)%Z) by
-      (rewrite <- Q_CountNotEqual_Union with (m:=x); auto with zarith).
+      rewrite <- Heqf in SplitAtNext.
+      enough(L_CountNotEqual_1_ L a 0 (1 + p) v = 1 + z)%Z by lia.
+      assert(SplitAtIdx:
+               (L_CountNotEqual_1_ L a 0 n v =
+                 L_CountNotEqual_1_ L a 0 p v + L_CountNotEqual_1_ L a p n v)%Z) by
+      (rewrite <- Q_CountNotEqual_Union with (m:=p); auto with zarith).
 
-      assert(R: (L_CountNotEqual_1_ L a 0 x v = z)%Z) by lia.
-      rewrite <- R.
+      (* By IH_Count, exactly z elements different from v lie below p. *)
+      assert(CountBeforeIdx: (L_CountNotEqual_1_ L a 0 p v = z)%Z) by lia.
+      rewrite <- CountBeforeIdx.
       symmetry.
-      assert(S: (L_CountNotEqual_1_ L a 0 (1 + x) v = 
-                 L_CountNotEqual_1_ L a 0 x v + L_CountNotEqual_1_ L a x (1+x) v)%Z) by 
-         (rewrite <- Q_CountNotEqual_Union with (m:=x); auto with zarith).
-      enough (L_CountNotEqual_1_ L a x (1+x) v = 1)%Z by lia.
+      assert(SplitAtIdxCell:
+               (L_CountNotEqual_1_ L a 0 (1 + p) v =
+                 L_CountNotEqual_1_ L a 0 p v + L_CountNotEqual_1_ L a p (1+p) v)%Z) by
+         (rewrite <- Q_CountNotEqual_Union with (m:=p); auto with zarith).
+
+      (* The single cell p contributes exactly one, since a[p] <> v by IH_NotEqual. *)
+      enough (L_CountNotEqual_1_ L a p (1+p) v = 1)%Z by lia.
       rewrite <- Q_CountNotEqual_Hit; auto with zarith.
       rewrite Q_CountNotEqual_Empty; auto with zarith.
     }
 
+    (* p_(z+1) < n *)
     rewrite <- Q_IndexOfNotEqual_Next; auto with zarith.
     replace (- (1) + (1 + z))%Z with z by lia.
     apply Q_CountNotEqual_FindNotEqual; auto with zarith.
-    assert(E: (L_IndexOfNotEqual L a n v z + L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v <= n)%Z).
-    {
-        apply Q_CountNotEqual_Upper; auto with zarith.
-    }
-      lia.
+    assert(IdxCountFits:
+             (L_IndexOfNotEqual L a n v z +
+              L_CountNotEqual_1_ L a (L_IndexOfNotEqual L a n v z) n v <= n)%Z).
+    { apply Q_CountNotEqual_Upper; auto with zarith. }
+    lia.
   }
 Qed.
-

@@ -4,6 +4,12 @@
 DIRLIST ?= subdirs.list
 SUBDIRS ?= $(strip $(shell test -f "$(DIRLIST)" && cat "$(DIRLIST)"))
 
+# Only the top-level Makefile includes this file, and it has no CONFIG_DIR of
+# its own -- it spells every include relative to where it stands.
+CONFIG_DIR ?= Config
+
+  include $(CONFIG_DIR)/banner.mk
+
 # Targets forwarded into every subdirectory.
 #
 # "clean-cache" is deliberately absent: the WP cache is shared by the whole
@@ -13,7 +19,7 @@ SUBDIRS ?= $(strip $(shell test -f "$(DIRLIST)" && cat "$(DIRLIST)"))
 # the top level empties it in one step instead of once per subdirectory.
 # "clean-slate" must stay absent for a stronger reason: outside the top level it
 # is a rule that calls back up here, so dispatching it would loop.
-DISPATCH_TARGETS ?= lib tests check format results reports \
+DISPATCH_TARGETS ?= lib tests check format results reports smoke \
                     clean clean-everything \
                     clean-tests clean-lib clean-proofs clean-format
 
@@ -22,7 +28,7 @@ DISPATCH_TARGETS ?= lib tests check format results reports \
 define _dispatch_to_subdirs
 set -e; \
 for d in $(SUBDIRS); do \
-  printf " -- %s  %s -- \n" "$$d" "$(1)"; \
+  $(call _dir_heading,$$d,$(1)); \
   $(MAKE) -C "$$d" "$(1)"; \
 done
 endef
@@ -37,4 +43,3 @@ $(SUBDIRS):
 
 # Silence "No rule to make target" for directory-selection usage.
 .PHONY: $(MAKECMDGOALS)
-

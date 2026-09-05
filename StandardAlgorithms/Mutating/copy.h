@@ -15,7 +15,7 @@
 
   ensures    equal:  Equal{Old,Here}(a, n, b);
 */
-void copy(const value_type* a, const size_type n, value_type* b);
+void copy(const value_type* a, size_type n, value_type* b);
 
 #endif /* COPY_H_INCLUDED */
 

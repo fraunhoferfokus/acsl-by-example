@@ -1,0 +1,15 @@
+[
+  {
+    "name": "merge_sort",
+    "proved": 110,
+    "total": 110,
+    "percent": 100,
+    "qed": 25,
+    "alt_ergo": 69,
+    "cvc5": 0,
+    "z3": 1,
+    "coq": 15,
+    "term": 0,
+    "unreach": 0
+  }
+]

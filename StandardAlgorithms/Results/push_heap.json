@@ -1,14 +1,14 @@
 [
   {
     "name": "push_heap",
-    "proved": 158,
-    "total": 158,
+    "proved": 161,
+    "total": 161,
     "percent": 100,
     "qed": 50,
-    "alt_ergo": 96,
+    "alt_ergo": 98,
     "cvc5": 1,
     "z3": 0,
-    "coq": 11,
+    "coq": 12,
     "term": 0,
     "unreach": 0
   }

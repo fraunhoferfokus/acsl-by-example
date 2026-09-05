@@ -8,7 +8,7 @@ size_type search(const value_type* a, size_type n,
   if (p <= n) {
     /*@
       loop invariant bound:     i <= n-p+1;
-      loop invariant not_found: !HasSubRange(a, p+i-1, b, p);
+      loop invariant no_match:  !HasSubRange(a, p+i-1, b, p);
       loop assigns i;
       loop variant n-i;
     */

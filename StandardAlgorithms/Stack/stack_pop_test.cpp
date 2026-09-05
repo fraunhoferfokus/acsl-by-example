@@ -1,22 +1,41 @@
 
-#include <iostream>
 #include <cassert>
+#include <cstdlib>
+#include <stack>
+#include <vector>
 
 #include "stack_pop.h"
-#include "stack_init.h"
-#include "stack_push.h"
-#include "stack_empty.h"
+#include "stack_test.hpp"
 
+// Every pop must remove the top and uncover the one below it, all the way
+// down to the empty stack.
 int main(int, char**)
 {
-  Stack a;
-  value_type storage[4];
-  stack_init(&a, storage, 4);
+  for (const size_type capacity : test_capacities()) {
+    std::vector<value_type> storage(capacity, -1);
+    Stack s;
+    stack_init(&s, storage.data(), capacity);
 
-  stack_push(&a, 14);
-  stack_pop(&a);
-  assert(stack_empty(&a));
+    std::stack<value_type> expected;
+
+    for (size_type i = 1; i <= capacity; ++i) {
+      const value_type v = static_cast<value_type>(10 * i);
+      stack_push(&s, v);
+      expected.push(v);
+    }
+
+    while (!expected.empty()) {
+      assert(stack_top(&s) == expected.top());
+      stack_pop(&s);
+      expected.pop();
+
+      assert(stack_size(&s) == expected.size());
+      assert(stack_empty(&s) == expected.empty());
+      assert(!stack_full(&s) || capacity == 0);
+    }
+
+    assert(stack_empty(&s));
+  }
 
   return EXIT_SUCCESS;
 }
-

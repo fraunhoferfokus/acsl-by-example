@@ -1,3 +1,4 @@
+is_sorted_until
 is_sorted
 partial_sort
 bubble_sort
@@ -5,3 +6,5 @@ selection_sort
 insertion_sort
 heap_sort
 merge
+inplace_merge
+merge_sort

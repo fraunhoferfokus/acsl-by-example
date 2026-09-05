@@ -1,14 +1,14 @@
 [
   {
     "name": "selection_sort",
-    "proved": 86,
-    "total": 86,
+    "proved": 91,
+    "total": 91,
     "percent": 100,
     "qed": 33,
-    "alt_ergo": 38,
+    "alt_ergo": 41,
     "cvc5": 0,
     "z3": 0,
-    "coq": 15,
+    "coq": 17,
     "term": 0,
     "unreach": 0
   }

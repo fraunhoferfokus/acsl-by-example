@@ -734,7 +734,6 @@ Proof.
   revert Count.
 
   remember (n - m)%Z as p.
-  assert (Pos: (0 < p)%Z) by lia.
 
   replace n with (m + p)%Z in * by lia.
   apply natlike_rec3 with (z := p); auto with zarith.

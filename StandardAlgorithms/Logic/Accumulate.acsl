@@ -3,42 +3,41 @@
 #define ACCUMULATE_ACSL_INCLUDED
 
 #include "UnchangedLemmas.acsl"
-#include "limits.h"
 
 /*@
-    logic integer
-    Accumulate{L}(value_type* a, integer n, integer init) =
-      n <= 0 ? init : Accumulate(a, n-1, init) + a[n-1];
+  logic integer
+  Accumulate{L}(value_type* a, integer n, integer init) =
+    n <= 0 ? init : Accumulate(a, n-1, init) + a[n-1];
 
-    predicate AccumulateBounds{L}(value_type* a, integer n, value_type init) =
-      \forall integer i; 0 <= i <= n  ==>
-        VALUE_TYPE_MIN <= Accumulate(a, i, init) <= VALUE_TYPE_MAX;
+  predicate AccumulateBounds{L}(value_type* a, integer n, value_type init) =
+    \forall integer i; 0 <= i <= n  ==>
+      VALUE_TYPE_MIN <= Accumulate(a, i, init) <= VALUE_TYPE_MAX;
 
-    lemma Accumulate_Init:
-      \forall value_type *a, init, integer n;
-         n <= 0  ==>  Accumulate(a, n, init) == init;
+  lemma Accumulate_Init:
+    \forall value_type *a, init, integer n;
+      n <= 0  ==>  Accumulate(a, n, init) == init;
 
-    lemma Accumulate_Next{L}:
-      \forall value_type* a, init, integer n;
-        0 <= n  ==>
-        Accumulate(a, n+1, init) == Accumulate(a, n, init) + a[n];
+  lemma Accumulate_Next{L}:
+    \forall value_type* a, init, integer n;
+      0 <= n  ==>
+      Accumulate(a, n+1, init) == Accumulate(a, n, init) + a[n];
 
-    lemma Accumulate_Unchanged{K,L}:
-      \forall value_type *a, init, integer n;
-        Unchanged{K,L}(a, n)  ==>
-        Accumulate{K}(a, n, init) == Accumulate{L}(a, n, init);
+  lemma Accumulate_Unchanged{K,L}:
+    \forall value_type *a, init, integer n;
+      Unchanged{K,L}(a, n)  ==>
+      Accumulate{K}(a, n, init) == Accumulate{L}(a, n, init);
 
-    lemma Accumulate_Unchanged_Shrink{K,L}:
-      \forall value_type *a, init, integer m, n;
-        0 <= m <= n            ==>
-        Unchanged{K, L}(a, n)  ==>
-        Accumulate{K}(a, m, init) == Accumulate{L}(a, m, init);
+  lemma Accumulate_Unchanged_Shrink{K,L}:
+    \forall value_type *a, init, integer m, n;
+      0 <= m <= n           ==>
+      Unchanged{K,L}(a, n)  ==>
+      Accumulate{K}(a, m, init) == Accumulate{L}(a, m, init);
 
-    lemma AccumulateBounds_Unchanged{K,L}:
-      \forall value_type *a, init, integer n;
-        Unchanged{K, L}(a, n)           ==>
-        AccumulateBounds{K}(a, n, init) ==>
-        AccumulateBounds{L}(a, n, init);
+  lemma AccumulateBounds_Unchanged{K,L}:
+    \forall value_type *a, init, integer n;
+      Unchanged{K,L}(a, n)             ==>
+      AccumulateBounds{K}(a, n, init)  ==>
+      AccumulateBounds{L}(a, n, init);
 */
 
 #endif /* ACCUMULATE_ACSL_INCLUDED */

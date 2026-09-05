@@ -1104,16 +1104,6 @@ Proof.
     replace (- (1) + z)%Z with (z - 1)%Z by lia.
 
     (*
-      By the induction hypothesis, the previous IndexOfNotEqual
-      value is already known to be non-negative.
-    *)
-    assert (Lower1 :
-      (0 <= L_IndexOfNotEqual L a n v (z - 1))%Z).
-    {
-      apply IHz; auto with zarith.
-    }
-
-    (*
       What remains is to show that FindNotEqual is also non-negative.
       This is a direct application of Q_FindNotEqual_Lower.
     *)

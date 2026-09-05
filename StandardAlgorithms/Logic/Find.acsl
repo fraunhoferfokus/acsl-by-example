@@ -7,7 +7,7 @@
 /*@
   logic integer
   Find(value_type* a, integer m, integer n, value_type v) =
-    (n <= m) ? 
+    (n <= m) ?
      0 : ((0 <= Find(a, m, n-1, v) < n-m-1) ?
        Find(a, m, n-1, v) : ((a[n-1] == v) ? n-m-1 : n-m));
 
@@ -69,9 +69,9 @@
 
   lemma Find_SomeEqual:
     \forall value_type *a, v, integer k, m, n;
-      m <= k < n             ==> 
+      m <= k < n             ==>
       a[k] == v              ==>
-      NoneEqual(a, m, k, v)  ==> 
+      NoneEqual(a, m, k, v)  ==>
       Find(a, m, n, v) == k-m;
 
   lemma Find_ResultNoneEqual:

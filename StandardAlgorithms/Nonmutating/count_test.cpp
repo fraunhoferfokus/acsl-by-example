@@ -1,18 +1,31 @@
 
 #include <algorithm>
-#include <vector>
-#include <iostream>
 #include <cassert>
+#include <cstdlib>
+#include <vector>
 
 #include "count.h"
+#include "test_data.hpp"
 
-int main(int, char** )
+void test_count(const std::vector<value_type>& a, value_type v)
 {
-  std::vector<value_type> a{1, 2, 3, 3, 3, 7, 8};
-  value_type count_value = 3;
-  auto c1 = std::count(a.begin(), a.end(), count_value);
-  auto c2 = count(a.data(), a.size(), count_value);
-  assert(c1 == c2);
+  const auto expected = std::count(a.begin(), a.end(), v);
+
+  assert(count(a.data(), a.size(), v) == static_cast<size_type>(expected));
+}
+
+
+int main(int, char**)
+{
+  for (const auto& a : test_arrays()) {
+    std::vector<value_type> values = a;
+    values.push_back(present_value());
+    values.push_back(absent_value());
+
+    for (const value_type v : values) {
+      test_count(a, v);
+    }
+  }
 
   return EXIT_SUCCESS;
 }

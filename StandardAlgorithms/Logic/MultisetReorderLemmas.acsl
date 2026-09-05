@@ -1,0 +1,18 @@
+
+#ifndef MULTISETREORDERLEMMAS_ACSL_INCLUDED
+#define MULTISETREORDERLEMMAS_ACSL_INCLUDED
+
+#include "MultisetReorder.acsl"
+#include "CountFind.acsl"
+
+/*@
+  lemma MultisetReorder_SomeEqual{K,L}:
+    \forall value_type *a, integer n, i;
+      0 < n                       ==>
+      0 <= i < n                  ==>
+      MultisetReorder{K,L}(a, n)  ==>
+      SomeEqual{K}(a, n, \at(a[i],L));
+*/
+
+#endif /* MULTISETREORDERLEMMAS_ACSL_INCLUDED */
+

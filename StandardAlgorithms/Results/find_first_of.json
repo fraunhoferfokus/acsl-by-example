@@ -1,11 +1,11 @@
 [
   {
     "name": "find_first_of",
-    "proved": 48,
-    "total": 48,
+    "proved": 47,
+    "total": 47,
     "percent": 100,
     "qed": 38,
-    "alt_ergo": 10,
+    "alt_ergo": 9,
     "cvc5": 0,
     "z3": 0,
     "coq": 0,

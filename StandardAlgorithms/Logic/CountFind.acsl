@@ -14,5 +14,5 @@
       SomeEqual(a, m, n, v);
 */
 
-#endif /* COUNTFIND_H_INCLUDED */
+#endif /* COUNTFIND_ACSL_INCLUDED */
 

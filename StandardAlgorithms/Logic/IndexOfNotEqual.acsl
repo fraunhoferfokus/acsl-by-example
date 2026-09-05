@@ -1,6 +1,6 @@
 
-#ifndef INDEXOFNOTEQAUL_ACSL_INCLUDED
-#define INDEXOFNOTEQAUL_ACSL_INCLUDED
+#ifndef INDEXOFNOTEQUAL_ACSL_INCLUDED
+#define INDEXOFNOTEQUAL_ACSL_INCLUDED
 
 #include "CountFindNotEqual.acsl"
 
@@ -35,7 +35,7 @@
     \forall value_type *a, v, integer n, k;
       \let x = IndexOfNotEqual(a, n, v, k-1) + 1;
       0 <= n                           ==>
-      0 <= k < CountNotEqual(a, n, v)  ==> 
+      0 <= k < CountNotEqual(a, n, v)  ==>
       IndexOfNotEqual(a, n, v, k) == x + FindNotEqual(a, x, n, v);
 
   lemma IndexOfNotEqual_Lower:
@@ -92,5 +92,5 @@
       IndexOfNotEqual{K}(a, n, v, k) == IndexOfNotEqual{L}(a, n, v, k);
 */
 
-#endif /* INDEXOFNOTEQAUL_H_INCLUDED */
+#endif /* INDEXOFNOTEQUAL_ACSL_INCLUDED */
 

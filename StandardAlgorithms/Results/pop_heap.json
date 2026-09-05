@@ -1,14 +1,14 @@
 [
   {
     "name": "pop_heap",
-    "proved": 188,
-    "total": 188,
+    "proved": 104,
+    "total": 104,
     "percent": 100,
-    "qed": 68,
-    "alt_ergo": 107,
-    "cvc5": 2,
+    "qed": 16,
+    "alt_ergo": 69,
+    "cvc5": 0,
     "z3": 0,
-    "coq": 11,
+    "coq": 19,
     "term": 0,
     "unreach": 0
   }

@@ -15,7 +15,7 @@ static long my_lrand48(unsigned short* seed)
                              | (unsigned long long)seed[1] << 16
                              | (unsigned long long)seed[2];
   state = (0x5deece66dull * state + 0xbull) % (1ull << 48);
-  //@ assert lower: state < (1ull << 48);
+  //@ assert upper: state < (1ull << 48);
   long result = state / (1ull << 17);
   //@ assert lower: 0 <= result;
   seed[0u] = state >> 32 & 0xffff;

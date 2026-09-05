@@ -20,6 +20,7 @@
 void partial_sum_inv(value_type* a, size_type n, value_type* b)
 {
   partial_sum(a, n, b);
+  //@ assert difference: AdjacentDifference(b, n, a);
   adjacent_difference(b, n, a);
 }
 

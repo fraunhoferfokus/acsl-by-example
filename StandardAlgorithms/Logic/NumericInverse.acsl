@@ -5,6 +5,7 @@
 
 #include "AdjacentDifference.acsl"
 #include "PartialSum.acsl"
+#include "DefaultBounds.acsl"
 
 /*@
   lemma PartialSum_Inverse:

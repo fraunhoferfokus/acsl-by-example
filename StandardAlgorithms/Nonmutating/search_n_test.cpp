@@ -28,6 +28,10 @@ int main(int, char** )
   // search for too large range
   test(a, 4, 20);
 
+  // the empty array, with an empty and a non-empty pattern
+  test(std::vector<value_type>(), 4, 0);
+  test(std::vector<value_type>(), 4, 1);
+
   return EXIT_SUCCESS;
 }
 

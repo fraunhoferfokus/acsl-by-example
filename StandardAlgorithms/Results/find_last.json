@@ -1,11 +1,11 @@
 [
   {
     "name": "find_last",
-    "proved": 40,
-    "total": 40,
+    "proved": 36,
+    "total": 36,
     "percent": 100,
-    "qed": 23,
-    "alt_ergo": 15,
+    "qed": 20,
+    "alt_ergo": 14,
     "cvc5": 0,
     "z3": 0,
     "coq": 0,

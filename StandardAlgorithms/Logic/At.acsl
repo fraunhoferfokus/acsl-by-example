@@ -2,6 +2,8 @@
 #ifndef AT_ACSL_INCLUDED
 #define AT_ACSL_INCLUDED
 
+#include "typedefs.h"
+
 /*@
   logic value_type At{L}(value_type* x, integer i) = \at(x[i],L);
 */

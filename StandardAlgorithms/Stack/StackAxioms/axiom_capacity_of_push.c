@@ -6,7 +6,7 @@
   requires   valid:     StackValid(s);
   requires   not_full:  !StackFull(s);
 
-  ensures    capacity:  \result == \old(StackCapacity(s));
+  ensures    capacity:  \result == StackCapacity{Old}(s);
   ensures    valid:     StackValid(s);
 */
 size_type axiom_capacity_of_push(Stack* s, value_type v)

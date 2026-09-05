@@ -1,11 +1,11 @@
 [
   {
     "name": "search_n",
-    "proved": 81,
-    "total": 81,
+    "proved": 80,
+    "total": 80,
     "percent": 100,
     "qed": 55,
-    "alt_ergo": 24,
+    "alt_ergo": 23,
     "cvc5": 0,
     "z3": 0,
     "coq": 0,

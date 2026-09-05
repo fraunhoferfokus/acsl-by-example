@@ -1,11 +1,11 @@
 [
   {
     "name": "find5",
-    "proved": 23,
-    "total": 23,
+    "proved": 22,
+    "total": 22,
     "percent": 100,
     "qed": 7,
-    "alt_ergo": 13,
+    "alt_ergo": 12,
     "cvc5": 0,
     "z3": 0,
     "coq": 3,

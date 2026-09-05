@@ -659,7 +659,6 @@ Proof.
   {
     pose (p := (n - m)%Z).
     replace n with (m + p)%Z in * by (subst p; auto with zarith).
-    assert(Pos: (p > 0)%Z) by lia.
     revert Unchanged.
 
     apply natlike_rec2 with (z := p); auto with zarith.

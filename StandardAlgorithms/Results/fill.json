@@ -1,11 +1,11 @@
 [
   {
     "name": "fill",
-    "proved": 17,
-    "total": 17,
+    "proved": 16,
+    "total": 16,
     "percent": 100,
     "qed": 9,
-    "alt_ergo": 6,
+    "alt_ergo": 5,
     "cvc5": 0,
     "z3": 0,
     "coq": 0,

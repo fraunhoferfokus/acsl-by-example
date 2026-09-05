@@ -1,21 +1,33 @@
 
 #include <algorithm>
-#include <vector>
-#include <iostream>
 #include <cassert>
+#include <cstdlib>
+#include <vector>
 
 #include "fill.h"
+#include "test_data.hpp"
+
+void test_fill(std::vector<value_type> a, value_type v)
+{
+  std::vector<value_type> expected = a;
+
+  fill(a.data(), a.size(), v);
+  std::fill(expected.begin(), expected.end(), v);
+
+  assert(a == expected);
+
+  for (size_type i = 0; i < a.size(); ++i) {
+    assert(a[i] == v);
+  }
+}
+
 
 int main(int, char**)
 {
-  std::vector<value_type> a{1, 2, 3, 3, 3, 7, 8};
-
-  auto b = a;
-  value_type value = 9;
-  std::fill(a.data(), a.data() + a.size(), value);
-  fill(b.data(), b.size(), value);
-  assert(a == b);
+  for (const auto& a : test_arrays()) {
+    test_fill(a, absent_value());       // every element changes
+    test_fill(a, present_value());      // some elements were already v
+  }
 
   return EXIT_SUCCESS;
 }
-

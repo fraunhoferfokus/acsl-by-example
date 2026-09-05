@@ -3,6 +3,7 @@
 #define MERGE_H_INCLUDED
 
 #include "IncreasingLemmas.acsl"
+#include "MultisetUnion.acsl"
 #include "Unchanged.acsl"
 
 
@@ -21,6 +22,7 @@
   assigns                  c[0 .. m+n-1];
 
   ensures    increasing:   Increasing(c, m + n);
+  ensures    multiset:     MultisetUnion(a, m, b, n, c);
   ensures    unchanged:    Unchanged{Old,Here}(a, m);
   ensures    unchanged:    Unchanged{Old,Here}(b, n);
  */

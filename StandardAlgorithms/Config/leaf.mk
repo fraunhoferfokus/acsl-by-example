@@ -19,6 +19,7 @@ check: check-local      ## build and run the tests
 
 results: results-local  ## run WP and refresh Results/*.json
 reports: reports-local  ## print the per-example proof report
+smoke: smoke-local      ## search for inconsistent ACSL specifications
 
 ##@ Formatting
 

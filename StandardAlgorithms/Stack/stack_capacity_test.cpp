@@ -1,23 +1,18 @@
 
-#include <iostream>
 #include <cassert>
-#include <vector>
+#include <cstdlib>
 
 #include "stack_capacity.h"
-#include "stack_init.h"
+#include "stack_test.hpp"
 
+// Pushing and popping never change how much a stack can hold.
 int main(int, char**)
 {
-  std::vector<value_type> a(1);
-  Stack stack_a;
-  stack_init(&stack_a, a.data(), a.size());
-  assert(stack_capacity(&stack_a) == a.size());
-
-  std::vector<value_type> b(10);
-  Stack stack_b;
-  stack_init(&stack_b, b.data(), b.size());
-  assert(stack_capacity(&stack_b) == b.size());
+  for (const size_type capacity : test_capacities()) {
+    walk_stack(capacity, [](const Stack & s, size_type, size_type cap) {
+      assert(stack_capacity(&s) == cap);
+    });
+  }
 
   return EXIT_SUCCESS;
 }
-

@@ -13,7 +13,7 @@
 
    ensures    bound:  0 <= \result <= n;
    ensures    heap:   Heap(a, \result);
-   ensures    last:   \forall integer i; \result < i <= n ==> !Heap(a, i);
+   ensures    last:   \result < n  ==>  !Heap(a, \result + 1);
 */
 size_type is_heap_until(const value_type* a, size_type n);
 

@@ -6,7 +6,6 @@
 #include "MultisetReorder.acsl"
 #include "IncreasingLemmas.acsl"
 
-
 /*@
   lemma Rotate_Shift{K,L}:
     \forall value_type *a, integer k, m, p, n;

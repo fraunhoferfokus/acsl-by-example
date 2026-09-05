@@ -1,11 +1,11 @@
 [
   {
     "name": "find_if_not",
-    "proved": 40,
-    "total": 40,
+    "proved": 39,
+    "total": 39,
     "percent": 100,
     "qed": 12,
-    "alt_ergo": 21,
+    "alt_ergo": 20,
     "cvc5": 0,
     "z3": 0,
     "coq": 5,

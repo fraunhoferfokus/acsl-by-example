@@ -1,6 +1,6 @@
 
-#ifndef MULTISETUNCHANGED_ACSL_INCLUDED
-#define MULTISETUNCHANGED_ACSL_INCLUDED
+#ifndef MULTISETREORDER_ACSL_INCLUDED
+#define MULTISETREORDER_ACSL_INCLUDED
 
 #include "Count.acsl"
 
@@ -23,6 +23,12 @@
       MultisetReorder{K,L}(a, k, n)  ==>
       MultisetReorder{K,L}(a, i, n);
 
+  lemma MultisetReorder_Shift{K,L}:
+    \forall value_type *a, integer p, n;
+      0 <= p                            ==>  0 <= n  ==>
+      MultisetReorder{K,L}(a+p, 0, n)   ==>
+      MultisetReorder{K,L}(a, p, p+n);
+
   lemma MultisetReorder_Symmetric{K,L}:
     \forall value_type *a, integer m, n;
       MultisetReorder{K,L}(a, m, n)  ==>  MultisetReorder{L,K}(a, m, n);
@@ -34,5 +40,5 @@
       MultisetReorder{K,M}(a, m, n);
 */
 
-#endif /* MULTISETUNCHANGED_ACSL_INCLUDED */
+#endif /* MULTISETREORDER_ACSL_INCLUDED */
 

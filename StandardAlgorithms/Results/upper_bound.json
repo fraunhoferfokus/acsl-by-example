@@ -1,11 +1,11 @@
 [
   {
     "name": "upper_bound",
-    "proved": 32,
-    "total": 32,
+    "proved": 33,
+    "total": 33,
     "percent": 100,
     "qed": 16,
-    "alt_ergo": 14,
+    "alt_ergo": 15,
     "cvc5": 0,
     "z3": 0,
     "coq": 0,

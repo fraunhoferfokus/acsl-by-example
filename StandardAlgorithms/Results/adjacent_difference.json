@@ -1,11 +1,11 @@
 [
   {
     "name": "adjacent_difference",
-    "proved": 37,
-    "total": 37,
+    "proved": 40,
+    "total": 40,
     "percent": 100,
     "qed": 13,
-    "alt_ergo": 22,
+    "alt_ergo": 25,
     "cvc5": 0,
     "z3": 0,
     "coq": 0,

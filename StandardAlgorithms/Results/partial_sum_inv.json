@@ -1,11 +1,11 @@
 [
   {
     "name": "partial_sum_inv",
-    "proved": 42,
-    "total": 42,
+    "proved": 44,
+    "total": 44,
     "percent": 100,
     "qed": 10,
-    "alt_ergo": 29,
+    "alt_ergo": 31,
     "cvc5": 0,
     "z3": 0,
     "coq": 3,

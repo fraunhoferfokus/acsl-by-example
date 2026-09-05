@@ -1,11 +1,11 @@
 [
   {
     "name": "all_of",
-    "proved": 29,
-    "total": 29,
+    "proved": 28,
+    "total": 28,
     "percent": 100,
     "qed": 7,
-    "alt_ergo": 17,
+    "alt_ergo": 16,
     "cvc5": 0,
     "z3": 0,
     "coq": 5,

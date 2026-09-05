@@ -2,7 +2,7 @@
 #ifndef DEFAULTBOUNDS_ACSL_INCLUDED
 #define DEFAULTBOUNDS_ACSL_INCLUDED
 
-#include "limits.h"
+#include "typedefs.h"
 
 /*@
   predicate DefaultBounds{L}(value_type* a, integer n) =

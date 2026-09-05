@@ -2,13 +2,12 @@
 #ifndef COUNTNOTEQUAL_ACSL_INCLUDED
 #define COUNTNOTEQUAL_ACSL_INCLUDED
 
-
 #include "FindNotEqual.acsl"
 #include "Count.acsl"
 
 /*@
   logic integer
-  CountNotEqual(value_type* a, integer m, integer n, value_type v) = 
+  CountNotEqual(value_type* a, integer m, integer n, value_type v) =
     n <= m ? 0 : CountNotEqual(a, m, n-1, v) + (a[n-1] == v ? 0 : 1);
 
   logic integer
@@ -22,7 +21,7 @@
   lemma CountNotEqual_Hit:
     \forall value_type *a, v, integer m, n;
       m <= n     ==>
-      a[n] != v  ==> 
+      a[n] != v  ==>
       CountNotEqual(a, m, n+1, v) == CountNotEqual(a, m, n, v) + 1;
 
   lemma CountNotEqual_Miss:

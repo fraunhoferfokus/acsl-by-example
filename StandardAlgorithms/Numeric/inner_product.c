@@ -5,7 +5,7 @@ value_type inner_product(const value_type* a, const value_type* b, size_type n,
                          value_type init)
 {
   /*@
-     loop invariant index: 0 <= i <= n;
+     loop invariant bound: 0 <= i <= n;
      loop invariant inner: init == InnerProduct(a, b, i, \at(init,Pre));
      loop assigns i, init;
      loop variant n-i;

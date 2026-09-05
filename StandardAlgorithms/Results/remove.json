@@ -1,11 +1,11 @@
 [
   {
     "name": "remove",
-    "proved": 116,
-    "total": 116,
+    "proved": 114,
+    "total": 114,
     "percent": 100,
     "qed": 22,
-    "alt_ergo": 71,
+    "alt_ergo": 69,
     "cvc5": 1,
     "z3": 0,
     "coq": 20,

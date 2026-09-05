@@ -1,6 +1,6 @@
 
-#ifndef RANDOMNUMBERMODULO_ACSL_INCLUDED
-#define RANDOMNUMBERMODULO_ACSL_INCLUDED
+#ifndef C_BIT_ACSL_INCLUDED
+#define C_BIT_ACSL_INCLUDED
 
 /*@
   lemma RandomNumberModulo:
@@ -8,5 +8,5 @@
       (a % (1ull << 48)) < (1ull << 48);
 */
 
-#endif /* RANDOMNUMBERMODULO_ACSL_INCLUDED */
+#endif /* C_BIT_ACSL_INCLUDED */
 

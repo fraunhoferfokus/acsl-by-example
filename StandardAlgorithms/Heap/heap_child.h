@@ -5,14 +5,14 @@
 #include "Heap.acsl"
 
 /*@
-   requires   bounds:  0 <= p < n;
+   requires   bound:   0 <= p < n;
    requires   valid:   \valid(a + (0..n-1));
 
    terminates          \true;
    exits               \false;
    assigns             \nothing;
 
-   ensures    bounds:  p < \result <= n;
+   ensures    bound:   p < \result <= n;
    ensures    parent:  \result < n       ==>  p == HeapParent(\result);
    ensures    parent:  \result < n-1     ==>  HeapLeft(p)  < n-1;
    ensures    parent:  \result < n-1     ==>  HeapRight(p) < n;

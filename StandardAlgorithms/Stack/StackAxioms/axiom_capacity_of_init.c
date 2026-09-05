@@ -11,7 +11,7 @@
   ensures    capacity: \result == capacity;
   ensures    valid:    StackValid(s);
 */
-size_type axiom_capacity(Stack* s, value_type* a, size_type capacity)
+size_type axiom_capacity_of_init(Stack* s, value_type* a, size_type capacity)
 {
   stack_init(s, a, capacity);
   return stack_capacity(s);

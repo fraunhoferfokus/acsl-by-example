@@ -10,7 +10,6 @@
       MultisetMinus{K,L}(a, n, v)  &&
       MultisetRetainRest{K,L}(a, n, u, v);
 
-
   lemma MultisetParity_UnchangedFirst{K,L,M}:
     \forall value_type *a, u, v, integer n;
       u != v                           ==>

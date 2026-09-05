@@ -1,0 +1,28 @@
+
+#ifndef HEAPANCESTOR_ACSL_INCLUDED
+#define HEAPANCESTOR_ACSL_INCLUDED
+
+#include "HeapNodes.acsl"
+
+/*@
+  inductive HeapAncestor(integer m, integer c) {
+    case HeapAncestor_Refl:
+      \forall integer m;
+        0 <= m  ==>  HeapAncestor(m, m);
+
+    case HeapAncestor_Step:
+      \forall integer m, c;
+        0 < c  ==>  HeapAncestor(m, HeapParent(c))  ==>  HeapAncestor(m, c);
+  }
+
+  lemma HeapAncestor_Bounds:
+    \forall integer m, c;
+      HeapAncestor(m, c)  ==>  0 <= m <= c;
+
+  lemma HeapAncestor_Root:
+    \forall integer c;
+      0 <= c  ==>  HeapAncestor(0, c);
+*/
+
+#endif /* HEAPANCESTOR_ACSL_INCLUDED */
+

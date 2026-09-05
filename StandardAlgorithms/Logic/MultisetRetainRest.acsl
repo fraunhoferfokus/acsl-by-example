@@ -5,9 +5,21 @@
 #include "MultisetOperations.acsl"
 
 /*@
-  predicate MultisetRetainRest{K,L}(value_type* a, integer n, value_type  v, value_type w) =
+  predicate MultisetRetainRest{K,L}(value_type* a, integer n, value_type v, value_type w) =
     \forall value_type x;
       x != v  ==>  x != w  ==>  MultisetRetain{K,L}(a, n, x);
+
+  lemma MultisetRetainRest_UnchangedFirst{K,L,M}:
+    \forall value_type *a, u, v, integer n;
+      Unchanged{K,L}(a, n)                 ==>
+      MultisetRetainRest{L,M}(a, n, u, v)  ==>
+      MultisetRetainRest{K,M}(a, n, u, v);
+
+  lemma MultisetRetainRest_UnchangedSecond{K,L,M}:
+    \forall value_type *a, u, v, integer n;
+      MultisetRetainRest{K,L}(a, n, u, v)  ==>
+      Unchanged{L,M}(a, n)                 ==>
+      MultisetRetainRest{K,M}(a, n, u, v);
 
   lemma Multiset_AddMinusRetain{K,L,M}:
     \forall value_type *a, u, integer n;

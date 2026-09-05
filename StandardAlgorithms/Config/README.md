@@ -20,10 +20,66 @@ run. The individual pieces are also reachable on their own as `clean-tests`,
 `clean-proofs` and `clean-format`, so proofs can be discarded without forcing a
 C rebuild.
 
+## What a directory's output looks like
+
+`banner.mk` holds the only `printf` that spells a directory heading, and both
+recursion loops -- `dispatch.mk` at the top level, `internal.mk` in `Stack/` --
+go through it. The convention it fixes is: **a blank line always precedes a
+heading, and nothing follows it.**
+
+Leading rather than trailing is what makes the nesting come out right. `Stack/`
+is an internal directory and a leaf at once, so `check` there runs
+`check-local` first and then recurses; a trailing separator would have to be
+emitted by `check-local`, and every `*-local` recipe would need one. With the
+separator in front of the heading, each recursion brings its own, and no
+`*-local` recipe prints spacing at all. That is why `check-local` and
+`reports-local` no longer end in `printf "\n"`.
+
+Headings come from the dispatch loop only, so a target run inside a directory
+(`cd MinMax && make results`) prints its output with no heading -- you already
+know where you are.
+
+`results-local` and `reports-local` print the same table, from
+`print_report_header.py` and `print_example_summary.py`. `results` covers
+`EXAMPLES`, because that is what `Results/` holds; `reports` covers `VERIFIED`,
+so it also shows the `verify.list` sources. `results` used to have no header at
+all: its rows were a side effect of the `$(RESULT_DIR)/%.json` copy rule, so a
+directory showed whichever examples happened to be out of date, and a directory
+already current showed nothing under its heading.
+
 The `## text` help lives in `leaf.mk`, `internal.mk` and the top-level
 `Makefile` — the per-directory front-ends — rather than next to each recipe.
 Only one front-end is ever included, so nothing is listed twice and the section
-order is controlled in one place.
+order is controlled in one place. A directory makefile is read *before* them,
+so documenting a target there would print it above the first section heading —
+keep directory-local targets internal and reach them from a `-local` rule.
+
+## `examples.list` and `verify.list`
+
+`examples.list` drives everything: the library, the tests, WP, and the
+`Results/*.json` the book's tables are generated from.
+
+`verify.list` is optional and names sources that are **verified but are not
+examples** — WP runs on them, nothing else does. `EXAMPLES` stays the list of
+real examples, `VERIFIED` is the union, and only `VERIFIED` reaches the WP
+aggregates. `Results/` deliberately stays on `EXAMPLES`, because
+`generate-tables.py` walks `examples.list` and would never read the extra file.
+
+Being in neither list is not the same as being ignored: the WP pattern rules
+are per-file, so `make foo.wp` has always worked for any `foo.c`. What did not
+work is *keeping* the output — `.SECONDARY` protects only what the aggregates
+name, so make deleted `foo.wp/proof-results.json` again as an intermediate.
+
+`Mutating/verify.list` is the only instance. It holds the `rewrite_array` pair
+from `unchanged.tex`, which cannot be ordinary examples: both files define
+`rewrite_array`, so they would collide in one library. Unlike `examples.list`
+it is read through the shell, because it carries comments and `$(file <...)`
+would hand their words to make — a `#` arriving from a function expansion does
+not start a comment.
+
+Note that one of the two is *expected to fail*: see `Scripts/check_goals.py`
+and the `check-rewrite-array` rule in `Mutating/Makefile`, which `results-local`
+depends on.
 
 ## The WP proof cache
 
@@ -69,6 +125,62 @@ forces re-verification. Adding the flag unconditionally would therefore
 invalidate all 78 examples on the next run. Guarded, a default build produces a
 byte-identical stamp, and only an explicit non-default mode forces the affected
 example to run again — which is exactly what it should do.
+
+## Contradiction smoke tests
+
+`make smoke` runs Frama-C/WP's best-effort checks for inconsistent contracts,
+assumptions and loop invariants, plus its dead-code reachability checks. It runs
+on the same `VERIFIED` set as ordinary WP verification, including entries from
+`verify.list`, and recurses in the same way as `make results`.
+
+Smoke goals have deliberately inverted verdicts: proving one means that the
+assumptions imply `\false` and the specification is inconsistent. The
+`Scripts/check_smoke.py` validator reads WP's JSON reports, fails on such a
+goal, and also fails when a smoke goal has no external-prover attempt. A source
+with no applicable precondition, behavior, loop or reachability smoke check is
+reported explicitly and accepted, provided WP emitted ordinary goals. A
+successful run therefore means only **no contradiction found**; smoke testing
+cannot prove that a specification is consistent.
+
+Smoke artifacts use the `foo.smoke.wp/` directory, separate from `foo.wp/`, so
+the two modes never overwrite each other's reports. They are covered by
+`clean-proofs` because their names still end in `.wp`. The default smoke timeout
+is 10 seconds and can be changed per invocation:
+
+```make
+make SMOKE_TIMEOUT=20 smoke
+```
+
+Smoke is the most expensive target in the tree -- it runs on every `VERIFIED`
+source, once per automatic prover, and with `-wp-cache none`, so nothing is ever
+replayed. It therefore has its own parallelism knob, `SMOKE_PROCESSES`, which
+becomes `-wp-par` for each run and defaults to the host's core count minus one
+(`getconf _NPROCESSORS_ONLN`, clamped at 1), leaving one core for the rest of
+the machine:
+
+```make
+make SMOKE_PROCESSES=4 smoke
+```
+
+`WP_PROCESSES` stays at 1 for ordinary verification on purpose: the times in
+`Results/*.json` feed the book's tables, and prover contention would make them
+depend on the machine that produced them. Smoke times are read by nobody.
+
+The caveat is the inverted verdict. A smoke goal that fails to prove is a pass,
+so contention that pushes a goal past `-wp-smoke-timeout` turns a *found*
+contradiction into a silent success. Cores-minus-one is chosen to avoid
+oversubscribing the machine; if a smoke run ever looks suspiciously clean,
+re-run it with `SMOKE_PROCESSES=1`, and possibly a larger `SMOKE_TIMEOUT`,
+before believing it.
+
+`-wp-par` is deliberately absent from the smoke `settings.stamp`: it schedules
+the work rather than deciding what is proved, so changing the knob -- or moving
+to a host with a different core count -- does not by itself force a re-run.
+
+The automatic provers are inherited from `PROVERS`, except for Coq: smoke goals
+are expected not to prove and have no interactive proof scripts. Frama-C 33
+applies only one prover to smoke goals, so the rule performs an isolated run for
+each selected automatic prover and merges their reports before validation.
 
 ## `make <TAB>` and the shape of the include chain
 

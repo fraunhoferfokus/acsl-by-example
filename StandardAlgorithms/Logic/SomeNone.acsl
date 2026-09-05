@@ -17,13 +17,9 @@
   predicate NoneEqual(value_type* a, integer n, value_type v) =
     NoneEqual(a, 0, n, v);
 
-  lemma NotSomeEqual_NoneEqual:
+  lemma NoneEqual_SomeEqual:
     \forall value_type *a, v, integer m, n;
-      !SomeEqual(a, m, n, v)  ==>  NoneEqual(a, m, n, v);
-
-  lemma NoneEqual_NotSomeEqual:
-    \forall value_type *a, v, integer m, n;
-     NoneEqual(a, m, n, v)   ==>  !SomeEqual(a, m, n, v);
+      NoneEqual(a, m, n, v)  <==>  !SomeEqual(a, m, n, v);
 */
 
 #endif /* SOMENONE_ACSL_INCLUDED */

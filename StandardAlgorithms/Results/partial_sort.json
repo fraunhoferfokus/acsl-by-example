@@ -1,14 +1,14 @@
 [
   {
     "name": "partial_sort",
-    "proved": 158,
-    "total": 158,
+    "proved": 159,
+    "total": 159,
     "percent": 100,
     "qed": 51,
     "alt_ergo": 89,
     "cvc5": 0,
     "z3": 0,
-    "coq": 18,
+    "coq": 19,
     "term": 0,
     "unreach": 0
   }

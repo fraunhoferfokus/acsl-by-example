@@ -1,29 +1,31 @@
 
 #include "make_heap.h"
-#include "push_heap.h"
-#include "Unchanged.acsl"
+#include "heap_parent.h"
+#include "heap_sift_down.h"
 
 void make_heap(value_type* a, size_type n)
 {
-  if (0u < n) {
+  if (1u < n) {
+    size_type root = heap_parent(n - 1u) + 1u;
+
     /*@
-       loop invariant bounds:     1 <= i <= n;
-       loop invariant heap:       Heap(a, i);
+       loop invariant bounds:     0 <= root <= HeapParent(n - 1u) + 1;
+       loop invariant forest:     HeapForest(a, root, n);
        loop invariant reorder:    MultisetReorder{Pre,Here}(a, n);
-       loop invariant unchanged:  Unchanged{Pre,Here}(a, i+1, n);
-       loop assigns   i, a[0..n-1];
-       loop   variant n - i;
+       loop assigns               root, a[0..n-1];
+       loop variant               root;
     */
-    for (size_type i = 1u; i < n; ++i) {
-      push_heap(a, i + 1u);
-      //@ assert reorder:    MultisetReorder{LoopCurrent,Here}(a, i+1);
-      //@ assert unchanged:  Unchanged{LoopCurrent,Here}(a, i+1, n);
-      //@ assert reorder:    MultisetReorder{LoopCurrent,Here}(a, n);
+    while (0u < root) {
+      --root;
+      //@ assert forest_next:  HeapForest(a, root + 1u, n);
+      heap_sift_down(a, n, root);
+      //@ assert forest:       HeapForest(a, root, n);
+      //@ assert reorder_step: MultisetReorder{LoopCurrent,Here}(a, n);
+      //@ assert reorder:      MultisetReorder{Pre,Here}(a, n);
     }
 
-    //@ assert reorder:    MultisetReorder{Pre,Here}(a, n);
+    //@ assert forest_zero:    HeapForest(a, 0, n);
   }
 
-  //@ assert  heap: Heap(a, n);
+  //@ assert heap:             Heap(a, n);
 }
-

@@ -16,8 +16,17 @@ check:            ## build and run the tests
 
 ##@ Formal verification
 
-results:          ## run WP and refresh Results/*.json
+# The one dispatch target with work of its own at the top level, so it is
+# excluded from the pattern rule below. Which prover version discharged which
+# goal is in the WP reports, and those are gitignored; Results/toolchain.json
+# is the committed record of it, and GitHub/Scripts/render.py checks the
+# report's prover table against it. One aggregation over the whole tree, after
+# the dispatch, so that it reads reports that are current.
+results: results-subdirs   ## run WP and refresh Results/*.json
+	@python3 Scripts/collect_toolchain.py
+
 reports:          ## print the per-example proof reports
+smoke:            ## search for inconsistent ACSL specifications
 
 ##@ Formatting
 
@@ -26,7 +35,10 @@ format:           ## run astyle over the sources
 ##@ Cleaning
 
 # The top level is a pure dispatcher, so these are synonyms for *-subdirs.
-$(DISPATCH_TARGETS): %: %-subdirs ;
+# "results" is the one exception -- it has work of its own above -- and is
+# excluded here rather than dropped from DISPATCH_TARGETS, which is what
+# defines results-subdirs.
+$(filter-out results,$(DISPATCH_TARGETS)): %: %-subdirs ;
 
 clean:            ## remove test output, WP output and astyle backups
 clean-everything: ## remove every artifact the subdirectories own

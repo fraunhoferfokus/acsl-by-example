@@ -1,0 +1,19 @@
+# Verified, but not examples: not compiled into libMutating.a and not tested.
+#
+# rewrite_array_{nothing,unchanged} are the didactic pair of
+# Tutorial/MutatingAndNumeric/Mutating/unchanged.tex.  Both hold the same body,
+# a[i] = a[i], and the same postcondition Unchanged{Pre,Post}(a,0,n); they
+# differ in one clause, "assigns \nothing" against "assigns a[0..n-1]".
+#
+# They cannot be ordinary examples: they share the function name, so they would
+# collide in a single library.
+#
+# Expected outcomes differ, and "make check-rewrite-array" asserts both:
+#
+#   rewrite_array_unchanged  proves completely
+#   rewrite_array_nothing    must NOT prove its assigns goal -- unchanged.tex
+#                            presents that contract as *incorrect*, because
+#                            "assigns \nothing" forbids the write even though
+#                            the value written is unchanged
+rewrite_array_unchanged
+rewrite_array_nothing

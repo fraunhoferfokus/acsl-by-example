@@ -17,7 +17,7 @@
 
   lemma MultisetAdd_Distinct{K,L}:
     \forall value_type *a, v, integer m, n;
-      0 <= m < n                       ==> 
+      0 <= m < n                       ==>
       At{K}(a, m) != v                 ==>  At{L}(a, m) == v  ==>
       MultisetReorder{K,L}(a, 0, m)    ==>
       MultisetReorder{K,L}(a, m+1, n)  ==>  MultisetAdd{K,L}(a, n, v);

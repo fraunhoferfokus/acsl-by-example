@@ -1,0 +1,67 @@
+
+#ifndef MULTISETUNIONLEMMAS_ACSL_INCLUDED
+#define MULTISETUNIONLEMMAS_ACSL_INCLUDED
+
+#include "MultisetUnion.acsl"
+#include "At.acsl"
+
+/*@
+  lemma Equal_Shift{K,L}:
+    \forall value_type *a, *c, integer i, j, m;
+      0 <= i <= m                     ==>  0 <= j  ==>
+      Equal{K,L}(a+i, m-i, c+j)       ==>
+      Equal{K,L}(a, i, m, c, j);
+
+  lemma Count_Between{K,L}:
+    \forall value_type *a, *b, v, integer m, n, p;
+      0 <= m <= n                    ==>
+      Equal{K,L}(a, m, n, b, p)      ==>
+      Count{K}(a, m, n, v) == Count{L}(b, p, p + (n-m), v);
+
+  lemma Count_Tail{L}:
+    \forall value_type *a, *c, v, integer i, j, m;
+      0 <= i <= m                    ==>  0 <= j  ==>
+      Equal{L,L}(a, i, m, c, i+j)    ==>
+      Count{L}(c, i+j, m+j, v) == Count{L}(a, i, m, v);
+
+  lemma MultisetUnion_Empty{L}:
+    \forall value_type *a, *b, *c;
+      MultisetUnion{L}(a, 0, b, 0, c);
+
+  lemma MultisetUnion_Unchanged{K,L}:
+    \forall value_type *a, *b, *c, integer m, n;
+      0 <= m  ==>  0 <= n               ==>
+      Unchanged{K,L}(a, 0, m)           ==>
+      Unchanged{K,L}(b, 0, n)           ==>
+      Unchanged{K,L}(c, 0, m+n)         ==>
+      MultisetUnion{K}(a, m, b, n, c)   ==>
+      MultisetUnion{L}(a, m, b, n, c);
+
+  lemma MultisetUnion_Symmetric{L}:
+    \forall value_type *a, *b, *c, integer m, n;
+      MultisetUnion{L}(a, m, b, n, c)  ==>  MultisetUnion{L}(b, n, a, m, c);
+
+  lemma MultisetUnion_Left{L}:
+    \forall value_type *a, *b, *c, integer i, j;
+      0 <= i                           ==>  0 <= j  ==>
+      At{L}(c, i+j) == At{L}(a, i)     ==>
+      MultisetUnion{L}(a, i, b, j, c)  ==>
+      MultisetUnion{L}(a, i+1, b, j, c);
+
+  lemma MultisetUnion_Right{L}:
+    \forall value_type *a, *b, *c, integer i, j;
+      0 <= i                           ==>  0 <= j  ==>
+      At{L}(c, i+j) == At{L}(b, j)     ==>
+      MultisetUnion{L}(a, i, b, j, c)  ==>
+      MultisetUnion{L}(a, i, b, j+1, c);
+
+  lemma MultisetUnion_TailLeft{L}:
+    \forall value_type *a, *b, *c, integer i, j, m;
+      0 <= i <= m                      ==>  0 <= j  ==>
+      Equal{L,L}(a, i, m, c, i+j)      ==>
+      MultisetUnion{L}(a, i, b, j, c)  ==>
+      MultisetUnion{L}(a, m, b, j, c);
+*/
+
+#endif /* MULTISETUNIONLEMMAS_ACSL_INCLUDED */
+

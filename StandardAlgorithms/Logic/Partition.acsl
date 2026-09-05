@@ -5,8 +5,11 @@
 #include "typedefs.h"
 
 /*@
-  predicate Partition{L}(value_type* a, integer m, integer n) =
-    \forall integer i, k; 0 <= i < m <= k < n  ==>  a[i] <= a[k];
+  predicate Partition{L}(value_type* a, integer m, integer p, integer n) =
+    \forall integer i, k; m <= i < p <= k < n  ==>  a[i] <= a[k];
+
+  predicate Partition{L}(value_type* a, integer p, integer n) =
+    Partition{L}(a, 0, p, n);
 */
 
 #endif /* PARTITION_ACSL_INCLUDED */

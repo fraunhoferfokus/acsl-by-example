@@ -15,7 +15,7 @@ void partial_sort(value_type* a, size_type m, size_type n)
   if (m > 0u) {
     make_heap(a, m);
 
-    //@ assert reorder: Unchanged{Pre,Here}(a, m, n);
+    //@ assert unchanged: Unchanged{Pre,Here}(a, m, n);
     /*@
       loop invariant bound:     m <= i <= n;
       loop invariant heap:      Heap(a, m);

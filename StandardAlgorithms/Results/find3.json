@@ -1,11 +1,11 @@
 [
   {
     "name": "find3",
-    "proved": 34,
-    "total": 34,
+    "proved": 33,
+    "total": 33,
     "percent": 100,
     "qed": 12,
-    "alt_ergo": 17,
+    "alt_ergo": 16,
     "cvc5": 0,
     "z3": 0,
     "coq": 3,

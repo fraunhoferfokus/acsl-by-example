@@ -85,11 +85,13 @@ def main() -> None:
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--frama-c", required=True)
     parser.add_argument("--compiler", required=True)
+    parser.add_argument("--why3", required=True)
     parser.add_argument("--prover", action="append", default=[])
     args = parser.parse_args()
 
     frama_c = command_argv(args.frama_c)
     compiler = command_argv(args.compiler)
+    why3 = command_argv(args.why3)
     prover_flags = [
         item
         for prover in args.prover
@@ -106,6 +108,14 @@ def main() -> None:
         "compiler": {
             **executable_details(compiler),
             "version": run(compiler + ["--version"]),
+        },
+        # Frama-C uses Why3 as a library rather than as a subprocess, so its
+        # version appears in no run log. Record it here, next to the tools that
+        # do leave a trace, so that Results/toolchain.json can state it without
+        # probing a tool nothing else vouches for.
+        "why3": {
+            **executable_details(why3),
+            "version": run(why3 + ["--version"]),
         },
         "configured_provers": args.prover,
         "detected_provers": prover_output,

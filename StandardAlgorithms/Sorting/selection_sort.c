@@ -12,7 +12,7 @@ void selection_sort(value_type* a, size_type n)
     loop invariant bound:       0 <= i <= n;
     loop invariant reorder:     MultisetReorder{Pre,Here}(a, n);
     loop invariant increasing:  WeaklyIncreasing(a, i);
-    loop invariant increasing:  0 < i  ==> LowerBound(a, i, n, a[i-1]);
+    loop invariant lower:       0 < i  ==> LowerBound(a, i, n, a[i-1]);
     loop assigns   i, a[0..n-1];
     loop variant   n - i;
   */
@@ -22,6 +22,8 @@ void selection_sort(value_type* a, size_type n)
     if (i < sel) {
       //@ ghost Before: ;
       swap(a + sel, a + i);
+      //@ assert unchanged: Unchanged{Before,Here}(a, i+1, sel);
+      //@ assert unchanged: Unchanged{Before,Here}(a, sel+1, n);
       //@ assert swapped: ArraySwap{Before,Here}(a, i, sel, n);
     }
 

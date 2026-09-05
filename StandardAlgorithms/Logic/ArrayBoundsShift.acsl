@@ -1,5 +1,6 @@
-#ifndef SHIFTLEMMAS_ACSL_INCLUDED
-#define SHIFTLEMMAS_ACSL_INCLUDED
+
+#ifndef ARRAYBOUNDSSHIFT_ACSL_INCLUDED
+#define ARRAYBOUNDSSHIFT_ACSL_INCLUDED
 
 #include "ArrayBounds.acsl"
 
@@ -21,4 +22,5 @@
       StrictUpperBound{L}(a+b, 0, c-b, v)  ==> StrictUpperBound{L}(a, b, c, v);
 */
 
-#endif /* SHIFTLEMMAS_ACSL_INCLUDED */
+#endif /* ARRAYBOUNDSSHIFT_ACSL_INCLUDED */
+

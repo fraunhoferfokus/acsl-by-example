@@ -9,6 +9,8 @@ endif
 
 include $(CONFIG_DIR)/help.mk
 
+  include $(CONFIG_DIR)/banner.mk
+
 .PHONY: $(SUBDIRS) \
         lib lib-local lib-subdirs \
         tests tests-local tests-subdirs \
@@ -16,6 +18,7 @@ include $(CONFIG_DIR)/help.mk
         format format-local format-subdirs \
         reports reports-local reports-subdirs \
         results results-local results-subdirs \
+        smoke smoke-local smoke-subdirs \
         clean clean-local clean-subdirs \
         clean-results clean-results-local clean-results-subdirs \
         clean-tests-subdirs clean-lib-subdirs \
@@ -26,7 +29,7 @@ include $(CONFIG_DIR)/help.mk
 define _dispatch
 set -e; \
 for d in $(SUBDIRS); do \
-  printf " -- %s  %s -- \n" "$$d" "$(1)"; \
+  $(call _dir_heading,$$d,$(1)); \
   $(MAKE) -C "$$d" $(1); \
 done
 endef
@@ -48,6 +51,9 @@ reports-subdirs:
 
 results-subdirs:
 	@$(call _dispatch,results)
+
+smoke-subdirs:
+	@$(call _dispatch,smoke)
 
 clean-results-subdirs:
 	@$(call _dispatch,clean-results)
@@ -80,6 +86,7 @@ check: check-local check-subdirs  ## build and run the tests
 
 results: results-local results-subdirs  ## run WP and refresh Results/*.json
 reports: reports-local reports-subdirs  ## print the per-example proof reports
+smoke: smoke-local smoke-subdirs        ## search for inconsistent ACSL specifications
 
 ##@ Formatting
 

@@ -5,34 +5,34 @@
 #include "Accumulate.acsl"
 
 /*@
-    logic integer
-    AccumulateDefault{L}(value_type* a, integer n) =
-      Accumulate(a, n, (value_type)(0));
+  logic integer
+  AccumulateDefault{L}(value_type* a, integer n) =
+    Accumulate(a, n, (value_type)(0));
 
-    predicate AccumulateDefaultBounds{L}(value_type* a, integer n) =
-      AccumulateBounds(a, n, (value_type)(0));
+  predicate AccumulateDefaultBounds{L}(value_type* a, integer n) =
+    AccumulateBounds(a, n, (value_type)(0));
 
-    lemma AccumulateDefault_Unchanged{K,L}:
-      \forall value_type *a, integer n;
-        0 <= n                ==>
-        Unchanged{K,L}(a, n)  ==>
-        AccumulateDefault{K}(a, n) == AccumulateDefault{L}(a, n);
+  lemma AccumulateDefault_Unchanged{K,L}:
+    \forall value_type *a, integer n;
+      0 <= n                ==>
+      Unchanged{K,L}(a, n)  ==>
+      AccumulateDefault{K}(a, n) == AccumulateDefault{L}(a, n);
 
-    lemma AccumulateDefault_Zero{L}:
-      \forall value_type* a; AccumulateDefault(a, 0) == 0;
+  lemma AccumulateDefault_Zero{L}:
+    \forall value_type* a; AccumulateDefault(a, 0) == 0;
 
-    lemma AccumulateDefault_One{L}:
-      \forall value_type* a; AccumulateDefault(a, 1) == a[0];
+  lemma AccumulateDefault_One{L}:
+    \forall value_type* a; AccumulateDefault(a, 1) == a[0];
 
-    lemma AccumulateDefault_Next{L}:
-      \forall value_type* a, integer n;
-        0 <= n  ==>
-        AccumulateDefault(a, n+1) == AccumulateDefault(a, n) + a[n];
+  lemma AccumulateDefault_Next{L}:
+    \forall value_type* a, integer n;
+      0 <= n  ==>
+      AccumulateDefault(a, n+1) == AccumulateDefault(a, n) + a[n];
 
-    lemma AccumulateDefaultBounds_Shrink{L}:
-      \forall value_type* a, integer m, n;
-        0 <= m <= n                    ==>
-        AccumulateDefaultBounds(a, n)  ==>  AccumulateDefaultBounds(a, m);
+  lemma AccumulateDefaultBounds_Shrink{L}:
+    \forall value_type* a, integer m, n;
+      0 <= m <= n                    ==>
+      AccumulateDefaultBounds(a, n)  ==>  AccumulateDefaultBounds(a, m);
 */
 
 #endif /* ACCUMULATEDEFAULT_ACSL_INCLUDED */

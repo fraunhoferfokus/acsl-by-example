@@ -1,14 +1,14 @@
 [
   {
     "name": "heap_sort",
-    "proved": 53,
-    "total": 53,
+    "proved": 55,
+    "total": 55,
     "percent": 100,
     "qed": 15,
-    "alt_ergo": 29,
+    "alt_ergo": 30,
     "cvc5": 0,
     "z3": 0,
-    "coq": 9,
+    "coq": 10,
     "term": 0,
     "unreach": 0
   }

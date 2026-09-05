@@ -1,7 +1,7 @@
 
 # ACSL by Example
 
-This repository contains version 33.0.0 of
+This repository contains version 33.0.1 of
 [ACSL by Example](https://github.com/fraunhoferfokus/acsl-by-example/blob/master/ACSL-by-Example.pdf)
 --- a curated collection of C functions and data types whose behavior has been
 formally specified using **ACSL** (ANSI/ISO C Specification Language) and
@@ -21,7 +21,7 @@ and relies, among others, on the following software packages:
  Why3     | 1.8.2
  Alt-Ergo | 2.6.3
  CVC5     | 1.3.4
- Z3       | 4.16.0
+ Z3       | 5.1.0
  Coq      | 8.20.1
 
 ---
@@ -46,6 +46,11 @@ and relies, among others, on the following software packages:
 
 - `README.md`  
   This file.
+
+- `CHANGES.md`  
+  The complete record of released versions, newest first, down to
+  version 4.2.0.  The report itself prints only the changes of the
+  version it is.
 
 - License and auxiliary configuration files.
 

@@ -1,6 +1,6 @@
 
-#ifndef EQUAL_RANGE_H_INCLUDED
-#define EQUAL_RANGE_H_INCLUDED
+#ifndef EQUAL_RANGE2_H_INCLUDED
+#define EQUAL_RANGE2_H_INCLUDED
 
 #include "SizeTypePairTrivial.acsl"
 #include "Increasing.acsl"
@@ -22,5 +22,5 @@
  */
 size_type_pair equal_range2(const value_type* a, size_type n, value_type v);
 
-#endif /* EQUAL_RANGE_H_INCLUDED */
+#endif /* EQUAL_RANGE2_H_INCLUDED */
 

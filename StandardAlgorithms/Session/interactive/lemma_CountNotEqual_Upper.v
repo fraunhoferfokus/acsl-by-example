@@ -613,7 +613,6 @@ Proof.
 
   remember (n-m)%Z as p.
   replace n with (m+p)%Z in * by lia.
-  assert(pNN: (0 <= p)%Z) by lia.
 
   apply natlike_rec2 with (z:=p); auto with zarith.
   {

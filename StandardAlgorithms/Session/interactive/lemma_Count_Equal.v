@@ -647,7 +647,6 @@ Proof.
   intros L K a m n p v mUpper mLower L32 K32 V32 Equal.
   remember (n-m)%Z as k.
   replace n with (m + k)%Z in * by lia.
-  assert(kNN: (0 <= k)%Z) by lia.
   replace (m + k + p + - (1) * m)%Z with (p+k)%Z by lia.
   revert Equal.
 

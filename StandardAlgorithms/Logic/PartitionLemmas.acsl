@@ -2,18 +2,12 @@
 #ifndef PARTITIONLEMMAS_ACSL_INCLUDED
 #define PARTITIONLEMMAS_ACSL_INCLUDED
 
-#include "MultisetReorder.acsl"
+#include "MultisetReorderLemmas.acsl"
+#include "Partition.acsl"
 #include "ArrayBounds.acsl"
 #include "CountFind.acsl"
 
 /*@
-  lemma MultisetReorder_SomeEqual{K,L}:
-    \forall value_type *a, integer n, i;
-      0 < n                       ==>
-      0 <= i < n                  ==>
-      MultisetReorder{K,L}(a, n)  ==>
-      SomeEqual{K}(a, n, \at(a[i],L));
-
   lemma MultisetReorder_LowerBound{K,L}:
     \forall value_type* a, integer n, value_type v;
       0 <= n                      ==>

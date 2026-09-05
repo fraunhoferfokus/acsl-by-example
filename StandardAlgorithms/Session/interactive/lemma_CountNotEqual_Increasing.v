@@ -627,7 +627,6 @@ Proof.
 
   remember (n-k)%Z as p.
   replace n with (k + p)%Z by lia.
-  assert (pNN: (0 <= p)%Z) by lia.
   apply natlike_rec2 with (z := p); auto with zarith.
   {
     now replace (k+0)%Z with k by lia.

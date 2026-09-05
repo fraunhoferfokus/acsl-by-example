@@ -1,0 +1,41 @@
+
+#ifndef HEAPFOREST_ACSL_INCLUDED
+#define HEAPFOREST_ACSL_INCLUDED
+
+#include "Heap.acsl"
+#include "HeapAncestor.acsl"
+#include "ArrayUpdate.acsl"
+
+/*@
+  predicate HeapForest{L}(value_type* a, integer m, integer n) =
+    \forall integer c;
+      0 < c < n  &&  m <= HeapParent(c)  ==>  a[c] <= a[HeapParent(c)];
+
+  lemma HeapForest_Heap{L}:
+    \forall value_type* a, integer n;
+      HeapForest(a, 0, n)  ==>  Heap(a, n);
+
+  lemma HeapForest_Maximum{L}:
+    \forall value_type* a, integer m, c, n;
+      0 <= m <= c < n      ==>
+      HeapForest(a, m, n)  ==>
+      HeapAncestor(m, c)   ==>  a[c] <= a[m];
+
+  predicate
+  HeapForestCompatible{L}(value_type* a, integer n, integer root, integer p,
+                          value_type v) =
+    (root <= p < n)                                                 &&
+    (0 < p  &&  root <= HeapParent(p)  ==>  v <= a[HeapParent(p)])  &&
+    (HeapLeft(p)  < n  ==>  a[HeapLeft(p)]  <= v)                   &&
+    (HeapRight(p) < n  ==>  a[HeapRight(p)] <= v);
+
+  lemma HeapForestCompatible_Update{K,L}:
+    \forall value_type* a, integer n, root, p, value_type v;
+      HeapForest{K}(a, root, n)                  ==>
+      HeapForestCompatible{K}(a, n, root, p, v)  ==>
+      ArrayUpdate{K,L}(a, n, p, v)               ==>
+      HeapForest{L}(a, root, n);
+*/
+
+#endif /* HEAPFOREST_ACSL_INCLUDED */
+

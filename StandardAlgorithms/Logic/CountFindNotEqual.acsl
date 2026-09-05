@@ -33,5 +33,5 @@
       CountNotEqual(a, 0, n, v) - CountNotEqual(a, 0, m, v);
 */
 
-#endif /* COUNTFINDNOTEQUAL_H_INCLUDED */
+#endif /* COUNTFINDNOTEQUAL_ACSL_INCLUDED */
 

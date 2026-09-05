@@ -13,9 +13,9 @@ void test_partial_sort(std::vector<value_type> a, size_type m)
   partial_sort(b.data(), m, b.size());
   std::partial_sort(c.begin(), c.begin() + m, c.end());
   //std::cout << a << "\t" << m << "\t" << b << std::endl;
-  // compare initial segments
+  // compare the sorted prefixes
   assert(std::equal(b.begin(), b.begin() + m, c.begin(), c.begin() + m));
-  // sort and compare trailing segments
+  // sort and compare the remaining suffixes
   std::sort(b.begin() + m, b.end());
   std::sort(c.begin() + m, c.end());
   assert(std::equal(b.begin() + m, b.end(), c.begin() + m, c.end()));

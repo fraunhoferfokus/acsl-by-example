@@ -25,6 +25,22 @@ REL_TOP_DIR := $(shell $(GNUREALPATH) --relative-to="$(CURDIR)" "$(TOP_DIR)")
 # - $(strip ...) removes newlines and extra whitespace.
 EXAMPLES := $(strip $(file <examples.list))
 
+# Sources that are verified but are not examples: they are neither compiled
+# into the library nor exercised by a test.  A directory declares them in an
+# optional verify.list.
+#
+# The one instance is the rewrite_array pair in Mutating/, which exists to make
+# a point about annotations rather than to compute anything: two files with the
+# same function name and the same include guard, so they cannot share a library
+# in any case.  See Mutating/verify.list.
+#
+# Unlike examples.list this is read through the shell, because the file carries
+# comments and $(file <...) would hand their words straight to make -- a '#'
+# arriving from a function expansion does not start a comment.  The subshell
+# runs only in a directory that has the file.
+VERIFY_ONLY := $(strip $(if $(wildcard verify.list),\
+                 $(shell sed -e 's/#.*//' verify.list)))
+
 # Name of the library built in this directory.
 # Using := avoids re-evaluating $(CURDIR) repeatedly.
 LIB_NAME := lib$(notdir $(CURDIR)).a

@@ -17,9 +17,9 @@ void sort_heap(value_type* a, size_type n)
   for (size_type i = n; i > 1u; --i) {
     //@ ghost Before: ;
     pop_heap(a, i);
-    //@ assert lower:    LowerBound(a, i, n, a[i-1]);
-    //@ assert reorder:  MultisetReorder{Before,Here}(a, 0, i);
-    //@ assert reorder:  Unchanged{Before,Here}(a, i, n);
+    //@ assert lower:      LowerBound(a, i, n, a[i-1]);
+    //@ assert reorder:    MultisetReorder{Before,Here}(a, 0, i);
+    //@ assert unchanged:  Unchanged{Before,Here}(a, i, n);
   }
 
   //@ assert increasing: Increasing(a, n);

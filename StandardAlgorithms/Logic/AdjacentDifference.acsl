@@ -2,30 +2,29 @@
 #ifndef ADJACENTDIFFERENCE_ACSL_INCLUDED
 #define ADJACENTDIFFERENCE_ACSL_INCLUDED
 
-#include "limits.h"
 #include "Difference.acsl"
 
 /*@
-    predicate AdjacentDifference{L}(value_type* a, integer n, value_type* b) =
-      \forall integer i; 0 <= i < n  ==>  b[i] == Difference(a, i);
+  predicate AdjacentDifference{L}(value_type* a, integer n, value_type* b) =
+    \forall integer i; 0 <= i < n  ==>  b[i] == Difference(a, i);
 
-    predicate AdjacentDifferenceBounds(value_type* a, integer n) =
-      \forall integer i; 1 <= i < n  ==>
-        VALUE_TYPE_MIN <= Difference(a, i) <= VALUE_TYPE_MAX;
+  predicate AdjacentDifferenceBounds(value_type* a, integer n) =
+    \forall integer i; 1 <= i < n  ==>
+      VALUE_TYPE_MIN <= Difference(a, i) <= VALUE_TYPE_MAX;
 
-    lemma AdjacentDifference_Step{K,L}:
-      \forall value_type *a, *b, integer n;
-        AdjacentDifference{K}(a, n, b)      ==>
-        Unchanged{K,L}(b, n)                ==>
-        Unchanged{K,L}(a, n+1)              ==>
-        \at(b[n],L) == Difference{L}(a, n)  ==>
-        AdjacentDifference{L}(a, n+1, b);
+  lemma AdjacentDifference_Step{K,L}:
+    \forall value_type *a, *b, integer n;
+      AdjacentDifference{K}(a, n, b)      ==>
+      Unchanged{K,L}(b, n)                ==>
+      Unchanged{K,L}(a, n+1)              ==>
+      \at(b[n],L) == Difference{L}(a, n)  ==>
+      AdjacentDifference{L}(a, n+1, b);
 
-    lemma AdjacentDifference_Section{K}:
-      \forall value_type *a, *b, integer m, n;
-        0 <= m <= n                     ==>
-        AdjacentDifference{K}(a, n, b)  ==>
-        AdjacentDifference{K}(a, m, b);
+  lemma AdjacentDifference_Section{K}:
+    \forall value_type *a, *b, integer m, n;
+      0 <= m <= n                     ==>
+      AdjacentDifference{K}(a, n, b)  ==>
+      AdjacentDifference{K}(a, m, b);
 */
 
 #endif /* ADJACENTDIFFERENCE_ACSL_INCLUDED */

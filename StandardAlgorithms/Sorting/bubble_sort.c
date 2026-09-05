@@ -23,7 +23,7 @@ void bubble_sort(value_type* a, size_type n)
         loop invariant upper:        1 < i ==> UpperBound(a, n-i+1, a[n-i+1]);
         loop invariant max:          MaxElement(a, j+1, j);
         loop invariant reorder:      MultisetReorder{LoopEntry,Here}(a, j+1);
-        loop invariant reorder:      Unchanged{LoopEntry,Here}(a, j+1, n);
+        loop invariant unchanged:    Unchanged{LoopEntry,Here}(a, j+1, n);
         loop assigns                 j, a[0..n-1];
         loop variant n-j;
       */
@@ -34,10 +34,11 @@ void bubble_sort(value_type* a, size_type n)
           //@ assert reorder:   MultisetReorder{LoopEntry,Here}(a, 0, j+2);
           swap(&a[j], &a[j + 1u]);
           //@ assert max:       MaxElement(a, j+2, j+1);
-          //@ assert swap:      ArraySwap{LoopCurrent,Here}(a, j, j+1, n);
-          //@ assert unchanged: Unchanged{LoopCurrent,Here}(a, j);
-          //@ assert reorder:   a[j+1] == At{LoopCurrent}(a, j);
-          //@ assert reorder:   a[j]   == At{LoopCurrent}(a, j+1);
+          //@ assert swapped:   a[j+1] == At{LoopCurrent}(a, j);
+          //@ assert swapped:   a[j]   == At{LoopCurrent}(a, j+1);
+          //@ assert unchanged: Unchanged{LoopCurrent,Here}(a, 0, j);
+          //@ assert unchanged: Unchanged{LoopCurrent,Here}(a, j+2, n);
+          //@ assert swapped:   ArraySwap{LoopCurrent,Here}(a, j, j+1, n);
           //@ assert reorder:   MultisetReorder{LoopCurrent,Here}(a, j, j+2);
         }
       }

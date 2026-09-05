@@ -1,0 +1,15 @@
+
+#ifndef MULTISETUNION_ACSL_INCLUDED
+#define MULTISETUNION_ACSL_INCLUDED
+
+#include "Count.acsl"
+
+/*@
+  predicate MultisetUnion{L}(value_type* a, integer m,
+                             value_type* b, integer n, value_type* c) =
+    \forall value_type v;
+      Count{L}(c, 0, m+n, v) == Count{L}(a, 0, m, v) + Count{L}(b, 0, n, v);
+*/
+
+#endif /* MULTISETUNION_ACSL_INCLUDED */
+

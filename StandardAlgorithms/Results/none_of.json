@@ -1,11 +1,11 @@
 [
   {
     "name": "none_of",
-    "proved": 10,
-    "total": 10,
+    "proved": 9,
+    "total": 9,
     "percent": 100,
     "qed": 7,
-    "alt_ergo": 3,
+    "alt_ergo": 2,
     "cvc5": 0,
     "z3": 0,
     "coq": 0,

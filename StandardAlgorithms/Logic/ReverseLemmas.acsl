@@ -4,7 +4,6 @@
 
 #include "Reverse.acsl"
 
-
 /*@
   lemma Reverse_Shift{K,L}:
     \forall value_type* a, integer n, p;
@@ -13,3 +12,4 @@
 */
 
 #endif /* REVERSELEMMAS_ACSL_INCLUDED */
+

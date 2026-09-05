@@ -11,14 +11,14 @@ size_type search_n(const value_type* a, size_type n, value_type v, size_type p)
         loop invariant match:     AllEqual(a, start, i, v);
         loop invariant start:     0 < start ==> a[start-1] != v;
         loop invariant bound:     start <= i + 1 <= start + p;
-        loop invariant not_found: !HasConstantSubRange(a, i, v, p);
+        loop invariant no_match:  !HasConstantSubRange(a, i, v, p);
         loop assigns i, start;
         loop variant n - i;
       */
       for (size_type i = 0u; i < n; ++i) {
         if (a[i] != v) {
           start = i + 1u;
-          //@ assert not_found: !HasConstantSubRange(a, i+1, v, p);
+          //@ assert no_match:  !HasConstantSubRange(a, i+1, v, p);
         }
         else {
           //@ assert match: a[i] == v;
@@ -29,7 +29,7 @@ size_type search_n(const value_type* a, size_type n, value_type v, size_type p)
             /*@ assert match: \exists integer k;
                                 0 <= k <= n-p && AllEqual(a, k, k+p, v);
              */
-            //@ assert match: HasConstantSubRange(a, n, v, p);
+            //@ assert has_match: HasConstantSubRange(a, n, v, p);
             return start;
           }
           else {
@@ -38,22 +38,22 @@ size_type search_n(const value_type* a, size_type n, value_type v, size_type p)
           }
         }
 
-        //@ assert not_found: !HasConstantSubRange(a, i+1, v, p);
+        //@ assert no_match:  !HasConstantSubRange(a, i+1, v, p);
       }
 
-      //@ assert not_found: !HasConstantSubRange(a, n, v, p);
+      //@ assert no_match:  !HasConstantSubRange(a, n, v, p);
       return n;
     }
     else {
-      //@ assert not_found: n < p;
-      //@ assert not_found: !HasConstantSubRange(a, n, v, p);
+      //@ assert bound:     n < p;
+      //@ assert no_match:  !HasConstantSubRange(a, n, v, p);
       return n;
     }
   }
   else {
     //@ assert bound: p == 0;
     //@ assert match: AllEqual(a, 0, 0, v);
-    //@ assert match: HasConstantSubRange(a, n, v, 0);
+    //@ assert has_match: HasConstantSubRange(a, n, v, 0);
     return 0u;
   }
 }

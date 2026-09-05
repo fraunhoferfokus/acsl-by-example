@@ -14,10 +14,10 @@
     StackSize{S}(s) == StackSize{T}(t) &&
     StackPrefix{S,T}(s, t);
 
-  lemma StackEqual_Reflexive{S} :
+  lemma StackEqual_Reflexive{S}:
     \forall Stack* s; StackEqual{S,S}(s, s);
 
-  lemma StackEqual_Symmetric{S,T} :
+  lemma StackEqual_Symmetric{S,T}:
     \forall Stack *s, *t;
       StackEqual{S,T}(s, t) ==>  StackEqual{T,S}(t, s);
 

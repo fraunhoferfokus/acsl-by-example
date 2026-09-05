@@ -23,7 +23,7 @@
   lemma ArrayUpdate_UpperBound{K,L}:
     \forall value_type *a, v, w, integer n, i;
       ArrayUpdate{K,L}(a, n, i, v)  ==>
-      v <= w                        ==> 
+      v <= w                        ==>
       UpperBound{K}(a, n, w)        ==>
       UpperBound{L}(a, n, w);
 */

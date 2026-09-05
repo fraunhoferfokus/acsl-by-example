@@ -5,7 +5,7 @@ size_type find2(const value_type* a, size_type n, value_type v)
 {
   /*@
     loop invariant bound:     0 <= i <= n;
-    loop invariant not_found: NoneEqual(a, i, v);
+    loop invariant none:      NoneEqual(a, i, v);
     loop assigns i;
     loop variant n-i;
    */

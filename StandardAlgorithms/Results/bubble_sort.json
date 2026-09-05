@@ -1,14 +1,14 @@
 [
   {
     "name": "bubble_sort",
-    "proved": 106,
-    "total": 106,
+    "proved": 110,
+    "total": 110,
     "percent": 100,
     "qed": 41,
-    "alt_ergo": 53,
+    "alt_ergo": 55,
     "cvc5": 1,
     "z3": 0,
-    "coq": 11,
+    "coq": 13,
     "term": 0,
     "unreach": 0
   }

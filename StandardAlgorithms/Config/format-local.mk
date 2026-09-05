@@ -16,8 +16,10 @@ ASTYLEOPTIONS += --break-blocks
 ASTYLEOPTIONS += --pad-oper
 ASTYLEOPTIONS += --pad-header
 
-# Format all local C/C++ headers and sources.
-FORMAT_FILES := $(wildcard *.c *.cpp *.h)
+# Format all local C/C++ headers and sources. The .hpp pattern picks up the
+# shared test headers, which are named that way to stay out of the book's
+# source listings.
+FORMAT_FILES := $(wildcard *.c *.cpp *.h *.hpp)
 
 .PHONY: format-local
 format-local:

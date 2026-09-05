@@ -1,14 +1,14 @@
 [
   {
     "name": "make_heap",
-    "proved": 75,
-    "total": 75,
+    "proved": 86,
+    "total": 86,
     "percent": 100,
-    "qed": 27,
-    "alt_ergo": 39,
+    "qed": 33,
+    "alt_ergo": 40,
     "cvc5": 0,
     "z3": 0,
-    "coq": 9,
+    "coq": 13,
     "term": 0,
     "unreach": 0
   }

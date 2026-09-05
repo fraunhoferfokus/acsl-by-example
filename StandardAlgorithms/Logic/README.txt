@@ -1,15 +1,36 @@
+Every ACSL predicate, logic function and lemma of the project is defined in
+this directory; nothing is defined in an algorithm header.
 
-A crude way to extract all names of predicates and logic functions.
-It relies on the assumptions
+
+Extracting all names of predicates, logic functions and lemmas
+--------------------------------------------------------------
+
+A crude way, relying on the naming convention
 - the names start with a capital letter
-- the name do not contain numbers
+- the names do not contain digits
 - the names are longer than one character
 
-grep -o "[A-Z][A-z]*" *.spec | cut -d : -f 2 | sort | uniq | grep -v '^[A-Z]$'
+    sed -e '/^#/d' *.acsl | grep -o "[A-Z][A-z]*" | sort -u | grep -v '^[A-Z]$'
+
+The leading sed drops the preprocessor lines; without it the include guards
+would be reported as names.  Note that [A-z] also matches the underscore,
+which is what lets a lemma name such as Count_Union through.
 
 
+Checking that each file has all the includes it needs
+-----------------------------------------------------
 
-To check that each file has all includes needed:
+Each file must be usable on its own.  A C compiler cannot check this, since
+the annotations sit inside comments, so let Frama-C parse a translation unit
+that includes nothing but the file under test:
 
-for i in *.h ; do echo +++++ $i +++++ ; cc -Wall -c -I.. $i ; done
+    for f in *.acsl ; do
+      echo "#include \"$f\"" > probe.c
+      frama-c -cpp-extra-args="-I. -I.. -I../Stack -I../MinMax" probe.c \
+        > /dev/null 2>&1 || echo "not self-contained: $f"
+    done
+    rm -f probe.c
 
+A file that fails here still works in the build whenever every one of its
+users happens to include the missing header first -- which is exactly what
+makes the omission easy to miss.
